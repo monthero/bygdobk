@@ -1,0 +1,45 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-inline: -6px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 6px 10px;
+  border-radius: var(--mantine-radius-md);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+
+  &[data-size='sheet'] {
+    min-height: 48px;
+    font-size: var(--mantine-font-size-md);
+  }
+
+  &:hover {
+    background: var(--bk-surface-2);
+  }
+
+  &[aria-current='true'] {
+    background: var(--bk-accent-soft);
+    font-weight: 600;
+  }
+}
+
+.name {
+  flex: 1;
+}
+
+.check {
+  width: 16px;
+  height: 16px;
+  color: var(--bk-accent-strong);
+}
+
+.option svg:first-child {
+  flex: none;
+}

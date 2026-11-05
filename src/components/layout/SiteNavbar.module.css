@@ -1,0 +1,22 @@
+.brand {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 20px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--bk-border);
+}
+
+.brandLink {
+  display: block;
+  border-radius: var(--mantine-radius-md);
+}
+
+.logo {
+  color: var(--bk-logo);
+}
+
+.actions {
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px solid var(--bk-border);
+}

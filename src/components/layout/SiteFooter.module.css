@@ -1,0 +1,183 @@
+.footer {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: 40px 56px;
+  border-top: 1px solid var(--bk-border);
+  background: color-mix(in srgb, var(--bk-surface) 72%, var(--mantine-color-body));
+  color: var(--mantine-color-text);
+  color-scheme: dark;
+  container-type: inline-size;
+
+  &:has(.wordmark) {
+    padding-bottom: max(80px, calc(11cqi + 24px));
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  }
+}
+
+.outline,
+.shuttle,
+.wordmark {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.outline {
+  --bk-logo-accent: currentColor;
+  inset-inline-end: 40px;
+  bottom: -90px;
+  color: var(--bk-accent-strong);
+  rotate: 30deg;
+  mask-image: linear-gradient(to bottom, transparent 5%, #000 70%);
+
+  & path {
+    fill: color-mix(in srgb, currentColor 5%, transparent);
+    stroke: color-mix(in srgb, currentColor 32%, transparent);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    height: 260px;
+    width: auto;
+    inset-inline-end: 0;
+    bottom: -40px;
+  }
+}
+
+.shuttle {
+  aspect-ratio: 850 / 1122;
+  scale: -1 1;
+  mask: url('../../assets/icons/logo-mark.svg') center / contain no-repeat;
+}
+
+.crop {
+  height: 420px;
+  inset-inline-end: -70px;
+  bottom: -100px;
+  rotate: -14deg;
+  background: var(--bk-accent);
+  opacity: 0.06;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    height: 300px;
+    inset-inline-end: -80px;
+    top: 290px;
+    bottom: auto;
+  }
+}
+
+.gradient {
+  height: 290px;
+  inset-inline-end: 64px;
+  bottom: 24px;
+  rotate: 10deg;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--bk-accent) 14%, transparent), transparent 90%);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    height: 210px;
+    inset-inline-end: 20px;
+    top: 330px;
+    bottom: auto;
+  }
+}
+
+.dots {
+  height: 380px;
+  inset-inline-end: 40px;
+  bottom: -60px;
+  rotate: 18deg;
+  background: radial-gradient(circle, color-mix(in srgb, var(--bk-accent) 40%, transparent) 1.2px, transparent 1.7px) 0
+    0 / 7px 7px;
+  mask:
+    url('../../assets/icons/logo-mark.svg') center / contain no-repeat,
+    linear-gradient(to top left, #000 15%, transparent 85%);
+  mask-composite: intersect;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    height: 270px;
+    inset-inline-end: -24px;
+    top: 300px;
+    bottom: auto;
+  }
+}
+
+.wordmark {
+  inset-inline: 0;
+  bottom: 0;
+  translate: 0 34%;
+  font-family: var(--bk-font-display);
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+  font-size: 21cqi;
+  line-height: 0.8;
+  letter-spacing: 0.06em;
+  text-indent: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--bk-accent) 4%, transparent);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--bk-accent) 14%, transparent);
+}
+
+.logo {
+  color: var(--bk-logo);
+  margin-bottom: 8px;
+}
+
+.ext {
+  width: 12px;
+  height: 12px;
+  vertical-align: -1px;
+}
+
+.variants {
+  grid-column: 1 / -1;
+  align-items: flex-start;
+  padding: 16px;
+  border: 1px dashed var(--bk-accent-line);
+  border-radius: var(--mantine-radius-md);
+  background: var(--bk-accent-soft);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-column: auto;
+  }
+}
+
+.brand {
+  grid-column: 1 / -1;
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-column: auto;
+    align-items: flex-start;
+    text-align: start;
+  }
+}
+
+.links {
+  @media (max-width: $mantine-breakpoint-sm) {
+    padding-top: 24px;
+    border-top: 1px solid var(--bk-border);
+  }
+}
+
+.social {
+  margin-top: 8px;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    justify-content: center;
+  }
+}

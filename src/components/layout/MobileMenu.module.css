@@ -1,0 +1,135 @@
+.overlay,
+.inner {
+  top: 64px;
+}
+
+.overlay {
+  backdrop-filter: blur(3px);
+}
+
+.panel {
+  height: calc(100dvh - 64px);
+  max-height: none;
+  background: radial-gradient(120% 60% at 100% 0%, var(--bk-accent-soft), transparent 70%), var(--mantine-color-body);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100%;
+  padding: 20px 16px calc(20px + env(safe-area-inset-bottom));
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  min-height: 104px;
+  padding: 14px;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-lg);
+  background: var(--bk-surface);
+  color: var(--mantine-color-text);
+  text-decoration: none;
+  animation: tile-in 0.42s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 40ms + 60ms);
+  transition:
+    border-color 0.15s,
+    background-color 0.15s,
+    transform 0.15s;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &[data-active] {
+    border-color: var(--bk-accent-strong);
+    background: var(--bk-accent-soft);
+
+    & .icon {
+      background: var(--bk-accent-strong);
+      color: var(--mantine-color-body);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--bk-accent-soft);
+  color: var(--bk-accent-strong);
+
+  & svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.label {
+  margin-top: auto;
+  font-family: var(--bk-font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+}
+
+.findUs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: auto;
+  padding: 16px;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-lg);
+  background: radial-gradient(120% 140% at 0% 0%, var(--bk-accent-soft), transparent 60%), var(--bk-surface);
+}
+
+.findHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.social {
+  padding-top: 14px;
+  border-top: 1px solid var(--bk-border);
+}
+
+.mark {
+  flex: none;
+  color: var(--bk-logo);
+}
+
+.findText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+@keyframes tile-in {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+}
