@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 227 55" font-family="Arial, Helvetica, 'Liberation Sans', sans-serif" text-rendering="geometricPrecision">
+  <rect width="100" height="34" fill="#000"/>
+  <rect x="100" width="127" height="34" fill="#bd012a"/>
+  <rect x="0.5" y="34" width="226" height="20.5" fill="#fff" stroke="#bd012a"/>
+  <text x="7" y="28" font-size="30.7" font-weight="700" fill="#fff" textLength="89" lengthAdjust="spacingAndGlyphs">SPORT</text>
+  <text x="102" y="28" font-size="30.7" fill="#fff" textLength="117" lengthAdjust="spacingAndGlyphs">MODERN</text>
+  <text x="40" y="48.4" font-size="17.3" fill="#000" textLength="146" lengthAdjust="spacingAndGlyphs">www.sportmodern.no</text>
+</svg>
