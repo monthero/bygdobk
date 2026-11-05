@@ -1,0 +1,2249 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: fi\n"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "“We want as many people as possible to enjoy playing badminton!”"
+msgstr "”Haluamme, että mahdollisimman moni nauttii sulkapallosta!”"
+
+#. placeholder {0}: m.posts.length
+#: src/pages/news/NewsPage.tsx
+msgid "{0, plural, one {# post} other {# posts}}"
+msgstr "{0, plural, one {# julkaisu} other {# julkaisua}}"
+
+#. placeholder {0}: kr(price.membership)
+#. placeholder {1}: kr(price.perVisit)
+#: src/pages/join/JoinPage.tsx
+msgid "{0} + {1} per visit"
+msgstr "{0} + {1} / kerta"
+
+#. Volunteer shift spots filled for an event
+#. placeholder {0}: shifts.taken
+#. placeholder {1}: shifts.spots
+#: src/components/events/EventCard.tsx
+msgid "{0} of {1} shifts taken"
+msgstr "{0}/{1} vuoroa varattu"
+
+#. placeholder {0}: kr(p.perVisit)
+#: src/pages/membership/MembershipPage.tsx
+msgid "{0} per visit"
+msgstr "{0} / kerta"
+
+#: src/pages/join/JoinDone.tsx
+msgid "{firstName} is signed up. See you on court!"
+msgstr "{firstName} on ilmoitettu. Nähdään kentällä!"
+
+#: src/pages/club/sections.tsx
+msgid "{firstName}'s email address was copied to the clipboard"
+msgstr "Sähköpostiosoite kopioitu leikepöydälle: {firstName}"
+
+#: src/pages/club/sections.tsx
+msgid "{firstName}'s phone number was copied to the clipboard"
+msgstr "Puhelinnumero kopioitu leikepöydälle: {firstName}"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "{length} of {NOTICE_MAX_LENGTH} characters"
+msgstr "{length} / {NOTICE_MAX_LENGTH} merkkiä"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "{taken} of {spots}"
+msgstr "{taken}/{spots}"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "404 · Out"
+msgstr "404 · Ulkona"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "404 · Rally on"
+msgstr "404 · Ralli jatkuu"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "404 · Service fault"
+msgstr "404 · Syöttövirhe"
+
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "404 idea"
+msgstr "404-idea"
+
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "404 ideas"
+msgstr "404-ideat"
+
+#: src/data/photos.ts
+msgid "A coach leading a group session at Bygdøhus"
+msgstr "Valmentaja vetää ryhmäharjoitusta Bygdøhusissa"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "A court in perspective, the shuttle lands just out."
+msgstr "Kenttä perspektiivissä, sulkapallo putoaa juuri ulos."
+
+#: src/data/photos.ts
+msgid "A player getting ready to serve"
+msgstr "Pelaaja valmistautuu syöttämään"
+
+#: src/pages/contact/ContactPage.tsx
+msgid "A question about training, membership or something else? Pick a topic and your message goes to the right person."
+msgstr "Kysyttävää harjoituksista, jäsenyydestä tai jostain muusta? Valitse aihe, niin viestisi menee oikealle henkilölle."
+
+#: src/data/club.ts
+msgid "A racket"
+msgstr "Maila"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "A short message at the top of every page, for example about a canceled training."
+msgstr "Lyhyt viesti jokaisen sivun yläosassa, esimerkiksi perutuista harjoituksista."
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket, with players on green courts behind"
+msgstr "Sulkapallo mailan päällä, taustalla pelaajia vihreillä kentillä"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "A shuttle resting on a badminton racket"
+msgstr "Sulkapallo lepää mailan päällä"
+
+#: src/data/photos.ts
+msgid "A shuttle resting on a racket in a sports hall"
+msgstr "Sulkapallo mailan päällä urheiluhallissa"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "A tiny game: keep the shuttle in the air."
+msgstr "Pikkupeli: pidä pallo ilmassa."
+
+#: src/data/club.ts
+msgid "A water bottle"
+msgstr "Vesipullo"
+
+#: src/pages/club/ClubPage.tsx
+msgid "About the club"
+msgstr "Tietoa seurasta"
+
+#: src/pages/join/JoinPage.tsx
+msgid "About you"
+msgstr "Tietoja sinusta"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Account"
+msgstr "Tili"
+
+#. placeholder {0}: user.name
+#: src/components/auth/UserMenu.tsx
+msgid "Account menu for {0}"
+msgstr "Tilivalikko: {0}"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Add a training break"
+msgstr "Lisää harjoitustauko"
+
+#: src/components/training/AddClosureModal.tsx
+#: src/pages/admin/AdminPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Add break"
+msgstr "Lisää tauko"
+
+#. User role: can edit the site
+#: src/components/auth/UserMenu.tsx
+msgid "Admin"
+msgstr "Ylläpitäjä"
+
+#: src/components/auth/UserMenu.tsx
+#: src/pages/admin/AdminPage.tsx
+msgid "Admin panel"
+msgstr "Ylläpitopaneeli"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Admins only"
+msgstr "Vain ylläpitäjille"
+
+#: src/data/club.ts
+msgid "Adult players"
+msgstr "Aikuiset pelaajat"
+
+#. Training group for adults. Norwegian: Senior (voksne)
+#: src/data/club.ts
+msgid "Adults"
+msgstr "Aikuiset"
+
+#. placeholder {0}: kr(DROPIN.membership)
+#: src/pages/home/components/StartCards.tsx
+msgid "after the {0} membership"
+msgstr "{0} jäsenmaksun jälkeen"
+
+#. placeholder {0}: kr(TRIAL.membership)
+#: src/pages/home/components/StartCards.tsx
+msgid "Ages 7–12 try half a season for {0}"
+msgstr "7–12-vuotiaat kokeilevat puolen kauden hintaan {0}"
+
+#. Events filter option that shows upcoming and past events
+#: src/pages/events/EventsPage.tsx
+#: src/pages/news/NewsPage.tsx
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "All"
+msgstr "Kaikki"
+
+#. placeholder {0}: i18n._(GROUPS[group].name)
+#: src/pages/join/JoinDone.tsx
+msgid "All {0} times"
+msgstr "Kaikki ajat: {0}"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "All day"
+msgstr "Koko päivä"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "All edits are reset."
+msgstr "Kaikki muutokset nollataan."
+
+#: src/pages/events/EventPage.tsx
+#: src/pages/home/HomePage.tsx
+msgid "All events"
+msgstr "Kaikki tapahtumat"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "All groups"
+msgstr "Kaikki ryhmät"
+
+#: src/data/news.ts
+msgid "All members are welcome at the annual meeting."
+msgstr "Kaikki jäsenet ovat tervetulleita vuosikokoukseen."
+
+#: src/pages/home/HomePage.tsx
+#: src/pages/news/components/ArticleHero.tsx
+#: src/pages/news/NewsPostPage.tsx
+msgid "All news"
+msgstr "Kaikki uutiset"
+
+#. Year filter option that shows events from every year
+#: src/pages/events/EventsPage.tsx
+msgid "All years"
+msgstr "Kaikki vuodet"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Already a member?"
+msgstr "Oletko jo jäsen?"
+
+#: src/data/photos.ts
+msgid "An empty badminton hall at sunset"
+msgstr "Tyhjä sulkapallohalli auringonlaskun aikaan"
+
+#: src/data/news.ts
+msgid "Annual meeting 2026"
+msgstr "Vuosikokous 2026"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Archive"
+msgstr "Arkisto"
+
+#: src/data/events.ts
+msgid "Autumn 2026"
+msgstr "Syksy 2026"
+
+#: src/data/club.ts
+msgid "Autumn break, no organized training"
+msgstr "Syystauko, ei ohjattuja harjoituksia"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Back"
+msgstr "Takaisin"
+
+#: src/pages/news/components/ClosureNotice.tsx
+msgid "Back on court {back}."
+msgstr "Kentälle taas: {back}."
+
+#: src/pages/NotFoundPage.tsx
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Back to the front page"
+msgstr "Takaisin etusivulle"
+
+#: src/components/styles/classic/ClassicHero.tsx
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/flight/FlightHero.tsx
+msgid "Badminton for everyone at Bygdøhus"
+msgstr "Sulkapalloa kaikille Bygdøhusissa"
+
+#: src/data/events.ts
+msgid "Baking counts too"
+msgstr "Leipominenkin lasketaan"
+
+#: src/data/club.ts
+msgid "Beginner discount"
+msgstr "Alennus aloittelijoille"
+
+#. Training group for new players. Norwegian: Rekrutt
+#: src/data/club.ts
+msgid "Beginners"
+msgstr "Aloittelijat"
+
+#: src/data/club.ts
+msgid "Beginners aged 7–12, half a season"
+msgstr "Aloittelijat 7–12-vuotiaat, puoli kautta"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Beginners play with a coach"
+msgstr "Aloittelijat pelaavat valmentajan kanssa"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Beginners, Junior, Adults or a trial. Not sure? Start as a beginner."
+msgstr "Aloittelijat, juniorit, aikuiset tai kokeilu. Epävarma? Aloita aloittelijana."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Best"
+msgstr "Ennätys"
+
+#. Footer decoration: the club name in huge faded letters
+#: src/components/layout/VariantMenu.tsx
+msgid "Big name"
+msgstr "Iso nimi"
+
+#: src/data/news.ts
+msgid "Big things are happening at Bygdøhus: the hall is being set up for the national championships."
+msgstr "Bygdøhusissa tapahtuu isoja: halli valmistellaan SM-kisoja varten."
+
+#: src/data/club.ts
+msgid "Board member"
+msgstr "Hallituksen jäsen"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
+msgstr "Tauot ja peruutukset näkyvät täällä heti, kun seura julkaisee ne. Jäsenet saavat ne myös Spondiin."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks this season"
+msgstr "Tämän kauden tauot"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Breaks you add show on the Training page, in the schedule and in “Next training”. Breaks from the site data are not listed here and cannot be removed."
+msgstr "Lisäämäsi tauot näkyvät Harjoitukset-sivulla, aikataulussa ja kohdassa ”Seuraavat harjoitukset”. Sivuston omien tietojen taukoja ei näytetä tässä, eikä niitä voi poistaa."
+
+#: src/pages/join/JoinDone.tsx
+msgid "Bring"
+msgstr "Ota mukaan"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Bring indoor shoes."
+msgstr "Ota mukaan sisäkengät."
+
+#. Role under the author name of a news post
+#: src/data/news.ts
+#: src/pages/news/NewsPage.tsx
+msgid "Bygdø Badmintonklubb"
+msgstr "Bygdø Badmintonklubb"
+
+#: src/pages/club/ClubPage.tsx
+msgid "Bygdø Badmintonklubb is one of Norway’s oldest badminton clubs. We play at Bygdøhus, a private foundation where the club rents court time."
+msgstr "Bygdø Badmintonklubb on yksi Norjan vanhimmista sulkapalloseuroista. Pelaamme Bygdøhusissa. Se on yksityinen säätiö, jolta seura vuokraa kenttäaikaa."
+
+#: src/components/layout/SiteHeader.tsx
+#: src/components/layout/SiteNavbar.tsx
+msgid "Bygdø Badmintonklubb, front page"
+msgstr "Bygdø Badmintonklubb, etusivu"
+
+#: src/components/ui/SocialLinks.tsx
+msgid "Bygdø BK on {name}"
+msgstr "Bygdø BK: {name}"
+
+#: src/data/photos.ts
+msgid "Bygdøhus seen from the car park"
+msgstr "Bygdøhus parkkipaikalta nähtynä"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Call stands: still not found"
+msgstr "Päätös pysyy: sivua ei vieläkään löydy"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Can I try before I join?"
+msgstr "Voiko kokeilla ennen liittymistä?"
+
+#: src/components/training/AddClosureModal.tsx
+#: src/pages/admin/AdminPage.tsx
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: src/components/events/ShiftBoard.tsx
+msgctxt "Leave a volunteer shift"
+msgid "Cancel"
+msgstr "Peru"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Cancel shift: {label}"
+msgstr "Peru vuoro: {label}"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Category"
+msgstr "Kategoria"
+
+#: src/data/club.ts
+msgid "Chair"
+msgstr "Puheenjohtaja"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Challenge the call"
+msgstr "Haasta päätös"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Challenge: page"
+msgstr "Haaste: sivu"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Challenge. Checking the replay…"
+msgstr "Haaste. Katsotaan uusinta…"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Check and send"
+msgstr "Tarkista ja lähetä"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Child’s email (optional)"
+msgstr "Lapsen sähköposti (valinnainen)"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Child’s phone (optional)"
+msgstr "Lapsen puhelin (valinnainen)"
+
+#: src/data/club.ts
+msgid "Children and teens, coached"
+msgstr "Lapset ja nuoret, valmentajan kanssa"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/join/JoinPage.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Choose a group"
+msgstr "Valitse ryhmä"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Choose a membership"
+msgstr "Valitse jäsenyys"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Choose who is joining"
+msgstr "Valitse, kuka liittyy"
+
+#. Design style name
+#: src/components/layout/VariantMenu.tsx
+msgid "Classic"
+msgstr "Klassinen"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Close account menu"
+msgstr "Sulje tilivalikko"
+
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Close language menu"
+msgstr "Sulje kielivalikko"
+
+#: src/components/layout/SiteHeader.tsx
+msgid "Close menu"
+msgstr "Sulje valikko"
+
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Close theme menu"
+msgstr "Sulje teemavalikko"
+
+#. News category
+#: src/data/news.ts
+msgid "Club"
+msgstr "Seura"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Club champion!"
+msgstr "Seuramestari!"
+
+#. Color palette name: the orange and black of the club logo
+#: src/components/layout/VariantMenu.tsx
+msgid "Club colors"
+msgstr "Seuran värit"
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Coached"
+msgstr "Valmennus"
+
+#: src/data/club.ts
+msgid "Coached sessions for children and teens who have played a bit."
+msgstr "Valmennettuja harjoituksia lapsille ja nuorille, jotka ovat jo pelanneet vähän."
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Coached training for kids and teens"
+msgstr "Valmennettuja harjoituksia lapsille ja nuorille"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Color"
+msgstr "Väri"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Come to training"
+msgstr "Tule harjoituksiin"
+
+#. Strip on the news page listing training breaks in the next weeks
+#: src/pages/news/components/ComingUp.tsx
+msgid "Coming up"
+msgstr "Tulossa"
+
+#. Size of text and controls
+#: src/components/layout/VariantMenu.tsx
+msgid "Compact"
+msgstr "Tiivis"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Concept preview"
+msgstr "Konseptin esikatselu"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Confirm"
+msgstr "Vahvista"
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/NotFoundPage.tsx
+msgid "Contact"
+msgstr "Yhteystiedot"
+
+#: src/pages/club/ClubPage.tsx
+#: src/pages/contact/ContactPage.tsx
+msgid "Contact us"
+msgstr "Ota yhteyttä"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Contact: <0>{email}</0>"
+msgstr "Yhteys: <0>{email}</0>"
+
+#. Page width: centered column
+#: src/components/layout/VariantMenu.tsx
+msgid "Contained"
+msgstr "Keskitetty"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Continue as admin"
+msgstr "Jatka ylläpitäjänä"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Continue as member"
+msgstr "Jatka jäsenenä"
+
+#. placeholder {0}: member.name
+#: src/pages/club/sections.tsx
+msgid "Copy email address for {0}"
+msgstr "Kopioi sähköpostiosoite: {0}"
+
+#: src/pages/news/components/ShareButtons.tsx
+msgid "Copy link"
+msgstr "Kopioi linkki"
+
+#. placeholder {0}: member.name
+#: src/pages/club/sections.tsx
+msgid "Copy phone number for {0}"
+msgstr "Kopioi puhelinnumero: {0}"
+
+#: src/pages/news/components/ShareButtons.tsx
+msgid "Could not copy"
+msgstr "Kopiointi ei onnistunut"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Court 1"
+msgstr "Kenttä 1"
+
+#. Design style based on badminton court lines
+#: src/components/layout/VariantMenu.tsx
+msgid "Court lines"
+msgstr "Kenttäviivat"
+
+#. Footer decoration: a large faded club logo cut off at the edge
+#: src/components/layout/VariantMenu.tsx
+msgid "Cropped stamp"
+msgstr "Rajattu leima"
+
+#. Theme option: dark theme
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Dark"
+msgstr "Tumma"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Date of birth"
+msgstr "Syntymäaika"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Dates"
+msgstr "Päivämäärät"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Day"
+msgstr "Päivä"
+
+#: src/components/training/ClosureList.tsx
+msgid "Delete break"
+msgstr "Poista tauko"
+
+#: src/components/training/ClosureList.tsx
+msgid "Delete break: {reason}"
+msgstr "Poista tauko: {reason}"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Discard changes"
+msgstr "Hylkää muutokset"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Discounts (siblings, first season) are applied by the board."
+msgstr "Hallitus lisää alennukset (sisarukset, ensimmäinen kausi)."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Discounts and help"
+msgstr "Alennukset ja apu"
+
+#. Badge on a tournament that has already taken place
+#: src/components/events/EventCard.tsx
+msgid "Done"
+msgstr "Pelattu"
+
+#: src/pages/events/EventPage.tsx
+msgid "Done!"
+msgstr "Valmista!"
+
+#. Footer decoration: club logo made of small dots
+#: src/components/layout/VariantMenu.tsx
+msgid "Dot pattern"
+msgstr "Pistekuvio"
+
+#. placeholder {0}: kr(DROPIN_VISIT)
+#: src/pages/home/components/StartCards.tsx
+msgid "Drop in for {0} a visit"
+msgstr "Drop-in {0} / kerta"
+
+#: src/data/club.ts
+msgid "Drop-in"
+msgstr "Drop-in"
+
+#. placeholder {0}: kr(DROPIN_VISIT)
+#. placeholder {1}: kr(DROPIN.membership)
+#. placeholder {2}: kr(SEASON_FROM)
+#: src/components/styles/HeroActions.tsx
+msgid "Drop-in {0} (+ {1} membership) · Season from {2}"
+msgstr "Drop-in {0} (+ {1} jäsenyys) · Kausi alkaen {2}"
+
+#. placeholder {0}: kr(DROPIN_VISIT)
+#. placeholder {1}: CLUB.vipps
+#: src/pages/home/components/StartCards.tsx
+msgid "Drop-in: Vipps {0} to {1}"
+msgstr "Drop-in: Vipps {0} numeroon {1}"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Edit content on the pages"
+msgstr "Muokkaa sivujen sisältöä"
+
+#: src/components/auth/UserMenu.tsx
+#: src/pages/admin/AdminPage.tsx
+msgid "Edit mode"
+msgstr "Muokkaustila"
+
+#: src/components/auth/EditModeAffix.tsx
+msgid "Edit mode is on"
+msgstr "Muokkaustila on päällä"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Edit the site content. In this demo, changes are saved in this browser only."
+msgstr "Muokkaa sivuston sisältöä. Tässä demossa muutokset tallennetaan vain tähän selaimeen."
+
+#: src/components/auth/LoginModal.tsx
+#: src/pages/contact/ContactSection.tsx
+#: src/pages/join/JoinPage.tsx
+msgid "Email"
+msgstr "Sähköposti"
+
+#: src/pages/club/sections.tsx
+msgid "Email the board"
+msgstr "Lähetä sähköpostia hallitukselle"
+
+#. placeholder {0}: CLUB.email
+#: src/data/news.ts
+msgid "Email the board at {0}."
+msgstr "Lähetä hallitukselle sähköpostia: {0}."
+
+#. placeholder {0}: CLUB.email
+#: src/pages/membership/MembershipPage.tsx
+msgid "Email the board at <0>{0}</0>."
+msgstr "Lähetä sähköpostia hallitukselle: <0>{0}</0>."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter a date of birth"
+msgstr "Anna syntymäaika"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter a first name"
+msgstr "Anna etunimi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter a last name"
+msgstr "Anna sukunimi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter a phone number with at least 8 digits"
+msgstr "Anna puhelinnumero, jossa on vähintään 8 numeroa"
+
+#: src/components/auth/LoginModal.tsx
+#: src/pages/contact/ContactSection.tsx
+#: src/pages/join/JoinPage.tsx
+msgid "Enter a valid email address"
+msgstr "Anna kelvollinen sähköpostiosoite"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Enter any password"
+msgstr "Anna mikä tahansa salasana"
+
+#: src/data/events.ts
+msgid "Enter results, call matches and share information."
+msgstr "Syötä tulokset, kuuluta ottelut ja jaa tietoa."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter the name of a parent"
+msgstr "Anna huoltajan nimi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter the parent’s phone number"
+msgstr "Anna huoltajan puhelinnumero"
+
+#: src/pages/contact/ContactSection.tsx
+#: src/pages/join/JoinPage.tsx
+msgid "Enter your name"
+msgstr "Anna nimesi"
+
+#: src/pages/NotFoundPage.tsx
+msgid "Error 404"
+msgstr "Virhe 404"
+
+#. Short for established, as on the club logo. Norwegian: Etabl.
+#. placeholder {0}: CLUB.founded
+#: src/components/layout/SiteHeader.tsx
+msgid "Est. {0}"
+msgstr "Perustettu {0}"
+
+#. News category
+#: src/data/news.ts
+msgid "Event"
+msgstr "Tapahtuma"
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/events/EventsPage.tsx
+#: src/pages/home/HomePage.tsx
+msgid "Events"
+msgstr "Tapahtumat"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Events and volunteering"
+msgstr "Tapahtumat ja talkoot"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
+msgstr "Kaikki pelaajat ovat jäseniä. Kauden hinta on jäsenmaksu plus oman ryhmäsi harjoitusmaksu."
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Fault"
+msgstr "Virhe"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Fault!"
+msgstr "Virhe!"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Fill in the form"
+msgstr "Täytä lomake"
+
+#: src/data/club.ts
+msgid "Finance"
+msgstr "Talous"
+
+#: src/data/club.ts
+msgid "Financial support"
+msgstr "Taloudellinen tuki"
+
+#: src/components/layout/MobileMenu.tsx
+msgid "Find us"
+msgstr "Löydä meidät"
+
+#: src/pages/join/JoinPage.tsx
+msgid "First name"
+msgstr "Etunimi"
+
+#: src/pages/join/JoinDone.tsx
+msgid "First training"
+msgstr "Ensimmäiset harjoitukset"
+
+#. Color palette name
+#: src/components/layout/VariantMenu.tsx
+msgid "Fjord blue"
+msgstr "Vuononsininen"
+
+#: src/components/ui/SocialLinks.tsx
+msgid "Follow us"
+msgstr "Seuraa meitä"
+
+#. Variant menu: the decoration in the corner of the page footer
+#: src/components/layout/VariantMenu.tsx
+msgid "Footer mark"
+msgstr "Alatunnisteen merkki"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Footer menu"
+msgstr "Alatunnisteen valikko"
+
+#: src/data/club.ts
+msgid "For breaks, or parents of players"
+msgstr "Taukoja varten, tai pelaajien vanhemmille"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "For example: Hall closed for maintenance"
+msgstr "Esimerkiksi: Halli suljettu huollon takia"
+
+#: src/data/club.ts
+msgid "For new players, with a coach."
+msgstr "Uusille pelaajille, valmentajan kanssa."
+
+#: src/components/training/ClosureList.tsx
+msgid "From site"
+msgstr "Sivuston tiedoista"
+
+#: src/components/styles/classic/ClassicHero.tsx
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/flight/FlightHero.tsx
+msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
+msgstr "Ensimmäisestä huitaisusta täysillä smashiin. Aloittelijat, juniorit ja aikuiset, kolmena iltana viikossa."
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Full"
+msgstr "Täynnä"
+
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+msgid "Full schedule"
+msgstr "Koko aikataulu"
+
+#. Page width: edge to edge
+#: src/components/layout/VariantMenu.tsx
+msgid "Full width"
+msgstr "Koko leveys"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Get in touch"
+msgstr "Ota yhteyttä"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Get under it and hit it as it drops. Swing on the move to steer."
+msgstr "Mene pallon alle ja lyö, kun se putoaa. Lyö liikkeessä, niin ohjaat palloa."
+
+#. Color palette name, a soft blue-green
+#: src/components/layout/VariantMenu.tsx
+msgid "Glacier"
+msgstr "Jäätikkö"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Go to the sign-up form"
+msgstr "Ilmoittautumislomakkeeseen"
+
+#. Footer decoration: club logo that fades out
+#: src/components/layout/VariantMenu.tsx
+msgid "Gradient"
+msgstr "Liukuväri"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Great rally!"
+msgstr "Hieno ralli!"
+
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Group"
+msgstr "Ryhmä"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Groups"
+msgstr "Ryhmät"
+
+#: src/data/club.ts
+msgid "Half price from the second sibling."
+msgstr "Puoli hintaa toisesta sisaruksesta alkaen."
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Half price on Beginners your first season"
+msgstr "Aloittelijat puoleen hintaan ensimmäisenä kautena"
+
+#: src/data/club.ts
+msgid "Half price on the Beginners group in your first season."
+msgstr "Puoli hintaa Aloittelijat-ryhmästä ensimmäisellä kaudella."
+
+#. Volunteer team that sets up courts and equipment
+#: src/data/events.ts
+msgid "Hall"
+msgstr "Halli"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Hall scoreboard"
+msgstr "Hallin tulostaulu"
+
+#: src/data/club.ts
+msgid "Hall setup for the national championships"
+msgstr "Hallin valmistelu Norjan mestaruuskilpailuihin"
+
+#: src/pages/club/sections.tsx
+msgid "Has something happened in the club that isn’t okay? You can report it to the Norwegian sports federation, outside the club."
+msgstr "Onko seurassa tapahtunut jotain, mikä ei ole ok? Voit ilmoittaa siitä Norjan urheiluliitolle seuran ulkopuolella."
+
+#: src/data/club.ts
+msgid "Head of sport"
+msgstr "Urheiluvastaava"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Heading font"
+msgstr "Otsikkofontti"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Hidden. Visitors do not see the notice."
+msgstr "Piilotettu. Kävijät eivät näe viestiä."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Hits"
+msgstr "Lyönnit"
+
+#: src/data/news.ts
+msgid "Høsttreff 2026: we need your help"
+msgstr "Høsttreff 2026: tarvitsemme apuasi"
+
+#: src/data/news.ts
+msgid "Høsttreff only works when lots of us lend a hand. Pick a shift that suits you."
+msgstr "Høsttreff onnistuu vain, kun moni meistä auttaa. Valitse sinulle sopiva vuoro."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "How do I change or end my membership?"
+msgstr "Miten muutan tai lopetan jäsenyyteni?"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "How it works"
+msgstr "Näin se toimii"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "How to join"
+msgstr "Näin liityt"
+
+#: src/pages/join/JoinPage.tsx
+msgid "I accept the club’s terms and privacy statement"
+msgstr "Hyväksyn seuran ehdot ja tietosuojaselosteen"
+
+#: src/pages/join/JoinPage.tsx
+msgid "I want to play"
+msgstr "Haluan pelata"
+
+#: src/pages/join/JoinPage.tsx
+msgid "I’m the parent"
+msgstr "Olen vanhempi"
+
+#: src/pages/join/JoinDone.tsx
+msgid "In the real flow you would now get an email with the payment request. This demo did not send anything."
+msgstr "Oikeassa palvelussa saisit nyt sähköpostin, jossa on maksupyyntö. Tämä demo ei lähettänyt mitään."
+
+#: src/pages/contact/ContactSection.tsx
+msgid "In the real site the right person would get your message. This demo did not send it."
+msgstr "Oikealla sivustolla viestisi menisi oikealle henkilölle. Tämä demo ei lähettänyt sitä."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Included"
+msgstr "Sisältyy"
+
+#: src/data/club.ts
+msgid "Indoor shoes"
+msgstr "Sisäkengät"
+
+#. Tone of the site notice
+#: src/pages/admin/AdminPage.tsx
+msgid "Info"
+msgstr "Tiedote"
+
+#: src/components/layout/SiteHeader.tsx
+msgid "Join"
+msgstr "Liity"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Join Bygdø Badmintonklubb"
+msgstr "Liity Bygdø Badmintonklubbiin"
+
+#: src/components/auth/UserMenu.tsx
+#: src/components/layout/MobileMenu.tsx
+#: src/components/layout/SiteFooter.tsx
+#: src/components/layout/SiteNavbar.tsx
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/components/styles/HeroActions.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Join the club"
+msgstr "Liity seuraan"
+
+#: src/data/news.ts
+msgid "Join the club’s group in Spond to see the status of each session."
+msgstr "Liity seuran Spond-ryhmään, niin näet jokaisen harjoituskerran tilan."
+
+#: src/data/news.ts
+msgid "Join us in Spond"
+msgstr "Liity Spondiin"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Jump to"
+msgstr "Siirry"
+
+#. Training group for children and teens
+#: src/data/club.ts
+msgid "Junior"
+msgstr "Juniorit"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "Keep it up"
+msgstr "Pidä pallo ilmassa"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Keep-it-up game. Move the racket with the arrow keys and press Space or Enter to hit the shuttle when it falls to the racket."
+msgstr "Pidä pallo ilmassa -peli. Liikuta mailaa nuolinäppäimillä ja lyö palloa välilyönnillä tai Enterillä, kun se putoaa mailalle."
+
+#. placeholder {0}: kr(TRIAL.membership)
+#: src/components/styles/HeroActions.tsx
+msgid "Kids 7–12: try half a season for {0}"
+msgstr "Lapset 7–12 v: kokeile puoli kautta hintaan {0}"
+
+#. Volunteer team that runs the food stand
+#: src/data/events.ts
+msgid "Kiosk"
+msgstr "Kioski"
+
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Language"
+msgstr "Kieli"
+
+#. placeholder {0}: LOCALE_META[current].name
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Language: {0}"
+msgstr "Kieli: {0}"
+
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Language: {code}"
+msgstr "Kieli: {code}"
+
+#. Size of text and controls
+#: src/components/layout/VariantMenu.tsx
+msgid "Large"
+msgstr "Suuri"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Last name"
+msgstr "Sukunimi"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Latest"
+msgstr "Uusimmat"
+
+#. Color palette name
+#: src/components/layout/VariantMenu.tsx
+msgid "Lavender"
+msgstr "Laventeli"
+
+#. Theme option: light theme
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Light"
+msgstr "Vaalea"
+
+#: src/pages/news/components/ShareButtons.tsx
+msgid "Link copied"
+msgstr "Linkki kopioitu"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "List"
+msgstr "Lista"
+
+#: src/components/auth/LoginModal.tsx
+#: src/components/auth/UserMenu.tsx
+msgid "Log in"
+msgstr "Kirjaudu sisään"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Log in as admin"
+msgstr "Kirjaudu sisään ylläpitäjänä"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Log in as admin to edit the site content."
+msgstr "Kirjaudu sisään ylläpitäjänä, niin voit muokata sivuston sisältöä."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Log in to <0>My membership <1/></0>, or <2>email the board</2> before the new season starts."
+msgstr "Kirjaudu <0>Oma jäsenyys <1/></0> -palveluun tai <2>lähetä sähköpostia hallitukselle</2> ennen uuden kauden alkua."
+
+#: src/components/auth/UserMenu.tsx
+msgid "Log in to sign up for volunteer shifts. Board members can edit the site."
+msgstr "Kirjaudu sisään, niin voit ilmoittautua talkoovuoroihin. Hallituksen jäsenet voivat muokata sivustoa."
+
+#: src/components/auth/UserMenu.tsx
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+#: src/components/layout/MobileMenu.tsx
+#: src/components/layout/SiteHeader.tsx
+msgid "Main menu"
+msgstr "Päävalikko"
+
+#: src/data/news.ts
+msgid "Many hands make light work. Can you give us a few hours?"
+msgstr "Yhdessä se käy kevyesti. Voisitko antaa meille muutaman tunnin?"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Me"
+msgstr "Minä"
+
+#: src/data/news.ts
+msgid "Meet the board"
+msgstr "Tutustu hallitukseen"
+
+#. Event type, e.g. the annual meeting
+#: src/data/events.ts
+msgid "Meeting"
+msgstr "Kokous"
+
+#. User role: club member
+#: src/components/auth/UserMenu.tsx
+msgid "Member"
+msgstr "Jäsen"
+
+#: src/pages/club/sections.tsx
+msgid "Member data is stored in the sports federation’s member system."
+msgstr "Jäsentiedot tallennetaan urheiluliiton jäsenjärjestelmään."
+
+#: src/pages/club/sections.tsx
+msgid "Member deal: Sport Modern gives members a discount. Ask the board for the club code."
+msgstr "Jäsenetu: Sport Modern antaa jäsenille alennusta. Kysy seurakoodia hallitukselta."
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Members get 20% off at Sport Modern."
+msgstr "Jäsenet saavat 20 % alennusta Sport Modernista."
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/join/JoinPage.tsx
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/NotFoundPage.tsx
+msgid "Membership"
+msgstr "Jäsenyys"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Membership and payment"
+msgstr "Jäsenyys ja maksu"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Membership and prices"
+msgstr "Jäsenyys ja hinnat"
+
+#: src/data/club.ts
+msgid "Membership only"
+msgstr "Vain jäsenyys"
+
+#: src/data/club.ts
+msgid "Membership, then pay per visit with Vipps"
+msgstr "Jäsenyys, sitten kertamaksu Vippsillä"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Menu"
+msgstr "Valikko"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Message"
+msgstr "Viesti"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
+msgstr "Ohi {hits, plural, one {# lyönnin} other {# lyönnin}} jälkeen. Syötä uudelleen välilyönnillä."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Missed!"
+msgstr "Ohi!"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Month"
+msgstr "Kuukausi"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "More news"
+msgstr "Lisää uutisia"
+
+#: src/pages/join/JoinPage.tsx
+msgid "My child"
+msgstr "Lapseni"
+
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/home/components/StartCards.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "My membership"
+msgstr "Oma jäsenyys"
+
+#: src/pages/contact/ContactSection.tsx
+#: src/pages/join/JoinPage.tsx
+msgid "Name"
+msgstr "Nimi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Name and contact"
+msgstr "Nimi ja yhteystiedot"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "New best: {best}"
+msgstr "Uusi ennätys: {best}"
+
+#: src/data/club.ts
+msgid "New players, coached"
+msgstr "Uudet pelaajat, valmentajan kanssa"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "New to badminton?"
+msgstr "Onko sulkapallo sinulle uutta?"
+
+#: src/pages/news/components/PostPager.tsx
+msgid "Newer post"
+msgstr "Uudempi juttu"
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/home/HomePage.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "News"
+msgstr "Uutiset"
+
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/join/JoinPage.tsx
+msgid "Next"
+msgstr "Seuraava"
+
+#: src/pages/home/HomePage.tsx
+msgid "Next event: date coming soon"
+msgstr "Seuraava tapahtuma: päivä tulossa pian"
+
+#: src/components/training/NextTraining.tsx
+msgid "Next training"
+msgstr "Seuraavat harjoitukset"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Next training: {nextDay}"
+msgstr "Seuraavat harjoitukset: {nextDay}"
+
+#. placeholder {0}: undated.name
+#: src/pages/home/HomePage.tsx
+msgid "Next up: <0>{0}</0>, date coming soon"
+msgstr "Seuraavaksi: <0>{0}</0>, päivä tulossa pian"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Nice!"
+msgstr "Hyvä!"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "No breaks added yet."
+msgstr "Taukoja ei ole vielä lisätty."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "No breaks this season."
+msgstr "Tällä kaudella ei ole taukoja."
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "No challenges left"
+msgstr "Haasteet käytetty"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "No coach"
+msgstr "Ei valmentajaa"
+
+#: src/pages/events/EventsPage.tsx
+msgid "No events match this filter"
+msgstr "Yksikään tapahtuma ei vastaa suodatinta"
+
+#: src/data/news.ts
+msgid "No organized training during the autumn break."
+msgstr "Ei ohjattuja harjoituksia syyslomalla."
+
+#: src/pages/news/NewsPage.tsx
+msgid "No posts here yet"
+msgstr "Ei vielä julkaisuja"
+
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+#: src/components/training/TrainingSchedule.tsx
+msgid "No training"
+msgstr "Ei harjoituksia"
+
+#: src/data/news.ts
+msgid "No training during the autumn break"
+msgstr "Ei harjoituksia syystauon aikana"
+
+#: src/data/news.ts
+msgid "No training during the championship setup"
+msgstr "Ei harjoituksia mestaruuskisojen valmistelun aikana"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "No training in the next two weeks"
+msgstr "Ei harjoituksia seuraavaan kahteen viikkoon"
+
+#: src/data/news.ts
+msgid "No training over the summer. See you after the break!"
+msgstr "Ei harjoituksia kesällä. Nähdään tauon jälkeen!"
+
+#: src/pages/news/components/ClosureNotice.tsx
+msgid "No training: {range}."
+msgstr "Ei harjoituksia: {range}."
+
+#. Footer decoration: nothing
+#: src/components/layout/VariantMenu.tsx
+msgid "None"
+msgstr "Ei mitään"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Nothing planned yet. New events show up here."
+msgstr "Ei vielä suunniteltua. Uudet tapahtumat näkyvät täällä."
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Nothing to reset."
+msgstr "Ei mitään nollattavaa."
+
+#. Badge on an event that is happening today
+#: src/components/events/EventCard.tsx
+msgid "Now on"
+msgstr "Käynnissä"
+
+#: src/pages/news/components/PostPager.tsx
+msgid "Older and newer posts"
+msgstr "Vanhemmat ja uudemmat jutut"
+
+#: src/pages/news/components/PostPager.tsx
+msgid "Older post"
+msgstr "Vanhempi juttu"
+
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+msgid "On now"
+msgstr "Nyt käynnissä"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
+msgstr "Kausi kestää elokuusta kesäkuuhun, kuten kouluvuosi. Liitytkö kesken kauden? <0>Kysy hallitukselta</0> hintaa."
+
+#: src/components/ui/AddressLink.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Open in maps"
+msgstr "Avaa kartalla"
+
+#: src/components/layout/SiteHeader.tsx
+msgid "Open menu"
+msgstr "Avaa valikko"
+
+#. Free play for all members. Norwegian: Fritt spill
+#: src/data/club.ts
+msgid "Open play"
+msgstr "Vapaa peli"
+
+#: src/data/club.ts
+msgid "Open play for all members."
+msgstr "Vapaa peli kaikille jäsenille."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "or <0>←</0> <1>→</1> and <2>Space</2>"
+msgstr "tai <0>←</0> <1>→</1> ja <2>Välilyönti</2>"
+
+#: src/data/club.ts
+msgid "Or borrow one at coached sessions"
+msgstr "Tai lainaa sellainen valmennetuilla harjoituksilla"
+
+#: src/components/auth/LoginModal.tsx
+msgid "or log in with email"
+msgstr "tai kirjaudu sisään sähköpostilla"
+
+#. placeholder {0}: CLUB.orgNr
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Org. no. {0}"
+msgstr "Org.nro {0}"
+
+#: src/data/news.ts
+msgid "Our autumn tournament runs on volunteers. Grab a shift in the hall, kiosk or secretariat."
+msgstr "Syysturnauksemme pyörii talkoovoimin. Ota vuoro hallissa, kioskissa tai sihteeristössä."
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Our partner"
+msgstr "Kumppanimme"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
+msgstr "Bygdøhusin turnauksemme pyörivät talkoovoimin. Ota vuoro!"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Out"
+msgstr "Ulkona"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "Out!"
+msgstr "Ulkona!"
+
+#: src/pages/NotFoundPage.tsx
+msgid "Out! That one landed past the line"
+msgstr "Ulos! Se meni yli rajan"
+
+#. Footer decoration: club logo drawn as thin lines
+#: src/components/layout/VariantMenu.tsx
+msgid "Outline"
+msgstr "Ääriviiva"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Page not found, but the rally isn't over"
+msgstr "Sivua ei löydy, mutta ralli jatkuu"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Parent"
+msgstr "Vanhempi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Parent’s name"
+msgstr "Huoltajan nimi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Parent’s phone"
+msgstr "Huoltajan puhelin"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Parents sign up children under 18."
+msgstr "Vanhemmat ilmoittavat alle 18-vuotiaat lapset."
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Partners"
+msgstr "Kumppanit"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Password"
+msgstr "Salasana"
+
+#. Events filter option
+#: src/pages/events/EventsPage.tsx
+msgid "Past"
+msgstr "Menneet"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Pay"
+msgstr "Maksa"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Phone"
+msgstr "Puhelin"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Pick a date"
+msgstr "Valitse päivämäärä"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "Pick a shift"
+msgstr "Valitse vuoro"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Pick dates"
+msgstr "Valitse päivämäärät"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Pick one day, or the first and last day"
+msgstr "Valitse yksi päivä tai ensimmäinen ja viimeinen päivä"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Pick the first and last day"
+msgstr "Valitse ensimmäinen ja viimeinen päivä"
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Pick your group on the court"
+msgstr "Valitse ryhmäsi kentältä"
+
+#: src/pages/club/sections.tsx
+msgid "Platform terms"
+msgstr "Alustan ehdot"
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Play"
+msgstr "Vapaa peli"
+
+#: src/data/club.ts
+msgid "Play for adult players."
+msgstr "Peliä aikuisille pelaajille."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Play the replay again"
+msgstr "Katso uusinta uudelleen"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Player"
+msgstr "Pelaaja"
+
+#: src/data/photos.ts
+msgid "Players training on the courts at Bygdøhus"
+msgstr "Pelaajat harjoittelevat Bygdøhusin kentillä"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Point"
+msgstr "Piste"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Preview"
+msgstr "Esikatselu"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Previous"
+msgstr "Edellinen"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Prices and joining"
+msgstr "Hinnat ja liittyminen"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Prices per season"
+msgstr "Kauden hinnat"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Privacy"
+msgstr "Tietosuoja"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Put your name on local badminton at Bygdøhus."
+msgstr "Laita nimesi paikalliseen sulkapalloon Bygdøhusissa."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Questions"
+msgstr "Kysymykset"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Questions about payment?"
+msgstr "Kysyttävää maksusta?"
+
+#: src/data/news.ts
+msgid "Questions?"
+msgstr "Kysyttävää?"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Rally"
+msgstr "Ralli"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Rally in progress"
+msgstr "Ralli käynnissä"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Reason"
+msgstr "Syy"
+
+#. Size of text and controls
+#: src/components/layout/VariantMenu.tsx
+msgid "Regular"
+msgstr "Normaali"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "Related event"
+msgstr "Tapahtuma"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Removes the site notice and every break you added, and brings back the original content."
+msgstr "Poistaa sivuston viestin ja kaikki lisäämäsi tauot ja palauttaa alkuperäisen sisällön."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Replay"
+msgstr "Uusinta"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Replay of a line call: the shuttle flies over the net and lands just past the baseline. The call is out."
+msgstr "Rajatuomion uusinta: sulkapallo lentää verkon yli ja putoaa juuri takarajan taakse. Tuomio: ulkona."
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Report a concern"
+msgstr "Ilmoita huolesta"
+
+#: src/pages/club/sections.tsx
+msgid "Report to the sports federation"
+msgstr "Ilmoita urheiluliitolle"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Reset all edits"
+msgstr "Nollaa kaikki muutokset"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Reset all edits?"
+msgstr "Nollataanko kaikki muutokset?"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Reviewing…"
+msgstr "Tarkistetaan…"
+
+#. Corner style
+#: src/components/layout/VariantMenu.tsx
+msgid "Round"
+msgstr "Pyöreä"
+
+#: src/data/events.ts
+msgid "Run the kiosk: waffles, toast and pizza baguettes."
+msgstr "Hoida kioskia: vohveleita, paahtoleipää ja pizzapatonkeja."
+
+#: src/pages/club/ClubPage.tsx
+msgid "Safe sport"
+msgstr "Turvallinen urheilu"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Save notice"
+msgstr "Tallenna viesti"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Saved"
+msgstr "Tallennettu"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Score: Bygdø {home}, 404 {away}"
+msgstr "Tilanne: Bygdø {home}, 404 {away}"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "Scoreboard"
+msgstr "Tulostaulu"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Season"
+msgstr "Kausi"
+
+#. placeholder {0}: CURRENT_SEASON.label
+#. placeholder {0}: season.label
+#: src/pages/join/JoinPage.tsx
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Season {0}"
+msgstr "Kausi {0}"
+
+#. Volunteer team that runs the match desk
+#: src/data/events.ts
+msgid "Secretariat"
+msgstr "Sihteeristö"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "See groups and times"
+msgstr "Katso ryhmät ja ajat"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "See the event"
+msgstr "Katso tapahtuma"
+
+#: src/data/news.ts
+#: src/pages/join/JoinDone.tsx
+msgid "See training times"
+msgstr "Katso harjoitusajat"
+
+#: src/pages/join/JoinDone.tsx
+msgid "See you on court!"
+msgstr "Nähdään kentällä!"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Send"
+msgstr "Lähetä"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Send message"
+msgstr "Lähetä viesti"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Serve"
+msgstr "Syöttö"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Serve · Rally · Point"
+msgstr "Syöttö · Ralli · Piste"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Service fault: page not found"
+msgstr "Syöttövirhe: sivua ei löydy"
+
+#: src/data/events.ts
+msgid "Set up courts and equipment, count balls and tidy up afterwards."
+msgstr "Pystytä kentät ja välineet, laske pallot ja siivoa jälkeenpäin."
+
+#: src/components/events/ShiftBoard.tsx
+msgid "setup or teardown"
+msgstr "pystytys tai purku"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Shape"
+msgstr "Muoto"
+
+#. Button that opens the phone or browser share menu for a news post
+#: src/pages/news/components/ShareButtons.tsx
+msgid "Share"
+msgstr "Jaa"
+
+#. Corner style
+#: src/components/layout/VariantMenu.tsx
+msgid "Sharp"
+msgstr "Terävä"
+
+#: src/pages/events/EventPage.tsx
+msgid "Shifts come later"
+msgstr "Vuorot tulevat myöhemmin"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Show"
+msgstr "Näytä"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Show all events"
+msgstr "Näytä kaikki tapahtumat"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Show all news"
+msgstr "Näytä kaikki uutiset"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Show edit buttons on the pages, for example to add breaks on the Training page."
+msgstr "Näytä sivuilla muokkauspainikkeet, esimerkiksi taukojen lisäämiseen Harjoitukset-sivulla."
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Show the notice"
+msgstr "Näytä viesti"
+
+#. Design style with a flying shuttlecock
+#: src/components/layout/VariantMenu.tsx
+msgid "Shuttle in flight"
+msgstr "Sulka lennossa"
+
+#: src/data/club.ts
+msgid "Shuttles are included at coached sessions."
+msgstr "Pallot sisältyvät valmennettuihin harjoituksiin."
+
+#: src/data/club.ts
+msgid "Sibling discount"
+msgstr "Sisarusalennus"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Siblings pay half"
+msgstr "Sisarukset puoleen hintaan"
+
+#. Where the main menu sits
+#: src/components/layout/VariantMenu.tsx
+msgid "Sidebar"
+msgstr "Sivupalkki"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Sign up"
+msgstr "Ilmoittaudu"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Sign up your child"
+msgstr "Ilmoita lapsesi"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Signing up a child?"
+msgstr "Ilmoitatko lapsen?"
+
+#. placeholder {0}: CLUB.founded
+#: src/pages/club/ClubPage.tsx
+msgid "Since {0}"
+msgstr "Vuodesta {0}"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Site notice"
+msgstr "Sivuston viesti"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Size"
+msgstr "Koko"
+
+#: src/components/layout/RootLayout.tsx
+msgid "Skip to content"
+msgstr "Siirry sisältöön"
+
+#. Event type: party or get-together
+#: src/data/events.ts
+msgid "Social"
+msgstr "Illanvietto"
+
+#. Corner style
+#: src/components/layout/VariantMenu.tsx
+msgid "Soft"
+msgstr "Pehmeä"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Something else"
+msgstr "Jotain muuta"
+
+#: src/pages/club/sections.tsx
+msgid "Sponsor the club"
+msgstr "Sponsoroi seuraa"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Sponsorship"
+msgstr "Sponsorointi"
+
+#: src/data/events.ts
+msgid "Spring 2027, date to be announced"
+msgstr "Kevät 2027, päivämäärä ilmoitetaan myöhemmin"
+
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "Study case"
+msgstr "Tapaustutkimus"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Style"
+msgstr "Tyyli"
+
+#: src/data/club.ts
+#: src/data/news.ts
+msgid "Summer break"
+msgstr "Kesätauko"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Switch color, shape, size, menu and width to compare design variants."
+msgstr "Vaihda väriä, muotoa, kokoa, valikkoa ja leveyttä ja vertaile ulkoasuja."
+
+#. Theme option: follow the device’s light or dark setting
+#: src/components/layout/ThemeSwitch.tsx
+msgid "System"
+msgstr "Järjestelmä"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Tap to serve"
+msgstr "Syötä napauttamalla"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Tap to serve again"
+msgstr "Syötä uudelleen napauttamalla"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Text"
+msgstr "Teksti"
+
+#: src/data/news.ts
+msgid "Thanks for a great season! The hall is quiet now, and there is no training over the summer."
+msgstr "Kiitos hienosta kaudesta! Halli hiljenee, eikä kesällä ole harjoituksia."
+
+#: src/pages/events/EventPage.tsx
+msgid "Thanks to everyone who helped."
+msgstr "Kiitos kaikille, jotka auttoivat."
+
+#. placeholder {0}: form.values.name
+#: src/pages/contact/ContactSection.tsx
+msgid "Thanks, {0}!"
+msgstr "Kiitos, {0}!"
+
+#: src/pages/join/JoinDone.tsx
+msgid "Thanks, {parentName}!"
+msgstr "Kiitos, {parentName}!"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "That one landed out"
+msgstr "Tuo pallo meni ulos"
+
+#: src/data/news.ts
+msgid "The annual meeting is where members have their say about the club. Come along and make your voice heard."
+msgstr "Vuosikokouksessa jäsenet pääsevät vaikuttamaan seuraan. Tule paikalle ja anna äänesi kuulua."
+
+#. Author of a news post: the club board. Norwegian: Styret
+#: src/data/news.ts
+#: src/pages/club/ClubPage.tsx
+msgid "The board"
+msgstr "Hallitus"
+
+#. Main menu
+#: src/components/layout/nav.ts
+msgid "The club"
+msgstr "Seura"
+
+#: src/data/events.ts
+msgid "The club’s autumn tournament at Bygdøhus, and an important source of income for the club."
+msgstr "Seuran syysturnaus Bygdøhusissa ja seuralle tärkeä tulonlähde."
+
+#: src/data/events.ts
+msgid "The club’s spring tournament at Bygdøhus. Members help in the hall, kiosk and secretariat."
+msgstr "Seuran kevätturnaus Bygdøhusissa. Jäsenet auttavat hallissa, kioskissa ja sihteeristössä."
+
+#: src/data/news.ts
+msgid "The hall is being set up for the national championships, so there is no training that day."
+msgstr "Hallia valmistellaan Norjan mestaruuskilpailuihin, joten sinä päivänä ei ole harjoituksia."
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "The hall scoreboard reads 4–04, fault."
+msgstr "Hallin tulostaulussa lukee 4–04, virhe."
+
+#: src/data/news.ts
+msgid "The new season is on, and the courts at Bygdøhus are busy again. Same days, same times as last season."
+msgstr "Uusi kausi on alkanut, ja Bygdøhusin kentillä on taas vilskettä. Samat päivät ja ajat kuin viime kaudella."
+
+#: src/data/news.ts
+msgid "The rackets get a short rest during the autumn break."
+msgstr "Mailat saavat pienen tauon syyslomalla."
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "The umpire looked twice. This page is not on the court. It may have moved, or the link has a typo."
+msgstr "Tuomari katsoi kahdesti. Tämä sivu ei ole kentällä. Se on ehkä siirtynyt, tai linkissä on kirjoitusvirhe."
+
+#: src/pages/events/EventPage.tsx
+msgid "The volunteer shifts open here when the date is set. Members get a message in Spond."
+msgstr "Talkoovuorot avautuvat tähän, kun päivämäärä on päätetty. Jäsenet saavat viestin Spondissa."
+
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Theme"
+msgstr "Teema"
+
+#. placeholder {0}: i18n._(label)
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Theme: {0}"
+msgstr "Teema: {0}"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "This cannot be undone."
+msgstr "Tätä ei voi perua."
+
+#: src/pages/join/JoinPage.tsx
+msgid "This is a demo of a new sign-up flow. Nothing is sent or saved."
+msgstr "Tämä on demo uudesta ilmoittautumisesta. Mitään ei lähetetä eikä tallenneta."
+
+#: src/components/auth/LoginModal.tsx
+msgid "This is a demo. Nothing is checked: any password works, and nothing leaves this browser."
+msgstr "Tämä on demo. Mitään ei tarkisteta: mikä tahansa salasana käy, eikä mikään lähde tästä selaimesta."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "This is an earlier season. Times may have changed since."
+msgstr "Tämä on aiempi kausi. Ajat ovat voineet muuttua sen jälkeen."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "This page is out of play. Keep the shuttle up while you're here, or head back to the club."
+msgstr "Tämä sivu on pelin ulkopuolella. Pidä pallo ilmassa sillä aikaa, tai palaa seuran sivuille."
+
+#: src/pages/NotFoundPage.tsx
+msgid "This page may have moved, or the link has a typo."
+msgstr "Sivu on ehkä siirtynyt, tai linkissä on kirjoitusvirhe."
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "This week"
+msgstr "Tällä viikolla"
+
+#: src/components/styles/court/CourtWeek.tsx
+msgid "This week in the hall"
+msgstr "Tällä viikolla hallissa"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Three short steps. You pay when the season starts, by card or Vipps."
+msgstr "Kolme lyhyttä vaihetta. Maksat kauden alkaessa kortilla tai Vippsillä."
+
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "Three ways to say “page not found” in badminton. Try them, then pick a favorite."
+msgstr "Kolme tapaa sanoa ”sivua ei löydy” sulkapallon kielellä. Kokeile niitä ja valitse suosikki."
+
+#: src/pages/join/JoinPage.tsx
+msgid "To pay this season"
+msgstr "Maksettavaa tällä kaudella"
+
+#. Marker on the events timeline between upcoming and past events
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/court/CourtWeek.tsx
+#: src/pages/events/EventsPage.tsx
+msgid "Today"
+msgstr "Tänään"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Tone"
+msgstr "Sävy"
+
+#. Where the main menu sits
+#: src/components/layout/VariantMenu.tsx
+msgid "Top bar"
+msgstr "Yläpalkki"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Total"
+msgstr "Yhteensä"
+
+#. Event type
+#: src/data/events.ts
+msgid "Tournament"
+msgstr "Turnaus"
+
+#. Main menu
+#. News category
+#: src/components/layout/nav.ts
+#: src/data/news.ts
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/NotFoundPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Training"
+msgstr "Harjoitukset"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Training and groups"
+msgstr "Harjoitukset ja ryhmät"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Training breaks"
+msgstr "Harjoitustauot"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Training changes, events, volunteering and club news, with dates."
+msgstr "Harjoitusmuutokset, tapahtumat, talkoot ja seuran uutiset päivämäärineen."
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Training groups"
+msgstr "Harjoitusryhmät"
+
+#: src/data/news.ts
+msgid "Training has started again"
+msgstr "Harjoitukset ovat alkaneet taas"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Training times"
+msgstr "Harjoitusajat"
+
+#: src/components/training/NextTraining.tsx
+msgid "Training today"
+msgstr "Harjoitukset tänään"
+
+#: src/data/club.ts
+msgid "Trial membership"
+msgstr "Kokeilujäsenyys"
+
+#. Event type: travel to another club’s tournament
+#: src/data/events.ts
+msgid "Trip"
+msgstr "Matka"
+
+#: src/components/layout/MobileMenu.tsx
+#: src/components/styles/HeroActions.tsx
+#: src/pages/home/components/StartCards.tsx
+msgid "Try a session"
+msgstr "Kokeile harjoituksia"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Try another category, or see all the news."
+msgstr "Kokeile toista luokkaa tai katso kaikki uutiset."
+
+#: src/components/auth/EditModeAffix.tsx
+msgid "Turn off"
+msgstr "Poista käytöstä"
+
+#: src/data/photos.ts
+msgid "Two rackets and a shuttle on a court line"
+msgstr "Kaksi mailaa ja sulkapallo kentän rajaviivalla"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Umpire"
+msgstr "Tuomari"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Under 18: a parent signs up with you"
+msgstr "Alle 18-vuotias: huoltaja ilmoittaa sinut"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Unreal!"
+msgstr "Uskomatonta!"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Unsaved changes"
+msgstr "Tallentamattomia muutoksia"
+
+#. Events filter option
+#: src/pages/events/EventsPage.tsx
+msgid "Upcoming"
+msgstr "Tulevat"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Use {adminEmail} to log in as admin. Any other email logs you in as a member."
+msgstr "Kirjaudu sisään ylläpitäjänä osoitteella {adminEmail}. Millä tahansa muulla sähköpostilla kirjaudut jäsenenä."
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Variants"
+msgstr "Vaihtoehdot"
+
+#: src/data/news.ts
+msgid "Vårtreff needs helping hands in the hall, kiosk and secretariat."
+msgstr "Vårtreff tarvitsee auttavia käsiä hallissa, kioskissa ja sihteeristössä."
+
+#: src/data/club.ts
+msgid "Vice chair, events"
+msgstr "Varapuheenjohtaja, tapahtumat"
+
+#. placeholder {0}: CLUB.vipps
+#: src/pages/membership/MembershipPage.tsx
+msgid "Vipps number {0}"
+msgstr "Vipps-numero {0}"
+
+#: src/pages/events/EventPage.tsx
+msgid "Volunteer shifts"
+msgstr "Talkoovuorot"
+
+#. News category. Norwegian: Dugnad
+#: src/data/news.ts
+msgid "Volunteering"
+msgstr "Talkoot"
+
+#: src/data/news.ts
+msgid "Volunteers for Vårtreff"
+msgstr "Talkoolaisia Vårtreffiin"
+
+#: src/data/events.ts
+msgid "Waffle batter and cakes for the kiosk are also part of the volunteering."
+msgstr "Myös vohvelitaikina ja kakut kioskiin kuuluvat talkoisiin."
+
+#: src/pages/club/sections.tsx
+msgid "Want to back badminton at Bygdøhus? We’d love to hear from you."
+msgstr "Haluatko tukea sulkapalloa Bygdøhusissa? Kuulemme mielellämme sinusta."
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Want to sponsor the club?"
+msgstr "Haluatko sponsoroida seuraa?"
+
+#. Tone of the site notice
+#: src/pages/admin/AdminPage.tsx
+msgid "Warning"
+msgstr "Varoitus"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "We checked the replay: this page is past the baseline. It may have moved, or the link has a typo."
+msgstr "Katsoimme uusinnan: tämä sivu meni takarajan yli. Se on ehkä siirtynyt, tai linkissä on kirjoitusvirhe."
+
+#: src/data/club.ts
+msgid "We help you apply to the city for support, so everyone can play."
+msgstr "Autamme hakemaan tukea kaupungilta, jotta kaikki voivat pelata."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "We train on Monday, Tuesday and Thursday evenings, from August to June."
+msgstr "Harjoittelemme maanantai-, tiistai- ja torstai-iltaisin elokuusta kesäkuuhun."
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Week"
+msgstr "Viikko"
+
+#. placeholder {0}: now.isoWeek()
+#: src/components/styles/court/CourtWeek.tsx
+msgid "Week {0}"
+msgstr "Viikko {0}"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Weekly schedule"
+msgstr "Viikkoaikataulu"
+
+#: src/data/news.ts
+msgid "Welcome back! Training times are the same as last season."
+msgstr "Tervetuloa takaisin! Harjoitusajat ovat samat kuin viime kaudella."
+
+#: src/pages/join/JoinDone.tsx
+msgid "Welcome to the club, {firstName}!"
+msgstr "Tervetuloa seuraan, {firstName}!"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "What is it about?"
+msgstr "Mistä on kyse?"
+
+#: src/components/training/BringList.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "What to bring"
+msgstr "Mitä ottaa mukaan"
+
+#: src/pages/home/HomePage.tsx
+msgid "Where do you want to start?"
+msgstr "Mistä haluat aloittaa?"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Who is joining?"
+msgstr "Kuka liittyy?"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Width"
+msgstr "Leveys"
+
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "With coach"
+msgstr "Valmentajan kanssa"
+
+#: src/components/training/AddClosureModal.tsx
+msgid "Write a short reason"
+msgstr "Kirjoita lyhyt syy"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Write another message"
+msgstr "Kirjoita uusi viesti"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Write at least a short sentence"
+msgstr "Kirjoita vähintään lyhyt virke"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Write the notice text, or hide the notice"
+msgstr "Kirjoita viestin teksti tai piilota viesti"
+
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/events/EventsPage.tsx
+msgid "Year"
+msgstr "Vuosi"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Yes, reset everything"
+msgstr "Kyllä, nollaa kaikki"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
+msgstr "Kyllä. Lapset voivat aloittaa kokeilujäsenyydellä, ja aikuiset voivat tulla drop-in-vuoroille. Katso hinnat yllä."
+
+#: src/pages/admin/AdminPage.tsx
+msgid "You are logged in as a member. Log in as admin to edit the site content."
+msgstr "Olet kirjautunut jäsenenä. Kirjaudu sisään ylläpitäjänä, niin voit muokata sivuston sisältöä."
+
+#: src/pages/club/sections.tsx
+msgid "You can also talk to a board member you trust."
+msgstr "Voit myös puhua luottamasi hallituksen jäsenen kanssa."
+
+#: src/pages/join/JoinPage.tsx
+msgid "You need to accept to continue"
+msgstr "Sinun pitää hyväksyä, jotta voit jatkaa"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "You pay both fees together, by card or Vipps, when the season starts or right after you join."
+msgstr "Maksat molemmat maksut yhdessä, kortilla tai Vippsillä, kauden alkaessa tai heti liityttyäsi."
+
+#: src/pages/join/JoinPage.tsx
+msgid "You, the parent"
+msgstr "Sinä, vanhempi"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You’re in"
+msgstr "Olet mukana"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You’re on"
+msgstr "Olet mukana"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Your account"
+msgstr "Oma tili"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Your child"
+msgstr "Lapsesi"
+
+#: src/pages/club/sections.tsx
+msgid "Your data"
+msgstr "Sinun tietosi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Your email"
+msgstr "Sähköpostisi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Your name"
+msgstr "Nimesi"
+
+#: src/pages/admin/AdminPage.tsx
+msgid "Your notice text shows here."
+msgstr "Viestisi teksti näkyy tässä."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Your phone"
+msgstr "Puhelimesi"
