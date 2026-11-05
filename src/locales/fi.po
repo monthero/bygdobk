@@ -239,6 +239,10 @@ msgstr "Vuosikokous 2026"
 msgid "Archive"
 msgstr "Arkisto"
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "Ask for the code"
+msgstr "Kysy koodia"
+
 #: src/data/events.ts
 msgid "Autumn 2026"
 msgstr "Syksy 2026"
@@ -806,6 +810,10 @@ msgstr "Esimerkiksi: Halli suljettu huollon takia"
 msgid "For new players, with a coach."
 msgstr "Uusille pelaajille, valmentajan kanssa."
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "Free shipping"
+msgstr "Ilmainen toimitus"
+
 #: src/components/training/ClosureList.tsx
 msgid "From site"
 msgstr "Sivuston tiedoista"
@@ -838,10 +846,18 @@ msgstr "Ota yhteyttä"
 msgid "Get under it and hit it as it drops. Swing on the move to steer."
 msgstr "Mene pallon alle ja lyö, kun se putoaa. Lyö liikkeessä, niin ohjaat palloa."
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "Give the club code when you order. Forgot it? Ask the board."
+msgstr "Anna seuran koodi tilatessasi. Unohditko sen? Kysy hallitukselta."
+
 #. Color palette name, a soft blue-green
 #: src/components/layout/VariantMenu.tsx
 msgid "Glacier"
 msgstr "Jäätikkö"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Go to season {currentLabel}"
+msgstr "Siirry kauteen {currentLabel}"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Go to the sign-up form"
@@ -974,6 +990,7 @@ msgstr "Liity Bygdø Badmintonklubbiin"
 
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/MobileMenu.tsx
+#: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/components/layout/SiteNavbar.tsx
 #: src/components/styles/flight/HowToJoin.tsx
@@ -1117,13 +1134,17 @@ msgstr "Jäsen"
 msgid "Member data is stored in the sports federation’s member system."
 msgstr "Jäsentiedot tallennetaan urheiluliiton jäsenjärjestelmään."
 
-#: src/pages/club/sections.tsx
-msgid "Member deal: Sport Modern gives members a discount. Ask the board for the club code."
-msgstr "Jäsenetu: Sport Modern antaa jäsenille alennusta. Kysy seurakoodia hallitukselta."
+#: src/pages/membership/MembershipPage.tsx
+msgid "Member deal"
+msgstr "Jäsenetu"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Members also get up to 20% off at Sport Modern. <0>See the member deal</0>"
+msgstr "Jäsenet saavat myös jopa 20 % alennuksen Sport Modernista. <0>Katso jäsenetu</0>"
 
 #: src/components/layout/SponsorStrip.tsx
-msgid "Members get 20% off at Sport Modern."
-msgstr "Jäsenet saavat 20 % alennusta Sport Modernista."
+msgid "Members get up to 20% off at Sport Modern."
+msgstr "Jäsenet saavat jopa 20 % alennuksen Sport Modernista."
 
 #. Main menu
 #: src/components/layout/nav.ts
@@ -1313,6 +1334,14 @@ msgstr "Ei mitään nollattavaa."
 msgid "Now on"
 msgstr "Käynnissä"
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "off clothes and rackets"
+msgstr "alennus vaatteista ja mailoista"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "off shoes, accessories, bags and shuttles"
+msgstr "alennus kengistä, tarvikkeista, laukuista ja sulkapalloista"
+
 #: src/pages/news/components/PostPager.tsx
 msgid "Older and newer posts"
 msgstr "Vanhemmat ja uudemmat jutut"
@@ -1326,6 +1355,10 @@ msgstr "Vanhempi juttu"
 #: src/components/training/NextTraining.tsx
 msgid "On now"
 msgstr "Nyt käynnissä"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "on orders over {limit}"
+msgstr "yli {limit} tilauksiin"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
@@ -1370,6 +1403,10 @@ msgstr "Org.nro {0}"
 #: src/data/news.ts
 msgid "Our autumn tournament runs on volunteers. Grab a shift in the hall, kiosk or secretariat."
 msgstr "Syysturnauksemme pyörii talkoovoimin. Ota vuoro hallissa, kioskissa tai sihteeristössä."
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Our members get these discounts at Sport Modern."
+msgstr "Jäsenemme saavat nämä alennukset Sport Modernista."
 
 #: src/components/layout/SponsorStrip.tsx
 msgid "Our partner"
@@ -1687,6 +1724,10 @@ msgstr "Terävä"
 #: src/pages/events/EventPage.tsx
 msgid "Shifts come later"
 msgstr "Vuorot tulevat myöhemmin"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Shop at Sport Modern"
+msgstr "Osta Sport Modernista"
 
 #: src/pages/events/EventsPage.tsx
 msgid "Show"

@@ -10,6 +10,7 @@ const STYLES = ['classic', 'court', 'flight'];
 const PAGES = [
   '/',
   '/trening',
+  '/trening/2025-26',
   '/medlemskap',
   '/medlemskap/bli-medlem',
   '/arrangementer',

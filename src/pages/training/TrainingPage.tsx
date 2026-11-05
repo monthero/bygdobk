@@ -19,6 +19,7 @@ import { getRouteApi, Link } from '@tanstack/react-router';
 import { memo, useMemo, type FC } from 'react';
 
 import { useCanEdit } from '~/components/auth';
+import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { slotsOf } from '~/components/styles/court/schedule';
 import { AddClosureModal, BringList, ClosureList, TrainingSchedule } from '~/components/training';
@@ -28,11 +29,11 @@ import {
   CalendarBlank,
   Info,
   MapPin,
-  PageToolbar,
   Plus,
   Segmented,
   type SegmentedOption,
   VenuePhoto,
+  Warning,
 } from '~/components/ui';
 import {
   CLUB,
@@ -108,6 +109,7 @@ export const TrainingPage: FC = () => {
   const season = seasonById(sesong) ?? CURRENT_SEASON;
   const group = GROUP_SLUGS.fromSlug(gruppe);
   const isCurrent = season.id === CURRENT_SEASON.id;
+  const currentLabel = CURRENT_SEASON.label;
 
   const all = useClosures();
   const closures = useMemo(() => closuresInSeason(all, season), [all, season]);
@@ -159,6 +161,26 @@ export const TrainingPage: FC = () => {
 
       <Container py={40}>
         <Stack gap={32}>
+          {!isCurrent && (
+            <Alert icon={<Warning />} color="yellow" variant="filled" autoContrast>
+              <Group justify="space-between" gap="sm">
+                <Text inherit fw={600}>
+                  <Trans>This is an earlier season. Times may have changed since.</Trans>
+                </Text>
+                <Button
+                  size="xs"
+                  variant="white"
+                  color="dark"
+                  rightSection={<ArrowRight />}
+                  renderRoot={(props) => (
+                    <Link {...props} to="/trening/$sesong" params={{ sesong: CURRENT_SEASON.id }} search={{ gruppe }} />
+                  )}
+                >
+                  <Trans>Go to season {currentLabel}</Trans>
+                </Button>
+              </Group>
+            </Alert>
+          )}
           <Stack gap="md">
             <Title order={2}>
               <Trans>Groups</Trans>
@@ -175,11 +197,6 @@ export const TrainingPage: FC = () => {
             <Title order={2}>
               <Trans>Weekly schedule</Trans>
             </Title>
-            {!isCurrent && (
-              <Alert icon={<Info />} color="gray" variant="light">
-                <Trans>This is an earlier season. Times may have changed since.</Trans>
-              </Alert>
-            )}
             <TrainingSchedule season={season} group={group} />
             <Alert icon={<Info />} color="brand" variant="light">
               <Trans>

@@ -239,6 +239,10 @@ msgstr "Årsmøte 2026"
 msgid "Archive"
 msgstr "Arkiv"
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "Ask for the code"
+msgstr "Be om koden"
+
 #: src/data/events.ts
 msgid "Autumn 2026"
 msgstr "Høsten 2026"
@@ -806,6 +810,10 @@ msgstr "For eksempel: Hallen er stengt for vedlikehold"
 msgid "For new players, with a coach."
 msgstr "For nye spillere, med trener."
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "Free shipping"
+msgstr "Fri frakt"
+
 #: src/components/training/ClosureList.tsx
 msgid "From site"
 msgstr "Fra nettsiden"
@@ -838,10 +846,18 @@ msgstr "Ta kontakt"
 msgid "Get under it and hit it as it drops. Swing on the move to steer."
 msgstr "Kom deg under den og slå den når den faller. Slå mens du beveger deg for å styre."
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "Give the club code when you order. Forgot it? Ask the board."
+msgstr "Oppgi klubbkoden når du bestiller. Husker du den ikke? Spør styret."
+
 #. Color palette name, a soft blue-green
 #: src/components/layout/VariantMenu.tsx
 msgid "Glacier"
 msgstr "Isbre"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Go to season {currentLabel}"
+msgstr "Gå til sesong {currentLabel}"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Go to the sign-up form"
@@ -974,6 +990,7 @@ msgstr "Bli medlem i Bygdø Badmintonklubb"
 
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/MobileMenu.tsx
+#: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/components/layout/SiteNavbar.tsx
 #: src/components/styles/flight/HowToJoin.tsx
@@ -1117,13 +1134,17 @@ msgstr "Medlem"
 msgid "Member data is stored in the sports federation’s member system."
 msgstr "Medlemsdata lagres i idrettsforbundets medlemssystem."
 
-#: src/pages/club/sections.tsx
-msgid "Member deal: Sport Modern gives members a discount. Ask the board for the club code."
-msgstr "Medlemsfordel: Sport Modern gir medlemmer rabatt. Spør styret om klubbkoden."
+#: src/pages/membership/MembershipPage.tsx
+msgid "Member deal"
+msgstr "Medlemsfordel"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Members also get up to 20% off at Sport Modern. <0>See the member deal</0>"
+msgstr "Medlemmer får også opptil 20 % rabatt hos Sport Modern. <0>Se medlemsfordelen</0>"
 
 #: src/components/layout/SponsorStrip.tsx
-msgid "Members get 20% off at Sport Modern."
-msgstr "Medlemmer får 20 % rabatt hos Sport Modern."
+msgid "Members get up to 20% off at Sport Modern."
+msgstr "Medlemmer får opptil 20 % rabatt hos Sport Modern."
 
 #. Main menu
 #: src/components/layout/nav.ts
@@ -1313,6 +1334,14 @@ msgstr "Ingenting å tilbakestille."
 msgid "Now on"
 msgstr "Pågår nå"
 
+#: src/pages/membership/MemberDeal.tsx
+msgid "off clothes and rackets"
+msgstr "rabatt på klær og racketer"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "off shoes, accessories, bags and shuttles"
+msgstr "rabatt på sko, tilbehør, bagger og baller"
+
 #: src/pages/news/components/PostPager.tsx
 msgid "Older and newer posts"
 msgstr "Eldre og nyere innlegg"
@@ -1326,6 +1355,10 @@ msgstr "Eldre innlegg"
 #: src/components/training/NextTraining.tsx
 msgid "On now"
 msgstr "Pågår nå"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "on orders over {limit}"
+msgstr "ved kjøp over {limit}"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
@@ -1370,6 +1403,10 @@ msgstr "Org.nr. {0}"
 #: src/data/news.ts
 msgid "Our autumn tournament runs on volunteers. Grab a shift in the hall, kiosk or secretariat."
 msgstr "Høstturneringen vår går på dugnad. Ta en vakt i hallen, kiosken eller sekretariatet."
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Our members get these discounts at Sport Modern."
+msgstr "Medlemmene våre får disse rabattene hos Sport Modern."
 
 #: src/components/layout/SponsorStrip.tsx
 msgid "Our partner"
@@ -1687,6 +1724,10 @@ msgstr "Skarp"
 #: src/pages/events/EventPage.tsx
 msgid "Shifts come later"
 msgstr "Vaktene kommer senere"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Shop at Sport Modern"
+msgstr "Handle hos Sport Modern"
 
 #: src/pages/events/EventsPage.tsx
 msgid "Show"
