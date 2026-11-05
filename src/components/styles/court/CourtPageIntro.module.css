@@ -1,0 +1,199 @@
+.intro {
+  --line: var(--bk-accent-strong);
+  --ruler: color-mix(in srgb, var(--bk-accent-strong) 55%, transparent);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 280px;
+  padding-block: 40px 36px;
+  background: linear-gradient(180deg, var(--bk-accent-soft), transparent 85%), var(--mantine-color-body);
+  border-bottom: 1px solid var(--bk-accent-line);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    min-height: 380px;
+  }
+}
+
+.panel {
+  position: absolute;
+  inset: 0;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    inset-inline-start: 56%;
+    border-inline-start: 2px solid var(--bk-accent-strong);
+
+    .intro:not([data-photo]) & {
+      background: var(--bk-accent-soft);
+    }
+  }
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--mantine-color-body) 76%, transparent) 0%,
+        color-mix(in srgb, var(--mantine-color-body) 90%, transparent) 60%,
+        var(--mantine-color-body) 100%
+      ),
+      linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade));
+
+    @media (min-width: $mantine-breakpoint-md) {
+      background:
+        linear-gradient(0deg, color-mix(in srgb, var(--bk-accent-ink) 35%, transparent), transparent 55%),
+        linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade));
+    }
+  }
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.court {
+  position: absolute;
+  inset: 28px 20px 36px;
+  opacity: 0.16;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    inset: 36px 40px 44px;
+    opacity: 0.55;
+
+    .intro[data-photo] & {
+      --line: var(--mantine-color-white);
+
+      opacity: 0.8;
+    }
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border: 0 solid var(--line);
+    }
+
+    &::before {
+      top: -10px;
+      inset-inline-start: -10px;
+      border-top-width: 2px;
+      border-inline-start-width: 2px;
+    }
+
+    &::after {
+      bottom: -10px;
+      inset-inline-end: -10px;
+      border-bottom-width: 2px;
+      border-inline-end-width: 2px;
+    }
+  }
+}
+
+.lines {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+
+  & :is(rect, line) {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+  }
+
+  & .net {
+    stroke-width: 3;
+    stroke-dasharray: 6 5;
+  }
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    max-width: min(560px, 52%);
+  }
+
+  .intro[data-photo] & {
+    text-shadow:
+      0 0 18px var(--mantine-color-body),
+      0 0 2px var(--mantine-color-body);
+
+    @media (min-width: $mantine-breakpoint-md) {
+      text-shadow: none;
+    }
+
+    & :is(a, button, .mantine-Badge-root) {
+      text-shadow: none;
+    }
+  }
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Share Tech Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 24px;
+    height: 10px;
+    border-inline-start: 2px solid currentColor;
+    background: linear-gradient(currentColor, currentColor) center / 100% 2px no-repeat;
+  }
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.lede {
+  max-width: 64ch;
+  font-size: 1.125rem;
+  text-wrap: pretty;
+  color: var(--mantine-color-text);
+
+  .intro:not([data-photo]) & {
+    color: var(--mantine-color-dimmed);
+  }
+}
+
+.ruler {
+  position: absolute;
+  inset: auto 0 0;
+  height: 10px;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(90deg, var(--ruler) 0 1px, transparent 1px 40px) left bottom / 100% 10px no-repeat,
+    repeating-linear-gradient(90deg, var(--ruler) 0 1px, transparent 1px 8px) left bottom / 100% 5px no-repeat;
+}

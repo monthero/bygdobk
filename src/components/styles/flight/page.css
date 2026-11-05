@@ -1,0 +1,112 @@
+:root[data-style='flight'] {
+  --flight-dots: radial-gradient(circle, var(--bk-accent-strong) 1.3px, transparent 1.7px) 0 50% / 8px 3px repeat-x;
+  --flight-marker: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 20'%3E%3Cg fill='black'%3E%3Ccircle cx='2' cy='18' r='1.6'/%3E%3Ccircle cx='5.8' cy='14.4' r='1.6'/%3E%3Ccircle cx='9.8' cy='11.4' r='1.6'/%3E%3Ccircle cx='14' cy='9.2' r='1.6'/%3E%3Ccircle cx='18.2' cy='7.8' r='1.6'/%3E%3Cpath d='M22 2.2 L28 5.4 L28 8.6 L22 11.8 Z'/%3E%3Ccircle cx='30.6' cy='7' r='3.2'/%3E%3C/g%3E%3C/svg%3E")
+    center / contain no-repeat;
+
+  &
+    main
+    h2.mantine-Title-root:not(
+      footer *,
+      aside *,
+      a *,
+      .mantine-Card-root *,
+      .mantine-Paper-root *,
+      .mantine-ThemeIcon-root + *
+    )::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 0.6em;
+    margin-inline-end: 0.35em;
+    vertical-align: 0.04em;
+    background: var(--bk-accent-strong);
+    mask: var(--flight-marker);
+  }
+
+  &
+    main
+    :is(.mantine-Card-root, .mantine-Paper-root)[data-with-border]:not(
+      footer *,
+      aside *,
+      :is(.mantine-Card-root, .mantine-Paper-root) *
+    ) {
+    border-color: color-mix(in srgb, var(--bk-border) 70%, transparent);
+    border-radius: calc(var(--paper-radius, var(--mantine-radius-md)) * 1.25);
+
+    &:where([data-mantine-color-scheme='light'] *) {
+      box-shadow: var(--bk-shadow);
+    }
+
+    @supports (animation-timeline: view()) {
+      @media (prefers-reduced-motion: no-preference) {
+        animation: flight-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 60%;
+      }
+    }
+  }
+
+  & main a.mantine-Card-root:hover {
+    border-color: var(--bk-accent-line);
+    box-shadow:
+      0 14px 32px color-mix(in srgb, var(--bk-accent) 26%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--bk-accent) 40%, transparent);
+
+    @media (prefers-reduced-motion: no-preference) {
+      transform: translateY(-3px);
+    }
+  }
+
+  & [data-bk='toolbar'] {
+    border-bottom-color: transparent;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset-inline: 0;
+      bottom: -1px;
+      height: 3px;
+      background: var(--flight-dots);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  & [data-bk='segmented'] {
+    & > span::after {
+      inset-inline: 8px;
+      border-radius: 0;
+      background: radial-gradient(circle, var(--tone, var(--bk-accent-strong)) 1.5px, transparent 1.9px) 0 50% / 7px 3px
+        repeat-x;
+    }
+
+    & > button::after {
+      border-radius: 0;
+      background: var(--flight-dots);
+    }
+  }
+
+  & main .mantine-Table-table:not(footer *, aside *) {
+    & thead th {
+      font-family: 'Share Tech Mono', ui-monospace, monospace;
+      font-size: var(--mantine-font-size-xs);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bk-accent-strong);
+    }
+
+    & tbody tr:not(:last-child) {
+      border-bottom-style: dashed;
+    }
+  }
+}
+
+@keyframes flight-rise {
+  from {
+    translate: 0 20px;
+  }
+  to {
+    translate: 0 0;
+  }
+}

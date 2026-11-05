@@ -1,0 +1,17 @@
+.skirt {
+  fill: var(--bk-surface);
+  stroke: var(--mantine-color-text);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.feathers {
+  fill: none;
+  stroke: var(--mantine-color-text);
+  stroke-width: 1;
+  opacity: 0.6;
+}
+
+.cork {
+  fill: var(--bk-logo-accent);
+}

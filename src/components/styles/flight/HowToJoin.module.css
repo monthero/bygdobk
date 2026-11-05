@@ -1,0 +1,178 @@
+.eyebrow {
+  font-family: 'Share Tech Mono', ui-monospace, monospace;
+  font-size: var(--mantine-font-size-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+}
+
+.quote {
+  background: var(--bk-accent-soft);
+  border-color: var(--bk-accent);
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.3;
+
+  & cite {
+    font-family: 'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
+    font-size: var(--mantine-font-size-sm);
+    color: var(--mantine-color-dimmed);
+    opacity: 1;
+  }
+}
+
+.rally {
+  position: relative;
+  padding-top: 20px;
+  view-timeline: --rally block;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    padding-top: 72px;
+  }
+}
+
+.band {
+  display: none;
+  position: absolute;
+  inset: 0 0 auto;
+  height: 72px;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    display: block;
+  }
+}
+
+.arcs {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.trail {
+  fill: none;
+  stroke: var(--bk-accent-strong);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 0 12;
+  opacity: 0.45;
+}
+
+.flyer {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 0;
+}
+
+@supports (offset-path: shape(from 0 0, line to 1px 1px)) {
+  .flyer {
+    display: block;
+    offset-path: shape(from 16.5% 100%, curve to 50% 100% with 33.25% -77.8%, curve to 83.5% 100% with 66.75% -77.8%);
+    offset-rotate: auto -90deg;
+    offset-distance: 70%;
+  }
+
+  @supports (animation-timeline: view()) {
+    .flyer {
+      animation: rally linear both;
+      animation-timeline: --rally;
+      animation-range: entry 30% cover 60%;
+    }
+  }
+}
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.step {
+  position: relative;
+  background: var(--bk-surface);
+
+  & + &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 24px);
+    width: 4px;
+    height: 20px;
+    translate: -50% 0;
+    background: radial-gradient(circle, var(--bk-accent-strong) 1.5px, transparent 2px) center top / 4px 10px repeat-y;
+    opacity: 0.55;
+
+    @media (min-width: $mantine-breakpoint-sm) {
+      display: none;
+    }
+  }
+}
+
+.score {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -50%;
+  min-width: 72px;
+  padding: 6px 12px;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-sm);
+  background: var(--bk-accent-ink);
+  color: var(--bk-accent);
+  font-family: 'Share Tech Mono', ui-monospace, monospace;
+  font-size: 1.5rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.call {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 40px;
+  font-weight: 600;
+  color: var(--bk-accent-strong);
+}
+
+.arrow {
+  flex: none;
+}
+
+.place {
+  padding-block: 8px;
+  font-weight: 600;
+  text-wrap: balance;
+  color: var(--bk-accent-strong);
+}
+
+.pin {
+  margin-inline-end: 4px;
+  vertical-align: -2px;
+}
+
+@keyframes rally {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flyer {
+    animation: none;
+  }
+}

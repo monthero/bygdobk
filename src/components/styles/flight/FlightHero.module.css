@@ -1,0 +1,120 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: 48px 56px;
+  border-bottom: 1px solid var(--bk-border);
+  background:
+    radial-gradient(90% 70% at 88% 0%, var(--bk-accent-soft), transparent 70%),
+    radial-gradient(60% 50% at 0% 100%, var(--bk-surface-2), transparent 70%), var(--mantine-color-body);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding-block: 96px 104px;
+  }
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.trail {
+  fill: none;
+  stroke: var(--bk-accent-strong);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0 12;
+  opacity: 0.5;
+}
+
+.reveal {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 12;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+  animation: reveal 1.8s cubic-bezier(0.3, 0.1, 0.6, 1) 0.4s both;
+}
+
+.flyer {
+  offset-rotate: auto -90deg;
+  offset-distance: 100%;
+  transform: scale(1.25);
+  animation: fly 1.8s cubic-bezier(0.3, 0.1, 0.6, 1) 0.4s both;
+}
+
+.landing {
+  fill: var(--mantine-color-text);
+  opacity: 0.16;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: land 0.5s ease-out 2.15s both;
+}
+
+.inner {
+  position: relative;
+}
+
+.halo {
+  text-shadow:
+    0 0 14px var(--mantine-color-body),
+    0 0 3px var(--mantine-color-body);
+}
+
+.title {
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+.join {
+  animation: hit 0.7s ease-out 2.15s both;
+}
+
+@keyframes fly {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes reveal {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes land {
+  from {
+    opacity: 0;
+    scale: 0.2;
+  }
+  to {
+    opacity: 0.16;
+    scale: 1;
+  }
+}
+
+@keyframes hit {
+  from {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--bk-accent) 70%, transparent);
+  }
+  to {
+    box-shadow: 0 0 0 16px transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .flyer,
+  .landing,
+  .join {
+    animation: none;
+  }
+}

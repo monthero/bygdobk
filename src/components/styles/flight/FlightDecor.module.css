@@ -1,0 +1,74 @@
+.decor {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  top: calc(50% + var(--bk-header-height) * 0.5);
+  right: max(12px, calc((100vw - 1140px) * 0.25 - 40px));
+  translate: 0 -50%;
+  pointer-events: none;
+
+  &[data-nav='side'] {
+    right: max(12px, calc((100vw - 1388px) * 0.25 - 40px));
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (min-width: 1400px) and (min-height: 680px) and (prefers-reduced-motion: no-preference) {
+    .decor {
+      display: block;
+      animation: appear linear both;
+      animation-timeline: scroll(root);
+      animation-range: 120px 480px;
+    }
+
+    .flyer {
+      animation: glide linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+
+  @media (max-width: 1659px) {
+    .decor[data-nav='side'] {
+      display: none;
+    }
+  }
+}
+
+.art {
+  display: block;
+  overflow: visible;
+}
+
+.trail {
+  fill: none;
+  stroke: var(--mantine-color-dimmed);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 0 10;
+  opacity: 0.45;
+}
+
+.flyer {
+  offset-rotate: auto -90deg;
+  offset-distance: 2%;
+  transform: scale(0.6);
+  opacity: 0.85;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes glide {
+  from {
+    offset-distance: 2%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}

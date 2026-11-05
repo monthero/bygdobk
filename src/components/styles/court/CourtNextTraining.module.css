@@ -1,0 +1,24 @@
+.frame {
+  position: relative;
+  padding: 5px;
+  background: var(--bk-accent-soft);
+  border: 2px solid var(--bk-accent-strong);
+  border-radius: calc(var(--mantine-radius-sm) + 7px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border: 1px solid var(--bk-accent-line);
+    border-radius: calc(var(--mantine-radius-sm) + 5px);
+    pointer-events: none;
+  }
+
+  &:empty {
+    display: none;
+  }
+
+  & > * {
+    position: relative;
+  }
+}

@@ -1,0 +1,78 @@
+:root[data-style='court'] {
+  --court-mono: 'Share Tech Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  & main h2.mantine-Title-root:not(footer *, a *, .mantine-Group-root > *, .mantine-Paper-root *, [role='dialog'] *) {
+    &::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 10px;
+      margin-bottom: 10px;
+      border-inline-start: 2px solid var(--bk-accent-strong);
+      background: linear-gradient(var(--bk-accent-strong), var(--bk-accent-strong)) left center / 100% 2px no-repeat;
+    }
+  }
+
+  & main :is(.mantine-Card-root, .mantine-Paper-root)[data-with-border]:not(footer *, [role='dialog'] *) {
+    position: relative;
+    border-radius: var(--mantine-radius-sm);
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      inset-inline-start: 0;
+      width: 14px;
+      height: 14px;
+      border-top: 2px solid var(--bk-accent-strong);
+      border-inline-start: 2px solid var(--bk-accent-strong);
+      border-start-start-radius: inherit;
+      pointer-events: none;
+    }
+  }
+
+  & [data-bk='toolbar'] {
+    border-bottom-color: var(--bk-accent-line);
+  }
+
+  & [data-bk='segmented'] {
+    & > span:first-child {
+      height: 8px;
+
+      &::after {
+        inset-inline: 10px;
+        border-radius: 0;
+        border-inline: 2px solid var(--tone, var(--bk-accent-strong));
+        background: linear-gradient(var(--tone, var(--bk-accent-strong)), var(--tone, var(--bk-accent-strong))) left
+          bottom / 100% 3px no-repeat;
+      }
+    }
+
+    & > button::after {
+      border-radius: 0;
+    }
+
+    &[data-multiple] > button[aria-pressed='true']::after {
+      inset-inline: 10px;
+      height: 8px;
+      border-inline: 2px solid var(--bk-accent-strong);
+      background: linear-gradient(var(--bk-accent-strong), var(--bk-accent-strong)) left bottom / 100% 3px no-repeat;
+    }
+  }
+
+  & main table.mantine-Table-table:not(footer *, [role='dialog'] *) {
+    & thead th {
+      font-family: var(--court-mono);
+      font-weight: 400;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bk-accent-strong);
+      border-bottom: 2px solid var(--bk-accent-strong);
+    }
+
+    & tbody tr:last-child :is(td, th) {
+      border-bottom: 1px solid var(--bk-accent-line);
+    }
+  }
+}

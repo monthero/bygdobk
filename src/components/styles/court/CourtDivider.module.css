@@ -1,0 +1,20 @@
+.divider {
+  position: relative;
+  height: 22px;
+  margin-block: 0 32px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 4px 0;
+    border-block: 2px solid var(--bk-accent-line);
+  }
+}
+
+.tick {
+  position: relative;
+  display: block;
+  width: 2px;
+  height: 100%;
+  background: var(--bk-accent-strong);
+}
