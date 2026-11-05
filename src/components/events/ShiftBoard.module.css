@@ -1,0 +1,5 @@
+.card {
+  &[data-mine] {
+    border-color: var(--mantine-color-teal-filled);
+  }
+}

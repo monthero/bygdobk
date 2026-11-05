@@ -1,0 +1,18 @@
+.list {
+  border-top: 1px solid var(--bk-border);
+}
+
+.item {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  padding: 16px 12px;
+  margin-inline: -12px;
+  border-bottom: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-sm);
+  transition: background-color 0.15s;
+
+  &:hover {
+    background: var(--bk-surface-2);
+  }
+}

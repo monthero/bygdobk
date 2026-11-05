@@ -1,0 +1,48 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-margin-top: calc(var(--app-shell-header-offset, 64px) + 24px);
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon {
+  flex: none;
+
+  & svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.note {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding: 10px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--bk-accent-soft);
+  color: var(--mantine-color-text);
+}
+
+.noteIcon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--bk-accent-strong);
+}
