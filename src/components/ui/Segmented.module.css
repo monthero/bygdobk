@@ -1,0 +1,123 @@
+.root {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(max-content, 1fr));
+  gap: 4px;
+  align-self: stretch;
+  width: max-content;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.pill {
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: calc((100% - (var(--n) - 1) * 4px) / var(--n));
+  height: 3px;
+  pointer-events: none;
+  transform: translateX(calc(var(--i) * (100% + 4px)));
+  transition: transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0 12px;
+    border-radius: 3px 3px 0 0;
+    background: var(--tone, var(--bk-accent-strong));
+    transition: background 0.2s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--h);
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--mantine-radius-sm);
+  background: transparent;
+  color: var(--mantine-color-dimmed);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 12px;
+    bottom: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: var(--bk-accent-strong);
+    opacity: 0;
+    transform: scaleX(0.4);
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
+  }
+
+  &:hover {
+    color: var(--mantine-color-text);
+  }
+
+  &:hover::after {
+    opacity: 0.35;
+    transform: scaleX(0.6);
+  }
+
+  &[aria-pressed='true'] {
+    color: var(--mantine-color-text);
+  }
+
+  &[aria-pressed='true']::after {
+    opacity: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--bk-accent-strong);
+    outline-offset: 1px;
+  }
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.root[data-multiple] {
+  & .option[aria-pressed='true']::after {
+    opacity: 1;
+    transform: none;
+  }
+
+  & .option:first-of-type {
+    margin-inline-end: 9px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset-inline-end: -7px;
+      top: 50%;
+      width: 1px;
+      height: 18px;
+      background: var(--bk-border);
+      transform: translateY(-50%);
+    }
+  }
+}

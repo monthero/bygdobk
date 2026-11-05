@@ -1,0 +1,23 @@
+.label {
+  margin-inline-end: 4px;
+}
+
+.icon {
+  border-color: var(--bk-accent-line);
+  color: var(--bk-accent-strong);
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
+
+  & svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  &:hover {
+    border-color: var(--bk-accent-strong);
+    background: var(--bk-accent-soft);
+    transform: translateY(-1px);
+  }
+}

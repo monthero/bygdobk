@@ -1,0 +1,26 @@
+.sheet {
+  height: auto;
+  max-height: var(--sheet-max-h);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border-radius: 22px 22px 0 0;
+  background: var(--bk-surface);
+  border: 1px solid var(--bk-border);
+  border-bottom: 0;
+  box-shadow: var(--bk-shadow);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.handle {
+  display: block;
+  width: 36px;
+  height: 4px;
+  margin: 10px auto 0;
+  border-radius: 2px;
+  background: var(--bk-border);
+}

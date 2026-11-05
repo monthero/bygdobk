@@ -1,0 +1,12 @@
+.photo {
+  position: relative;
+  height: 160px;
+  margin: calc(var(--mantine-spacing-lg) * -1) calc(var(--mantine-spacing-lg) * -1) var(--mantine-spacing-md);
+  background: var(--venue-photo) center 70% / cover no-repeat;
+
+  &[data-fill] {
+    flex: 1;
+    height: auto;
+    min-height: 160px;
+  }
+}

@@ -1,0 +1,10 @@
+.texture {
+  position: absolute;
+  inset: 24px 0;
+  z-index: -1;
+  width: 100%;
+  height: calc(100% - 48px);
+  color: var(--bk-accent-strong);
+  opacity: 0.08;
+  pointer-events: none;
+}

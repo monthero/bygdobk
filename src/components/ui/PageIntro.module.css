@@ -1,0 +1,87 @@
+.intro {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  min-height: 280px;
+  padding-block: 40px 32px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    min-height: 380px;
+  }
+
+  background: linear-gradient(180deg, var(--bk-accent-soft), transparent 85%), var(--mantine-color-body);
+  border-bottom: 1px solid var(--bk-border);
+}
+
+.photo {
+  position: absolute;
+  inset: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--mantine-color-body) 50%, transparent) 0%,
+        color-mix(in srgb, var(--mantine-color-body) 82%, transparent) 55%,
+        var(--mantine-color-body) 100%
+      ),
+      linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade));
+
+    @media (min-width: $mantine-breakpoint-md) {
+      background:
+        linear-gradient(
+          90deg,
+          color-mix(in srgb, var(--mantine-color-body) 86%, transparent) 0%,
+          color-mix(in srgb, var(--mantine-color-body) 62%, transparent) 36%,
+          color-mix(in srgb, var(--mantine-color-body) 8%, transparent) 62%,
+          transparent 100%
+        ),
+        linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade));
+    }
+  }
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+}
+
+.title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.lede {
+  max-width: 80ch;
+  font-size: 1.125rem;
+  text-wrap: pretty;
+  color: var(--mantine-color-dimmed);
+
+  .intro[data-photo] & {
+    color: var(--mantine-color-text);
+  }
+}
