@@ -132,7 +132,7 @@ export const SafetySection: FC = () => (
   </Card>
 );
 
-export const SponsorSection: FC<{ dealId: string }> = ({ dealId }) => (
+export const SponsorSection: FC = () => (
   <IconCard icon={<Handshake width={22} height={22} />} title={<Trans>Sponsor the club</Trans>}>
     <Text c="dimmed">
       <Trans>Want to back badminton at Bygdøhus? We’d love to hear from you.</Trans>
@@ -140,9 +140,6 @@ export const SponsorSection: FC<{ dealId: string }> = ({ dealId }) => (
     <Anchor href={`mailto:${CLUB.email}`}>
       <Trans>Email the board</Trans>
     </Anchor>
-    <Text id={dealId} size="sm" c="dimmed" className={classes.deal}>
-      <Trans>Member deal: Sport Modern gives members a discount. Ask the board for the club code.</Trans>
-    </Text>
   </IconCard>
 );
 

@@ -5,7 +5,7 @@ import { memo } from 'react';
 
 import sportModernLogo from '~/assets/sponsors/sport-modern.svg';
 import { ArrowRight, Handshake } from '~/components/ui';
-import { CLUB } from '~/data/club';
+import { CLUB, DEAL_HASH } from '~/data/club';
 
 import classes from './SponsorStrip.module.css';
 
@@ -22,8 +22,8 @@ export const SponsorStrip = memo(() => {
             <Trans>Our partner</Trans>
           </Text>
           <Text size="sm">
-            <Trans>Members get 20% off at Sport Modern.</Trans>{' '}
-            <Anchor component={Link} to="/klubben" hash="medlemsfordel" size="sm" className={classes.more}>
+            <Trans>Members get up to 20% off at Sport Modern.</Trans>{' '}
+            <Anchor component={Link} to="/medlemskap" hash={DEAL_HASH} size="sm" className={classes.more}>
               <Trans>How it works</Trans>
             </Anchor>
           </Text>

@@ -6,6 +6,8 @@ import { z } from 'zod';
 import { date, ISO_DAY } from '~/utils/dates';
 import { slugMap } from '~/utils/slugs';
 
+export const DEAL_HASH = 'medlemsfordel';
+
 export const CLUB = {
   name: 'Bygdø Badmintonklubb',
   shortName: 'Bygdø BK',

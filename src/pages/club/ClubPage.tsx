@@ -13,7 +13,7 @@ import { BoardSection, PrivacySection, SafetySection, SponsorSection } from './s
 
 import classes from './ClubPage.module.css';
 
-const ClubSection = z.enum(['styret', 'medlemsfordel', 'varsling', 'personvern']);
+const ClubSection = z.enum(['styret', 'varsling', 'personvern']);
 
 export const ClubPage: FC = () => (
   <>
@@ -49,7 +49,7 @@ export const ClubPage: FC = () => (
         </section>
         <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
           <div className={classes.cell}>
-            <SponsorSection dealId={ClubSection.enum.medlemsfordel} />
+            <SponsorSection />
           </div>
           <div id={ClubSection.enum.personvern} className={classes.cell}>
             <PrivacySection />

@@ -49,6 +49,8 @@ export { default as Sparkle } from '~icons/ph/sparkle';
 export { default as Sun } from '~icons/ph/sun';
 export { default as Translate } from '~icons/ph/translate';
 export { default as Trash } from '~icons/ph/trash';
+export { default as TShirt } from '~icons/ph/t-shirt';
+export { default as Truck } from '~icons/ph/truck';
 export { default as TreeStructure } from '~icons/ph/tree-structure';
 export { default as Trophy } from '~icons/ph/trophy';
 export { default as User } from '~icons/ph/user';

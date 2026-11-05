@@ -108,10 +108,3 @@
     box-shadow: none;
   }
 }
-
-.deal {
-  margin-top: var(--mantine-spacing-xs);
-  padding-top: var(--mantine-spacing-sm);
-  border-top: 1px solid var(--bk-border);
-  scroll-margin-top: 120px;
-}

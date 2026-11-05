@@ -23,6 +23,7 @@ import { PageIntro } from '~/components/styles';
 import { ArrowRight, ArrowUpRight, CalendarBlank, UserPlus } from '~/components/ui';
 import {
   CLUB,
+  DEAL_HASH,
   CURRENT_SEASON,
   DISCOUNTS,
   Group as TrainingGroup,
@@ -35,6 +36,8 @@ import {
 import { PHOTOS } from '~/data/photos';
 import { numberFormat } from '~/i18n/current';
 import { BRING_HASH } from '~/pages/training/TrainingPage';
+
+import { MemberDeal } from './MemberDeal';
 
 const MAILTO = `mailto:${CLUB.email}`;
 
@@ -171,6 +174,14 @@ export const MembershipPage: FC = () => {
             <Trans>My membership</Trans>
           </Button>
         </Group>
+        <Text mt="md">
+          <Trans>
+            Members also get up to 20% off at Sport Modern.{' '}
+            <Anchor component={Link} to="/medlemskap" hash={DEAL_HASH} fw={600}>
+              See the member deal
+            </Anchor>
+          </Trans>
+        </Text>
       </PageIntro>
 
       <Container py={40}>
@@ -256,6 +267,15 @@ export const MembershipPage: FC = () => {
             </Stack>
           </Grid.Col>
         </Grid>
+      </Container>
+
+      <Container pb={40}>
+        <Stack gap="md" id={DEAL_HASH}>
+          <Title order={2}>
+            <Trans>Member deal</Trans>
+          </Title>
+          <MemberDeal />
+        </Stack>
       </Container>
 
       <Container pb={40}>
