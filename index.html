@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="nb" data-mantine-color-scheme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Bygdø BK – redesign</title>
+    <meta name="description" content="Konsept og studie for et nytt nettsted for Bygdø Badmintonklubb." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&family=Saira:wght@500..800&family=Chakra+Petch:wght@500;600;700&family=Barlow+Condensed:wght@500;600;700&family=Familjen+Grotesk:wght@500..700&family=Big+Shoulders+Display:wght@600..800&family=Archivo:wdth,wght@100..125,500..800&family=Unbounded:wght@500..700&family=Sora:wght@500..700&family=Share+Tech+Mono&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <script>
+      try {
+        const s = JSON.parse(localStorage.getItem('bigdo-settings'))?.state ?? {};
+        const scheme = s.colorScheme ?? 'auto';
+        const root = document.documentElement;
+        const dark = scheme === 'dark' || (scheme === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+        root.dataset.mantineColorScheme = dark ? 'dark' : 'light';
+        root.lang = s.lang === 'en' ? 'en' : 'nb';
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

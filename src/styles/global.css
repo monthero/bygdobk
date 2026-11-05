@@ -1,0 +1,36 @@
+html {
+  scroll-padding-top: calc(var(--bk-header-height) + 24px);
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+  font-stretch: var(--bk-font-display-stretch, 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+body {
+  background: var(--bk-page-wash), var(--mantine-color-body);
+  background-attachment: fixed;
+}
