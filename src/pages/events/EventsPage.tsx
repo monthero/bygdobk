@@ -4,8 +4,9 @@ import { getRouteApi } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
 import { EVENT_ICONS, EventCard } from '~/components/events';
+import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
-import { CalendarBlank, PageToolbar, Segmented, SegmentedMulti, type SegmentedOption } from '~/components/ui';
+import { CalendarBlank, Segmented, SegmentedMulti, type SegmentedOption } from '~/components/ui';
 import { EVENT_YEARS, EVENTS_BY_DATE, EventsShow, eventYear, isPast, splitEvents, type ClubEvent } from '~/data/events';
 import { PHOTOS } from '~/data/photos';
 import { date, dayjs, formatDate, ISO_DAY, LONG_DATE } from '~/utils/dates';

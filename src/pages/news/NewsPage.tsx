@@ -3,9 +3,10 @@ import { Badge, Button, Container, Grid, Group, NavLink, ScrollArea, Stack, Text
 import { getRouteApi } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
+import { PageToolbar } from '~/components/layout';
 import { NewsCard } from '~/components/news';
 import { PageIntro, useStyleKit } from '~/components/styles';
-import { Newspaper, PageToolbar, Segmented, type SegmentedOption } from '~/components/ui';
+import { Newspaper, Segmented, type SegmentedOption } from '~/components/ui';
 import {
   currentPosts,
   NEWS,

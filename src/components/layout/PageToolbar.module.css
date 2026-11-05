@@ -1,0 +1,45 @@
+.toolbar {
+  position: sticky;
+  top: var(--app-shell-header-offset, 0px);
+  z-index: 50;
+  background: color-mix(in srgb, var(--mantine-color-body) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bk-border);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  white-space: nowrap;
+
+  & > * {
+    flex: none;
+  }
+}
+
+.title {
+  max-width: 0;
+  margin-inline-end: -12px;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.2s;
+
+  [data-stuck] & {
+    max-width: 360px;
+    margin-inline-end: 8px;
+    padding-inline-end: 20px;
+    border-inline-end: 1px solid var(--bk-border);
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

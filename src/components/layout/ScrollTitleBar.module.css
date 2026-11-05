@@ -1,0 +1,36 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 56px;
+  margin-bottom: -56px;
+  border-bottom: 1px solid var(--bk-border);
+  background: color-mix(in srgb, var(--mantine-color-body) 92%, transparent);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.2s;
+
+  &[data-shown] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  main:has([data-bk='toolbar']) & {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}

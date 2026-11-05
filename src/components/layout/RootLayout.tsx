@@ -1,15 +1,17 @@
 import { Trans } from '@lingui/react/macro';
 import { AppShell } from '@mantine/core';
-import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { useDisclosure } from '@mantine/hooks';
 import { Outlet, useRouterState, type RouterState } from '@tanstack/react-router';
 import { useEffect, type FC } from 'react';
 
 import { EditModeAffix, LoginModal } from '~/components/auth';
 import { useStyleKit } from '~/components/styles';
+import { useStandaloneNav } from '~/hooks/useStandaloneNav';
 import type { FileRoutesById } from '~/routeTree.gen';
 import { NavLayout, useSettings } from '~/stores/settings';
 
 import { MobileMenu } from './MobileMenu';
+import { ScrollTitleBar } from './ScrollTitleBar';
 import { SiteFooter } from './SiteFooter';
 import { SiteHeader } from './SiteHeader';
 import { SiteNavbar } from './SiteNavbar';
@@ -19,7 +21,6 @@ import { SponsorStrip } from './SponsorStrip';
 import classes from './RootLayout.module.css';
 
 const HEADER = { height: 64 };
-const DESKTOP_QUERY = '(min-width: 62em)';
 
 const NO_STRIP_ROUTES = new Set<keyof FileRoutesById>(['/medlemskap/bli-medlem']);
 
@@ -35,8 +36,7 @@ export const RootLayout: FC = () => {
   const pathname = useRouterState({ select: selectPathname });
   const showStrip = useRouterState({ select: selectShowStrip });
   const side = navLayout === NavLayout.enum.side;
-  const desktop = useMediaQuery(DESKTOP_QUERY);
-  const standalone = side && desktop;
+  const standalone = useStandaloneNav();
   const style = useSettings((s) => s.style);
   const { PageDecor } = useStyleKit();
 
@@ -65,6 +65,7 @@ export const RootLayout: FC = () => {
           <SiteNavbar standalone={standalone} />
         </AppShell.Navbar>
         <AppShell.Main id="main" className={classes.main}>
+          {standalone && <ScrollTitleBar />}
           <SiteNotice />
           <div className={classes.content}>
             <Outlet />

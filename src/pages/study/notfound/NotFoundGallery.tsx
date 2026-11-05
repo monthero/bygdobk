@@ -2,8 +2,9 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Container, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
+import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
-import { PageToolbar, Segmented, type SegmentedOption } from '~/components/ui';
+import { Segmented, type SegmentedOption } from '~/components/ui';
 import { PHOTOS } from '~/data/photos';
 
 import { CONCEPTS, type Concept } from './concepts';

@@ -1,5 +1,4 @@
 export { PageIntroBase, type PageIntroProps } from './PageIntro';
-export { PageToolbar } from './PageToolbar';
 export { PhotoBadge } from './PhotoBadge';
 export { BottomSheet } from './BottomSheet';
 export { ResponsivePanel, type PanelVariant } from './ResponsivePanel';

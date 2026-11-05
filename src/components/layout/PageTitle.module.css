@@ -1,0 +1,39 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.logo {
+  flex: none;
+  color: var(--bk-logo);
+}
+
+.title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.section {
+  flex: none;
+  font-family: var(--bk-font-display);
+  font-size: 17px;
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+}
+
+.slash {
+  color: var(--bk-border-strong, var(--mantine-color-dimmed));
+}
+
+.detail {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--mantine-color-dimmed);
+  font-size: 15px;
+}
