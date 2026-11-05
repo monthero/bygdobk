@@ -1,0 +1,367 @@
+.field {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 360 / 320;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-lg);
+  overflow: hidden;
+  background: var(--bk-surface);
+  box-shadow: var(--bk-shadow);
+  user-select: none;
+  container-type: inline-size;
+
+  &:has(.surface:focus-visible) {
+    outline: 3px solid var(--mantine-primary-color-filled);
+    outline-offset: 3px;
+  }
+}
+
+.surface {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+
+  .field[data-phase='playing'] & {
+    touch-action: none;
+    cursor: none;
+  }
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.wallTop {
+  stop-color: var(--bk-surface-2);
+}
+
+.wallBottom {
+  stop-color: var(--bk-surface);
+}
+
+.glowCenter {
+  stop-color: var(--bk-accent-line);
+  stop-opacity: 0.45;
+}
+
+.glowEdge {
+  stop-color: var(--bk-accent-line);
+  stop-opacity: 0;
+}
+
+.lampCord {
+  stroke: var(--mantine-color-dimmed);
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+.lamp {
+  fill: var(--mantine-color-dimmed);
+  opacity: 0.45;
+}
+
+.bulb {
+  fill: var(--bk-accent-line);
+}
+
+.decal {
+  opacity: 0.06;
+  color: var(--mantine-color-text);
+}
+
+.padding {
+  fill: var(--bk-surface-2);
+}
+
+.paddingEdge {
+  fill: none;
+  stroke: var(--bk-border);
+  stroke-width: 1.2;
+}
+
+.floor {
+  fill: color-mix(in srgb, var(--bk-accent-soft) 60%, var(--bk-accent-line));
+}
+
+.floorEdge {
+  stroke: var(--bk-accent-line);
+  stroke-width: 1.5;
+}
+
+.courtLine {
+  fill: none;
+  stroke: var(--bk-surface);
+  stroke-width: 2;
+  opacity: 0.85;
+}
+
+.shadow {
+  fill: var(--mantine-color-text);
+  opacity: 0.16;
+}
+
+.swing {
+  transform-origin: 0 46px;
+}
+
+.face {
+  fill: var(--bk-accent-soft);
+  opacity: 0.55;
+}
+
+.strings {
+  fill: none;
+  stroke: var(--mantine-color-dimmed);
+  stroke-width: 0.6;
+  opacity: 0.8;
+}
+
+.frame {
+  fill: none;
+  stroke: var(--mantine-color-text);
+  stroke-width: 4;
+}
+
+.frameShine {
+  fill: none;
+  stroke: var(--bk-accent);
+  stroke-width: 1.2;
+  stroke-dasharray: 34 186;
+  stroke-dashoffset: -150;
+  stroke-linecap: round;
+}
+
+.throat,
+.shaft {
+  fill: none;
+  stroke: var(--mantine-color-text);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.shaft {
+  stroke-width: 2.6;
+}
+
+.grip {
+  fill: var(--bk-accent);
+}
+
+.wrap {
+  stroke: var(--bk-accent-strong);
+  stroke-width: 1.4;
+  opacity: 0.7;
+}
+
+.butt {
+  fill: var(--mantine-color-text);
+}
+
+.skirtLit {
+  stop-color: var(--mantine-color-white);
+}
+
+.skirtShade {
+  stop-color: color-mix(in srgb, var(--mantine-color-white) 78%, var(--bk-accent-line));
+}
+
+.skirt {
+  stroke: color-mix(in srgb, var(--mantine-color-text) 55%, transparent);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.quills {
+  stroke: color-mix(in srgb, var(--mantine-color-text) 30%, var(--mantine-color-white));
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.thread {
+  fill: none;
+  stroke: var(--bk-accent-strong);
+  stroke-width: 1.4;
+  opacity: 0.8;
+}
+
+.corkLit {
+  stop-color: color-mix(in srgb, var(--mantine-color-white) 70%, var(--bk-accent));
+}
+
+.corkShade {
+  stop-color: var(--bk-accent);
+}
+
+.cork {
+  stroke: color-mix(in srgb, var(--mantine-color-text) 45%, transparent);
+  stroke-width: 1.2;
+}
+
+.band {
+  fill: var(--bk-accent-strong);
+}
+
+.burst {
+  opacity: 0;
+  stroke: var(--bk-accent-strong);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  transform-origin: 0 0;
+}
+
+.pop {
+  opacity: 0;
+  fill: var(--bk-accent-strong);
+  font-family: var(--bk-font-display);
+  font-weight: var(--bk-font-display-weight);
+  font-size: 15px;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.hud {
+  position: absolute;
+  inset: 12px 14px auto;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1;
+
+  &[data-align='end'] {
+    align-items: flex-end;
+  }
+}
+
+.statLabel {
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+
+.statValue {
+  margin-top: 4px;
+  font-family: var(--bk-font-display);
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-text);
+  animation: bump 260ms cubic-bezier(0.2, 0.8, 0.3, 1.4);
+}
+
+.callout {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 12px 18px;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-md);
+  background: color-mix(in srgb, var(--bk-surface) 82%, transparent);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  animation: rise 320ms cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.calloutTitle {
+  font-family: var(--bk-font-display);
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+  font-size: clamp(1.15rem, 3.6vw, 1.5rem);
+  color: var(--mantine-color-text);
+}
+
+.calloutHint {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+  text-wrap: balance;
+}
+
+.keys {
+  font-size: var(--mantine-font-size-xs);
+  color: var(--mantine-color-dimmed);
+
+  @media (hover: none) {
+    display: none;
+  }
+}
+
+@container (width < 440px) {
+  .hud {
+    inset: 8px 10px auto;
+  }
+
+  .statValue {
+    font-size: 22px;
+  }
+
+  .callout {
+    top: 32%;
+    gap: 2px;
+    max-width: calc(100% - 48px);
+    padding: 8px 12px;
+  }
+
+  .calloutHint,
+  .keys {
+    font-size: 11px;
+  }
+}
+
+.title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  text-wrap: balance;
+}
+
+@keyframes bump {
+  from {
+    scale: 1.35;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: -50% -38%;
+  }
+  to {
+    opacity: 1;
+    translate: -50% -50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .statValue,
+  .callout {
+    animation: none;
+  }
+}

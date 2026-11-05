@@ -1,0 +1,671 @@
+.root {
+  width: 100%;
+  max-width: 760px;
+}
+
+.scene {
+  --co-sky-top: var(--bk-surface);
+  --co-sky-bottom: color-mix(in srgb, var(--mantine-color-brand-1) 70%, var(--bk-surface));
+  --co-glass-far: color-mix(in srgb, var(--mantine-color-brand-1) 60%, var(--mantine-color-white));
+  --co-glass-near: color-mix(in srgb, var(--mantine-color-brand-2) 80%, var(--mantine-color-white));
+  --co-grid: var(--mantine-color-brand-6);
+  --co-grid-opacity: 0.14;
+  --co-scan: var(--mantine-color-brand-7);
+  --co-scan-opacity: 0.035;
+  --co-sheen: var(--mantine-color-white);
+  --co-sheen-opacity: 0.6;
+  --co-vignette: var(--bk-surface);
+  --co-vignette-opacity: 0.7;
+  --co-reflect: var(--mantine-color-brand-7);
+  --co-reflect-opacity: 0.16;
+  --co-line: var(--mantine-color-brand-7);
+  --co-glow: var(--mantine-color-brand-4);
+  --co-glow-opacity: 0.55;
+  --co-net: var(--mantine-color-brand-9);
+  --co-net-opacity: 0.4;
+  --co-tape: var(--mantine-color-white);
+  --co-edge: var(--mantine-color-brand-6);
+  --co-post: var(--mantine-color-brand-8);
+  --co-trail: var(--mantine-color-brand-7);
+  --co-trail-glow: var(--mantine-color-brand-4);
+  --co-hud: var(--mantine-color-brand-7);
+  --co-call: var(--mantine-color-red-6);
+  --co-call-fill: var(--mantine-color-red-7);
+  --co-shadow: var(--mantine-color-brand-9);
+  --co-panel: color-mix(in srgb, var(--bk-surface) 82%, transparent);
+  --co-panel-text: var(--mantine-color-text);
+
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-lg);
+  background: var(--co-sky-top);
+  box-shadow: var(--bk-shadow);
+
+  :where([data-mantine-color-scheme='dark']) & {
+    --co-sky-top: var(--mantine-color-body);
+    --co-sky-bottom: color-mix(in srgb, var(--mantine-color-brand-9) 55%, var(--mantine-color-body));
+    --co-glass-far: color-mix(in srgb, var(--mantine-color-brand-9) 50%, var(--mantine-color-body));
+    --co-glass-near: color-mix(in srgb, var(--mantine-color-brand-8) 45%, var(--mantine-color-body));
+    --co-grid: var(--mantine-color-brand-3);
+    --co-grid-opacity: 0.12;
+    --co-scan: var(--mantine-color-black);
+    --co-scan-opacity: 0.22;
+    --co-sheen-opacity: 0.07;
+    --co-vignette: var(--mantine-color-black);
+    --co-vignette-opacity: 0.55;
+    --co-reflect: var(--mantine-color-brand-2);
+    --co-reflect-opacity: 0.14;
+    --co-line: var(--mantine-color-brand-1);
+    --co-glow: var(--mantine-color-brand-4);
+    --co-glow-opacity: 0.75;
+    --co-net: var(--mantine-color-brand-2);
+    --co-net-opacity: 0.3;
+    --co-edge: var(--mantine-color-brand-2);
+    --co-post: var(--mantine-color-brand-3);
+    --co-trail: var(--mantine-color-white);
+    --co-trail-glow: var(--mantine-color-brand-4);
+    --co-hud: var(--mantine-color-brand-3);
+    --co-call: var(--mantine-color-red-5);
+    --co-call-fill: var(--mantine-color-red-8);
+    --co-shadow: var(--mantine-color-black);
+    --co-panel: color-mix(in srgb, var(--mantine-color-body) 72%, transparent);
+  }
+}
+
+.stage {
+  margin: 0;
+  animation: court-out-reveal 0.5s ease-out both;
+}
+
+.art {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.skyTop {
+  stop-color: var(--co-sky-top);
+}
+
+.skyBottom {
+  stop-color: var(--co-sky-bottom);
+}
+
+.glassFar {
+  stop-color: var(--co-glass-far);
+}
+
+.glassNear {
+  stop-color: var(--co-glass-near);
+}
+
+.sheenOff {
+  stop-color: var(--co-sheen);
+  stop-opacity: 0;
+}
+
+.sheenOn {
+  stop-color: var(--co-sheen);
+  stop-opacity: var(--co-sheen-opacity);
+}
+
+.vignetteOff {
+  stop-color: var(--co-vignette);
+  stop-opacity: 0;
+}
+
+.vignetteOn {
+  stop-color: var(--co-vignette);
+  stop-opacity: var(--co-vignette-opacity);
+}
+
+.reflectOn {
+  stop-color: var(--co-reflect);
+  stop-opacity: var(--co-reflect-opacity);
+}
+
+.reflectOff {
+  stop-color: var(--co-reflect);
+  stop-opacity: 0;
+}
+
+.scanline {
+  fill: var(--co-scan);
+  opacity: var(--co-scan-opacity);
+}
+
+.grid {
+  fill: none;
+  stroke: var(--co-grid);
+  stroke-width: 0.6;
+  opacity: var(--co-grid-opacity);
+}
+
+.edgeReflection {
+  fill: none;
+  stroke: var(--co-edge);
+  stroke-width: 1.2;
+  opacity: 0.25;
+}
+
+.matEdge {
+  fill: none;
+  stroke: var(--co-glow);
+  stroke-width: 0.8;
+  opacity: 0.45;
+}
+
+.glow {
+  fill: var(--co-glow);
+  opacity: var(--co-glow-opacity);
+}
+
+.lines {
+  fill: var(--co-line);
+}
+
+.ruler {
+  fill: none;
+  stroke: var(--co-hud);
+  stroke-width: 0.8;
+  opacity: 0.7;
+}
+
+.baselineCall {
+  fill: var(--co-call);
+  opacity: 0;
+  animation: court-out-flash 1.4s ease-out var(--court-out-land) both;
+}
+
+.contact {
+  fill: var(--co-shadow);
+  opacity: 0.35;
+}
+
+.netBody {
+  fill: var(--co-net);
+  opacity: 0.08;
+}
+
+.mesh {
+  fill: none;
+  stroke: var(--co-net);
+  stroke-width: 0.45;
+  opacity: var(--co-net-opacity);
+}
+
+.cord {
+  fill: none;
+  stroke: var(--co-net);
+  stroke-width: 0.8;
+  opacity: 0.6;
+}
+
+.tape {
+  fill: var(--co-tape);
+}
+
+.edgeGlow {
+  fill: none;
+  stroke: var(--co-glow);
+  stroke-width: 4;
+  opacity: 0.8;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--co-edge);
+  stroke-width: 1.2;
+}
+
+.post {
+  fill: var(--co-post);
+}
+
+.pulse {
+  fill: none;
+  stroke: var(--co-call);
+  stroke-width: 1.2;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: court-out-pulse 1s cubic-bezier(0.2, 0.7, 0.2, 1) var(--court-out-land) both;
+}
+
+.mark {
+  fill: color-mix(in srgb, var(--co-call) 35%, transparent);
+  stroke: var(--co-call);
+  stroke-width: 1.2;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: court-out-mark 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--court-out-land) both;
+}
+
+.trailFaint {
+  stop-color: var(--co-trail);
+  stop-opacity: 0;
+}
+
+.trailStrong {
+  stop-color: var(--co-trail);
+  stop-opacity: 0.95;
+}
+
+.trail,
+.trailGlow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: 0;
+  animation-name: court-out-dash;
+  animation-fill-mode: both;
+}
+
+.trail {
+  stroke-width: 1.4;
+}
+
+.trailGlow {
+  stroke: var(--co-trail-glow);
+  stroke-width: 5;
+  opacity: 0.55;
+}
+
+.dot {
+  fill: var(--co-sky-top);
+  stroke: var(--co-trail);
+  stroke-width: 1.1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: court-out-dot 0.4s ease-out both;
+}
+
+.camera {
+  animation-name: court-out-push;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.35, 1);
+  animation-fill-mode: both;
+}
+
+.flight,
+.ground {
+  offset-rotate: auto;
+  offset-distance: 100%;
+  animation-name: court-out-travel;
+  animation-fill-mode: both;
+}
+
+.scaled {
+  animation-name: court-out-scale;
+  animation-fill-mode: both;
+}
+
+.shadow {
+  fill: var(--co-shadow);
+  animation-name: court-out-fade;
+  animation-fill-mode: both;
+}
+
+.shuttleBody {
+  animation: court-out-launch 0.3s ease-out var(--court-out-start) both;
+}
+
+.skirtLight {
+  stop-color: var(--mantine-color-white);
+}
+
+.skirtMid {
+  stop-color: var(--mantine-color-gray-1);
+}
+
+.skirtShade {
+  stop-color: var(--mantine-color-gray-4);
+}
+
+.skirt {
+  fill: url(#court-out-skirt);
+}
+
+.quills {
+  fill: none;
+  stroke: var(--mantine-color-gray-5);
+  stroke-width: 1.2;
+  opacity: 0.7;
+}
+
+.rim {
+  fill: none;
+  stroke: var(--mantine-color-gray-4);
+  stroke-width: 2;
+}
+
+.thread {
+  fill: none;
+  stroke: var(--mantine-color-gray-6);
+  stroke-width: 1.6;
+  opacity: 0.8;
+}
+
+.band {
+  fill: var(--mantine-color-brand-5);
+}
+
+.corkLight {
+  stop-color: var(--mantine-color-white);
+}
+
+.corkShade {
+  stop-color: var(--mantine-color-gray-4);
+}
+
+.cork {
+  fill: url(#court-out-cork);
+}
+
+.shine {
+  fill: none;
+  stroke: var(--mantine-color-white);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: 0.9;
+}
+
+.corners {
+  fill: none;
+  stroke: var(--co-hud);
+  stroke-width: 1.2;
+  opacity: 0.6;
+}
+
+.leader {
+  fill: none;
+  stroke: var(--co-hud);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.8;
+  animation: court-out-appear 0.4s ease-out var(--court-out-inset) both;
+}
+
+.target {
+  fill: none;
+  stroke: var(--co-hud);
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: court-out-target 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--court-out-inset) both;
+}
+
+.lens {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: court-out-lens 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) var(--court-out-inset) both;
+}
+
+.lensHalo {
+  fill: var(--co-glow);
+  opacity: 0.35;
+}
+
+.lensFloor {
+  fill: var(--co-glass-near);
+}
+
+.lensGrid {
+  fill: none;
+  stroke: var(--co-grid);
+  stroke-width: 0.6;
+  opacity: calc(var(--co-grid-opacity) * 1.6);
+}
+
+.lensLine {
+  fill: var(--co-line);
+}
+
+.lensSkid {
+  fill: var(--co-call);
+  opacity: 0.18;
+}
+
+.lensMark {
+  fill: color-mix(in srgb, var(--co-call) 40%, transparent);
+  stroke: var(--co-call);
+  stroke-width: 1.4;
+}
+
+.lensBracket {
+  fill: none;
+  stroke: var(--co-hud);
+  stroke-width: 1;
+}
+
+.lensRim {
+  fill: none;
+  stroke: var(--co-hud);
+  stroke-width: 1.4;
+}
+
+.lowerThird {
+  position: absolute;
+  bottom: 4cqi;
+  left: 4cqi;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: start;
+  pointer-events: none;
+}
+
+.eyebrow {
+  padding: 0.45em 0.9em 0.4em;
+  font-size: max(7.5px, 1.35cqi);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--co-panel-text);
+  background: var(--co-panel);
+  backdrop-filter: blur(6px);
+  animation: court-out-wipe 0.45s cubic-bezier(0.6, 0, 0.2, 1) var(--court-out-call) both;
+}
+
+.verdict {
+  padding: 0.1em 0.75em 0.06em 0.6em;
+  font-family: var(--bk-font-display);
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+  font-size: max(15px, 4.6cqi);
+  letter-spacing: 0.14em;
+  line-height: 1.15;
+  text-transform: uppercase;
+  color: var(--mantine-color-white);
+  background: var(--co-call-fill);
+  box-shadow: inset 0.2em 0 0 var(--mantine-color-white);
+  animation: court-out-wipe 0.5s cubic-bezier(0.6, 0, 0.2, 1) calc(var(--court-out-call) + 0.12s) both;
+}
+
+.replay {
+  position: absolute;
+  top: 3.6cqi;
+  left: 4cqi;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  min-height: max(28px, 4.2cqi);
+  padding: 0 0.95em;
+  font-size: max(10px, 1.45cqi);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--co-panel-text);
+  background: var(--co-panel);
+  border: 1px solid color-mix(in srgb, var(--co-hud) 40%, transparent);
+  border-radius: var(--mantine-radius-xl);
+  backdrop-filter: blur(6px);
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+
+  &:hover {
+    color: var(--co-hud);
+    border-color: var(--co-hud);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-primary-color-filled);
+    outline-offset: 2px;
+  }
+}
+
+.title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: -0.01em;
+}
+
+@keyframes court-out-reveal {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes court-out-push {
+  from {
+    scale: 1;
+  }
+}
+
+@keyframes court-out-travel {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes court-out-scale {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes court-out-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes court-out-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes court-out-dot {
+  from {
+    opacity: 0;
+    scale: 2.6;
+  }
+}
+
+@keyframes court-out-launch {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes court-out-pulse {
+  0% {
+    opacity: 0.9;
+    scale: 0.3;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.5;
+  }
+}
+
+@keyframes court-out-mark {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+@keyframes court-out-flash {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes court-out-appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes court-out-target {
+  from {
+    opacity: 0;
+    scale: 2.2;
+  }
+}
+
+@keyframes court-out-lens {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+
+@keyframes court-out-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .baselineCall,
+  .pulse,
+  .mark,
+  .trail,
+  .trailGlow,
+  .dot,
+  .camera,
+  .flight,
+  .ground,
+  .scaled,
+  .shadow,
+  .shuttleBody,
+  .leader,
+  .target,
+  .lens,
+  .eyebrow,
+  .verdict {
+    animation: none;
+  }
+
+  .replay {
+    display: none;
+  }
+}
