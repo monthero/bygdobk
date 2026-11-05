@@ -1,0 +1,46 @@
+.timeline {
+  max-width: 760px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.nowTitle {
+  padding-top: 2px;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+}
+
+.past {
+  --tli-color: var(--bk-border);
+
+  & :global(.mantine-Card-root) {
+    background: var(--bk-surface-2);
+  }
+}
+
+.nextBullet {
+  border-color: var(--bk-accent-line);
+  color: var(--bk-accent-strong);
+}
+
+.pastBullet[data-active] {
+  background-color: var(--bk-surface-2);
+  color: var(--mantine-color-dimmed);
+}
+
+.emptyIcon {
+  color: var(--bk-accent-strong);
+}
+
+.divider {
+  align-self: center;
+  height: 24px;
+}
