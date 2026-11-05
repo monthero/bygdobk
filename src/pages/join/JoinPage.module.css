@@ -1,0 +1,19 @@
+.option {
+  &[data-checked] {
+    border-color: var(--mantine-primary-color-filled);
+    background: var(--bk-accent-soft);
+  }
+}
+
+.stepBody {
+  @media (max-width: $mantine-breakpoint-sm) {
+    .step:not([data-progress]) & {
+      display: none;
+    }
+  }
+}
+
+.question {
+  font-size: var(--mantine-font-size-lg);
+  font-weight: 700;
+}
