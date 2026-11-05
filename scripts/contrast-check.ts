@@ -20,6 +20,8 @@ const PAGES = [
   '/klubben',
   '/kontakt',
   '/studie/404',
+  '/zh',
+  '/zh/medlemskap',
 ];
 const SETTLE_MS = 1200;
 const DESKTOP = { viewport: { width: 1366, height: 900 } };

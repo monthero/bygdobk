@@ -11,7 +11,7 @@ import { PanelOptions, type PanelOption } from './PanelOptions';
 
 import classes from './LanguageSwitch.module.css';
 
-const LOCALE_CODES: Record<Locale, string> = { nb: 'NO', en: 'EN', sv: 'SV', fi: 'FI' };
+const LOCALE_CODES: Record<Locale, string> = { nb: 'NO', en: 'EN', sv: 'SV', fi: 'FI', zh: 'ZH' };
 
 const OPTIONS: PanelOption<Locale>[] = LOCALES_BY_ORDER.map((locale) => ({
   value: locale,

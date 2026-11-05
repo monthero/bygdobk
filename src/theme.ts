@@ -160,7 +160,8 @@ export const PALETTE_SWATCH: Record<Palette, string> = {
 
 type FontSpec = { family: string; weight: string; label: string; stretch?: string };
 
-const sans = (name: string) => `'${name}', 'Segoe UI', system-ui, sans-serif`;
+const CJK = "'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans SC'";
+const sans = (name: string) => `'${name}', 'Segoe UI', ${CJK}, system-ui, sans-serif`;
 
 export const HEADING_FONTS: Record<HeadingFont, FontSpec> = {
   [HeadingFont.enum.saira]: { family: sans('Saira'), weight: '700', label: 'Saira' },
@@ -176,7 +177,7 @@ export const HEADING_FONTS: Record<HeadingFont, FontSpec> = {
   [HeadingFont.enum.unbounded]: { family: sans('Unbounded'), weight: '700', label: 'Unbounded' },
   [HeadingFont.enum.sora]: { family: sans('Sora'), weight: '700', label: 'Sora' },
   [HeadingFont.enum.instrumentSerif]: {
-    family: "'Instrument Serif', Georgia, serif",
+    family: `'Instrument Serif', Georgia, ${CJK}, serif`,
     weight: '400',
     label: 'Instrument Serif',
   },
@@ -204,7 +205,7 @@ export const buildTheme = ({ palette, shape, density, width, font }: ThemeOption
     autoContrast: true,
     luminanceThreshold: 0.4,
     scale: SCALES[density],
-    fontFamily: "'Instrument Sans', 'Segoe UI', system-ui, sans-serif",
+    fontFamily: sans('Instrument Sans'),
     headings: { fontFamily: HEADING_FONTS[font].family, fontWeight: HEADING_FONTS[font].weight },
     defaultRadius: 'md',
     radius: RADII[shape],

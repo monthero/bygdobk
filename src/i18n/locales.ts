@@ -1,4 +1,4 @@
-export const LOCALES = ['en', 'nb', 'sv', 'fi'] as const;
+export const LOCALES = ['en', 'nb', 'sv', 'fi', 'zh'] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const SOURCE_LOCALE: Locale = 'en';
@@ -9,6 +9,7 @@ export const LOCALE_META: Record<Locale, { name: string; lang: string; intl: str
   en: { name: 'English', lang: 'en', intl: 'en-GB', dayjs: 'en', order: 1 },
   sv: { name: 'Svenska', lang: 'sv', intl: 'sv-SE', dayjs: 'sv', order: 2 },
   fi: { name: 'Suomi', lang: 'fi', intl: 'fi-FI', dayjs: 'fi', order: 3 },
+  zh: { name: '简体中文', lang: 'zh-Hans', intl: 'zh-CN', dayjs: 'zh-cn', order: 4 },
 };
 
 export const LOCALES_BY_ORDER = LOCALES.toSorted((a, b) => LOCALE_META[a].order - LOCALE_META[b].order);

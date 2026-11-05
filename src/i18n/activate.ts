@@ -7,6 +7,7 @@ const DAYJS_LOCALES: Record<Exclude<Locale, 'en'>, () => Promise<unknown>> = {
   nb: () => import('dayjs/locale/nb'),
   sv: () => import('dayjs/locale/sv'),
   fi: () => import('dayjs/locale/fi'),
+  zh: () => import('dayjs/locale/zh-cn'),
 };
 
 const applyDayjs = async (locale: Locale) => {
