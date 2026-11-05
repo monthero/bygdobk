@@ -3,12 +3,12 @@ import { MantineProvider } from '@mantine/core';
 import { DatesProvider, type DatesProviderSettings } from '@mantine/dates';
 import { useColorScheme } from '@mantine/hooks';
 import { Notifications } from '@mantine/notifications';
-import { createBrowserHistory, createHashHistory, createRouter, RouterProvider } from '@tanstack/react-router';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
 import { currentLocale } from './i18n/current';
 import { LOCALE_META } from './i18n/locales';
-import { HASH_ROUTING, localeRewrite } from './i18n/url';
+import { localeRewrite } from './i18n/url';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { routeTree } from './routeTree.gen';
 import { ColorScheme, useSettings } from './stores/settings';
@@ -16,7 +16,6 @@ import { buildTheme, cssVariablesResolver } from './theme';
 
 const router = createRouter({
   routeTree,
-  history: HASH_ROUTING ? createHashHistory() : createBrowserHistory(),
   rewrite: localeRewrite,
   scrollRestoration: true,
   defaultNotFoundComponent: NotFoundPage,

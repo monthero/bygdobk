@@ -23,23 +23,12 @@ export const localeRewrite = {
   },
 };
 
-export const HASH_ROUTING = !import.meta.env.DEV;
-
-const split = (raw: string) => {
-  const cut = raw.search(/[?#]/);
-  return cut === -1 ? { pathname: raw, rest: '' } : { pathname: raw.slice(0, cut), rest: raw.slice(cut) };
-};
-
-export const readLocation = () =>
-  HASH_ROUTING
-    ? split(window.location.hash.slice(1) || '/')
-    : { pathname: window.location.pathname, rest: window.location.search + window.location.hash };
+export const readLocation = () => ({
+  pathname: window.location.pathname,
+  rest: window.location.search + window.location.hash,
+});
 
 export const replaceLocation = (path: string) => {
-  if (HASH_ROUTING) {
-    window.location.replace(`#${path}`);
-    return;
-  }
   window.history.replaceState(window.history.state, '', path);
   window.dispatchEvent(new PopStateEvent('popstate', { state: window.history.state }));
 };

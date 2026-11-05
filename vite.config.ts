@@ -6,7 +6,6 @@ import Icons from 'unplugin-icons/vite';
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
-  base: './',
   fmt: {
     printWidth: 120,
     semi: true,
