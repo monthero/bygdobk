@@ -1,0 +1,71 @@
+.season {
+  font-weight: 600;
+  border-color: var(--bk-border);
+  background: var(--bk-surface);
+}
+
+.venue {
+  overflow: hidden;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto auto;
+  column-gap: var(--mantine-spacing-lg);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+}
+
+.group {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  grid-template-areas: 'name who coach times join';
+  align-items: center;
+  row-gap: 4px;
+  padding-block: var(--mantine-spacing-sm);
+
+  & + & {
+    border-top: 1px solid var(--bk-border);
+  }
+
+  @media (max-width: $mantine-breakpoint-md) {
+    grid-template-areas:
+      'name coach'
+      'who who'
+      'times times'
+      'join join';
+  }
+}
+
+.name {
+  grid-area: name;
+}
+
+.who {
+  grid-area: who;
+}
+
+.coach {
+  grid-area: coach;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    justify-self: end;
+  }
+}
+
+.times {
+  grid-area: times;
+  font-variant-numeric: tabular-nums;
+}
+
+.join {
+  grid-area: join;
+  justify-self: start;
+  white-space: nowrap;
+}
