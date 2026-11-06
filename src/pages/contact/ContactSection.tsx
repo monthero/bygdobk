@@ -45,7 +45,7 @@ import {
 } from '~/data/contact';
 import type { Translate } from '~/i18n/current';
 import type { User } from '~/stores/auth';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 
 const SUBMIT_WIDTH = { base: '100%', sm: 'auto' };
 
@@ -76,6 +76,7 @@ type ContactEmail = Omit<ContactValues, 'topic'> & {
 };
 
 const sendMessage = async (body: ContactEmail) => {
+  const supabase = await getSupabase();
   const { error } = await supabase.functions.invoke('contact', { body });
   if (error) throw error;
 };

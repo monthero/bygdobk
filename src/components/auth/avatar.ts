@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import { queryClient } from '~/cms/queryClient';
 import { useAuth, type User } from '~/stores/auth';
-import { supabase } from '~/supabase/client';
+import { getSupabase, type Supabase } from '~/supabase/client';
 
 import { profileKey } from './hooks';
 
@@ -93,15 +93,15 @@ const squareImage = async (file: File) => {
   return { blob: jpeg, type: AvatarType.enum['image/jpeg'] };
 };
 
-const avatars = () => supabase.storage.from(BUCKET);
+type Bucket = ReturnType<Supabase['storage']['from']>;
 
-const ownPath = (url: string | null | undefined, userId: string) => {
-  const prefix = avatars().getPublicUrl(`${userId}/`).data.publicUrl;
+const ownPath = (bucket: Bucket, url: string | null | undefined, userId: string) => {
+  const prefix = bucket.getPublicUrl(`${userId}/`).data.publicUrl;
   return url?.startsWith(prefix) ? `${userId}/${url.slice(prefix.length)}` : undefined;
 };
 
-const removeFile = async (path: string | undefined) => {
-  if (path) await avatars().remove([path]);
+const removeFile = async (bucket: Bucket, path: string | undefined) => {
+  if (path) await bucket.remove([path]);
 };
 
 const currentUser = () => {
@@ -119,24 +119,28 @@ const changeAvatar = async (file: File) => {
   const { userId, avatarUrl: previous } = currentUser();
   const { blob, type } = await squareImage(file);
   const path = `${userId}/${crypto.randomUUID()}.${EXTENSIONS[type]}`;
-  const upload = await avatars().upload(path, blob, { contentType: type, cacheControl: CACHE_SECONDS });
+  const supabase = await getSupabase();
+  const bucket = supabase.storage.from(BUCKET);
+  const upload = await bucket.upload(path, blob, { contentType: type, cacheControl: CACHE_SECONDS });
   if (upload.error) throw new AvatarError(AvatarProblem.enum.saveFailed);
-  const avatarUrl = avatars().getPublicUrl(path).data.publicUrl;
+  const avatarUrl = bucket.getPublicUrl(path).data.publicUrl;
   const { error } = await supabase.from('profiles').update({ avatar_url: avatarUrl }).eq('id', userId);
   if (error) {
-    await removeFile(path);
+    await removeFile(bucket, path);
     throw new AvatarError(AvatarProblem.enum.saveFailed);
   }
   patchAvatar(userId, avatarUrl);
-  await removeFile(ownPath(previous, userId));
+  await removeFile(bucket, ownPath(bucket, previous, userId));
 };
 
 const removeAvatar = async () => {
   const { userId, avatarUrl: previous } = currentUser();
+  const supabase = await getSupabase();
+  const bucket = supabase.storage.from(BUCKET);
   const { data, error } = await supabase.rpc('remove_avatar');
   if (error) throw new AvatarError(AvatarProblem.enum.removeFailed);
   patchAvatar(userId, z.string().nullable().catch(null).parse(data));
-  await removeFile(ownPath(previous, userId));
+  await removeFile(bucket, ownPath(bucket, previous, userId));
 };
 
 type Options<TVariables> = Omit<UseMutationOptions<void, Error, TVariables>, 'mutationFn'>;

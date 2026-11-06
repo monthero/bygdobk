@@ -1,6 +1,6 @@
 import { ShiftBoard } from '~/components/events';
 import { NewsList } from '~/components/news';
-import { NextTraining } from '~/components/training';
+import { NextTraining } from '~/components/training/NextTraining';
 import { PageIntroBase } from '~/components/ui';
 
 import type { StyleKit } from '../types';

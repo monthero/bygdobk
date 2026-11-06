@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import { queryClient } from '~/cms/queryClient';
 import { useIsAdmin, useSessionUserId } from '~/components/auth/hooks';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 import { PROFILE_REF_COLUMNS } from '~/supabase/profile';
 
 import {
@@ -102,6 +102,7 @@ type AllOptions<T> = Omit<UseQueryOptions<AdminMembership[], Error, T, AllKey>, 
 type MutationOptions<TData, TVariables> = Omit<UseMutationOptions<TData, Error, TVariables>, 'mutationFn'>;
 
 const fetchMine = async (userId: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('memberships')
     .select(COLUMNS)
@@ -112,6 +113,7 @@ const fetchMine = async (userId: string) => {
 };
 
 const fetchAll = async () => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('memberships')
     .select(ADMIN_COLUMNS)
@@ -122,6 +124,7 @@ const fetchAll = async () => {
 };
 
 const createMembership = async (input: MembershipInput) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase.from('memberships').insert(toColumns(input)).select(COLUMNS).single();
   if (error) throw toError(error);
   return Membership.parse(data);
@@ -130,6 +133,7 @@ const createMembership = async (input: MembershipInput) => {
 type Update = { id: string; patch: MembershipPatch };
 
 const updateMembership = async ({ id, patch }: Update) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('memberships')
     .update(toColumns(patch))
@@ -141,6 +145,7 @@ const updateMembership = async ({ id, patch }: Update) => {
 };
 
 const requestMembership = async (userId: string | undefined, input: RequestInput) => {
+  const supabase = await getSupabase();
   if (!userId) throw new MembershipError(MembershipProblem.enum.notAllowed);
   const { data, error } = await supabase
     .from('memberships')
@@ -152,12 +157,14 @@ const requestMembership = async (userId: string | undefined, input: RequestInput
 };
 
 const deleteMembership = async (id: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase.from('memberships').delete().eq('id', id).select('id');
   if (error) throw toError(error);
   if (data.length === 0) throw new MembershipError(MembershipProblem.enum.notFound);
 };
 
 const cancelRequest = async (id: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('memberships')
     .delete()
@@ -212,6 +219,7 @@ export const useCancelRequest = (options?: MutationOptions<void, string>) =>
 
 const FoundProfile = z.object({ id: z.uuid(), name: z.string(), email: z.string() }).nullable();
 export const findProfileByEmail = async (email: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('profiles')
     .select('id, name, email')

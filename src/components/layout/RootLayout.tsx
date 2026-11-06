@@ -2,14 +2,14 @@ import { Trans } from '@lingui/react/macro';
 import { AppShell } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Outlet, useRouterState, type RouterState } from '@tanstack/react-router';
-import { useEffect, type FC } from 'react';
+import { lazy, Suspense, useEffect, useState, type FC } from 'react';
 
-import { LoginModal } from '~/components/auth';
 import { usePreferenceSync } from '~/components/auth/preferences';
 import { useStyleKit } from '~/components/styles';
 import { useStandaloneNav } from '~/hooks/useStandaloneNav';
 import type { FileRoutesById } from '~/routeTree.gen';
 import { NavLayout, useSettings } from '~/stores/settings';
+import { useUi } from '~/stores/ui';
 
 import { MobileMenu } from './MobileMenu';
 import { ScrollTitleBar } from './ScrollTitleBar';
@@ -20,6 +20,8 @@ import { SiteNotice } from './SiteNotice';
 import { SponsorStrip } from './SponsorStrip';
 
 import classes from './RootLayout.module.css';
+
+const LoginModal = lazy(() => import('~/components/auth/LoginModal'));
 
 const HEADER = { height: 64 };
 
@@ -41,6 +43,9 @@ export const RootLayout: FC = () => {
   usePreferenceSync();
   const style = useSettings((s) => s.style);
   const { PageDecor } = useStyleKit();
+  const loginOpened = useUi((s) => s.loginOpened);
+  const [loginLoaded, setLoginLoaded] = useState(loginOpened);
+  if (loginOpened && !loginLoaded) setLoginLoaded(true);
 
   useEffect(() => {
     document.documentElement.dataset.style = style;
@@ -78,7 +83,11 @@ export const RootLayout: FC = () => {
       </AppShell>
       <MobileMenu opened={opened} onClose={close} />
       <PageDecor />
-      <LoginModal />
+      {loginLoaded && (
+        <Suspense fallback={null}>
+          <LoginModal />
+        </Suspense>
+      )}
     </>
   );
 };

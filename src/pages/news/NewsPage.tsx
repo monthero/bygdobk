@@ -25,7 +25,7 @@ import {
   type SVGProps,
 } from 'react';
 
-import { useSiteContent, type NewsPost } from '~/cms/content';
+import { useNewsBodies, useSiteContent, type NewsPost } from '~/cms/content';
 import { PageToolbar } from '~/components/layout';
 import { NewsCard } from '~/components/news';
 import { PageIntro, useStyleKit } from '~/components/styles';
@@ -124,7 +124,8 @@ export const NewsPage: FC = () => {
   const trimmed = query.trim();
   const deferredQuery = useDeferredValue(trimmed);
   const searching = news.length > 0 && deferredQuery.length >= MIN_QUERY;
-  const index = useMemo(() => createNewsSearch(news), [news]);
+  const bodies = useNewsBodies({ enabled: trimmed.length > 0 });
+  const index = useMemo(() => createNewsSearch(news, bodies), [news, bodies]);
   const hits = useMemo(
     () => (searching ? searchNews(index, deferredQuery).filter((h) => !kind || h.post.kind === kind) : NO_HITS),
     [index, searching, deferredQuery, kind],

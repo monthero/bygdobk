@@ -31,7 +31,7 @@ import {
 import { isCurrent, isOwn, type Membership } from '~/memberships/model';
 import { useMyMemberships } from '~/memberships/queries';
 import { useUi } from '~/stores/ui';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 
 import { AVATAR_IMAGE_PROPS } from './avatar';
 import { authErrorMessage } from './errors';
@@ -43,6 +43,7 @@ const EDITOR_PARAMS = { _splat: '' };
 const EMPTY_MEMBERSHIPS: Membership[] = [];
 
 const signOut = async () => {
+  const supabase = await getSupabase();
   const { error } = await supabase.auth.signOut({ scope: 'local' });
   if (error) throw error;
 };

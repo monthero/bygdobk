@@ -1,7 +1,10 @@
 import { i18n, type Messages } from '@lingui/core';
 import dayjs from 'dayjs';
 
-import { intlLocale, LOCALE_META, type Locale } from './locales';
+import { contentQuery } from '~/cms/content';
+import { queryClient } from '~/cms/queryClient';
+
+import { intlLocale, isAdminPath, LOCALE_META, type Locale } from './locales';
 
 const DAYJS_LOCALES: Record<Exclude<Locale, 'en'>, () => Promise<unknown>> = {
   nb: () => import('dayjs/locale/nb'),
@@ -20,7 +23,8 @@ const applyDayjs = async (locale: Locale) => {
 const loadCatalog = async (locale: Locale): Promise<Messages> => (await import(`../locales/${locale}.po`)).messages;
 
 export const activateLocale = async (locale: Locale) => {
-  const [messages] = await Promise.all([loadCatalog(locale), applyDayjs(locale)]);
+  const content = isAdminPath(window.location.pathname) ? undefined : queryClient.prefetchQuery(contentQuery(locale));
+  const [messages] = await Promise.all([loadCatalog(locale), applyDayjs(locale), content]);
   i18n.loadAndActivate({ locale, locales: intlLocale(locale), messages });
   document.documentElement.lang = LOCALE_META[locale].lang;
 };

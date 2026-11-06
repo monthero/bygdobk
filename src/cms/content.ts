@@ -1,5 +1,11 @@
 import { useLingui } from '@lingui/react';
-import { queryOptions, useSuspenseQuery, type UseSuspenseQueryOptions } from '@tanstack/react-query';
+import {
+  queryOptions,
+  useQuery,
+  useSuspenseQuery,
+  type UseQueryOptions,
+  type UseSuspenseQueryOptions,
+} from '@tanstack/react-query';
 import { z } from 'zod';
 
 import { Group, PlanAudience, PriceKind } from '~/data/club';
@@ -8,9 +14,10 @@ import { InternalPath, NewsKind } from '~/data/news';
 import { NoticeTone } from '~/data/notice';
 import { SocialPlatform } from '~/data/socials';
 import { currentLocale } from '~/i18n/current';
-import { CONTENT_FALLBACK, DEFAULT_LOCALE, LOCALES, type Locale } from '~/i18n/locales';
+import { CONTENT_FALLBACK, type Locale } from '~/i18n/locales';
 
-import { sanity } from './client';
+import { sanityQuery } from './client';
+import { CONTENT_GROQ, NEWS_BODIES_GROQ, NEWS_BODY_GROQ, PRIVACY_GROQ } from './queries';
 import { queryClient } from './queryClient';
 
 const opt = <T extends z.ZodType>(schema: T) => schema.nullish().transform((v) => v ?? undefined);
@@ -19,17 +26,6 @@ const flag = z
   .boolean()
   .nullish()
   .transform((v) => v ?? false);
-
-const localeOf = <T extends z.ZodType>(value: T) =>
-  z.object({
-    nb: value,
-    en: opt(value),
-    sv: opt(value),
-    da: opt(value),
-    fi: opt(value),
-    is: opt(value),
-    zh: opt(value),
-  });
 
 const listOf = <T extends z.ZodType>(name: string, item: T) =>
   z
@@ -47,7 +43,7 @@ const listOf = <T extends z.ZodType>(name: string, item: T) =>
 const IsoDay = z.iso.date();
 const Time = z.string().regex(/^\d{2}:\d{2}$/);
 
-const LocaleString = localeOf(z.string());
+const LocaleString = z.string();
 const Blocks = z.array(z.looseObject({ _type: z.string(), _key: z.string() }));
 
 const Photo = z.looseObject({
@@ -81,7 +77,6 @@ const NewsPost = z.object({
   title: LocaleString,
   summary: LocaleString,
   banner: opt(Image).catch(undefined),
-  body: localeOf(Blocks),
   eventId: opt(z.string()),
   links: listOf('news link', NewsLink),
 });
@@ -179,133 +174,106 @@ const RawContent = z.object({
   discounts: listOf('discount', Discount),
   board: listOf('board member', BoardMember),
 });
-type RawContent = z.output<typeof RawContent>;
-
-const CONTENT_GROQ = `{
-  "notice": *[_id == "siteSettings"][0].notice,
-  "socials": *[_id == "siteSettings"][0].socials[] { platform, url },
-  "news": *[_type == "newsPost"] | order(date desc) {
-    "slug": slug.current, date, kind, title, summary, body, links,
-    "banner": banner { ..., "lqip": asset->metadata.lqip },
-    "eventId": event._ref
-  },
-  "events": *[_type == "event"] | order(startDate asc) {
-    "id": _id, kind, "slug": slug.current, title, group, groups, startDate, endDate, dateConfirmed, whenText,
-    startTime, endTime, recurrence, description, ownEvent, tip, venue, registrationDeadline, registrationUrl,
-    signupUrl, shifts
-  },
-  "plans": *[_type == "membershipPlan"] | order(order asc) {
-    "id": slug.current, kind, audience, group, name, note, membership, training, perVisit
-  },
-  "discounts": *[_type == "discount"] | order(order asc) { title, body },
-  "board": *[_type == "boardMember"] | order(order asc) { "id": _id, name, role, photo, email, phone }
-}`;
-
-const fetchContent = async ({ signal }: { signal: AbortSignal }) =>
-  RawContent.parse(await sanity.fetch<unknown>(CONTENT_GROQ, {}, { signal }));
-
-const CONTENT_KEY = ['content'] as const;
-const STALE_TIME = 5 * 60_000;
-
-export const contentQuery = queryOptions({ queryKey: CONTENT_KEY, queryFn: fetchContent, staleTime: STALE_TIME });
-
-const RawPrivacyPage = z.object({ title: LocaleString, body: localeOf(Blocks), updatedAt: opt(IsoDay) }).nullable();
-type RawPrivacyPage = z.output<typeof RawPrivacyPage>;
-
-const PRIVACY_GROQ = `*[_id == "privacyPage"][0] { title, body, updatedAt }`;
-
-const fetchPrivacyPage = async ({ signal }: { signal: AbortSignal }) => {
-  const parsed = RawPrivacyPage.safeParse(await sanity.fetch<unknown>(PRIVACY_GROQ, {}, { signal }));
-  if (parsed.success) return parsed.data;
-  console.warn('Skipped an invalid privacy page from Sanity', z.prettifyError(parsed.error));
-  return null;
-};
-
-const PRIVACY_KEY = ['privacyPage'] as const;
-
-export const privacyPageQuery = queryOptions({
-  queryKey: PRIVACY_KEY,
-  queryFn: fetchPrivacyPage,
-  staleTime: STALE_TIME,
-});
-
-type LocaleValue<V> = { nb: V; en?: V; sv?: V; da?: V; fi?: V; is?: V; zh?: V };
-
-type Localized<T> =
-  T extends LocaleValue<infer V>
-    ? V
-    : T extends readonly (infer U)[]
-      ? Localized<U>[]
-      : T extends object
-        ? { [K in keyof T]: Localized<T[K]> }
-        : T;
-
-export type SiteContent = Localized<RawContent>;
+export type SiteContent = z.output<typeof RawContent>;
 export type NewsPost = SiteContent['news'][number];
-export type CmsImageData = Localized<z.output<typeof Image>>;
+export type CmsImageData = z.output<typeof Image>;
 export type ArticleBlocks = z.output<typeof Blocks>;
-export type PrivacyPage = Localized<RawPrivacyPage>;
-
 export type BoardMember = SiteContent['board'][number];
 export type Plan = SiteContent['plans'][number];
 
-const LOCALE_KEYS = new Set<string>(LOCALES);
+const STALE_TIME = 5 * 60_000;
 
-const isLocaleValue = (value: object): value is LocaleValue<unknown> =>
-  'nb' in value && Object.keys(value).every((key) => LOCALE_KEYS.has(key));
+const localeParams = (locale: Locale) => ({ locale, fallback: CONTENT_FALLBACK[locale] });
 
-const isFilled = (value: unknown) => {
-  if (typeof value === 'string') return value.trim() !== '';
-  if (Array.isArray(value)) return value.length > 0;
-  return value !== undefined && value !== null;
-};
+const contentKey = (locale: Locale) => ['content', locale] as const;
 
-const localizeValue = (value: unknown, locale: Locale): unknown => {
-  if (Array.isArray(value)) return value.map((item) => localizeValue(item, locale));
-  if (typeof value !== 'object' || value === null) return value;
-  if (isLocaleValue(value)) {
-    for (const candidate of [locale, CONTENT_FALLBACK[locale]]) {
-      if (isFilled(value[candidate])) return value[candidate];
-    }
-    return value[DEFAULT_LOCALE];
-  }
-  return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, localizeValue(item, locale)]));
-};
+export const contentQuery = (locale: Locale) =>
+  queryOptions({
+    queryKey: contentKey(locale),
+    queryFn: async ({ signal }) =>
+      RawContent.parse(await sanityQuery(CONTENT_GROQ, { params: localeParams(locale), signal })),
+    staleTime: STALE_TIME,
+  });
 
-const localize = <T>(value: T, locale: Locale) => localizeValue(value, locale) as Localized<T>;
-
-export const loadSiteContent = async () => localize(await queryClient.ensureQueryData(contentQuery), currentLocale());
-
-const localeSelects = <T>() => {
-  const selects = new Map<Locale, (raw: T) => Localized<T>>();
-  return (locale: Locale) => {
-    const existing = selects.get(locale);
-    if (existing) return existing;
-    const select = (raw: T) => localize(raw, locale);
-    selects.set(locale, select);
-    return select;
-  };
-};
-
-const contentSelect = localeSelects<RawContent>();
-const privacySelect = localeSelects<RawPrivacyPage>();
+export const loadSiteContent = () => queryClient.ensureQueryData(contentQuery(currentLocale()));
 
 type ContentOptions = Omit<
-  UseSuspenseQueryOptions<RawContent, Error, SiteContent, typeof CONTENT_KEY>,
-  'queryKey' | 'queryFn' | 'select'
+  UseSuspenseQueryOptions<SiteContent, Error, SiteContent, ReturnType<typeof contentKey>>,
+  'queryKey' | 'queryFn'
 >;
 
 export const useSiteContent = (options?: ContentOptions) => {
   useLingui();
-  return useSuspenseQuery({ ...contentQuery, select: contentSelect(currentLocale()), ...options }).data;
+  return useSuspenseQuery({ ...contentQuery(currentLocale()), ...options }).data;
 };
 
+const RawPrivacyPage = z.object({ title: LocaleString, body: Blocks, updatedAt: opt(IsoDay) }).nullable();
+export type PrivacyPage = z.output<typeof RawPrivacyPage>;
+
+const privacyKey = (locale: Locale) => ['privacyPage', locale] as const;
+
+export const privacyPageQuery = (locale: Locale) =>
+  queryOptions({
+    queryKey: privacyKey(locale),
+    queryFn: async ({ signal }) => {
+      const parsed = RawPrivacyPage.safeParse(
+        await sanityQuery(PRIVACY_GROQ, { params: localeParams(locale), signal }),
+      );
+      if (parsed.success) return parsed.data;
+      console.warn('Skipped an invalid privacy page from Sanity', z.prettifyError(parsed.error));
+      return null;
+    },
+    staleTime: STALE_TIME,
+  });
+
 type PrivacyPageOptions = Omit<
-  UseSuspenseQueryOptions<RawPrivacyPage, Error, PrivacyPage, typeof PRIVACY_KEY>,
-  'queryKey' | 'queryFn' | 'select'
+  UseSuspenseQueryOptions<PrivacyPage, Error, PrivacyPage, ReturnType<typeof privacyKey>>,
+  'queryKey' | 'queryFn'
 >;
 
 export const usePrivacyPage = (options?: PrivacyPageOptions) => {
   useLingui();
-  return useSuspenseQuery({ ...privacyPageQuery, select: privacySelect(currentLocale()), ...options }).data;
+  return useSuspenseQuery({ ...privacyPageQuery(currentLocale()), ...options }).data;
+};
+
+const NewsBody = z.object({ body: Blocks.nullish().catch(null) }).nullable();
+
+const NO_BLOCKS: ArticleBlocks = [];
+
+export const newsBodyQuery = (slug: string, locale: Locale) =>
+  queryOptions({
+    queryKey: ['newsBody', slug, locale] as const,
+    queryFn: async ({ signal }) => {
+      const result = await sanityQuery(NEWS_BODY_GROQ, { params: { ...localeParams(locale), slug }, signal });
+      return NewsBody.parse(result)?.body ?? NO_BLOCKS;
+    },
+    staleTime: STALE_TIME,
+  });
+
+export const useNewsBody = (slug: string) => {
+  useLingui();
+  return useSuspenseQuery(newsBodyQuery(slug, currentLocale())).data;
+};
+
+const NewsBodies = z.array(z.object({ slug: z.string(), body: Blocks.nullish().catch(null) }));
+export type NewsBodies = z.output<typeof NewsBodies>;
+
+const newsBodiesKey = (locale: Locale) => ['newsBodies', locale] as const;
+
+const newsBodiesQuery = (locale: Locale) =>
+  queryOptions({
+    queryKey: newsBodiesKey(locale),
+    queryFn: async ({ signal }) =>
+      NewsBodies.parse(await sanityQuery(NEWS_BODIES_GROQ, { params: localeParams(locale), signal })),
+    staleTime: STALE_TIME,
+  });
+
+type NewsBodiesOptions = Omit<
+  UseQueryOptions<NewsBodies, Error, NewsBodies, ReturnType<typeof newsBodiesKey>>,
+  'queryKey' | 'queryFn'
+>;
+
+export const useNewsBodies = (options?: NewsBodiesOptions) => {
+  useLingui();
+  return useQuery({ ...newsBodiesQuery(currentLocale()), ...options }).data;
 };

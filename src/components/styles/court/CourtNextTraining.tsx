@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { NextTraining } from '~/components/training';
+import { NextTraining } from '~/components/training/NextTraining';
 import type { Group } from '~/data/club';
 
 import classes from './CourtNextTraining.module.css';

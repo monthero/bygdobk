@@ -15,6 +15,7 @@ import { membershipSeason, MembershipStatus, type AdminMembership } from '~/memb
 import { useAllMemberships } from '~/memberships/queries';
 import { STAY } from '~/utils/navigation';
 
+import { BoardDatesProvider } from './BoardDatesProvider';
 import { DeclineRequestModal } from './DeclineRequestModal';
 import { DeleteMembershipModal } from './DeleteMembershipModal';
 import { ALL_SEASONS, memberName, MembersTab, seasonById } from './format';
@@ -143,7 +144,7 @@ export const MembersPage: FC = () => {
   const isOpen = (kind: DialogKind) => opened && dialog?.kind === kind;
 
   return (
-    <>
+    <BoardDatesProvider>
       <PageIntro
         eyebrow={<Trans comment="Eyebrow above the page title: the club board">The board</Trans>}
         title={<Trans>Memberships</Trans>}
@@ -294,6 +295,6 @@ export const MembersPage: FC = () => {
         onClose={closeDialog}
         membership={dialog?.membership}
       />
-    </>
+    </BoardDatesProvider>
   );
 };

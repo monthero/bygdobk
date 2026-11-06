@@ -1,11 +1,12 @@
 import { redirect } from '@tanstack/react-router';
 
 import { queryClient } from '~/cms/queryClient';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 
 import { profileQuery } from './hooks';
 
 const isAdmin = async () => {
+  const supabase = await getSupabase();
   const { data } = await supabase.auth.getSession();
   const userId = data.session?.user.id;
   if (!userId) return false;

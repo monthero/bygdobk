@@ -3,7 +3,33 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import Icons from 'unplugin-icons/vite';
-import { defineConfig } from 'vite-plus';
+import { defineConfig, type Plugin } from 'vite-plus';
+
+import { CONTENT_GROQ } from './src/cms/queries.ts';
+import { sanityQueryUrl } from './src/cms/queryUrl.ts';
+import { ADMIN_PATH, CONTENT_FALLBACK } from './src/i18n/locales.ts';
+
+const contentPreload = (): Plugin => {
+  let script = '';
+  return {
+    name: 'bk-content-preload',
+    configResolved: ({ env }) => {
+      const project = { projectId: env.VITE_SANITY_PROJECT_ID, dataset: env.VITE_SANITY_DATASET };
+      const template = sanityQueryUrl(project, CONTENT_GROQ, { locale: '__LOCALE__', fallback: '__FALLBACK__' });
+      script = `(() => {
+  if (\`\${location.pathname}/\`.startsWith('${ADMIN_PATH}/')) return;
+  const lang = document.documentElement.lang;
+  const locale = lang.startsWith('zh') ? 'zh' : lang;
+  const fallback = ${JSON.stringify(CONTENT_FALLBACK)}[locale];
+  if (!fallback) return;
+  const link = Object.assign(document.createElement('link'), { rel: 'preload', as: 'fetch', crossOrigin: 'anonymous' });
+  link.href = ${JSON.stringify(template)}.replace('__LOCALE__', locale).replace('__FALLBACK__', fallback);
+  document.head.append(link);
+})();`;
+    },
+    transformIndexHtml: () => [{ tag: 'script', children: script, injectTo: 'head' }],
+  };
+};
 
 export default defineConfig({
   fmt: {
@@ -53,6 +79,7 @@ export default defineConfig({
       scale: 1,
       customCollections: { bk: FileSystemIconLoader(`${import.meta.dirname}/src/assets/icons`) },
     }),
+    contentPreload(),
   ],
   resolve: { tsconfigPaths: true },
 });

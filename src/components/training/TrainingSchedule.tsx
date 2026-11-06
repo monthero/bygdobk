@@ -1,6 +1,8 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Group as Row, Paper, Stack, Text, Title, UnstyledButton } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
+
+import '@mantine/schedule/styles.css';
 import { Schedule, type ScheduleEventData, type ScheduleLabelsOverride, type ScheduleProps } from '@mantine/schedule';
 import { memo, useCallback, useMemo } from 'react';
 

@@ -2,7 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { Container, Grid, Stack, Text, Title } from '@mantine/core';
 import type { FC } from 'react';
 
-import { NextTraining } from '~/components/training';
+import { NextTraining } from '~/components/training/NextTraining';
 import { PHOTOS } from '~/data/photos';
 
 import { HeroActions } from '../HeroActions';

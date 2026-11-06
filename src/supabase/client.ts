@@ -1,7 +1,7 @@
-import { createClient } from '@supabase/supabase-js';
+const loadClient = async () => (await import('./instance')).supabase;
 
-import { ENV } from '~/env';
+let client: ReturnType<typeof loadClient> | undefined;
 
-export const supabase = createClient(ENV.VITE_SUPABASE_URL, ENV.VITE_SUPABASE_PUBLISHABLE_KEY, {
-  auth: { flowType: 'pkce' },
-});
+export const getSupabase = () => (client ??= loadClient());
+
+export type Supabase = Awaited<ReturnType<typeof getSupabase>>;

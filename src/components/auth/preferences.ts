@@ -9,7 +9,7 @@ import type { Locale } from '~/i18n/locales';
 import { switchLocale } from '~/i18n/switch';
 import { useAuth, type User } from '~/stores/auth';
 import { useSettings, type ColorScheme } from '~/stores/settings';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 
 import { profileKey, useProfile, useSessionUserId } from './hooks';
 
@@ -23,6 +23,7 @@ const toColumns = ({ locale, colorScheme }: Preferences) => ({
 export const savePreferences = async (patch: Preferences) => {
   const userId = useAuth.getState().session?.user.id;
   if (!userId) return;
+  const supabase = await getSupabase();
   const { error } = await supabase.from('profiles').update(toColumns(patch)).eq('id', userId);
   if (error) {
     notifications.show({

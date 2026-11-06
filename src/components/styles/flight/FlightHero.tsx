@@ -2,7 +2,7 @@ import { Trans } from '@lingui/react/macro';
 import { Box, Container, Grid, Stack, Text, Title } from '@mantine/core';
 import { useId, useLayoutEffect, useRef, useState, type FC } from 'react';
 
-import { NextTraining } from '~/components/training';
+import { NextTraining } from '~/components/training/NextTraining';
 
 import { HeroActions } from '../HeroActions';
 import { Shuttle } from './Shuttle';

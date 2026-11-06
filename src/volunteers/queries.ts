@@ -5,7 +5,7 @@ import { z } from 'zod';
 
 import { queryClient } from '~/cms/queryClient';
 import { useIsAdmin, useSessionUserId } from '~/components/auth/hooks';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 import { PROFILE_REF_COLUMNS } from '~/supabase/profile';
 
 import { AdminShiftVolunteer, ShiftCount, ShiftVolunteer, type ShiftCounts, type VolunteerInput } from './model';
@@ -76,6 +76,7 @@ type MutationOptions<TData, TVariables> = Omit<UseMutationOptions<TData, Error, 
 type TakeShift = { eventId: string; shiftKey: string };
 
 const fetchCounts = async (eventId: string): Promise<ShiftCounts> => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .rpc('shift_counts', { p_event_id: eventId })
     .select('shiftKey:shift_key, taken');
@@ -84,6 +85,7 @@ const fetchCounts = async (eventId: string): Promise<ShiftCounts> => {
 };
 
 const fetchMine = async (eventId: string, userId: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('shift_volunteers')
     .select(COLUMNS)
@@ -95,6 +97,7 @@ const fetchMine = async (eventId: string, userId: string) => {
 };
 
 const fetchEventVolunteers = async (eventId: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('shift_volunteers')
     .select(ADMIN_COLUMNS)
@@ -105,6 +108,7 @@ const fetchEventVolunteers = async (eventId: string) => {
 };
 
 const addVolunteer = async (input: VolunteerInput) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('shift_volunteers')
     .insert({
@@ -121,12 +125,14 @@ const addVolunteer = async (input: VolunteerInput) => {
 };
 
 const removeVolunteer = async (id: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase.from('shift_volunteers').delete().eq('id', id).select('id');
   if (error) throw toError(error);
   if (data.length === 0) throw new VolunteerError(VolunteerProblem.enum.notFound);
 };
 
 const updateNote = async ({ id, note }: { id: string; note: string | null }) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('shift_volunteers')
     .update({ note })

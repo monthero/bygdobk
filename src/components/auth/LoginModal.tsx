@@ -4,15 +4,15 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { Alert, Badge, Button, Divider, Group, Modal, Stack, Text, TextInput, ThemeIcon } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useMutation } from '@tanstack/react-query';
-import { memo, useMemo, useState, type FC } from 'react';
+import { memo, useEffect, useMemo, useState, type FC } from 'react';
 import { z } from 'zod';
 
 import { BottomSheet, Check, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, Warning } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Translate } from '~/i18n/current';
-import { useAuth } from '~/stores/auth';
+import { startAuth, useAuth } from '~/stores/auth';
 import { useUi } from '~/stores/ui';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 
 import { authErrorMessage, LOGIN_FAILED } from './errors';
 import { useAuthSettings } from './hooks';
@@ -28,11 +28,13 @@ const loginSchema = (t: Translate) =>
 const SENT_ICON = <EnvelopeSimple width={28} height={28} />;
 
 const sendLink = async (email: string) => {
+  const supabase = await getSupabase();
   const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.href } });
   if (error) throw error;
 };
 
 const continueWithGoogle = async () => {
+  const supabase = await getSupabase();
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: { redirectTo: window.location.href },
@@ -176,6 +178,7 @@ const LoginForm: FC = () => {
 
 export const LoginModal = memo(() => {
   const { t } = useLingui();
+  useEffect(() => void startAuth(), []);
   const opened = useUi((s) => s.loginOpened);
   const mobile = useIsMobile();
 
@@ -198,3 +201,5 @@ export const LoginModal = memo(() => {
     </Modal>
   );
 });
+
+export default LoginModal;

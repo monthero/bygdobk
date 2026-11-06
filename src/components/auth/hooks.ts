@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { ENV } from '~/env';
 import { useAuth, User, type AuthState } from '~/stores/auth';
-import { supabase } from '~/supabase/client';
+import { getSupabase } from '~/supabase/client';
 
 const PROFILE_KEY = 'profile';
 const AUTH_SETTINGS_KEY = 'auth-settings';
@@ -23,6 +23,7 @@ const selectSignedOut = (s: AuthState) => s.ready && !s.session;
 const selectIsAdmin = (user: User) => user.isAdmin;
 
 const fetchProfile = async (id: string) => {
+  const supabase = await getSupabase();
   const { data, error } = await supabase
     .from('profiles')
     .select('name, email, isAdmin:is_admin, locale, colorScheme:color_scheme, avatarUrl:avatar_url')

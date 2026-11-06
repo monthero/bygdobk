@@ -1,7 +1,7 @@
 import Fuse, { type FuseResultMatch, type IFuseOptions } from 'fuse.js';
 import { z } from 'zod';
 
-import type { NewsPost } from '~/cms/content';
+import type { NewsBodies, NewsPost } from '~/cms/content';
 
 const SearchKey = z.enum(['title', 'summary', 'body']);
 
@@ -26,11 +26,13 @@ const blockText = (block: unknown) => {
 
 const bodyText = (body: readonly unknown[]) => body.map(blockText).join('\n');
 
-const SEARCH_OPTIONS: IFuseOptions<NewsPost> = {
+type SearchItem = { post: NewsPost; body: string };
+
+const SEARCH_OPTIONS: IFuseOptions<SearchItem> = {
   keys: [
-    { name: SearchKey.enum.title, weight: 3, getFn: (p) => fold(p.title) },
-    { name: SearchKey.enum.summary, weight: 2, getFn: (p) => fold(p.summary) },
-    { name: SearchKey.enum.body, weight: 1, getFn: (p) => fold(bodyText(p.body)) },
+    { name: SearchKey.enum.title, weight: 3, getFn: (i) => fold(i.post.title) },
+    { name: SearchKey.enum.summary, weight: 2, getFn: (i) => fold(i.post.summary) },
+    { name: SearchKey.enum.body, weight: 1, getFn: (i) => i.body },
   ],
   threshold: 0.35,
   ignoreLocation: true,
@@ -41,7 +43,7 @@ const SEARCH_OPTIONS: IFuseOptions<NewsPost> = {
   tokenMatch: 'all',
 };
 
-type NewsSearch = Fuse<NewsPost>;
+type NewsSearch = Fuse<SearchItem>;
 export type NewsHit = { post: NewsPost; highlight: string[] };
 
 const NO_TERMS: string[] = [];
@@ -53,7 +55,13 @@ const titleTerms = (title: string, matches: readonly FuseResultMatch[] = []) => 
   return ranges.map(([start, end]) => title.slice(origin.at(start) ?? start, (origin.at(end) ?? end) + 1));
 };
 
-export const createNewsSearch = (posts: readonly NewsPost[]): NewsSearch => new Fuse(posts, SEARCH_OPTIONS);
+export const createNewsSearch = (posts: readonly NewsPost[], bodies: NewsBodies = []): NewsSearch => {
+  const bySlug = new Map(bodies.map((b) => [b.slug, b.body]));
+  const items = posts.map((post) => ({ post, body: fold(bodyText(bySlug.get(post.slug) ?? [])) }));
+  return new Fuse(items, SEARCH_OPTIONS);
+};
 
 export const searchNews = (search: NewsSearch, query: string): NewsHit[] =>
-  search.search(fold(query)).map(({ item, matches }) => ({ post: item, highlight: titleTerms(item.title, matches) }));
+  search
+    .search(fold(query))
+    .map(({ item, matches }) => ({ post: item.post, highlight: titleTerms(item.post.title, matches) }));

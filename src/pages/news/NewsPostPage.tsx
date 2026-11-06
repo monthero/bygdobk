@@ -4,7 +4,7 @@ import { getRouteApi, Link } from '@tanstack/react-router';
 import { memo, useMemo, type FC } from 'react';
 
 import { isPast } from '~/cms/calendar';
-import { useSiteContent, type NewsPost } from '~/cms/content';
+import { useNewsBody, useSiteContent, type NewsPost } from '~/cms/content';
 import { EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { ArticleBody, NewsCard } from '~/components/news';
 import { ArrowRight, ArrowUpRight, ClubLogo } from '~/components/ui';
@@ -89,6 +89,7 @@ const EventPointer: FC<{ event: VisitorEvent }> = ({ event }) => {
 const Article = memo<{ post: NewsPost }>(({ post }) => {
   const { i18n } = useLingui();
   const { news, events } = useSiteContent();
+  const body = useNewsBody(post.slug);
   const { newer, older, more } = useMemo(() => neighbors(post, news), [post, news]);
   const linked = post.eventId ? events.find((e) => e.id === post.eventId) : undefined;
   const event = linked && isVisitorEvent(linked) ? linked : undefined;
@@ -118,7 +119,7 @@ const Article = memo<{ post: NewsPost }>(({ post }) => {
           </div>
 
           <article>
-            <ArticleBody blocks={post.body} />
+            <ArticleBody blocks={body} />
           </article>
 
           {pause && <ClosureNotice event={pause} />}
