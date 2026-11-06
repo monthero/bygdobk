@@ -6,6 +6,7 @@ import { CLUB } from '~/data/club';
 import { ENV } from '~/env';
 import { ADMIN_PATH } from '~/i18n/locales';
 
+import { HELP_TOOL } from './help';
 import { PRIVACY_PAGE_ID, SCHEMA_TYPES, SITE_SETTINGS_ID } from './schema';
 
 const THEME = buildTheme({
@@ -45,6 +46,7 @@ export const STUDIO_CONFIG = defineConfig({
   basePath: ADMIN_PATH,
   theme: THEME,
   plugins: [structureTool({ structure })],
+  tools: (tools) => [...tools, HELP_TOOL],
   schema: {
     types: SCHEMA_TYPES,
     templates: (templates) => templates.filter(({ schemaType }) => !SINGLETON_TYPES.has(schemaType)),

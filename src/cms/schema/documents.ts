@@ -353,7 +353,7 @@ export const event = defineType({
       title: 'Sign-up link',
       type: 'url',
       description:
-        'Where volunteers sign up for shifts, for example a Google Sheet. Without it, people write to the board.',
+        'Optional. An outside sign-up sheet, for example a Google Sheet, shown as an extra button. Members can always sign up for shifts on the website.',
       hidden: noShifts,
     }),
     defineField({
