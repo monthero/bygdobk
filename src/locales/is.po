@@ -1,0 +1,2763 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: is\n"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "“We want as many people as possible to enjoy playing badminton!”"
+msgstr "„Við viljum að sem flestir hafi gaman af badminton!“"
+
+#. placeholder {0}: shown.length
+#: src/pages/board/MembersPage.tsx
+msgid "{0, plural, one {# membership} other {# memberships}}"
+msgstr "{0, plural, one {# aðild} other {# aðildir}}"
+
+#. placeholder {0}: hits.length
+#: src/pages/news/NewsPage.tsx
+msgid "{0, plural, one {# post matches} other {# posts match}}"
+msgstr "{0, plural, one {# færsla fannst} other {# færslur fundust}}"
+
+#. placeholder {0}: m.posts.length
+#: src/pages/news/NewsPage.tsx
+msgid "{0, plural, one {# post} other {# posts}}"
+msgstr "{0, plural, one {# færsla} other {# færslur}}"
+
+#. placeholder {0}: shown.length
+#: src/pages/board/MembersPage.tsx
+msgid "{0, plural, one {# request} other {# requests}}"
+msgstr "{0, plural, one {# umsókn} other {# umsóknir}}"
+
+#. placeholder {0}: kr(plan.membership)
+#. placeholder {1}: kr(plan.perVisit)
+#: src/pages/join/JoinPage.tsx
+msgid "{0} + {1} per visit"
+msgstr "{0} + {1} skiptið"
+
+#. placeholder {0}: kr(p.perVisit)
+#: src/pages/membership/MembershipPage.tsx
+msgid "{0} per visit"
+msgstr "{0} skiptið"
+
+#: src/components/events/EventCard.tsx
+msgid "{filled} of {needed} spots filled"
+msgstr "{filled} af {needed} plássum fyllt"
+
+#: src/pages/club/sections.tsx
+msgid "{firstName}'s email address was copied to the clipboard"
+msgstr "Netfang afritað: {firstName}"
+
+#: src/pages/club/sections.tsx
+msgid "{firstName}'s phone number was copied to the clipboard"
+msgstr "Símanúmer afritað: {firstName}"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
+msgstr "{hits, plural, one {# högg} other {# högg}}: {callout}"
+
+#: src/pages/board/MembershipList.tsx
+msgid "{name} is in!"
+msgstr "Nýr félagi: {name}!"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{name} is marked as paid"
+msgstr "Merkt sem greitt: {name}"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "{name} is off the shift"
+msgstr "{name} er ekki lengur á vaktinni"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{name} paid <0>{price}</0>."
+msgstr "{name} greiddi <0>{price}</0>."
+
+#: src/components/events/EventCard.tsx
+msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
+msgstr "{needed, plural, one {Vantar # sjálfboðaliða} other {Vantar # sjálfboðaliða}}"
+
+#. Open spots on a volunteer team, e.g. 2 open
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{open} open"
+msgstr "{open} laus"
+
+#. Shift has more volunteers than spots, e.g. 1 over
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{over} over"
+msgstr "{over} of mörg"
+
+#: src/pages/board/MembersPage.tsx
+msgid "{requestCount} open"
+msgstr "Opnar umsóknir: {requestCount}"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "{shown} is on the shift"
+msgstr "{shown} er á vaktinni"
+
+#. How many spots of a volunteer shift are taken, e.g. 2 of 3
+#. placeholder {0}: shift.spots
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{taken} of {0}"
+msgstr "{taken} af {0}"
+
+#. placeholder {0}: shift.spots
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{taken} of {0} spots taken"
+msgstr "{taken} af {0} plássum tekin"
+
+#. How many spots of a volunteer shift are taken, e.g. 2 of 3
+#: src/components/events/ShiftBoard.tsx
+msgid "{taken} of {spots}"
+msgstr "{taken} af {spots}"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "{taken} of {spots} spots taken"
+msgstr "{taken} af {spots} plássum tekin"
+
+#: src/pages/board/MembersPage.tsx
+msgid "{unpaidCount} not paid"
+msgstr "Ógreitt: {unpaidCount}"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "<0>Ask the board</0> about discounts and support."
+msgstr "<0>Spurðu stjórnina</0> um afslætti og stuðning."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "<0>Write to the board</0> before the new season starts."
+msgstr "<0>Skrifaðu stjórninni</0> áður en nýtt tímabil hefst."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "<0>Write to the board</0>."
+msgstr "<0>Skrifaðu stjórninni</0>."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "404 · Out"
+msgstr "404 · Úti"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "404 · Rally on"
+msgstr "404 · Leikurinn heldur áfram"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "404 · Service fault"
+msgstr "404 · Villa í uppgjöf"
+
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "404 idea"
+msgstr "404-hugmynd"
+
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "404 ideas"
+msgstr "404-hugmyndir"
+
+#. The shuttle hit the racket away from the middle
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "A bit off-center"
+msgstr "Aðeins utan við miðju"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "A child, or someone without an account."
+msgstr "Barn, eða einhver án aðgangs."
+
+#: src/data/photos.ts
+msgid "A coach leading a group session at Bygdøhus"
+msgstr "Þjálfari stýrir hópæfingu í Bygdøhus"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "A court in perspective, the shuttle lands just out."
+msgstr "Völlur í fjarvídd, boltinn lendir rétt utan vallar."
+
+#: src/data/photos.ts
+msgid "A player getting ready to serve"
+msgstr "Leikmaður býr sig undir að gefa upp"
+
+#: src/pages/contact/ContactPage.tsx
+msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
+msgstr "Spurning um æfingar, aðild eða eitthvað annað? Veldu efni og skilaboðin fara til stjórnarinnar."
+
+#: src/data/club.ts
+msgid "A racket"
+msgstr "Spaði"
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket, with players on green courts behind"
+msgstr "Fjaðrabolti á spaða og leikmenn á grænum völlum fyrir aftan"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "A shuttle resting on a badminton racket"
+msgstr "Fjaðrabolti liggur á badmintonspaða"
+
+#: src/data/photos.ts
+msgid "A shuttle resting on a racket in a sports hall"
+msgstr "Fjaðrabolti liggur á spaða í íþróttahúsi"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "A tiny game: keep the shuttle in the air."
+msgstr "Lítill leikur: haltu boltanum á lofti."
+
+#: src/data/club.ts
+msgid "A water bottle"
+msgstr "Vatnsbrúsi"
+
+#: src/pages/club/ClubPage.tsx
+msgid "About the club"
+msgstr "Um klúbbinn"
+
+#. Table column: the user account linked to the membership
+#: src/components/auth/UserMenu.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Account"
+msgstr "Aðgangur"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Account email"
+msgstr "Netfang aðgangsins"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Account menu for {name}"
+msgstr "Aðgangsvalmynd: {name}"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Actions"
+msgstr "Aðgerðir"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Add"
+msgstr "Bæta við"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Add a volunteer"
+msgstr "Bæta við sjálfboðaliða"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Add anyway"
+msgstr "Bæta samt við"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembersPage.tsx
+msgid "Add membership"
+msgstr "Bæta við aðild"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Add person"
+msgstr "Bæta við manneskju"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Add shifts to an event in Sanity, and they show up here."
+msgstr "Bættu vöktum við viðburð í Sanity og þær birtast hér."
+
+#: src/components/events/EventDetails.tsx
+msgid "Add to calendar"
+msgstr "Bæta í dagatal"
+
+#. User role: can edit the site
+#: src/components/auth/ProfileCard.tsx
+msgid "Admin"
+msgstr "Stjórnandi"
+
+#. Training group for adults. Norwegian: Senior (voksne)
+#: src/data/club.ts
+msgid "Adults"
+msgstr "Fullorðnir"
+
+#. placeholder {0}: kr(dropin.membership)
+#: src/pages/home/components/StartCards.tsx
+msgid "after the {0} membership"
+msgstr "eftir félagsgjald upp á {0}"
+
+#. placeholder {0}: kr(trial.membership)
+#: src/pages/home/components/StartCards.tsx
+msgid "Ages 7–12 try half a season for {0}"
+msgstr "7–12 ára prófa hálft tímabil fyrir {0}"
+
+#. Events filter option that shows upcoming and past events
+#: src/pages/events/EventsPage.tsx
+#: src/pages/news/NewsPage.tsx
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "All"
+msgstr "Allt"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "All day"
+msgstr "Allan daginn"
+
+#: src/pages/events/EventPage.tsx
+#: src/pages/home/HomePage.tsx
+msgid "All events"
+msgstr "Allir viðburðir"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "All groups"
+msgstr "Allir hópar"
+
+#: src/pages/home/HomePage.tsx
+#: src/pages/news/components/ArticleHero.tsx
+#: src/pages/news/NewsPostPage.tsx
+msgid "All news"
+msgstr "Allar fréttir"
+
+#. Season filter option
+#: src/pages/board/MembersPage.tsx
+msgid "All seasons"
+msgstr "Öll tímabil"
+
+#. Year filter option that shows events from every year
+#. Year picker while searching, since search covers every year
+#: src/pages/events/EventsPage.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "All years"
+msgstr "Öll ár"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Already a member?"
+msgstr "Ertu þegar félagi?"
+
+#: src/volunteers/queries.ts
+msgid "Already on this shift."
+msgstr "Er þegar á þessari vakt."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Already requested. The board will get back to you."
+msgstr "Umsóknin er þegar send. Stjórnin hefur samband við þig."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "An account holder"
+msgstr "Einhver með aðgang"
+
+#: src/data/photos.ts
+msgid "An empty badminton hall at sunset"
+msgstr "Tómur badmintonsalur við sólsetur"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Approve"
+msgstr "Samþykkja"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Archive"
+msgstr "Safn"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Ask for the code"
+msgstr "Biðja um kóðann"
+
+#: src/pages/news/components/ClosureNotice.tsx
+msgid "Back on court {back}."
+msgstr "Aftur á vellinum: {back}."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Back to the front page"
+msgstr "Aftur á forsíðuna"
+
+#: src/components/styles/classic/ClassicHero.tsx
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/flight/FlightHero.tsx
+msgid "Badminton for everyone at Bygdøhus"
+msgstr "Badminton fyrir alla í Bygdøhus"
+
+#. Payment method
+#: src/pages/board/format.ts
+msgid "Bank transfer"
+msgstr "Millifærsla"
+
+#. Training group for new players. Norwegian: Rekrutt
+#: src/data/club.ts
+msgid "Beginners"
+msgstr "Byrjendur"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Beginners play with a coach"
+msgstr "Byrjendur spila með þjálfara"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Beginners, Junior, Adults or a trial. Not sure? Start as a beginner."
+msgstr "Byrjendur, unglingar, fullorðnir eða prufuaðild. Ekki viss? Byrjaðu í byrjendahópnum."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Best"
+msgstr "Met"
+
+#. Footer decoration: the club name in huge faded letters
+#: src/components/layout/VariantMenu.tsx
+msgid "Big name"
+msgstr "Stórt nafn"
+
+#. Event type: no training, e.g. holidays
+#: src/data/events.ts
+msgid "Break"
+msgstr "Hlé"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
+msgstr "Hlé og niðurfelldar æfingar birtast hér um leið og klúbburinn setur þau inn. Félagar fá þau líka í Spond."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks this season"
+msgstr "Hlé á þessu tímabili"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Bring indoor shoes."
+msgstr "Taktu með innanhússkó."
+
+#. Who sent a membership request, and when
+#: src/pages/board/MembershipList.tsx
+msgid "By {by}, {day}"
+msgstr "Sendandi: {by}, {day}"
+
+#. Role under the author name of a news post
+#: src/data/news.ts
+#: src/pages/news/NewsPage.tsx
+msgid "Bygdø Badmintonklubb"
+msgstr "Bygdø Badmintonklubb"
+
+#: src/pages/club/ClubPage.tsx
+msgid "Bygdø Badmintonklubb is one of Norway’s oldest badminton clubs. We play at Bygdøhus, a private foundation where the club rents court time."
+msgstr "Bygdø Badmintonklubb er einn af elstu badmintonklúbbum Noregs. Við spilum í Bygdøhus, sjálfseignarstofnun þar sem klúbburinn leigir vallartíma."
+
+#: src/components/layout/SiteHeader.tsx
+#: src/components/layout/SiteNavbar.tsx
+msgid "Bygdø Badmintonklubb, front page"
+msgstr "Bygdø Badmintonklubb, forsíða"
+
+#: src/components/ui/SocialLinks.tsx
+msgid "Bygdø BK on {name}"
+msgstr "Bygdø BK á {name}"
+
+#: src/data/photos.ts
+msgid "Bygdøhus seen from the car park"
+msgstr "Bygdøhus séð frá bílastæðinu"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Calendar link"
+msgstr "Dagatalstengill"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Call stands: still not found"
+msgstr "Dómurinn stendur: finnst enn ekki"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Can I try before I join?"
+msgstr "Get ég prófað áður en ég skrái mig?"
+
+#: src/components/auth/errors.ts
+#: src/memberships/queries.ts
+#: src/volunteers/queries.ts
+msgid "Can't reach the server. Check your connection."
+msgstr "Næst ekki samband við netþjóninn. Athugaðu tenginguna."
+
+#. Button that drops your own volunteer shift
+#. Button that drops your own volunteer shift
+#: src/components/events/ShiftBoard.tsx
+#: src/pages/board/DeclineRequestModal.tsx
+#: src/pages/board/DeleteMembershipModal.tsx
+#: src/pages/board/MarkPaidModal.tsx
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Cancel"
+msgstr "Hætta við"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Cancel request"
+msgstr "Draga umsókn til baka"
+
+#. Payment method: paid with a bank card
+#: src/pages/board/format.ts
+msgid "Card"
+msgstr "Kort"
+
+#. Payment method
+#: src/pages/board/format.ts
+msgid "Cash"
+msgstr "Reiðufé"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Category"
+msgstr "Flokkur"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Challenge the call"
+msgstr "Véfengja dóminn"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Challenge: page"
+msgstr "Véfenging: síðan"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Challenge. Checking the replay…"
+msgstr "Véfenging. Skoðum endursýninguna…"
+
+#: src/components/auth/ProfileCard.tsx
+msgid "Change photo"
+msgstr "Skipta um mynd"
+
+#: src/components/auth/ProfileCard.tsx
+msgid "Change your photo"
+msgstr "Skipta um prófílmynd"
+
+#: src/pages/board/LoadError.tsx
+msgid "Check your connection and try again."
+msgstr "Athugaðu tenginguna og reyndu aftur."
+
+#: src/components/auth/LoginModal.tsx
+msgid "Check your email"
+msgstr "Athugaðu tölvupóstinn þinn"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Choose a group"
+msgstr "Veldu hóp"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Choose a membership"
+msgstr "Veldu aðild"
+
+#. Design style name
+#: src/components/layout/VariantMenu.tsx
+msgid "Classic"
+msgstr "Klassískt"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Clear filters"
+msgstr "Hreinsa síur"
+
+#: src/components/ui/SearchInput.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "Clear search"
+msgstr "Hreinsa leit"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Close"
+msgstr "Loka"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Close account menu"
+msgstr "Loka aðgangsvalmynd"
+
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Close language menu"
+msgstr "Loka tungumálavalmynd"
+
+#: src/components/layout/SiteHeader.tsx
+msgid "Close menu"
+msgstr "Loka valmynd"
+
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Close theme menu"
+msgstr "Loka þemavalmynd"
+
+#: src/components/events/EventDetails.tsx
+msgid "Closed {deadline}"
+msgstr "Skráningu lauk {deadline}"
+
+#. Badge when the sign-up deadline is within 3 days
+#: src/components/events/EventDetails.tsx
+msgid "Closing soon"
+msgstr "Lokar fljótlega"
+
+#. News category
+#: src/data/news.ts
+msgid "Club"
+msgstr "Klúbburinn"
+
+#. Color palette name: the orange and black of the club logo
+#: src/components/layout/VariantMenu.tsx
+msgid "Club colors"
+msgstr "Litir klúbbsins"
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Coached"
+msgstr "Með þjálfara"
+
+#: src/data/club.ts
+msgid "Coached sessions for children and teens who have played a bit."
+msgstr "Æfingar með þjálfara fyrir börn og unglinga sem hafa spilað smá."
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Coached training for kids and teens"
+msgstr "Æfingar með þjálfara fyrir börn og unglinga"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Color"
+msgstr "Litur"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Come to training"
+msgstr "Komdu á æfingu"
+
+#. Strip on the news page listing training breaks in the next weeks
+#: src/pages/news/components/ComingUp.tsx
+msgid "Coming up"
+msgstr "Fram undan"
+
+#. Size of text and controls
+#: src/components/layout/VariantMenu.tsx
+msgid "Compact"
+msgstr "Þétt"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Concept preview"
+msgstr "Forskoðun hugmyndar"
+
+#. Main menu
+#: src/components/layout/nav.ts
+msgid "Contact"
+msgstr "Hafa samband"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Contact form: {topic} (from {name})"
+msgstr "Fyrirspurn: {topic} (frá {name})"
+
+#: src/pages/club/ClubPage.tsx
+#: src/pages/contact/ContactPage.tsx
+msgid "Contact us"
+msgstr "Hafðu samband"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Contact: <0>{email}</0>"
+msgstr "Hafðu samband: <0>{email}</0>"
+
+#. Page width: centered column
+#: src/components/layout/VariantMenu.tsx
+msgid "Contained"
+msgstr "Miðjað"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Continue with Google"
+msgstr "Halda áfram með Google"
+
+#. placeholder {0}: member.name
+#: src/pages/club/sections.tsx
+msgid "Copy email address for {0}"
+msgstr "Afrita netfang: {0}"
+
+#: src/components/ui/CopyLinkButton.tsx
+msgid "Copy link"
+msgstr "Afrita tengil"
+
+#. placeholder {0}: member.name
+#: src/pages/club/sections.tsx
+msgid "Copy phone number for {0}"
+msgstr "Afrita símanúmer: {0}"
+
+#: src/components/ui/CopyLinkButton.tsx
+msgid "Could not copy"
+msgstr "Tókst ekki að afrita"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Couldn't load the memberships"
+msgstr "Ekki tókst að sækja aðildirnar"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Couldn't load the spots"
+msgstr "Ekki tókst að sækja plássin"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Couldn't load the volunteers"
+msgstr "Ekki tókst að sækja sjálfboðaliðana"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Couldn't load your membership"
+msgstr "Ekki tókst að sækja aðildina þína"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Couldn't load your shifts"
+msgstr "Ekki tókst að sækja vaktirnar þínar"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Couldn't look up that email. Try again."
+msgstr "Ekki tókst að fletta upp netfanginu. Reyndu aftur."
+
+#: src/components/auth/avatar.ts
+msgid "Couldn't remove your photo. Try again."
+msgstr "Ekki tókst að fjarlægja myndina. Reyndu aftur."
+
+#: src/memberships/queries.ts
+msgid "Couldn't save the membership. Try again."
+msgstr "Ekki tókst að vista aðildina. Reyndu aftur."
+
+#: src/volunteers/queries.ts
+msgid "Couldn't save the shift. Try again."
+msgstr "Ekki tókst að vista vaktina. Reyndu aftur."
+
+#: src/components/auth/preferences.ts
+msgid "Couldn’t save this to your profile. It still works on this device."
+msgstr "Ekki tókst að vista þetta í prófílnum þínum. Það virkar samt á þessu tæki."
+
+#: src/components/auth/avatar.ts
+msgid "Couldn't save your photo. Try again."
+msgstr "Ekki tókst að vista myndina. Reyndu aftur."
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Court 1"
+msgstr "Völlur 1"
+
+#. Design style based on badminton court lines
+#: src/components/layout/VariantMenu.tsx
+msgid "Court lines"
+msgstr "Vallarlínur"
+
+#. Footer decoration: a large faded club logo cut off at the edge
+#: src/components/layout/VariantMenu.tsx
+msgid "Cropped stamp"
+msgstr "Skorinn stimpill"
+
+#. Theme option: dark theme
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Dark"
+msgstr "Dökkt"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Day"
+msgstr "Dagur"
+
+#. Button: say no to a membership request
+#. Button: say no to a membership request
+#: src/pages/board/DeclineRequestModal.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Decline"
+msgstr "Hafna"
+
+#: src/pages/board/DeclineRequestModal.tsx
+msgid "Decline request?"
+msgstr "Hafna umsókn?"
+
+#: src/pages/board/DeclineRequestModal.tsx
+msgid "Decline the request from <0>{name}</0>? It moves to <1>Show declined</1>, where you can undo it."
+msgstr "Hafna umsókn: <0>{name}</0>? Hún fer undir <1>Sýna hafnaðar</1> og þar getur þú afturkallað þetta."
+
+#. Badge: the board said no to this membership request
+#: src/pages/board/MembershipList.tsx
+msgid "Declined"
+msgstr "Hafnað"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Delete"
+msgstr "Eyða"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Delete {name}"
+msgstr "Eyða {name}"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+msgid "Delete membership?"
+msgstr "Eyða aðild?"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+msgid "Delete the membership for <0>{name}</0> in season {season}? You can't undo this."
+msgstr "Eyða aðild á tímabilinu {season}: <0>{name}</0>? Ekki er hægt að afturkalla þetta."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Discounts and help"
+msgstr "Afslættir og aðstoð"
+
+#. Badge on a tournament that has already taken place
+#: src/components/events/EventCard.tsx
+msgid "Done"
+msgstr "Lokið"
+
+#: src/pages/events/EventPage.tsx
+msgid "Done!"
+msgstr "Búið!"
+
+#. Footer decoration: club logo made of small dots
+#: src/components/layout/VariantMenu.tsx
+msgid "Dot pattern"
+msgstr "Punktamynstur"
+
+#. Shown briefly after the calendar file was downloaded
+#: src/components/events/EventDetails.tsx
+msgid "Downloaded"
+msgstr "Sótt"
+
+#. placeholder {0}: kr(dropin.perVisit)
+#: src/pages/home/components/StartCards.tsx
+msgid "Drop in for {0} a visit"
+msgstr "Drop-in: {0} skiptið"
+
+#. placeholder {0}: kr(dropin.perVisit)
+#. placeholder {1}: kr(dropin.membership)
+#. placeholder {2}: kr(seasonFrom)
+#: src/components/styles/HeroActions.tsx
+msgid "Drop-in {0} (+ {1} membership) · Season from {2}"
+msgstr "Drop-in {0} (+ {1} félagsgjald) · Tímabil frá {2}"
+
+#. placeholder {0}: kr(dropin.perVisit)
+#. placeholder {1}: CLUB.vipps
+#: src/pages/home/components/StartCards.tsx
+msgid "Drop-in: Vipps {0} to {1}"
+msgstr "Drop-in: Vipps {0} til {1}"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Edit"
+msgstr "Breyta"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Edit {name}"
+msgstr "Breyta {name}"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Edit membership"
+msgstr "Breyta aðild"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Edit note"
+msgstr "Breyta athugasemd"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Edit note for {name}"
+msgstr "Breyta athugasemd: {name}"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Edit the site"
+msgstr "Breyta vefnum"
+
+#: src/components/auth/LoginModal.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Email"
+msgstr "Netfang"
+
+#: src/components/auth/errors.ts
+msgid "Email login isn't switched on yet."
+msgstr "Innskráning með tölvupósti er ekki virk enn."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "End"
+msgstr "Lok"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "End can't be before start"
+msgstr "Lokadagur má ekki vera á undan upphafsdegi"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Enter a name"
+msgstr "Sláðu inn nafn"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Enter a price"
+msgstr "Sláðu inn verð"
+
+#: src/components/auth/LoginModal.tsx
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Enter a valid email address"
+msgstr "Sláðu inn gilt netfang"
+
+#: src/data/events.ts
+msgid "Enter results, call matches and share information."
+msgstr "Skrá úrslit, kalla upp leiki og miðla upplýsingum."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Enter the account's email"
+msgstr "Sláðu inn netfang aðgangsins"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Enter the player's name"
+msgstr "Sláðu inn nafn leikmannsins"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Enter your child’s name"
+msgstr "Sláðu inn nafn barnsins"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Enter your name"
+msgstr "Sláðu inn nafnið þitt"
+
+#. Short for established, as on the club logo. Norwegian: Etabl.
+#. placeholder {0}: CLUB.founded
+#: src/components/layout/SiteHeader.tsx
+msgid "Est. {0}"
+msgstr "Stofnað {0}"
+
+#. News category
+#: src/data/news.ts
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Event"
+msgstr "Viðburður"
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/events/EventsPage.tsx
+#: src/pages/home/HomePage.tsx
+msgid "Events"
+msgstr "Viðburðir"
+
+#: src/data/contact.ts
+msgid "Events and volunteering"
+msgstr "Viðburðir og sjálfboðavinna"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Every spot is filled. Nice work!"
+msgstr "Öll pláss eru fyllt. Vel gert!"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
+msgstr "Allir sem spila eru félagar. Verð fyrir tímabilið er félagsgjald auk æfingagjalds fyrir hópinn þinn."
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Fault"
+msgstr "Villa"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Fault!"
+msgstr "Villa!"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Fill in the form"
+msgstr "Fylltu út eyðublaðið"
+
+#. Button that looks up an account by email
+#: src/pages/board/MembershipForm.tsx
+msgid "Find"
+msgstr "Finna"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Find the plan that fits you and send a request. The board takes it from there."
+msgstr "Finndu aðild sem hentar þér og sendu umsókn. Stjórnin sér um framhaldið."
+
+#: src/components/layout/MobileMenu.tsx
+msgid "Find us"
+msgstr "Finndu okkur"
+
+#. Color palette name
+#: src/components/layout/VariantMenu.tsx
+msgid "Fjord blue"
+msgstr "Fjarðablár"
+
+#: src/components/ui/SocialLinks.tsx
+msgid "Follow us"
+msgstr "Fylgdu okkur"
+
+#. Variant menu: the decoration in the corner of the page footer
+#: src/components/layout/VariantMenu.tsx
+msgid "Footer mark"
+msgstr "Merki í síðufæti"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Footer menu"
+msgstr "Valmynd í síðufæti"
+
+#. Label: who the membership is for
+#: src/pages/board/MembershipForm.tsx
+msgid "For"
+msgstr "Fyrir"
+
+#: src/data/club.ts
+msgid "For new players, with a coach."
+msgstr "Fyrir nýja leikmenn, með þjálfara."
+
+#. The shuttle hit the racket frame, not the strings
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Frame shot!"
+msgstr "Beint í rammann!"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Free shipping"
+msgstr "Frí sending"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "From {from}"
+msgstr "Gildir frá {from}"
+
+#: src/components/styles/classic/ClassicHero.tsx
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/flight/FlightHero.tsx
+msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
+msgstr "Frá fyrsta högginu upp í alvöru smass. Byrjendur, unglingar og fullorðnir, þrjú kvöld í viku."
+
+#. Volunteer shift with no free spots
+#: src/components/events/ShiftBoard.tsx
+msgid "Full"
+msgstr "Fullt"
+
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+msgid "Full schedule"
+msgstr "Öll stundaskráin"
+
+#. Page width: edge to edge
+#: src/components/layout/VariantMenu.tsx
+msgid "Full width"
+msgstr "Full breidd"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Get in touch"
+msgstr "Hafðu samband"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Get under it and hit it as it drops. Swing on the move to steer."
+msgstr "Komdu þér undir boltann og sláðu hann þegar hann fellur. Sláðu á ferðinni til að stýra."
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Give the club code when you order. Forgot it? Ask the board."
+msgstr "Gefðu upp klúbbkóðann þegar þú pantar. Gleymdirðu honum? Spurðu stjórnina."
+
+#. Color palette name, a soft blue-green
+#: src/components/layout/VariantMenu.tsx
+msgid "Glacier"
+msgstr "Jökull"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Go to season {currentLabel}"
+msgstr "Fara á tímabilið {currentLabel}"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Go to the sign-up form"
+msgstr "Fara á skráningarformið"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Google login isn't switched on yet."
+msgstr "Innskráning með Google er ekki virk enn."
+
+#. Footer decoration: club logo that fades out
+#: src/components/layout/VariantMenu.tsx
+msgid "Gradient"
+msgstr "Dofnun"
+
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Group"
+msgstr "Hópur"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Groups"
+msgstr "Hópar"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Half price on Beginners your first season"
+msgstr "Hálft verð í byrjendahópnum fyrsta tímabilið"
+
+#. Volunteer team that sets up courts and equipment
+#: src/data/events.ts
+msgid "Hall"
+msgstr "Salur"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Hall scoreboard"
+msgstr "Stigatafla salarins"
+
+#: src/pages/club/sections.tsx
+msgid "Has something happened in the club that isn’t okay? You can report it to the Norwegian sports federation, outside the club."
+msgstr "Hefur eitthvað gerst í klúbbnum sem er ekki í lagi? Þú getur látið norska íþróttasambandið vita, utan klúbbsins."
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Heading font"
+msgstr "Leturgerð fyrirsagna"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Hi! Could you send me the Sport Modern member code?"
+msgstr "Hæ! Gætirðu sent mér félagakóðann fyrir Sport Modern?"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Hi! I have a question about paying for my membership."
+msgstr "Hæ! Ég er með spurningu um greiðslu fyrir aðildina mína."
+
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Hi! I'd like to change or end my membership."
+msgstr "Hæ! Mig langar að breyta eða segja upp aðildinni minni."
+
+#: src/pages/events/EventPage.tsx
+msgid "Hi! I'd like to help at {eventTitle}. Let me know where you need a hand."
+msgstr "Hæ! Mig langar að hjálpa til á {eventTitle}. Láttu mig vita hvar ykkur vantar hjálp."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Hi! I'd like to join mid-season. What would the price be?"
+msgstr "Hæ! Mig langar að byrja á miðju tímabili. Hvað myndi það kosta?"
+
+#: src/data/contact.ts
+msgid "Hi! We'd like to hear more about sponsoring the club."
+msgstr "Hæ! Við viljum gjarnan heyra meira um að styrkja klúbbinn."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Hits"
+msgstr "Högg"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "How do I change or end my membership?"
+msgstr "Hvernig breyti ég eða segi upp aðildinni?"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "How it works"
+msgstr "Svona virkar þetta"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "How to join"
+msgstr "Svona gerist þú félagi"
+
+#: src/pages/join/JoinPage.tsx
+msgid "I want to play"
+msgstr "Ég vil spila"
+
+#: src/pages/join/JoinPage.tsx
+msgid "I’m the parent"
+msgstr "Ég er foreldrið"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Included"
+msgstr "Innifalið"
+
+#: src/data/club.ts
+msgid "Indoor shoes"
+msgstr "Innanhússkór"
+
+#: src/components/layout/SiteHeader.tsx
+msgid "Join"
+msgstr "Vertu með"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Join Bygdø Badmintonklubb"
+msgstr "Vertu með í Bygdø Badmintonklubb"
+
+#: src/components/auth/UserMenu.tsx
+#: src/components/layout/MobileMenu.tsx
+#: src/components/layout/PageTitle.tsx
+#: src/components/layout/SiteFooter.tsx
+#: src/components/layout/SiteNavbar.tsx
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/components/styles/HeroActions.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Join the club"
+msgstr "Gerast félagi"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Jump to"
+msgstr "Fara á"
+
+#. Training group for children and teens
+#: src/data/club.ts
+msgid "Junior"
+msgstr "Unglingar"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Just a name"
+msgstr "Bara nafn"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "Keep it up"
+msgstr "Haltu á lofti"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Keep the note to {NOTE_MAX} characters"
+msgstr "Athugasemdin má vera að hámarki {NOTE_MAX} stafir"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Keep-it-up game. Move the racket with the arrow keys and press Space or Enter to hit the shuttle when it falls to the racket."
+msgstr "Leikur: haltu boltanum á lofti. Færðu spaðann með örvatökkunum og ýttu á bilslá eða Enter til að slá boltann þegar hann fellur niður að spaðanum."
+
+#. placeholder {0}: kr(trial.membership)
+#: src/components/styles/HeroActions.tsx
+msgid "Kids 7–12: try half a season for {0}"
+msgstr "Börn 7–12 ára: hálft tímabil til prufu fyrir {0}"
+
+#. Volunteer team that runs the food stand
+#: src/data/events.ts
+msgid "Kiosk"
+msgstr "Sjoppa"
+
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Language"
+msgstr "Tungumál"
+
+#. placeholder {0}: LOCALE_META[current].name
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Language: {0}"
+msgstr "Tungumál: {0}"
+
+#: src/components/layout/LanguageSwitch.tsx
+msgid "Language: {code}"
+msgstr "Tungumál: {code}"
+
+#. Size of text and controls
+#: src/components/layout/VariantMenu.tsx
+msgid "Large"
+msgstr "Stórt"
+
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Last updated {updated}"
+msgstr "Síðast uppfært {updated}"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Latest"
+msgstr "Nýjast"
+
+#. Color palette name
+#: src/components/layout/VariantMenu.tsx
+msgid "Lavender"
+msgstr "Lofnarblóm"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Leave this empty"
+msgstr "Hafðu þetta autt"
+
+#. Theme option: light theme
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Light"
+msgstr "Ljóst"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Link an account"
+msgstr "Tengja aðgang"
+
+#: src/components/ui/CopyLinkButton.tsx
+msgid "Link copied"
+msgstr "Tengill afritaður"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Linked account email"
+msgstr "Netfang tengds aðgangs"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "List"
+msgstr "Listi"
+
+#: src/components/auth/LoginModal.tsx
+#: src/components/auth/UserMenu.tsx
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Log in"
+msgstr "Skrá inn"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Log in to see your membership and your requests."
+msgstr "Skráðu þig inn til að sjá aðildina þína og umsóknirnar þínar."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Log in to send your request"
+msgstr "Skráðu þig inn til að senda umsóknina"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Log in to sign up for volunteer shifts. Board members can edit the site."
+msgstr "Skráðu þig inn til að taka sjálfboðavaktir. Stjórnarmenn geta breytt vefnum."
+
+#: src/components/auth/UserMenu.tsx
+msgid "Log out"
+msgstr "Skrá út"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Logged in as {email}, but your profile didn't load."
+msgstr "Skráð inn með {email}, en ekki tókst að sækja prófílinn þinn."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Looking for the account…"
+msgstr "Leita að aðganginum…"
+
+#: src/components/layout/MobileMenu.tsx
+#: src/components/layout/SiteHeader.tsx
+msgid "Main menu"
+msgstr "Aðalvalmynd"
+
+#: src/pages/board/MarkPaidModal.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Mark as paid"
+msgstr "Merkja sem greitt"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Me"
+msgstr "Ég"
+
+#. Event type, e.g. the annual meeting
+#: src/data/events.ts
+msgid "Meeting"
+msgstr "Fundur"
+
+#. Badge: has a club membership this season
+#: src/components/auth/ProfileCard.tsx
+msgid "Member"
+msgstr "Félagi"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Member deal"
+msgstr "Félagatilboð"
+
+#. Payment method: paid on the external membership website
+#: src/pages/board/format.ts
+msgid "Member site"
+msgstr "Félagavefurinn"
+
+#. Tab: memberships the board has confirmed
+#: src/pages/board/MembersPage.tsx
+msgid "Members"
+msgstr "Félagar"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Members also get up to 20% off at Sport Modern. <0>See the member deal</0>"
+msgstr "Félagar fá líka allt að 20% afslátt hjá Sport Modern. <0>Sjá félagatilboðið</0>"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Members get up to 20% off at Sport Modern."
+msgstr "Félagar fá allt að 20% afslátt hjá Sport Modern."
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/membership/MembershipPage.tsx
+msgid "Membership"
+msgstr "Aðild"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Membership added"
+msgstr "Aðild bætt við"
+
+#: src/data/contact.ts
+msgid "Membership and payment"
+msgstr "Aðild og greiðsla"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Membership and prices"
+msgstr "Aðild og verð"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+msgid "Membership for {name} deleted"
+msgstr "Aðild eytt: {name}"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Membership saved"
+msgstr "Aðild vistuð"
+
+#. Sticky title of the board page that lists memberships
+#: src/components/auth/UserMenu.tsx
+#: src/components/layout/PageTitle.tsx
+#: src/pages/board/MembersPage.tsx
+msgid "Memberships"
+msgstr "Aðildir"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Menu"
+msgstr "Valmynd"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Message"
+msgstr "Skilaboð"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
+msgstr "Misstir af boltanum eftir {hits, plural, one {# högg} other {# högg}}. Ýttu á bilslá til að gefa upp aftur."
+
+#. The shuttle hit the racket away from the middle
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Missed the sweet spot"
+msgstr "Rétt fram hjá miðjunni"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Missed!"
+msgstr "Fram hjá!"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Month"
+msgstr "Mánuður"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "More news"
+msgstr "Fleiri fréttir"
+
+#: src/pages/join/JoinPage.tsx
+msgid "My child"
+msgstr "Barnið mitt"
+
+#: src/components/layout/PageTitle.tsx
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/home/components/StartCards.tsx
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "My membership"
+msgstr "Mín aðild"
+
+#: src/pages/board/MembershipList.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Name"
+msgstr "Nafn"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Name or email"
+msgstr "Nafn eða netfang"
+
+#: src/components/auth/errors.ts
+msgid "New accounts are closed right now."
+msgstr "Ekki er hægt að stofna nýja aðganga núna."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "New best: {best}"
+msgstr "Nýtt met: {best}"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "New events show up in your calendar by themselves."
+msgstr "Nýir viðburðir birtast sjálfkrafa í dagatalinu þínu."
+
+#: src/components/auth/LoginModal.tsx
+msgid "New link sent"
+msgstr "Nýr tengill sendur"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "New to badminton?"
+msgstr "Byrjandi í badminton?"
+
+#: src/pages/news/components/PostPager.tsx
+msgid "Newer post"
+msgstr "Nýrri færsla"
+
+#. Link to news posts from a newer year
+#: src/pages/news/components/YearPager.tsx
+msgid "Newer posts: {newer}"
+msgstr "Nýrri færslur: {newer}"
+
+#. Main menu
+#: src/components/layout/nav.ts
+#: src/pages/home/HomePage.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "News"
+msgstr "Fréttir"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Next"
+msgstr "Næsta"
+
+#: src/components/training/NextTraining.tsx
+msgid "Next training"
+msgstr "Næsta æfing"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Next training: {nextDay}"
+msgstr "Næsta æfing: {nextDay}"
+
+#. placeholder {0}: undated.title
+#: src/pages/home/HomePage.tsx
+msgid "Next up: <0>{0}</0>, date coming soon"
+msgstr "Næst á dagskrá: <0>{0}</0>, dagsetning kemur fljótlega"
+
+#: src/pages/board/MembershipList.tsx
+msgid "No account"
+msgstr "Enginn aðgangur"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "No account with that email"
+msgstr "Enginn aðgangur með þessu netfangi"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "No breaks this season."
+msgstr "Ekkert hlé á þessu tímabili."
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "No challenges left"
+msgstr "Engar véfengingar eftir"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "No coach"
+msgstr "Án þjálfara"
+
+#: src/pages/events/EventsPage.tsx
+msgid "No events match this filter"
+msgstr "Engir viðburðir passa við síuna"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "No events with shifts yet"
+msgstr "Engir viðburðir með vöktum enn"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "No membership yet. Pick a plan and send a request!"
+msgstr "Engin aðild enn. Veldu tegund og sendu umsókn!"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships match"
+msgstr "Engar aðildir fundust"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships this season yet"
+msgstr "Engar aðildir á þessu tímabili enn"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships yet"
+msgstr "Engar aðildir enn"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No open requests. All caught up!"
+msgstr "Engar opnar umsóknir. Allt afgreitt!"
+
+#: src/components/auth/LoginModal.tsx
+msgid "No password needed."
+msgstr "Ekkert lykilorð þarf."
+
+#: src/pages/news/NewsPage.tsx
+msgid "No posts here yet"
+msgstr "Engar færslur hér enn"
+
+#: src/pages/news/NewsPage.tsx
+msgid "No posts match"
+msgstr "Engar færslur fundust"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "No prices here yet. <0>Ask the board</0>"
+msgstr "Engin verð hér enn. <0>Spurðu stjórnina</0>"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No requests match"
+msgstr "Engar umsóknir fundust"
+
+#: src/pages/events/EventPage.tsx
+msgid "No shifts listed yet. Tell the board you can help."
+msgstr "Engar vaktir skráðar enn. Láttu stjórnina vita að þú getur hjálpað."
+
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+#: src/components/training/TrainingSchedule.tsx
+msgid "No training"
+msgstr "Engin æfing"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "No training in the next two weeks"
+msgstr "Engin æfing næstu tvær vikurnar"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "No training times yet."
+msgstr "Engir æfingatímar enn."
+
+#: src/pages/news/components/ClosureNotice.tsx
+msgid "No training: {range}."
+msgstr "Engin æfing: {range}."
+
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/home/components/StartCards.tsx
+msgid "No training: {reason}"
+msgstr "Engin æfing: {reason}"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Nobody yet."
+msgstr "Enginn enn."
+
+#. Footer decoration: nothing
+#: src/components/layout/VariantMenu.tsx
+msgid "None"
+msgstr "Ekkert"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Not paid"
+msgstr "Ógreitt"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Not paid yet"
+msgstr "Ekki greitt enn"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Note"
+msgstr "Athugasemd"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Note for {name}"
+msgstr "Athugasemd: {name}"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Note for {name} saved"
+msgstr "Athugasemd vistuð: {name}"
+
+#: src/pages/events/EventsPage.tsx
+#: src/pages/home/HomePage.tsx
+msgid "Nothing planned yet. New events show up here."
+msgstr "Ekkert á dagskrá enn. Nýir viðburðir birtast hér."
+
+#. Badge on an event that is happening today
+#: src/components/events/EventCard.tsx
+msgid "Now on"
+msgstr "Í gangi"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "off clothes and rackets"
+msgstr "afsláttur af fötum og spöðum"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "off shoes, accessories, bags and shuttles"
+msgstr "afsláttur af skóm, aukahlutum, töskum og boltum"
+
+#: src/pages/news/components/PostPager.tsx
+msgid "Older and newer posts"
+msgstr "Eldri og nýrri færslur"
+
+#: src/pages/news/components/YearPager.tsx
+msgid "Older and newer years"
+msgstr "Eldri og nýrri ár"
+
+#: src/pages/news/components/PostPager.tsx
+msgid "Older post"
+msgstr "Eldri færsla"
+
+#. Link to news posts from an older year
+#: src/pages/news/components/YearPager.tsx
+msgid "Older posts: {older}"
+msgstr "Eldri færslur: {older}"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "On a shift that's gone"
+msgstr "Á vakt sem er horfin"
+
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+msgid "On now"
+msgstr "Í gangi"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "on orders over {limit}"
+msgstr "á pöntunum yfir {limit}"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
+msgstr "Tímabilið er frá ágúst til júní, eins og skólaárið. Byrjarðu á miðju tímabili? <0>Spurðu stjórnina</0> um verðið."
+
+#: src/memberships/queries.ts
+msgid "Only admins can change memberships."
+msgstr "Aðeins stjórnendur geta breytt aðildum."
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Only the board sees this."
+msgstr "Aðeins stjórnin sér þetta."
+
+#. The shuttle hit the racket frame, not the strings
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Oops, rim shot!"
+msgstr "Úps, í rammann!"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Open in calendar app"
+msgstr "Opna í dagatalsforriti"
+
+#: src/components/events/EventDetails.tsx
+#: src/components/ui/AddressLink.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Open in maps"
+msgstr "Opna á korti"
+
+#: src/components/layout/SiteHeader.tsx
+msgid "Open menu"
+msgstr "Opna valmynd"
+
+#. Free play for all members. Norwegian: Fritt spill
+#: src/data/club.ts
+msgid "Open play"
+msgstr "Opnir tímar"
+
+#: src/data/club.ts
+msgid "Open play for all members."
+msgstr "Opnir tímar fyrir alla félaga."
+
+#: src/components/auth/errors.ts
+msgid "Open the link in the same browser you asked for it in."
+msgstr "Opnaðu tengilinn í sama vafra og þú notaðir til að biðja um hann."
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Open the sign-up sheet"
+msgstr "Opna skráningarlistann"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Optional. Usually a parent's account."
+msgstr "Valfrjálst. Oftast aðgangur foreldris."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "or <0>←</0> <1>→</1> and <2>Space</2>"
+msgstr "eða <0>←</0> <1>→</1> og <2>Bilslá</2>"
+
+#: src/data/club.ts
+msgid "Or borrow one at coached sessions"
+msgstr "Eða fáðu spaða lánaðan á æfingum með þjálfara"
+
+#: src/components/auth/LoginModal.tsx
+msgid "or get a link by email"
+msgstr "eða fáðu tengil í tölvupósti"
+
+#. placeholder {0}: CLUB.orgNr
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Org. no. {0}"
+msgstr "Skráningarnr. {0}"
+
+#. Payment method that is none of the listed ones
+#: src/pages/board/format.ts
+msgid "Other"
+msgstr "Annað"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Our members get these discounts at Sport Modern."
+msgstr "Félagar okkar fá þessa afslætti hjá Sport Modern."
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Our partner"
+msgstr "Samstarfsaðili okkar"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
+msgstr "Mótin okkar í Bygdøhus byggja á sjálfboðaliðum. Taktu vakt!"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Out"
+msgstr "Úti"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "Out!"
+msgstr "Úti!"
+
+#. Footer decoration: club logo drawn as thin lines
+#: src/components/layout/VariantMenu.tsx
+msgid "Outline"
+msgstr "Útlína"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Page not found, but the rally isn't over"
+msgstr "Síðan fannst ekki, en leikurinn er ekki búinn"
+
+#. Switch: the membership is paid
+#. Table column: whether and when the membership was paid
+#: src/components/auth/MyMemberships.tsx
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Paid"
+msgstr "Greitt"
+
+#: src/pages/board/PaymentFields.tsx
+msgid "Paid on"
+msgstr "Greiðsludagur"
+
+#. Label for the payment method, like Vipps or cash
+#: src/pages/board/PaymentFields.tsx
+msgid "Paid with"
+msgstr "Greitt með"
+
+#: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/join/JoinPage.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "Parents sign up children under 18."
+msgstr "Foreldrar skrá börn undir 18 ára."
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Partners"
+msgstr "Samstarfsaðilar"
+
+#. Events filter option
+#. Events filter option
+#: src/pages/board/volunteers/VolunteersPage.tsx
+#: src/pages/events/EventsPage.tsx
+msgid "Past"
+msgstr "Liðið"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Pay"
+msgstr "Greiða"
+
+#. Table column: from and to date of the membership
+#: src/pages/board/MembershipList.tsx
+msgid "Period"
+msgstr "Gildistími"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Pick a free shift below and tap Sign up."
+msgstr "Veldu lausa vakt hér fyrir neðan og ýttu á Skrá mig."
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Pick a free shift below. Log in first, it takes a minute."
+msgstr "Veldu lausa vakt hér fyrir neðan. Skráðu þig fyrst inn, það tekur bara mínútu."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Pick a plan"
+msgstr "Veldu tegund"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Pick a plan above to see the price."
+msgstr "Veldu aðild hér fyrir ofan til að sjá verðið."
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "Pick a shift"
+msgstr "Veldu vakt"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Pick a start date"
+msgstr "Veldu upphafsdag"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Pick an end date"
+msgstr "Veldu lokadag"
+
+#: src/pages/board/format.ts
+msgid "Pick how they paid"
+msgstr "Veldu hvernig var greitt"
+
+#: src/pages/board/PaymentFields.tsx
+msgid "Pick one"
+msgstr "Veldu eitt"
+
+#: src/pages/board/format.ts
+msgid "Pick the day they paid"
+msgstr "Veldu greiðsludag"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Pick who is joining above."
+msgstr "Veldu hver er að skrá sig hér fyrir ofan."
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Pick your group on the court"
+msgstr "Veldu hópinn þinn á vellinum"
+
+#. Label: the membership plan, like Adults or Junior
+#. Table column: the membership plan, like Adults or Junior
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Plan"
+msgstr "Tegund"
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Play"
+msgstr "Opnir tímar"
+
+#: src/data/club.ts
+msgid "Play for adult players."
+msgstr "Spilatímar fyrir fullorðna leikmenn."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Play the replay again"
+msgstr "Sjá endursýninguna aftur"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Player name"
+msgstr "Nafn leikmanns"
+
+#: src/data/photos.ts
+msgid "Players training on the courts at Bygdøhus"
+msgstr "Leikmenn á æfingu á völlunum í Bygdøhus"
+
+#. Pling is the sound of the shuttle hitting the racket frame. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Pling! That hit the frame"
+msgstr "Kling! Þetta fór í rammann"
+
+#. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Pock!"
+msgstr "Pomm!"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Point"
+msgstr "Stig"
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Previous"
+msgstr "Fyrri"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Price"
+msgstr "Verð"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Prices and joining"
+msgstr "Verð og skráning"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Prices per season"
+msgstr "Verð á tímabil"
+
+#: src/components/layout/PageTitle.tsx
+#: src/components/layout/SiteFooter.tsx
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Privacy"
+msgstr "Persónuvernd"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Put your name on local badminton at Bygdøhus."
+msgstr "Settu nafnið þitt á badminton í heimabyggð, í Bygdøhus."
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Questions"
+msgstr "Spurningar"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Questions about payment?"
+msgstr "Spurningar um greiðslu?"
+
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Questions about your data? Ask the board, and we’ll answer."
+msgstr "Spurningar um gögnin þín? Spurðu stjórnina og við svörum."
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Rally"
+msgstr "Höggaskipti"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Rally in progress"
+msgstr "Höggaskipti í gangi"
+
+#: src/pages/club/sections.tsx
+msgid "Read about privacy"
+msgstr "Lestu um persónuvernd"
+
+#: src/components/events/EventDetails.tsx
+msgid "Registration closed"
+msgstr "Skráning lokuð"
+
+#. Size of text and controls
+#: src/components/layout/VariantMenu.tsx
+msgid "Regular"
+msgstr "Venjulegt"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "Related event"
+msgstr "Tengdur viðburður"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Remove"
+msgstr "Fjarlægja"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Remove {name}"
+msgstr "Fjarlægja {name}"
+
+#: src/components/auth/ProfileCard.tsx
+msgid "Remove photo"
+msgstr "Fjarlægja mynd"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Remove volunteer?"
+msgstr "Fjarlægja sjálfboðaliða?"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Replay"
+msgstr "Endursýning"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "Replay of a line call: the shuttle flies over the net and lands just past the baseline. The call is out."
+msgstr "Endursýning á línudómi: boltinn flýgur yfir netið og lendir rétt fyrir aftan endalínuna. Dæmt úti."
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Report a concern"
+msgstr "Segðu frá"
+
+#: src/pages/club/sections.tsx
+msgid "Report to the sports federation"
+msgstr "Tilkynna til íþróttasambandsins"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Request a membership"
+msgstr "Sækja um aðild"
+
+#: src/pages/board/DeclineRequestModal.tsx
+msgid "Request from {name} declined"
+msgstr "Umsókn hafnað: {name}"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Request sent!"
+msgstr "Umsókn send!"
+
+#. Badge: membership request waiting for the board
+#. Badge: membership request waiting for the board
+#: src/components/auth/MyMemberships.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Requested"
+msgstr "Sótt um"
+
+#. Tab: membership requests sent from the join page
+#: src/pages/board/MembersPage.tsx
+msgid "Requests"
+msgstr "Umsóknir"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Reviewing…"
+msgstr "Í skoðun…"
+
+#. Corner style
+#: src/components/layout/VariantMenu.tsx
+msgid "Round"
+msgstr "Rúnnað"
+
+#: src/data/events.ts
+msgid "Run the kiosk: waffles, toast and pizza baguettes."
+msgstr "Sjáðu um sjoppuna: vöfflur, grillaðar samlokur og pítsubagettur."
+
+#: src/pages/club/ClubPage.tsx
+msgid "Safe sport"
+msgstr "Öruggt íþróttastarf"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Save"
+msgstr "Vista"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Score: Bygdø {home}, 404 {away}"
+msgstr "Staða: Bygdø {home}, 404 {away}"
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "Scoreboard"
+msgstr "Stigatafla"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Search"
+msgstr "Leita"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Search news"
+msgstr "Leita í fréttum"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Search results"
+msgstr "Leitarniðurstöður"
+
+#: src/pages/board/MembersPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Season"
+msgstr "Tímabil"
+
+#. placeholder {0}: current.label
+#. placeholder {0}: season.label
+#: src/pages/join/JoinPage.tsx
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Season {0}"
+msgstr "Tímabil {0}"
+
+#. Volunteer team that runs the match desk
+#: src/data/events.ts
+msgid "Secretariat"
+msgstr "Mótsstjórn"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "See groups and times"
+msgstr "Sjá hópa og tíma"
+
+#: src/pages/join/JoinPage.tsx
+msgid "See my membership"
+msgstr "Sjá aðildina mína"
+
+#: src/pages/news/NewsPostPage.tsx
+msgid "See the event"
+msgstr "Sjá viðburðinn"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "See who's on each shift, and who we still need."
+msgstr "Sjáðu hverjir eru á hverri vakt og hverja vantar enn."
+
+#: src/components/auth/LoginModal.tsx
+msgid "Send again"
+msgstr "Senda aftur"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Send me a link"
+msgstr "Senda mér tengil"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Send membership request"
+msgstr "Senda umsókn um aðild"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Send message"
+msgstr "Senda skilaboð"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Sending as"
+msgstr "Sent sem"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Sent {sent}"
+msgstr "Sent {sent}"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Serve"
+msgstr "Uppgjöf"
+
+#: src/components/styles/flight/HowToJoin.tsx
+msgid "Serve · Rally · Point"
+msgstr "Uppgjöf · Höggaskipti · Stig"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Service fault: page not found"
+msgstr "Villa í uppgjöf: síðan fannst ekki"
+
+#: src/data/events.ts
+msgid "Set up courts and equipment, count balls and tidy up afterwards."
+msgstr "Settu upp velli og búnað, teldu bolta og taktu til á eftir."
+
+#: src/components/events/ShiftBoard.tsx
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "setup or teardown"
+msgstr "uppsetning eða frágangur"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Shape"
+msgstr "Lögun"
+
+#. Button that opens the phone or browser share menu for a news post
+#: src/pages/news/components/ShareButtons.tsx
+msgid "Share"
+msgstr "Deila"
+
+#. Corner style
+#: src/components/layout/VariantMenu.tsx
+msgid "Sharp"
+msgstr "Hvasst"
+
+#: src/pages/events/EventPage.tsx
+msgid "Shifts come later"
+msgstr "Vaktirnar koma síðar"
+
+#: src/pages/membership/MemberDeal.tsx
+msgid "Shop at Sport Modern"
+msgstr "Verslaðu hjá Sport Modern"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Show"
+msgstr "Sýna"
+
+#: src/pages/events/EventsPage.tsx
+msgid "Show all events"
+msgstr "Sýna alla viðburði"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Show all news"
+msgstr "Sýna allar fréttir"
+
+#. Filter chip: also list membership requests the board said no to
+#: src/pages/board/MembersPage.tsx
+msgid "Show declined"
+msgstr "Sýna hafnaðar"
+
+#. Design style with a flying shuttlecock
+#: src/components/layout/VariantMenu.tsx
+msgid "Shuttle in flight"
+msgstr "Bolti á flugi"
+
+#: src/data/club.ts
+msgid "Shuttles are included at coached sessions."
+msgstr "Boltar eru innifaldir á æfingum með þjálfara."
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Siblings pay half"
+msgstr "Systkini borga hálft verð"
+
+#. Where the main menu sits
+#: src/components/layout/VariantMenu.tsx
+msgid "Sidebar"
+msgstr "Hliðarstika"
+
+#. Button that opens the tournament registration page
+#. Button that takes a volunteer shift
+#: src/components/events/EventDetails.tsx
+#: src/components/events/ShiftBoard.tsx
+msgid "Sign up"
+msgstr "Skrá mig"
+
+#: src/components/events/EventCard.tsx
+#: src/components/events/EventDetails.tsx
+msgid "Sign up by {deadline}"
+msgstr "Skráning til {deadline}"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Sign up your child"
+msgstr "Skráðu barnið þitt"
+
+#: src/pages/home/components/StartCards.tsx
+msgid "Signing up a child?"
+msgstr "Ertu að skrá barn?"
+
+#. placeholder {0}: CLUB.founded
+#: src/pages/club/ClubPage.tsx
+msgid "Since {0}"
+msgstr "Frá {0}"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Size"
+msgstr "Stærð"
+
+#: src/components/layout/RootLayout.tsx
+msgid "Skip to content"
+msgstr "Fara beint í efnið"
+
+#. Event type: party or get-together
+#: src/data/events.ts
+msgid "Social"
+msgstr "Félagslíf"
+
+#. Corner style
+#: src/components/layout/VariantMenu.tsx
+msgid "Soft"
+msgstr "Mjúkt"
+
+#: src/memberships/queries.ts
+#: src/volunteers/queries.ts
+msgid "Some of these details don't add up. Check them and try again."
+msgstr "Sumar upplýsingarnar ganga ekki upp. Athugaðu þær og reyndu aftur."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Someone else"
+msgstr "Einhver annar"
+
+#: src/data/contact.ts
+msgid "Something else"
+msgstr "Eitthvað annað"
+
+#: src/components/auth/errors.ts
+msgid "Something went wrong. Try again."
+msgstr "Eitthvað fór úrskeiðis. Reyndu aftur."
+
+#: src/pages/club/sections.tsx
+msgid "Sponsor the club"
+msgstr "Styrktu klúbbinn"
+
+#: src/data/contact.ts
+msgid "Sponsorship"
+msgstr "Styrktarsamstarf"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Start"
+msgstr "Upphaf"
+
+#. Table column: where a membership request stands, and who sent it
+#: src/pages/board/MembershipList.tsx
+msgid "Status"
+msgstr "Staða"
+
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "Study case"
+msgstr "Rannsókn"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Style"
+msgstr "Stíll"
+
+#. Button that opens the calendar feed options
+#: src/pages/events/SubscribeButton.tsx
+msgid "Subscribe"
+msgstr "Áskrift"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Subscribe to events"
+msgstr "Áskrift að viðburðum"
+
+#: src/components/layout/SiteFooter.tsx
+msgid "Switch color, shape, size, menu and width to compare design variants."
+msgstr "Skiptu um lit, lögun, stærð, valmynd og breidd til að bera saman útgáfur."
+
+#. Theme option: follow the device’s light or dark setting
+#: src/components/layout/ThemeSwitch.tsx
+msgid "System"
+msgstr "Kerfi"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Take <0>{name}</0> off this shift?"
+msgstr "Taka <0>{name}</0> af þessari vakt?"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Tap to serve"
+msgstr "Ýttu til að gefa upp"
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Tap to serve again"
+msgstr "Ýttu til að gefa upp aftur"
+
+#: src/pages/events/EventPage.tsx
+msgid "Thanks to everyone who helped."
+msgstr "Takk til allra sem hjálpuðu til."
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Thanks, {name}!"
+msgstr "Takk, {name}!"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "That didn't go through"
+msgstr "Sending tókst ekki"
+
+#: src/components/auth/errors.ts
+msgid "That email won't work. Try another one."
+msgstr "Þetta netfang virkar ekki. Prófaðu annað."
+
+#: src/components/auth/errors.ts
+msgid "That link didn't work. Get a new one below."
+msgstr "Tengillinn virkaði ekki. Fáðu nýjan hér fyrir neðan."
+
+#: src/components/auth/errors.ts
+msgid "That link has expired. Get a new one below."
+msgstr "Tengillinn er útrunninn. Fáðu nýjan hér fyrir neðan."
+
+#: src/memberships/queries.ts
+msgid "That membership is gone. Someone may have deleted it."
+msgstr "Þessi aðild er ekki lengur til. Einhver gæti hafa eytt henni."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "That one landed out"
+msgstr "Þessi lenti úti"
+
+#: src/components/auth/avatar.ts
+msgid "That photo is over 15 MB. Pick a smaller one."
+msgstr "Myndin er stærri en 15 MB. Veldu minni mynd."
+
+#: src/volunteers/queries.ts
+msgid "That spot is gone. Someone may have removed it."
+msgstr "Þetta pláss er ekki lengur til. Einhver gæti hafa fjarlægt það."
+
+#: src/memberships/queries.ts
+msgid "That's a lot of open requests! Wait for the board to answer first."
+msgstr "Þetta eru margar opnar umsóknir! Bíddu fyrst eftir svari frá stjórninni."
+
+#: src/components/auth/avatar.ts
+msgid "That's not a photo. Pick an image file."
+msgstr "Þetta er ekki mynd. Veldu myndaskrá."
+
+#. Author of a news post: the club board. Norwegian: Styret
+#. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
+#: src/data/news.ts
+#: src/pages/board/MembersPage.tsx
+#: src/pages/board/volunteers/VolunteersPage.tsx
+#: src/pages/club/ClubPage.tsx
+msgid "The board"
+msgstr "Stjórnin"
+
+#: src/pages/join/JoinPage.tsx
+msgid "The board applies any discounts after you sign up."
+msgstr "Stjórnin setur inn afslætti, ef einhverjir eru, eftir að þú skráir þig."
+
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "The board is still writing this page"
+msgstr "Stjórnin er enn að skrifa þessa síðu"
+
+#: src/pages/join/JoinPage.tsx
+msgid "The board will confirm it and let you know about payment."
+msgstr "Stjórnin staðfestir hana og lætur þig vita um greiðslu."
+
+#. Main menu
+#: src/components/layout/nav.ts
+msgid "The club"
+msgstr "Klúbburinn"
+
+#: src/components/auth/UserMenu.tsx
+msgid "The editor has its own login."
+msgstr "Ritillinn er með sína eigin innskráningu."
+
+#: src/pages/study/notfound/concepts/index.ts
+msgid "The hall scoreboard reads 4–04, fault."
+msgstr "Stigatafla salarins sýnir 4–04, villa."
+
+#: src/pages/board/MembershipForm.tsx
+msgid "The price can't be below 0"
+msgstr "Verðið má ekki vera undir 0"
+
+#: src/pages/board/MembershipList.tsx
+msgid "The request from {name} is open again"
+msgstr "Umsókn opin aftur: {name}"
+
+#: src/components/layout/RouteFallbacks.tsx
+msgid "The shuttle got stuck in the net"
+msgstr "Boltinn festist í netinu"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "The umpire looked twice. This page is not on the court. It may have moved, or the link has a typo."
+msgstr "Dómarinn leit tvisvar. Þessi síða er ekki á vellinum. Hún gæti hafa verið færð, eða það er innsláttarvilla í tenglinum."
+
+#: src/pages/events/EventPage.tsx
+msgid "The volunteer shifts open here when the date is set. Members get a message in Spond."
+msgstr "Sjálfboðavaktirnar opnast hér þegar dagsetning er komin. Félagar fá skilaboð í Spond."
+
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Theme"
+msgstr "Þema"
+
+#. placeholder {0}: i18n._(label)
+#: src/components/layout/ThemeSwitch.tsx
+msgid "Theme: {0}"
+msgstr "Þema: {0}"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "These people are on a shift that was removed in Sanity."
+msgstr "Þetta fólk er á vakt sem var fjarlægð í Sanity."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "This is an earlier season. Times may have changed since."
+msgstr "Þetta er eldra tímabil. Tímarnir gætu hafa breyst síðan."
+
+#: src/components/auth/errors.ts
+msgid "This login isn't switched on yet."
+msgstr "Þessi innskráning er ekki virk enn."
+
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "This page is out of play. Keep the shuttle up while you're here, or head back to the club."
+msgstr "Þessi síða er úr leik. Haltu boltanum á lofti á meðan þú ert hér, eða farðu aftur til klúbbsins."
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "This shift is full. Adding one more overbooks it."
+msgstr "Þessi vakt er full. Ef þú bætir einum við verður hún yfirbókuð."
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "This week"
+msgstr "Þessi vika"
+
+#: src/components/styles/court/CourtWeek.tsx
+msgid "This week in the hall"
+msgstr "Þessi vika í salnum"
+
+#: src/pages/study/notfound/NotFoundGallery.tsx
+msgid "Three ways to say “page not found” in badminton. Try them, then pick a favorite."
+msgstr "Þrjár leiðir til að segja „síða fannst ekki“ á badmintonmáli. Prófaðu þær og veldu uppáhald."
+
+#. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Thwack!"
+msgstr "Smell!"
+
+#. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Tock!"
+msgstr "Bamm!"
+
+#. Marker on the events timeline between upcoming and past events
+#: src/components/styles/court/CourtHero.tsx
+#: src/components/styles/court/CourtWeek.tsx
+#: src/pages/events/EventsPage.tsx
+msgid "Today"
+msgstr "Í dag"
+
+#: src/components/auth/errors.ts
+msgid "Too many emails for now. Try again later."
+msgstr "Of margir tölvupóstar í bili. Reyndu aftur síðar."
+
+#: src/components/auth/errors.ts
+msgid "Too many tries. Try again in a bit."
+msgstr "Of margar tilraunir. Reyndu aftur eftir smástund."
+
+#. Where the main menu sits
+#: src/components/layout/VariantMenu.tsx
+msgid "Top bar"
+msgstr "Efsta stika"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Topic"
+msgstr "Efni"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Total"
+msgstr "Samtals"
+
+#. Event type
+#: src/data/events.ts
+msgid "Tournament"
+msgstr "Mót"
+
+#. Event type
+#. Main menu
+#. News category
+#: src/components/layout/nav.ts
+#: src/data/events.ts
+#: src/data/news.ts
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "Training"
+msgstr "Æfingar"
+
+#: src/data/contact.ts
+msgid "Training and groups"
+msgstr "Æfingar og hópar"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Training changes, events, volunteering and club news, with dates."
+msgstr "Breytingar á æfingum, viðburðir, sjálfboðavinna og fréttir úr klúbbnum, með dagsetningum."
+
+#: src/components/styles/court/CourtHero.tsx
+msgid "Training groups"
+msgstr "Æfingahópar"
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Training times"
+msgstr "Æfingatímar"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Training times for this season are coming soon."
+msgstr "Æfingatímar fyrir þetta tímabil koma fljótlega."
+
+#: src/components/training/NextTraining.tsx
+msgid "Training today"
+msgstr "Æfing í dag"
+
+#. Event type: travel to another club’s tournament
+#: src/data/events.ts
+msgid "Trip"
+msgstr "Ferð"
+
+#: src/components/layout/MobileMenu.tsx
+#: src/components/styles/HeroActions.tsx
+#: src/pages/home/components/StartCards.tsx
+msgid "Try a session"
+msgstr "Prófaðu æfingu"
+
+#: src/components/auth/UserMenu.tsx
+#: src/components/events/ShiftBoard.tsx
+#: src/components/layout/RouteFallbacks.tsx
+#: src/pages/board/LoadError.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Try again"
+msgstr "Reyndu aftur"
+
+#. placeholder {0}: CLUB.email
+#: src/pages/contact/ContactSection.tsx
+msgid "Try again, or email us at <0>{0}</0>."
+msgstr "Reyndu aftur, eða sendu okkur tölvupóst á <0>{0}</0>."
+
+#: src/pages/news/NewsPage.tsx
+msgid "Try another category, or see all the news."
+msgstr "Prófaðu annan flokk, eða sjáðu allar fréttirnar."
+
+#: src/data/photos.ts
+msgid "Two rackets and a shuttle on a court line"
+msgstr "Tveir spaðar og fjaðrabolti á vallarlínu"
+
+#: src/pages/study/notfound/concepts/Scoreboard.tsx
+msgid "Umpire"
+msgstr "Dómari"
+
+#. Button: undo declining a membership request
+#: src/pages/board/MembershipList.tsx
+msgid "Undo decline"
+msgstr "Afturkalla höfnun"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Unpaid only"
+msgstr "Aðeins ógreitt"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Until {until}"
+msgstr "Gildir til {until}"
+
+#. Events filter option
+#. Events filter option
+#: src/pages/board/volunteers/VolunteersPage.tsx
+#: src/pages/events/EventsPage.tsx
+msgid "Upcoming"
+msgstr "Fram undan"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Use another email"
+msgstr "Nota annað netfang"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Use other details"
+msgstr "Nota aðrar upplýsingar"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Variants"
+msgstr "Útgáfur"
+
+#. Payment method: the Norwegian mobile payment app
+#: src/pages/board/format.ts
+msgid "Vipps"
+msgstr "Vipps"
+
+#. placeholder {0}: CLUB.vipps
+#: src/pages/membership/MembershipPage.tsx
+msgid "Vipps number {0}"
+msgstr "Vipps-númer {0}"
+
+#. Sticky title of the board page that lists who is on each volunteer shift
+#: src/components/layout/PageTitle.tsx
+#: src/pages/board/volunteers/VolunteersPage.tsx
+#: src/pages/events/EventPage.tsx
+msgid "Volunteer shifts"
+msgstr "Sjálfboðavaktir"
+
+#. News category. Norwegian: Dugnad
+#: src/data/news.ts
+msgid "Volunteering"
+msgstr "Sjálfboðavinna"
+
+#. Board screen for volunteer shifts
+#: src/components/auth/UserMenu.tsx
+msgid "Volunteers"
+msgstr "Sjálfboðaliðar"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Want a shift?"
+msgstr "Viltu taka vakt?"
+
+#: src/pages/club/sections.tsx
+msgid "Want to back badminton at Bygdøhus? We’d love to hear from you."
+msgstr "Viltu styðja badminton í Bygdøhus? Við viljum gjarnan heyra frá þér."
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Want to change or end a membership? <0>Write to the board</0>."
+msgstr "Viltu breyta eða segja upp aðild? <0>Skrifaðu stjórninni</0>."
+
+#: src/pages/events/EventPage.tsx
+msgid "Want to help?"
+msgstr "Viltu hjálpa til?"
+
+#: src/components/layout/SponsorStrip.tsx
+msgid "Want to sponsor the club?"
+msgstr "Viltu styrkja klúbbinn?"
+
+#: src/components/auth/errors.ts
+msgid "We can't send email to that address yet."
+msgstr "Við getum ekki sent tölvupóst á þetta netfang enn."
+
+#: src/pages/study/notfound/concepts/CourtOut.tsx
+msgid "We checked the replay: this page is past the baseline. It may have moved, or the link has a typo."
+msgstr "Við skoðuðum endursýninguna: þessi síða er fyrir aftan endalínuna. Hún gæti hafa verið færð, eða það er innsláttarvilla í tenglinum."
+
+#: src/components/layout/RouteFallbacks.tsx
+msgid "We could not load the page. Check your connection and try again."
+msgstr "Ekki tókst að hlaða síðunni. Athugaðu tenginguna og reyndu aftur."
+
+#: src/components/auth/avatar.ts
+msgid "We couldn't open that photo. Try another one."
+msgstr "Ekki tókst að opna myndina. Prófaðu aðra."
+
+#: src/components/auth/LoginModal.tsx
+msgid "We sent a login link to <0>{email}</0>. Open it in this browser."
+msgstr "Við sendum innskráningartengil á <0>{email}</0>. Opnaðu hann í þessum vafra."
+
+#: src/pages/training/TrainingPage.tsx
+msgid "We train on {weekdays} evenings, from {fromMonth} to {toMonth}."
+msgstr "Við æfum á kvöldin: {weekdays}, frá {fromMonth} til {toMonth}."
+
+#: src/components/training/TrainingSchedule.tsx
+msgid "Week"
+msgstr "Vika"
+
+#. placeholder {0}: now.isoWeek()
+#: src/components/styles/court/CourtWeek.tsx
+msgid "Week {0}"
+msgstr "Vika {0}"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Weekly schedule"
+msgstr "Vikuáætlun"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "What is it about?"
+msgstr "Um hvað snýst þetta?"
+
+#: src/components/training/BringList.tsx
+#: src/pages/membership/MembershipPage.tsx
+msgid "What to bring"
+msgstr "Hvað á að taka með"
+
+#: src/pages/club/sections.tsx
+msgid "What we store about you, why, and who helps us keep it."
+msgstr "Hvað við geymum um þig, af hverju, og hverjir hjálpa okkur að geyma það."
+
+#: src/pages/home/HomePage.tsx
+msgid "Where do you want to start?"
+msgstr "Hvar viltu byrja?"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Who has a membership, and who still needs to pay."
+msgstr "Hverjir eru með aðild og hverjir eiga eftir að borga."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Who is joining?"
+msgstr "Hver er að skrá sig?"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Who to find"
+msgstr "Hverja vantar"
+
+#: src/components/layout/VariantMenu.tsx
+msgid "Width"
+msgstr "Breidd"
+
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/training/TrainingPage.tsx
+msgid "With coach"
+msgstr "Með þjálfara"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Write another message"
+msgstr "Skrifa ný skilaboð"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Write at least a short sentence"
+msgstr "Skrifaðu að minnsta kosti stutta setningu"
+
+#: src/pages/club/sections.tsx
+#: src/pages/events/EventPage.tsx
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Write to the board"
+msgstr "Skrifaðu stjórninni"
+
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/events/EventsPage.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "Year"
+msgstr "Ár"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
+msgstr "Já. Börn geta byrjað með prufuaðild og fullorðnir geta komið í drop-in. Sjáðu verðin hér fyrir ofan."
+
+#: src/memberships/queries.ts
+msgid "You already asked for this one. The board will get back to you."
+msgstr "Þú hefur þegar sótt um þessa. Stjórnin hefur samband við þig."
+
+#: src/pages/join/JoinPage.tsx
+msgid "You already have this one this season."
+msgstr "Þú ert þegar með þessa á þessu tímabili."
+
+#: src/pages/club/sections.tsx
+msgid "You can also talk to a board member you trust."
+msgstr "Þú getur líka talað við stjórnarmann sem þú treystir."
+
+#: src/volunteers/queries.ts
+msgid "You can't change that shift."
+msgstr "Þú getur ekki breytt þessari vakt."
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You helped"
+msgstr "Þú hjálpaðir til"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You helped out"
+msgstr "Þú lagðir hönd á plóg"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "You pay both fees together, by card or Vipps, when the season starts or right after you join."
+msgstr "Þú greiðir bæði gjöldin saman, með korti eða Vipps, þegar tímabilið hefst eða strax eftir að þú skráir þig."
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You're in"
+msgstr "Þú ert með"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You're on"
+msgstr "Vaktirnar þínar"
+
+#: src/components/auth/UserMenu.tsx
+msgid "Your account"
+msgstr "Aðgangurinn þinn"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Your child’s name"
+msgstr "Nafn barnsins"
+
+#: src/pages/club/sections.tsx
+msgid "Your data"
+msgstr "Gögnin þín"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Your memberships"
+msgstr "Aðildirnar þínar"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Your memberships and requests, all in one spot."
+msgstr "Aðildirnar þínar og umsóknir, allt á einum stað."
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Your message is on its way to the board."
+msgstr "Skilaboðin þín eru á leið til stjórnarinnar."
+
+#: src/pages/join/JoinPage.tsx
+msgid "Your pick"
+msgstr "Þitt val"

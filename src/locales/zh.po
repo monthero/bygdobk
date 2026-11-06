@@ -11,32 +11,40 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "“我们希望让更多人享受打羽毛球的乐趣！”"
 
+#. placeholder {0}: shown.length
+#: src/pages/board/MembersPage.tsx
+msgid "{0, plural, one {# membership} other {# memberships}}"
+msgstr "{0, plural, other {#个会员}}"
+
+#. placeholder {0}: hits.length
+#: src/pages/news/NewsPage.tsx
+msgid "{0, plural, one {# post matches} other {# posts match}}"
+msgstr "{0, plural, other {找到#篇文章}}"
+
 #. placeholder {0}: m.posts.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post} other {# posts}}"
 msgstr "{0, plural, one {#篇文章} other {#篇文章}}"
 
-#. placeholder {0}: kr(price.membership)
-#. placeholder {1}: kr(price.perVisit)
+#. placeholder {0}: shown.length
+#: src/pages/board/MembersPage.tsx
+msgid "{0, plural, one {# request} other {# requests}}"
+msgstr "{0, plural, other {#份申请}}"
+
+#. placeholder {0}: kr(plan.membership)
+#. placeholder {1}: kr(plan.perVisit)
 #: src/pages/join/JoinPage.tsx
 msgid "{0} + {1} per visit"
 msgstr "{0}+每次{1}"
-
-#. Volunteer shift spots filled for an event
-#. placeholder {0}: shifts.taken
-#. placeholder {1}: shifts.spots
-#: src/components/events/EventCard.tsx
-msgid "{0} of {1} shifts taken"
-msgstr "{1}个班次已有{0}个被认领"
 
 #. placeholder {0}: kr(p.perVisit)
 #: src/pages/membership/MembershipPage.tsx
 msgid "{0} per visit"
 msgstr "每次{0}"
 
-#: src/pages/join/JoinDone.tsx
-msgid "{firstName} is signed up. See you on court!"
-msgstr "{firstName}报名成功。球场上见！"
+#: src/components/events/EventCard.tsx
+msgid "{filled} of {needed} spots filled"
+msgstr "已报名{filled}/{needed}人"
 
 #: src/pages/club/sections.tsx
 msgid "{firstName}'s email address was copied to the clipboard"
@@ -46,13 +54,83 @@ msgstr "{firstName}的邮箱地址已复制到剪贴板"
 msgid "{firstName}'s phone number was copied to the clipboard"
 msgstr "{firstName}的电话号码已复制到剪贴板"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "{length} of {NOTICE_MAX_LENGTH} characters"
-msgstr "{length}/{NOTICE_MAX_LENGTH}个字符"
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
+msgstr "击球{hits, plural, one {#次} other {#次}}：{callout}"
 
+#: src/pages/board/MembershipList.tsx
+msgid "{name} is in!"
+msgstr "{name}入会啦！"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{name} is marked as paid"
+msgstr "{name}已标记为已付款"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "{name} is off the shift"
+msgstr "{name}已移出班次"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{name} paid <0>{price}</0>."
+msgstr "{name}付了<0>{price}</0>。"
+
+#: src/components/events/EventCard.tsx
+msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
+msgstr "{needed, plural, other {需要#名志愿者}}"
+
+#. Open spots on a volunteer team, e.g. 2 open
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{open} open"
+msgstr "缺{open}人"
+
+#. Shift has more volunteers than spots, e.g. 1 over
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{over} over"
+msgstr "超{over}人"
+
+#: src/pages/board/MembersPage.tsx
+msgid "{requestCount} open"
+msgstr "{requestCount}份待处理"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "{shown} is on the shift"
+msgstr "{shown}已加入班次"
+
+#. How many spots of a volunteer shift are taken, e.g. 2 of 3
+#. placeholder {0}: shift.spots
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{taken} of {0}"
+msgstr "{taken}/{0}"
+
+#. placeholder {0}: shift.spots
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "{taken} of {0} spots taken"
+msgstr "名额已占{taken}/{0}"
+
+#. How many spots of a volunteer shift are taken, e.g. 2 of 3
 #: src/components/events/ShiftBoard.tsx
 msgid "{taken} of {spots}"
 msgstr "{taken}/{spots}"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "{taken} of {spots} spots taken"
+msgstr "名额已占{taken}/{spots}"
+
+#: src/pages/board/MembersPage.tsx
+msgid "{unpaidCount} not paid"
+msgstr "{unpaidCount}个未付款"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "<0>Ask the board</0> about discounts and support."
+msgstr "优惠和补助的事，<0>问问理事会</0>吧。"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "<0>Write to the board</0> before the new season starts."
+msgstr "新赛季开始前，请<0>联系理事会</0>。"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "<0>Write to the board</0>."
+msgstr "<0>联系理事会</0>。"
 
 #: src/pages/study/notfound/concepts/CourtOut.tsx
 msgid "404 · Out"
@@ -75,6 +153,15 @@ msgstr "404创意"
 msgid "404 ideas"
 msgstr "404创意"
 
+#. The shuttle hit the racket away from the middle
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "A bit off-center"
+msgstr "有点偏了"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "A child, or someone without an account."
+msgstr "孩子，或没有账户的人。"
+
 #: src/data/photos.ts
 msgid "A coach leading a group session at Bygdøhus"
 msgstr "教练在Bygdøhus带领小组训练"
@@ -88,16 +175,12 @@ msgid "A player getting ready to serve"
 msgstr "一名球员准备发球"
 
 #: src/pages/contact/ContactPage.tsx
-msgid "A question about training, membership or something else? Pick a topic and your message goes to the right person."
-msgstr "对训练、会员或其他事情有疑问？选一个主题，你的消息就会发给对的人。"
+msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
+msgstr "对训练、会员或其他事情有疑问？选个主题，你的消息就会发给理事会。"
 
 #: src/data/club.ts
 msgid "A racket"
 msgstr "一支球拍"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "A short message at the top of every page, for example about a canceled training."
-msgstr "显示在每个页面顶部的简短消息，比如训练取消的通知。"
 
 #: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
@@ -123,58 +206,70 @@ msgstr "一个水瓶"
 msgid "About the club"
 msgstr "关于俱乐部"
 
-#: src/pages/join/JoinPage.tsx
-msgid "About you"
-msgstr "关于你"
-
+#. Table column: the user account linked to the membership
 #: src/components/auth/UserMenu.tsx
+#: src/pages/board/MembershipList.tsx
 msgid "Account"
 msgstr "账户"
 
-#. placeholder {0}: user.name
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Account email"
+msgstr "账户邮箱"
+
 #: src/components/auth/UserMenu.tsx
-msgid "Account menu for {0}"
-msgstr "{0}的账户菜单"
+msgid "Account menu for {name}"
+msgstr "{name}的账户菜单"
 
-#: src/components/training/AddClosureModal.tsx
-msgid "Add a training break"
-msgstr "添加停训"
+#: src/pages/board/MembershipList.tsx
+msgid "Actions"
+msgstr "操作"
 
-#: src/components/training/AddClosureModal.tsx
-#: src/pages/admin/AdminPage.tsx
-#: src/pages/training/TrainingPage.tsx
-msgid "Add break"
-msgstr "添加停训"
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Add"
+msgstr "添加"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Add a volunteer"
+msgstr "添加志愿者"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Add anyway"
+msgstr "仍然添加"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembersPage.tsx
+msgid "Add membership"
+msgstr "添加会员"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Add person"
+msgstr "添加人员"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Add shifts to an event in Sanity, and they show up here."
+msgstr "在Sanity里给活动添加班次，它们就会显示在这里。"
+
+#: src/components/events/EventDetails.tsx
+msgid "Add to calendar"
+msgstr "添加到日历"
 
 #. User role: can edit the site
-#: src/components/auth/UserMenu.tsx
+#: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "管理员"
-
-#: src/components/auth/UserMenu.tsx
-#: src/pages/admin/AdminPage.tsx
-msgid "Admin panel"
-msgstr "管理面板"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Admins only"
-msgstr "仅限管理员"
-
-#: src/data/club.ts
-msgid "Adult players"
-msgstr "成人球员"
 
 #. Training group for adults. Norwegian: Senior (voksne)
 #: src/data/club.ts
 msgid "Adults"
 msgstr "成人组"
 
-#. placeholder {0}: kr(DROPIN.membership)
+#. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
 msgid "after the {0} membership"
 msgstr "另付{0}会员费"
 
-#. placeholder {0}: kr(TRIAL.membership)
+#. placeholder {0}: kr(trial.membership)
 #: src/pages/home/components/StartCards.tsx
 msgid "Ages 7–12 try half a season for {0}"
 msgstr "7–12岁可用{0}体验半个赛季"
@@ -186,18 +281,9 @@ msgstr "7–12岁可用{0}体验半个赛季"
 msgid "All"
 msgstr "全部"
 
-#. placeholder {0}: i18n._(GROUPS[group].name)
-#: src/pages/join/JoinDone.tsx
-msgid "All {0} times"
-msgstr "{0}的全部时间"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "All day"
 msgstr "全天"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "All edits are reset."
-msgstr "所有修改已重置。"
 
 #: src/pages/events/EventPage.tsx
 #: src/pages/home/HomePage.tsx
@@ -208,18 +294,21 @@ msgstr "全部活动"
 msgid "All groups"
 msgstr "全部组别"
 
-#: src/data/news.ts
-msgid "All members are welcome at the annual meeting."
-msgstr "欢迎所有会员参加年度会员大会。"
-
 #: src/pages/home/HomePage.tsx
 #: src/pages/news/components/ArticleHero.tsx
 #: src/pages/news/NewsPostPage.tsx
 msgid "All news"
 msgstr "全部新闻"
 
+#. Season filter option
+#: src/pages/board/MembersPage.tsx
+msgid "All seasons"
+msgstr "全部赛季"
+
 #. Year filter option that shows events from every year
+#. Year picker while searching, since search covers every year
 #: src/pages/events/EventsPage.tsx
+#: src/pages/news/NewsPage.tsx
 msgid "All years"
 msgstr "全部年份"
 
@@ -227,13 +316,25 @@ msgstr "全部年份"
 msgid "Already a member?"
 msgstr "已经是会员了？"
 
+#: src/volunteers/queries.ts
+msgid "Already on this shift."
+msgstr "已经在这个班次里了。"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Already requested. The board will get back to you."
+msgstr "已经申请过了，理事会会回复你。"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "An account holder"
+msgstr "有账户的人"
+
 #: src/data/photos.ts
 msgid "An empty badminton hall at sunset"
 msgstr "日落时空荡荡的羽毛球馆"
 
-#: src/data/news.ts
-msgid "Annual meeting 2026"
-msgstr "2026年度会员大会"
+#: src/pages/board/MembershipList.tsx
+msgid "Approve"
+msgstr "批准"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
@@ -243,23 +344,10 @@ msgstr "存档"
 msgid "Ask for the code"
 msgstr "索取优惠码"
 
-#: src/data/events.ts
-msgid "Autumn 2026"
-msgstr "2026年秋季"
-
-#: src/data/club.ts
-msgid "Autumn break, no organized training"
-msgstr "秋假，没有组织训练"
-
-#: src/pages/join/JoinPage.tsx
-msgid "Back"
-msgstr "返回"
-
 #: src/pages/news/components/ClosureNotice.tsx
 msgid "Back on court {back}."
 msgstr "{back}重返球场。"
 
-#: src/pages/NotFoundPage.tsx
 #: src/pages/study/notfound/concepts/CourtOut.tsx
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
@@ -272,22 +360,15 @@ msgstr "返回首页"
 msgid "Badminton for everyone at Bygdøhus"
 msgstr "在Bygdøhus，人人都能打羽毛球"
 
-#: src/data/events.ts
-msgid "Baking counts too"
-msgstr "烘焙也算"
-
-#: src/data/club.ts
-msgid "Beginner discount"
-msgstr "新手优惠"
+#. Payment method
+#: src/pages/board/format.ts
+msgid "Bank transfer"
+msgstr "银行转账"
 
 #. Training group for new players. Norwegian: Rekrutt
 #: src/data/club.ts
 msgid "Beginners"
 msgstr "新手组"
-
-#: src/data/club.ts
-msgid "Beginners aged 7–12, half a season"
-msgstr "7–12岁新手，半个赛季"
 
 #: src/pages/home/components/StartCards.tsx
 msgid "Beginners play with a coach"
@@ -307,13 +388,10 @@ msgstr "最高纪录"
 msgid "Big name"
 msgstr "大字名称"
 
-#: src/data/news.ts
-msgid "Big things are happening at Bygdøhus: the hall is being set up for the national championships."
-msgstr "Bygdøhus有大事发生：场馆正在为全国锦标赛做准备。"
-
-#: src/data/club.ts
-msgid "Board member"
-msgstr "理事"
+#. Event type: no training, e.g. holidays
+#: src/data/events.ts
+msgid "Break"
+msgstr "停训"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
@@ -323,17 +401,14 @@ msgstr "俱乐部一发布停训和取消通知，就会显示在这里。会员
 msgid "Breaks this season"
 msgstr "本赛季停训"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Breaks you add show on the Training page, in the schedule and in “Next training”. Breaks from the site data are not listed here and cannot be removed."
-msgstr "你添加的停训会显示在训练页面、时间表和“下次训练”中。网站数据中的停训不在这里列出，也无法删除。"
-
-#: src/pages/join/JoinDone.tsx
-msgid "Bring"
-msgstr "带上"
-
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Bring indoor shoes."
 msgstr "请带上室内运动鞋。"
+
+#. Who sent a membership request, and when
+#: src/pages/board/MembershipList.tsx
+msgid "By {by}, {day}"
+msgstr "{by}于{day}提交"
 
 #. Role under the author name of a news post
 #: src/data/news.ts
@@ -358,6 +433,10 @@ msgstr "Bygdø BK的{name}"
 msgid "Bygdøhus seen from the car park"
 msgstr "从停车场看Bygdøhus"
 
+#: src/pages/events/SubscribeButton.tsx
+msgid "Calendar link"
+msgstr "日历链接"
+
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "Call stands: still not found"
 msgstr "判罚维持：还是没找到"
@@ -366,27 +445,40 @@ msgstr "判罚维持：还是没找到"
 msgid "Can I try before I join?"
 msgstr "入会前可以先试试吗？"
 
-#: src/components/training/AddClosureModal.tsx
-#: src/pages/admin/AdminPage.tsx
+#: src/components/auth/errors.ts
+#: src/memberships/queries.ts
+#: src/volunteers/queries.ts
+msgid "Can't reach the server. Check your connection."
+msgstr "连不上服务器，请检查网络。"
+
+#. Button that drops your own volunteer shift
+#. Button that drops your own volunteer shift
+#: src/components/events/ShiftBoard.tsx
+#: src/pages/board/DeclineRequestModal.tsx
+#: src/pages/board/DeleteMembershipModal.tsx
+#: src/pages/board/MarkPaidModal.tsx
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Cancel"
 msgstr "取消"
 
-#: src/components/events/ShiftBoard.tsx
-msgctxt "Leave a volunteer shift"
-msgid "Cancel"
-msgstr "取消"
+#: src/components/auth/MyMemberships.tsx
+msgid "Cancel request"
+msgstr "取消申请"
 
-#: src/components/events/ShiftBoard.tsx
-msgid "Cancel shift: {label}"
-msgstr "取消班次：{label}"
+#. Payment method: paid with a bank card
+#: src/pages/board/format.ts
+msgid "Card"
+msgstr "银行卡"
+
+#. Payment method
+#: src/pages/board/format.ts
+msgid "Cash"
+msgstr "现金"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Category"
 msgstr "类别"
-
-#: src/data/club.ts
-msgid "Chair"
-msgstr "主席"
 
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "Challenge the call"
@@ -400,24 +492,23 @@ msgstr "挑战：页面"
 msgid "Challenge. Checking the replay…"
 msgstr "挑战。正在查看回放…"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Check and send"
-msgstr "检查并发送"
+#: src/components/auth/ProfileCard.tsx
+msgid "Change photo"
+msgstr "更换照片"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Child’s email (optional)"
-msgstr "孩子的邮箱（选填）"
+#: src/components/auth/ProfileCard.tsx
+msgid "Change your photo"
+msgstr "更换你的照片"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Child’s phone (optional)"
-msgstr "孩子的电话（选填）"
+#: src/pages/board/LoadError.tsx
+msgid "Check your connection and try again."
+msgstr "请检查网络后再试一次。"
 
-#: src/data/club.ts
-msgid "Children and teens, coached"
-msgstr "儿童和青少年，有教练"
+#: src/components/auth/LoginModal.tsx
+msgid "Check your email"
+msgstr "查看你的邮箱"
 
 #: src/components/styles/flight/HowToJoin.tsx
-#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Choose a group"
 msgstr "选择组别"
@@ -426,14 +517,23 @@ msgstr "选择组别"
 msgid "Choose a membership"
 msgstr "选择会员类型"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Choose who is joining"
-msgstr "选择谁要入会"
-
 #. Design style name
 #: src/components/layout/VariantMenu.tsx
 msgid "Classic"
 msgstr "经典"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Clear filters"
+msgstr "清除筛选"
+
+#: src/components/ui/SearchInput.tsx
+#: src/pages/news/NewsPage.tsx
+msgid "Clear search"
+msgstr "清除搜索"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Close"
+msgstr "关闭"
 
 #: src/components/auth/UserMenu.tsx
 msgid "Close account menu"
@@ -451,14 +551,19 @@ msgstr "关闭菜单"
 msgid "Close theme menu"
 msgstr "关闭主题菜单"
 
+#: src/components/events/EventDetails.tsx
+msgid "Closed {deadline}"
+msgstr "{deadline}已截止"
+
+#. Badge when the sign-up deadline is within 3 days
+#: src/components/events/EventDetails.tsx
+msgid "Closing soon"
+msgstr "即将截止"
+
 #. News category
 #: src/data/news.ts
 msgid "Club"
 msgstr "俱乐部"
-
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-msgid "Club champion!"
-msgstr "俱乐部冠军！"
 
 #. Color palette name: the orange and black of the club logo
 #: src/components/layout/VariantMenu.tsx
@@ -500,15 +605,14 @@ msgstr "紧凑"
 msgid "Concept preview"
 msgstr "概念预览"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Confirm"
-msgstr "确认"
-
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/NotFoundPage.tsx
 msgid "Contact"
 msgstr "联系"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Contact form: {topic} (from {name})"
+msgstr "联系表单：{topic}（来自{name}）"
 
 #: src/pages/club/ClubPage.tsx
 #: src/pages/contact/ContactPage.tsx
@@ -525,19 +629,15 @@ msgid "Contained"
 msgstr "居中"
 
 #: src/components/auth/LoginModal.tsx
-msgid "Continue as admin"
-msgstr "以管理员身份继续"
-
-#: src/components/auth/LoginModal.tsx
-msgid "Continue as member"
-msgstr "以会员身份继续"
+msgid "Continue with Google"
+msgstr "使用Google继续"
 
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy email address for {0}"
 msgstr "复制{0}的邮箱地址"
 
-#: src/pages/news/components/ShareButtons.tsx
+#: src/components/ui/CopyLinkButton.tsx
 msgid "Copy link"
 msgstr "复制链接"
 
@@ -546,9 +646,53 @@ msgstr "复制链接"
 msgid "Copy phone number for {0}"
 msgstr "复制{0}的电话号码"
 
-#: src/pages/news/components/ShareButtons.tsx
+#: src/components/ui/CopyLinkButton.tsx
 msgid "Could not copy"
 msgstr "无法复制"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Couldn't load the memberships"
+msgstr "会员名单加载失败"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Couldn't load the spots"
+msgstr "名额加载失败"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Couldn't load the volunteers"
+msgstr "志愿者加载失败"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Couldn't load your membership"
+msgstr "你的会员信息加载失败"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Couldn't load your shifts"
+msgstr "你的班次加载失败"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Couldn't look up that email. Try again."
+msgstr "邮箱查询失败，请再试一次。"
+
+#: src/components/auth/avatar.ts
+msgid "Couldn't remove your photo. Try again."
+msgstr "照片删除失败，请再试一次。"
+
+#: src/memberships/queries.ts
+msgid "Couldn't save the membership. Try again."
+msgstr "会员保存失败，请再试一次。"
+
+#: src/volunteers/queries.ts
+msgid "Couldn't save the shift. Try again."
+msgstr "班次保存失败，请再试一次。"
+
+#: src/components/auth/preferences.ts
+msgid "Couldn’t save this to your profile. It still works on this device."
+msgstr "没能保存到你的个人资料，但在这台设备上仍然有效。"
+
+#: src/components/auth/avatar.ts
+msgid "Couldn't save your photo. Try again."
+msgstr "照片保存失败，请再试一次。"
 
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "Court 1"
@@ -569,33 +713,46 @@ msgstr "裁切印章"
 msgid "Dark"
 msgstr "深色"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Date of birth"
-msgstr "出生日期"
-
-#: src/components/training/AddClosureModal.tsx
-msgid "Dates"
-msgstr "日期"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Day"
 msgstr "星期"
 
-#: src/components/training/ClosureList.tsx
-msgid "Delete break"
-msgstr "删除停训"
+#. Button: say no to a membership request
+#. Button: say no to a membership request
+#: src/pages/board/DeclineRequestModal.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Decline"
+msgstr "拒绝"
 
-#: src/components/training/ClosureList.tsx
-msgid "Delete break: {reason}"
-msgstr "删除停训：{reason}"
+#: src/pages/board/DeclineRequestModal.tsx
+msgid "Decline request?"
+msgstr "拒绝申请？"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Discard changes"
-msgstr "放弃修改"
+#: src/pages/board/DeclineRequestModal.tsx
+msgid "Decline the request from <0>{name}</0>? It moves to <1>Show declined</1>, where you can undo it."
+msgstr "拒绝<0>{name}</0>的申请吗？它会移到<1>显示已拒绝</1>里，你可以在那里撤销。"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Discounts (siblings, first season) are applied by the board."
-msgstr "优惠（兄弟姐妹、第一个赛季）由理事会添加。"
+#. Badge: the board said no to this membership request
+#: src/pages/board/MembershipList.tsx
+msgid "Declined"
+msgstr "已拒绝"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Delete"
+msgstr "删除"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Delete {name}"
+msgstr "删除{name}"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+msgid "Delete membership?"
+msgstr "删除会员？"
+
+#: src/pages/board/DeleteMembershipModal.tsx
+msgid "Delete the membership for <0>{name}</0> in season {season}? You can't undo this."
+msgstr "删除<0>{name}</0>在{season}赛季的会员吗？删除后无法恢复。"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Discounts and help"
@@ -615,111 +772,104 @@ msgstr "完成！"
 msgid "Dot pattern"
 msgstr "点阵图案"
 
-#. placeholder {0}: kr(DROPIN_VISIT)
+#. Shown briefly after the calendar file was downloaded
+#: src/components/events/EventDetails.tsx
+msgid "Downloaded"
+msgstr "已下载"
+
+#. placeholder {0}: kr(dropin.perVisit)
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop in for {0} a visit"
 msgstr "单次参加，每次{0}"
 
-#: src/data/club.ts
-msgid "Drop-in"
-msgstr "单次参加"
-
-#. placeholder {0}: kr(DROPIN_VISIT)
-#. placeholder {1}: kr(DROPIN.membership)
-#. placeholder {2}: kr(SEASON_FROM)
+#. placeholder {0}: kr(dropin.perVisit)
+#. placeholder {1}: kr(dropin.membership)
+#. placeholder {2}: kr(seasonFrom)
 #: src/components/styles/HeroActions.tsx
 msgid "Drop-in {0} (+ {1} membership) · Season from {2}"
 msgstr "单次参加{0}（另付{1}会员费）· 整个赛季{2}起"
 
-#. placeholder {0}: kr(DROPIN_VISIT)
+#. placeholder {0}: kr(dropin.perVisit)
 #. placeholder {1}: CLUB.vipps
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "单次参加：用Vipps付{0}到{1}"
 
-#: src/components/auth/UserMenu.tsx
-msgid "Edit content on the pages"
-msgstr "编辑页面内容"
+#: src/pages/board/MembershipList.tsx
+msgid "Edit"
+msgstr "编辑"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Edit {name}"
+msgstr "编辑{name}"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Edit membership"
+msgstr "编辑会员"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Edit note"
+msgstr "编辑备注"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Edit note for {name}"
+msgstr "编辑{name}的备注"
 
 #: src/components/auth/UserMenu.tsx
-#: src/pages/admin/AdminPage.tsx
-msgid "Edit mode"
-msgstr "编辑模式"
-
-#: src/components/auth/EditModeAffix.tsx
-msgid "Edit mode is on"
-msgstr "编辑模式已开启"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Edit the site content. In this demo, changes are saved in this browser only."
-msgstr "编辑网站内容。在这个演示版中，修改只保存在当前浏览器里。"
+msgid "Edit the site"
+msgstr "编辑网站"
 
 #: src/components/auth/LoginModal.tsx
 #: src/pages/contact/ContactSection.tsx
-#: src/pages/join/JoinPage.tsx
 msgid "Email"
 msgstr "邮箱"
 
-#: src/pages/club/sections.tsx
-msgid "Email the board"
-msgstr "给理事会发邮件"
+#: src/components/auth/errors.ts
+msgid "Email login isn't switched on yet."
+msgstr "邮箱登录还没开通。"
 
-#. placeholder {0}: CLUB.email
-#: src/data/news.ts
-msgid "Email the board at {0}."
-msgstr "发邮件到{0}联系理事会。"
+#: src/pages/board/MembershipForm.tsx
+msgid "End"
+msgstr "结束"
 
-#. placeholder {0}: CLUB.email
-#: src/pages/membership/MembershipPage.tsx
-msgid "Email the board at <0>{0}</0>."
-msgstr "发邮件到<0>{0}</0>联系理事会。"
+#: src/pages/board/MembershipForm.tsx
+msgid "End can't be before start"
+msgstr "结束日期不能早于开始日期"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Enter a date of birth"
-msgstr "请输入出生日期"
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Enter a name"
+msgstr "请输入姓名"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Enter a first name"
-msgstr "请输入名字"
-
-#: src/pages/join/JoinPage.tsx
-msgid "Enter a last name"
-msgstr "请输入姓氏"
-
-#: src/pages/join/JoinPage.tsx
-msgid "Enter a phone number with at least 8 digits"
-msgstr "请输入至少8位数的电话号码"
+#: src/pages/board/MembershipForm.tsx
+msgid "Enter a price"
+msgstr "请输入价格"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
-#: src/pages/join/JoinPage.tsx
 msgid "Enter a valid email address"
 msgstr "请输入有效的邮箱地址"
-
-#: src/components/auth/LoginModal.tsx
-msgid "Enter any password"
-msgstr "随便输入一个密码"
 
 #: src/data/events.ts
 msgid "Enter results, call matches and share information."
 msgstr "录入比分、叫场和发布信息。"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Enter the name of a parent"
-msgstr "请输入一位家长的姓名"
+#: src/pages/board/MembershipForm.tsx
+msgid "Enter the account's email"
+msgstr "请输入账户邮箱"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Enter the player's name"
+msgstr "请输入球员姓名"
 
 #: src/pages/join/JoinPage.tsx
-msgid "Enter the parent’s phone number"
-msgstr "请输入家长的电话号码"
+msgid "Enter your child’s name"
+msgstr "请输入孩子的姓名"
 
 #: src/pages/contact/ContactSection.tsx
-#: src/pages/join/JoinPage.tsx
 msgid "Enter your name"
 msgstr "请输入你的姓名"
-
-#: src/pages/NotFoundPage.tsx
-msgid "Error 404"
-msgstr "错误404"
 
 #. Short for established, as on the club logo. Norwegian: Etabl.
 #. placeholder {0}: CLUB.founded
@@ -729,6 +879,7 @@ msgstr "创立于{0}"
 
 #. News category
 #: src/data/news.ts
+#: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Event"
 msgstr "活动"
 
@@ -739,9 +890,13 @@ msgstr "活动"
 msgid "Events"
 msgstr "活动"
 
-#: src/pages/contact/ContactSection.tsx
+#: src/data/contact.ts
 msgid "Events and volunteering"
 msgstr "活动和志愿服务"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Every spot is filled. Nice work!"
+msgstr "名额全满了，干得漂亮！"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
@@ -760,25 +915,18 @@ msgstr "失误！"
 msgid "Fill in the form"
 msgstr "填写表格"
 
-#: src/data/club.ts
-msgid "Finance"
-msgstr "财务"
+#. Button that looks up an account by email
+#: src/pages/board/MembershipForm.tsx
+msgid "Find"
+msgstr "查找"
 
-#: src/data/club.ts
-msgid "Financial support"
-msgstr "经济资助"
+#: src/pages/join/JoinPage.tsx
+msgid "Find the plan that fits you and send a request. The board takes it from there."
+msgstr "找到适合你的会员类型，发送申请，剩下的交给理事会。"
 
 #: src/components/layout/MobileMenu.tsx
 msgid "Find us"
 msgstr "找到我们"
-
-#: src/pages/join/JoinPage.tsx
-msgid "First name"
-msgstr "名字"
-
-#: src/pages/join/JoinDone.tsx
-msgid "First training"
-msgstr "第一次训练"
 
 #. Color palette name
 #: src/components/layout/VariantMenu.tsx
@@ -798,25 +946,27 @@ msgstr "页脚装饰"
 msgid "Footer menu"
 msgstr "页脚菜单"
 
-#: src/data/club.ts
-msgid "For breaks, or parents of players"
-msgstr "休息时用，或给球员家长"
-
-#: src/components/training/AddClosureModal.tsx
-msgid "For example: Hall closed for maintenance"
-msgstr "例如：场馆维修，暂停开放"
+#. Label: who the membership is for
+#: src/pages/board/MembershipForm.tsx
+msgid "For"
+msgstr "给谁"
 
 #: src/data/club.ts
 msgid "For new players, with a coach."
 msgstr "适合新球员，有教练。"
 
+#. The shuttle hit the racket frame, not the strings
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Frame shot!"
+msgstr "拍框球！"
+
 #: src/pages/membership/MemberDeal.tsx
 msgid "Free shipping"
 msgstr "免运费"
 
-#: src/components/training/ClosureList.tsx
-msgid "From site"
-msgstr "来自网站"
+#: src/components/auth/MyMemberships.tsx
+msgid "From {from}"
+msgstr "{from}起生效"
 
 #: src/components/styles/classic/ClassicHero.tsx
 #: src/components/styles/court/CourtHero.tsx
@@ -824,6 +974,7 @@ msgstr "来自网站"
 msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
 msgstr "从第一次挥拍到全力扣杀。新手、青少年和成人，每周三个晚上。"
 
+#. Volunteer shift with no free spots
 #: src/components/events/ShiftBoard.tsx
 msgid "Full"
 msgstr "已满"
@@ -863,14 +1014,14 @@ msgstr "前往{currentLabel}赛季"
 msgid "Go to the sign-up form"
 msgstr "前往报名表"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Google login isn't switched on yet."
+msgstr "Google登录还没开通。"
+
 #. Footer decoration: club logo that fades out
 #: src/components/layout/VariantMenu.tsx
 msgid "Gradient"
 msgstr "渐变"
-
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-msgid "Great rally!"
-msgstr "好球，来回真精彩！"
 
 #: src/pages/membership/MembershipPage.tsx
 #: src/pages/training/TrainingPage.tsx
@@ -881,17 +1032,9 @@ msgstr "组别"
 msgid "Groups"
 msgstr "组别"
 
-#: src/data/club.ts
-msgid "Half price from the second sibling."
-msgstr "第二个兄弟姐妹起半价。"
-
 #: src/pages/home/components/StartCards.tsx
 msgid "Half price on Beginners your first season"
 msgstr "第一个赛季新手组半价"
-
-#: src/data/club.ts
-msgid "Half price on the Beginners group in your first season."
-msgstr "第一个赛季参加新手组半价。"
 
 #. Volunteer team that sets up courts and equipment
 #: src/data/events.ts
@@ -902,37 +1045,42 @@ msgstr "场馆组"
 msgid "Hall scoreboard"
 msgstr "场馆记分牌"
 
-#: src/data/club.ts
-msgid "Hall setup for the national championships"
-msgstr "为全国锦标赛布置场馆"
-
 #: src/pages/club/sections.tsx
 msgid "Has something happened in the club that isn’t okay? You can report it to the Norwegian sports federation, outside the club."
 msgstr "俱乐部里发生了不对劲的事？你可以在俱乐部之外，向挪威体育联合会反映。"
-
-#: src/data/club.ts
-msgid "Head of sport"
-msgstr "体育负责人"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Heading font"
 msgstr "标题字体"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Hidden. Visitors do not see the notice."
-msgstr "已隐藏。访客看不到这条通知。"
+#: src/pages/membership/MemberDeal.tsx
+msgid "Hi! Could you send me the Sport Modern member code?"
+msgstr "你好！能把Sport Modern的会员优惠码发给我吗？"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Hi! I have a question about paying for my membership."
+msgstr "你好！我想问一下会员费付款的事。"
+
+#: src/pages/membership/MembershipPage.tsx
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Hi! I'd like to change or end my membership."
+msgstr "你好！我想更改或终止我的会员。"
+
+#: src/pages/events/EventPage.tsx
+msgid "Hi! I'd like to help at {eventTitle}. Let me know where you need a hand."
+msgstr "你好！我想在{eventTitle}帮忙。哪里需要人手，告诉我一声。"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "Hi! I'd like to join mid-season. What would the price be?"
+msgstr "你好！我想在赛季中途加入，价格是多少？"
+
+#: src/data/contact.ts
+msgid "Hi! We'd like to hear more about sponsoring the club."
+msgstr "你好！我们想多了解一下赞助俱乐部的事。"
 
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "Hits"
 msgstr "击球数"
-
-#: src/data/news.ts
-msgid "Høsttreff 2026: we need your help"
-msgstr "Høsttreff 2026：我们需要你的帮助"
-
-#: src/data/news.ts
-msgid "Høsttreff only works when lots of us lend a hand. Pick a shift that suits you."
-msgstr "Høsttreff要靠大家一起帮忙才办得成。选一个适合你的班次吧。"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "How do I change or end my membership?"
@@ -948,24 +1096,12 @@ msgid "How to join"
 msgstr "如何入会"
 
 #: src/pages/join/JoinPage.tsx
-msgid "I accept the club’s terms and privacy statement"
-msgstr "我接受俱乐部的条款和隐私声明"
-
-#: src/pages/join/JoinPage.tsx
 msgid "I want to play"
 msgstr "我想打球"
 
 #: src/pages/join/JoinPage.tsx
 msgid "I’m the parent"
 msgstr "我是家长"
-
-#: src/pages/join/JoinDone.tsx
-msgid "In the real flow you would now get an email with the payment request. This demo did not send anything."
-msgstr "在正式流程中，你现在会收到一封付款请求邮件。这个演示没有发送任何内容。"
-
-#: src/pages/contact/ContactSection.tsx
-msgid "In the real site the right person would get your message. This demo did not send it."
-msgstr "在正式网站上，你的消息会送到对应的人手里。这个演示没有发送它。"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Included"
@@ -974,11 +1110,6 @@ msgstr "已包含"
 #: src/data/club.ts
 msgid "Indoor shoes"
 msgstr "室内运动鞋"
-
-#. Tone of the site notice
-#: src/pages/admin/AdminPage.tsx
-msgid "Info"
-msgstr "信息"
 
 #: src/components/layout/SiteHeader.tsx
 msgid "Join"
@@ -999,14 +1130,6 @@ msgstr "加入Bygdø Badmintonklubb"
 msgid "Join the club"
 msgstr "加入俱乐部"
 
-#: src/data/news.ts
-msgid "Join the club’s group in Spond to see the status of each session."
-msgstr "加入俱乐部的Spond群组，查看每次训练的状态。"
-
-#: src/data/news.ts
-msgid "Join us in Spond"
-msgstr "来Spond找我们"
-
 #: src/pages/news/NewsPage.tsx
 msgid "Jump to"
 msgstr "跳转到"
@@ -1016,15 +1139,23 @@ msgstr "跳转到"
 msgid "Junior"
 msgstr "青少年组"
 
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Just a name"
+msgstr "只填姓名"
+
 #: src/pages/study/notfound/concepts/index.ts
 msgid "Keep it up"
 msgstr "别让球落地"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Keep the note to {NOTE_MAX} characters"
+msgstr "备注最多{NOTE_MAX}个字"
 
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "Keep-it-up game. Move the racket with the arrow keys and press Space or Enter to hit the shuttle when it falls to the racket."
 msgstr "颠球小游戏。用方向键移动球拍，羽毛球落到球拍上时按空格键或Enter键击球。"
 
-#. placeholder {0}: kr(TRIAL.membership)
+#. placeholder {0}: kr(trial.membership)
 #: src/components/styles/HeroActions.tsx
 msgid "Kids 7–12: try half a season for {0}"
 msgstr "7–12岁儿童：花{0}体验半个赛季"
@@ -1052,9 +1183,9 @@ msgstr "语言：{code}"
 msgid "Large"
 msgstr "大"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Last name"
-msgstr "姓"
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Last updated {updated}"
+msgstr "最后更新：{updated}"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Latest"
@@ -1065,14 +1196,26 @@ msgstr "最新"
 msgid "Lavender"
 msgstr "薰衣草"
 
+#: src/pages/contact/ContactSection.tsx
+msgid "Leave this empty"
+msgstr "此项请留空"
+
 #. Theme option: light theme
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Light"
 msgstr "浅色"
 
-#: src/pages/news/components/ShareButtons.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Link an account"
+msgstr "关联账户"
+
+#: src/components/ui/CopyLinkButton.tsx
 msgid "Link copied"
 msgstr "链接已复制"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Linked account email"
+msgstr "关联账户邮箱"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "List"
@@ -1080,20 +1223,17 @@ msgstr "列表"
 
 #: src/components/auth/LoginModal.tsx
 #: src/components/auth/UserMenu.tsx
+#: src/pages/membership/MyMembershipPage.tsx
 msgid "Log in"
 msgstr "登录"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Log in as admin"
-msgstr "以管理员身份登录"
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Log in to see your membership and your requests."
+msgstr "登录后可查看你的会员和申请。"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Log in as admin to edit the site content."
-msgstr "以管理员身份登录，编辑网站内容。"
-
-#: src/pages/membership/MembershipPage.tsx
-msgid "Log in to <0>My membership <1/></0>, or <2>email the board</2> before the new season starts."
-msgstr "在新赛季开始前，登录<0>我的会员<1/></0>，或<2>发邮件给理事会</2>。"
+#: src/pages/join/JoinPage.tsx
+msgid "Log in to send your request"
+msgstr "登录后发送申请"
 
 #: src/components/auth/UserMenu.tsx
 msgid "Log in to sign up for volunteer shifts. Board members can edit the site."
@@ -1103,40 +1243,51 @@ msgstr "登录后可报名志愿者班次。理事可以编辑网站。"
 msgid "Log out"
 msgstr "退出登录"
 
+#: src/components/auth/UserMenu.tsx
+msgid "Logged in as {email}, but your profile didn't load."
+msgstr "已用{email}登录，但个人资料没加载出来。"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Looking for the account…"
+msgstr "正在查找账户…"
+
 #: src/components/layout/MobileMenu.tsx
 #: src/components/layout/SiteHeader.tsx
 msgid "Main menu"
 msgstr "主菜单"
 
-#: src/data/news.ts
-msgid "Many hands make light work. Can you give us a few hours?"
-msgstr "人多力量大。你能抽出几个小时吗？"
+#: src/pages/board/MarkPaidModal.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Mark as paid"
+msgstr "标记为已付款"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
 msgstr "我自己"
-
-#: src/data/news.ts
-msgid "Meet the board"
-msgstr "认识理事会"
 
 #. Event type, e.g. the annual meeting
 #: src/data/events.ts
 msgid "Meeting"
 msgstr "会议"
 
-#. User role: club member
-#: src/components/auth/UserMenu.tsx
+#. Badge: has a club membership this season
+#: src/components/auth/ProfileCard.tsx
 msgid "Member"
 msgstr "会员"
-
-#: src/pages/club/sections.tsx
-msgid "Member data is stored in the sports federation’s member system."
-msgstr "会员数据保存在体育联合会的会员系统中。"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Member deal"
 msgstr "会员优惠"
+
+#. Payment method: paid on the external membership website
+#: src/pages/board/format.ts
+msgid "Member site"
+msgstr "会员网站"
+
+#. Tab: memberships the board has confirmed
+#: src/pages/board/MembersPage.tsx
+msgid "Members"
+msgstr "会员"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Members also get up to 20% off at Sport Modern. <0>See the member deal</0>"
@@ -1148,13 +1299,15 @@ msgstr "会员在Sport Modern享受最高八折优惠。"
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
-#: src/pages/NotFoundPage.tsx
 msgid "Membership"
 msgstr "会员"
 
-#: src/pages/contact/ContactSection.tsx
+#: src/pages/board/MembershipForm.tsx
+msgid "Membership added"
+msgstr "会员已添加"
+
+#: src/data/contact.ts
 msgid "Membership and payment"
 msgstr "会员和付款"
 
@@ -1162,13 +1315,20 @@ msgstr "会员和付款"
 msgid "Membership and prices"
 msgstr "会员和价格"
 
-#: src/data/club.ts
-msgid "Membership only"
-msgstr "仅会员费"
+#: src/pages/board/DeleteMembershipModal.tsx
+msgid "Membership for {name} deleted"
+msgstr "{name}的会员已删除"
 
-#: src/data/club.ts
-msgid "Membership, then pay per visit with Vipps"
-msgstr "会员费，之后每次用Vipps付款"
+#: src/pages/board/MembershipForm.tsx
+msgid "Membership saved"
+msgstr "会员已保存"
+
+#. Sticky title of the board page that lists memberships
+#: src/components/auth/UserMenu.tsx
+#: src/components/layout/PageTitle.tsx
+#: src/pages/board/MembersPage.tsx
+msgid "Memberships"
+msgstr "会员名单"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Menu"
@@ -1181,6 +1341,11 @@ msgstr "消息"
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "击球{hits, plural, one {#次} other {#次}}后没接住。按空格键重新发球。"
+
+#. The shuttle hit the racket away from the middle
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Missed the sweet spot"
+msgstr "没打到甜区"
 
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "Missed!"
@@ -1198,28 +1363,39 @@ msgstr "更多新闻"
 msgid "My child"
 msgstr "我的孩子"
 
+#: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/home/components/StartCards.tsx
 #: src/pages/membership/MembershipPage.tsx
+#: src/pages/membership/MyMembershipPage.tsx
 msgid "My membership"
 msgstr "我的会员"
 
+#: src/pages/board/MembershipList.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
-#: src/pages/join/JoinPage.tsx
 msgid "Name"
 msgstr "姓名"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Name and contact"
-msgstr "姓名和联系方式"
+#: src/pages/board/MembersPage.tsx
+msgid "Name or email"
+msgstr "姓名或邮箱"
+
+#: src/components/auth/errors.ts
+msgid "New accounts are closed right now."
+msgstr "目前暂停注册新账户。"
 
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "New best: {best}"
 msgstr "新纪录：{best}"
 
-#: src/data/club.ts
-msgid "New players, coached"
-msgstr "新球员，有教练"
+#: src/pages/events/SubscribeButton.tsx
+msgid "New events show up in your calendar by themselves."
+msgstr "新活动会自动出现在你的日历里。"
+
+#: src/components/auth/LoginModal.tsx
+msgid "New link sent"
+msgstr "新链接已发送"
 
 #: src/pages/home/components/StartCards.tsx
 msgid "New to badminton?"
@@ -1229,6 +1405,11 @@ msgstr "刚接触羽毛球？"
 msgid "Newer post"
 msgstr "较新的文章"
 
+#. Link to news posts from a newer year
+#: src/pages/news/components/YearPager.tsx
+msgid "Newer posts: {newer}"
+msgstr "较新的文章：{newer}"
+
 #. Main menu
 #: src/components/layout/nav.ts
 #: src/pages/home/HomePage.tsx
@@ -1237,13 +1418,8 @@ msgid "News"
 msgstr "新闻"
 
 #: src/components/training/TrainingSchedule.tsx
-#: src/pages/join/JoinPage.tsx
 msgid "Next"
 msgstr "下一步"
-
-#: src/pages/home/HomePage.tsx
-msgid "Next event: date coming soon"
-msgstr "下一个活动：日期即将公布"
 
 #: src/components/training/NextTraining.tsx
 msgid "Next training"
@@ -1253,18 +1429,19 @@ msgstr "下次训练"
 msgid "Next training: {nextDay}"
 msgstr "下次训练：{nextDay}"
 
-#. placeholder {0}: undated.name
+#. placeholder {0}: undated.title
 #: src/pages/home/HomePage.tsx
 msgid "Next up: <0>{0}</0>, date coming soon"
 msgstr "接下来：<0>{0}</0>，日期即将公布"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-msgid "Nice!"
-msgstr "漂亮！"
+#: src/pages/board/MembershipList.tsx
+msgid "No account"
+msgstr "无账户"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "No breaks added yet."
-msgstr "还没有添加停训。"
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "No account with that email"
+msgstr "没有用这个邮箱的账户"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "No breaks this season."
@@ -1282,13 +1459,53 @@ msgstr "无教练"
 msgid "No events match this filter"
 msgstr "没有符合筛选条件的活动"
 
-#: src/data/news.ts
-msgid "No organized training during the autumn break."
-msgstr "秋假期间没有组织训练。"
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "No events with shifts yet"
+msgstr "还没有设了班次的活动"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "No membership yet. Pick a plan and send a request!"
+msgstr "你还不是会员。选个会员类型，发送申请吧！"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships match"
+msgstr "没有符合条件的会员"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships this season yet"
+msgstr "本赛季还没有会员"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships yet"
+msgstr "还没有会员"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No open requests. All caught up!"
+msgstr "没有待处理的申请，全部搞定！"
+
+#: src/components/auth/LoginModal.tsx
+msgid "No password needed."
+msgstr "不需要密码。"
 
 #: src/pages/news/NewsPage.tsx
 msgid "No posts here yet"
 msgstr "这里还没有文章"
+
+#: src/pages/news/NewsPage.tsx
+msgid "No posts match"
+msgstr "没有符合条件的文章"
+
+#: src/pages/membership/MembershipPage.tsx
+msgid "No prices here yet. <0>Ask the board</0>"
+msgstr "这里还没有价格。<0>问问理事会</0>"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No requests match"
+msgstr "没有符合条件的申请"
+
+#: src/pages/events/EventPage.tsx
+msgid "No shifts listed yet. Tell the board you can help."
+msgstr "还没有列出班次。告诉理事会你能来帮忙。"
 
 #: src/components/styles/court/CourtWeek.tsx
 #: src/components/training/NextTraining.tsx
@@ -1296,38 +1513,59 @@ msgstr "这里还没有文章"
 msgid "No training"
 msgstr "无训练"
 
-#: src/data/news.ts
-msgid "No training during the autumn break"
-msgstr "秋假期间停训"
-
-#: src/data/news.ts
-msgid "No training during the championship setup"
-msgstr "布置锦标赛场地期间停训"
-
 #: src/pages/home/components/StartCards.tsx
 msgid "No training in the next two weeks"
 msgstr "未来两周没有训练"
 
-#: src/data/news.ts
-msgid "No training over the summer. See you after the break!"
-msgstr "暑假不训练。假期后见！"
+#: src/components/training/TrainingSchedule.tsx
+msgid "No training times yet."
+msgstr "还没有训练时间。"
 
 #: src/pages/news/components/ClosureNotice.tsx
 msgid "No training: {range}."
 msgstr "停训：{range}。"
+
+#: src/components/styles/court/CourtWeek.tsx
+#: src/components/training/NextTraining.tsx
+#: src/components/training/TrainingSchedule.tsx
+#: src/pages/home/components/StartCards.tsx
+msgid "No training: {reason}"
+msgstr "停训：{reason}"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Nobody yet."
+msgstr "还没有人。"
 
 #. Footer decoration: nothing
 #: src/components/layout/VariantMenu.tsx
 msgid "None"
 msgstr "无"
 
+#: src/pages/board/MembershipList.tsx
+msgid "Not paid"
+msgstr "未付款"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Not paid yet"
+msgstr "还没付款"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Note"
+msgstr "备注"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Note for {name}"
+msgstr "{name}的备注"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Note for {name} saved"
+msgstr "{name}的备注已保存"
+
 #: src/pages/events/EventsPage.tsx
+#: src/pages/home/HomePage.tsx
 msgid "Nothing planned yet. New events show up here."
 msgstr "暂时还没有安排。新活动会显示在这里。"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Nothing to reset."
-msgstr "没有需要重置的内容。"
 
 #. Badge on an event that is happening today
 #: src/components/events/EventCard.tsx
@@ -1346,9 +1584,22 @@ msgstr "鞋、配件、球包和羽毛球优惠"
 msgid "Older and newer posts"
 msgstr "较早和较新的文章"
 
+#: src/pages/news/components/YearPager.tsx
+msgid "Older and newer years"
+msgstr "较早和较新的年份"
+
 #: src/pages/news/components/PostPager.tsx
 msgid "Older post"
 msgstr "较早的文章"
+
+#. Link to news posts from an older year
+#: src/pages/news/components/YearPager.tsx
+msgid "Older posts: {older}"
+msgstr "较早的文章：{older}"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "On a shift that's gone"
+msgstr "班次已不存在"
 
 #: src/components/styles/court/CourtHero.tsx
 #: src/components/styles/court/CourtWeek.tsx
@@ -1364,6 +1615,24 @@ msgstr "订单满{limit}"
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "一个赛季从8月到次年6月，和学年一样。赛季中途加入？价格请<0>问问理事会</0>。"
 
+#: src/memberships/queries.ts
+msgid "Only admins can change memberships."
+msgstr "只有管理员可以修改会员。"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Only the board sees this."
+msgstr "只有理事会能看到。"
+
+#. The shuttle hit the racket frame, not the strings
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Oops, rim shot!"
+msgstr "哎呀，打框了！"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Open in calendar app"
+msgstr "在日历应用中打开"
+
+#: src/components/events/EventDetails.tsx
 #: src/components/ui/AddressLink.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Open in maps"
@@ -1382,6 +1651,18 @@ msgstr "自由打"
 msgid "Open play for all members."
 msgstr "所有会员都能来自由打。"
 
+#: src/components/auth/errors.ts
+msgid "Open the link in the same browser you asked for it in."
+msgstr "请在申请链接的同一个浏览器里打开它。"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Open the sign-up sheet"
+msgstr "打开报名表"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Optional. Usually a parent's account."
+msgstr "选填。通常是家长的账户。"
+
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "or <0>←</0> <1>→</1> and <2>Space</2>"
 msgstr "或<0>←</0> <1>→</1>和<2>空格键</2>"
@@ -1391,8 +1672,8 @@ msgid "Or borrow one at coached sessions"
 msgstr "或在有教练指导的训练中借一副"
 
 #: src/components/auth/LoginModal.tsx
-msgid "or log in with email"
-msgstr "或用邮箱登录"
+msgid "or get a link by email"
+msgstr "或通过邮件获取链接"
 
 #. placeholder {0}: CLUB.orgNr
 #: src/components/layout/SiteFooter.tsx
@@ -1400,9 +1681,10 @@ msgstr "或用邮箱登录"
 msgid "Org. no. {0}"
 msgstr "组织编号{0}"
 
-#: src/data/news.ts
-msgid "Our autumn tournament runs on volunteers. Grab a shift in the hall, kiosk or secretariat."
-msgstr "我们的秋季比赛靠志愿者撑起来。来场馆组、小卖部或秘书处领个班次吧。"
+#. Payment method that is none of the listed ones
+#: src/pages/board/format.ts
+msgid "Other"
+msgstr "其他"
 
 #: src/pages/membership/MemberDeal.tsx
 msgid "Our members get these discounts at Sport Modern."
@@ -1424,10 +1706,6 @@ msgstr "出界"
 msgid "Out!"
 msgstr "出界！"
 
-#: src/pages/NotFoundPage.tsx
-msgid "Out! That one landed past the line"
-msgstr "出界！这球落在线外了"
-
 #. Footer decoration: club logo drawn as thin lines
 #: src/components/layout/VariantMenu.tsx
 msgid "Outline"
@@ -1437,19 +1715,25 @@ msgstr "线框"
 msgid "Page not found, but the rally isn't over"
 msgstr "页面找不到了，但这一回合还没结束"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Parent"
-msgstr "家长"
+#. Switch: the membership is paid
+#. Table column: whether and when the membership was paid
+#: src/components/auth/MyMemberships.tsx
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Paid"
+msgstr "已付款"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Parent’s name"
-msgstr "家长姓名"
+#: src/pages/board/PaymentFields.tsx
+msgid "Paid on"
+msgstr "付款日期"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Parent’s phone"
-msgstr "家长电话"
+#. Label for the payment method, like Vipps or cash
+#: src/pages/board/PaymentFields.tsx
+msgid "Paid with"
+msgstr "付款方式"
 
 #: src/components/styles/flight/HowToJoin.tsx
+#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Parents sign up children under 18."
 msgstr "18岁以下的孩子由家长报名。"
@@ -1458,11 +1742,9 @@ msgstr "18岁以下的孩子由家长报名。"
 msgid "Partners"
 msgstr "合作伙伴"
 
-#: src/components/auth/LoginModal.tsx
-msgid "Password"
-msgstr "密码"
-
 #. Events filter option
+#. Events filter option
+#: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventsPage.tsx
 msgid "Past"
 msgstr "往期"
@@ -1471,37 +1753,65 @@ msgstr "往期"
 msgid "Pay"
 msgstr "付款"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Phone"
-msgstr "电话"
+#. Table column: from and to date of the membership
+#: src/pages/board/MembershipList.tsx
+msgid "Period"
+msgstr "有效期"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Pick a free shift below and tap Sign up."
+msgstr "在下面选一个空班次，点“报名”。"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "Pick a free shift below. Log in first, it takes a minute."
+msgstr "在下面选一个空班次。先登录一下，一分钟就好。"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Pick a plan"
+msgstr "请选择会员类型"
 
 #: src/pages/join/JoinPage.tsx
-msgid "Pick a date"
-msgstr "选择日期"
+msgid "Pick a plan above to see the price."
+msgstr "在上面选一个会员类型，就能看到价格。"
 
 #: src/pages/news/NewsPostPage.tsx
 msgid "Pick a shift"
 msgstr "选一个班次"
 
-#: src/components/training/AddClosureModal.tsx
-msgid "Pick dates"
-msgstr "选择日期"
+#: src/pages/board/MembershipForm.tsx
+msgid "Pick a start date"
+msgstr "请选择开始日期"
 
-#: src/components/training/AddClosureModal.tsx
-msgid "Pick one day, or the first and last day"
-msgstr "选一天，或选第一天和最后一天"
+#: src/pages/board/MembershipForm.tsx
+msgid "Pick an end date"
+msgstr "请选择结束日期"
 
-#: src/components/training/AddClosureModal.tsx
-msgid "Pick the first and last day"
-msgstr "选第一天和最后一天"
+#: src/pages/board/format.ts
+msgid "Pick how they paid"
+msgstr "请选择付款方式"
+
+#: src/pages/board/PaymentFields.tsx
+msgid "Pick one"
+msgstr "请选择"
+
+#: src/pages/board/format.ts
+msgid "Pick the day they paid"
+msgstr "请选择付款日期"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Pick who is joining above."
+msgstr "请在上面选择谁要入会。"
 
 #: src/components/styles/court/CourtHero.tsx
 msgid "Pick your group on the court"
 msgstr "在球场上选你的组"
 
-#: src/pages/club/sections.tsx
-msgid "Platform terms"
-msgstr "平台条款"
+#. Label: the membership plan, like Adults or Junior
+#. Table column: the membership plan, like Adults or Junior
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Plan"
+msgstr "会员类型"
 
 #: src/components/styles/court/CourtHero.tsx
 msgid "Play"
@@ -1515,25 +1825,36 @@ msgstr "成人球员的打球时间。"
 msgid "Play the replay again"
 msgstr "再看一遍回放"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Player"
-msgstr "球员"
+#: src/pages/board/MembershipForm.tsx
+msgid "Player name"
+msgstr "球员姓名"
 
 #: src/data/photos.ts
 msgid "Players training on the courts at Bygdøhus"
 msgstr "球员们在Bygdøhus的球场上训练"
 
+#. Pling is the sound of the shuttle hitting the racket frame. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Pling! That hit the frame"
+msgstr "叮！打到拍框了"
+
+#. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Pock!"
+msgstr "啪！"
+
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Point"
 msgstr "得分"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Preview"
-msgstr "预览"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Previous"
 msgstr "上一个"
+
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Price"
+msgstr "价格"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Prices and joining"
@@ -1543,7 +1864,9 @@ msgstr "价格和入会"
 msgid "Prices per season"
 msgstr "每赛季价格"
 
+#: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/privacy/PrivacyPage.tsx
 msgid "Privacy"
 msgstr "隐私"
 
@@ -1559,9 +1882,9 @@ msgstr "常见问题"
 msgid "Questions about payment?"
 msgstr "付款有疑问？"
 
-#: src/data/news.ts
-msgid "Questions?"
-msgstr "有问题？"
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Questions about your data? Ask the board, and we’ll answer."
+msgstr "对你的数据有疑问？问问理事会，我们会回答你。"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Rally"
@@ -1571,9 +1894,13 @@ msgstr "多拍"
 msgid "Rally in progress"
 msgstr "多拍进行中"
 
-#: src/components/training/AddClosureModal.tsx
-msgid "Reason"
-msgstr "原因"
+#: src/pages/club/sections.tsx
+msgid "Read about privacy"
+msgstr "阅读隐私政策"
+
+#: src/components/events/EventDetails.tsx
+msgid "Registration closed"
+msgstr "报名已截止"
 
 #. Size of text and controls
 #: src/components/layout/VariantMenu.tsx
@@ -1584,9 +1911,21 @@ msgstr "标准"
 msgid "Related event"
 msgstr "相关活动"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Removes the site notice and every break you added, and brings back the original content."
-msgstr "删除网站通知和你添加的所有停训，恢复原始内容。"
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Remove"
+msgstr "移除"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Remove {name}"
+msgstr "移除{name}"
+
+#: src/components/auth/ProfileCard.tsx
+msgid "Remove photo"
+msgstr "删除照片"
+
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Remove volunteer?"
+msgstr "移除志愿者？"
 
 #: src/pages/study/notfound/concepts/CourtOut.tsx
 msgid "Replay"
@@ -1604,13 +1943,29 @@ msgstr "反映问题"
 msgid "Report to the sports federation"
 msgstr "向体育联合会举报"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Reset all edits"
-msgstr "重置所有修改"
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Request a membership"
+msgstr "申请入会"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Reset all edits?"
-msgstr "要重置所有修改吗？"
+#: src/pages/board/DeclineRequestModal.tsx
+msgid "Request from {name} declined"
+msgstr "已拒绝{name}的申请"
+
+#: src/pages/join/JoinPage.tsx
+msgid "Request sent!"
+msgstr "申请已发送！"
+
+#. Badge: membership request waiting for the board
+#. Badge: membership request waiting for the board
+#: src/components/auth/MyMemberships.tsx
+#: src/pages/board/MembershipList.tsx
+msgid "Requested"
+msgstr "待审核"
+
+#. Tab: membership requests sent from the join page
+#: src/pages/board/MembersPage.tsx
+msgid "Requests"
+msgstr "申请"
 
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "Reviewing…"
@@ -1629,13 +1984,10 @@ msgstr "经营小卖部：华夫饼、吐司和披萨法棍。"
 msgid "Safe sport"
 msgstr "安全运动"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Save notice"
-msgstr "保存通知"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Saved"
-msgstr "已保存"
+#: src/pages/board/MembershipForm.tsx
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Save"
+msgstr "保存"
 
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
@@ -1645,11 +1997,24 @@ msgstr "比分：Bygdø {home}，404 {away}"
 msgid "Scoreboard"
 msgstr "记分牌"
 
+#: src/pages/board/MembersPage.tsx
+msgid "Search"
+msgstr "搜索"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Search news"
+msgstr "搜索新闻"
+
+#: src/pages/news/NewsPage.tsx
+msgid "Search results"
+msgstr "搜索结果"
+
+#: src/pages/board/MembersPage.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Season"
 msgstr "赛季"
 
-#. placeholder {0}: CURRENT_SEASON.label
+#. placeholder {0}: current.label
 #. placeholder {0}: season.label
 #: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
@@ -1666,26 +2031,41 @@ msgstr "秘书处"
 msgid "See groups and times"
 msgstr "查看分组和时间"
 
+#: src/pages/join/JoinPage.tsx
+msgid "See my membership"
+msgstr "查看我的会员"
+
 #: src/pages/news/NewsPostPage.tsx
 msgid "See the event"
 msgstr "查看活动"
 
-#: src/data/news.ts
-#: src/pages/join/JoinDone.tsx
-msgid "See training times"
-msgstr "查看训练时间"
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "See who's on each shift, and who we still need."
+msgstr "看看每个班次有谁，还缺谁。"
 
-#: src/pages/join/JoinDone.tsx
-msgid "See you on court!"
-msgstr "球场上见！"
+#: src/components/auth/LoginModal.tsx
+msgid "Send again"
+msgstr "再发一次"
+
+#: src/components/auth/LoginModal.tsx
+msgid "Send me a link"
+msgstr "给我发个链接"
 
 #: src/pages/join/JoinPage.tsx
-msgid "Send"
-msgstr "发送"
+msgid "Send membership request"
+msgstr "发送入会申请"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Send message"
 msgstr "发送消息"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Sending as"
+msgstr "发送人"
+
+#: src/components/auth/MyMemberships.tsx
+msgid "Sent {sent}"
+msgstr "发送于{sent}"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Serve"
@@ -1704,6 +2084,7 @@ msgid "Set up courts and equipment, count balls and tidy up afterwards."
 msgstr "布置场地和器材，清点羽毛球，结束后收拾整理。"
 
 #: src/components/events/ShiftBoard.tsx
+#: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
 msgstr "布置或收场"
 
@@ -1741,13 +2122,10 @@ msgstr "显示全部活动"
 msgid "Show all news"
 msgstr "显示全部新闻"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Show edit buttons on the pages, for example to add breaks on the Training page."
-msgstr "在页面上显示编辑按钮，比如在训练页面添加停训。"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Show the notice"
-msgstr "显示通知"
+#. Filter chip: also list membership requests the board said no to
+#: src/pages/board/MembersPage.tsx
+msgid "Show declined"
+msgstr "显示已拒绝"
 
 #. Design style with a flying shuttlecock
 #: src/components/layout/VariantMenu.tsx
@@ -1758,10 +2136,6 @@ msgstr "飞行的羽毛球"
 msgid "Shuttles are included at coached sessions."
 msgstr "有教练指导的训练提供羽毛球。"
 
-#: src/data/club.ts
-msgid "Sibling discount"
-msgstr "兄弟姐妹优惠"
-
 #: src/pages/home/components/StartCards.tsx
 msgid "Siblings pay half"
 msgstr "兄弟姐妹半价"
@@ -1771,9 +2145,17 @@ msgstr "兄弟姐妹半价"
 msgid "Sidebar"
 msgstr "侧边栏"
 
+#. Button that opens the tournament registration page
+#. Button that takes a volunteer shift
+#: src/components/events/EventDetails.tsx
 #: src/components/events/ShiftBoard.tsx
 msgid "Sign up"
 msgstr "报名"
+
+#: src/components/events/EventCard.tsx
+#: src/components/events/EventDetails.tsx
+msgid "Sign up by {deadline}"
+msgstr "{deadline}前报名"
 
 #: src/pages/home/components/StartCards.tsx
 msgid "Sign up your child"
@@ -1787,10 +2169,6 @@ msgstr "要给孩子报名？"
 #: src/pages/club/ClubPage.tsx
 msgid "Since {0}"
 msgstr "始于{0}年"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Site notice"
-msgstr "网站通知"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Size"
@@ -1810,21 +2188,39 @@ msgstr "联谊"
 msgid "Soft"
 msgstr "柔和"
 
-#: src/pages/contact/ContactSection.tsx
+#: src/memberships/queries.ts
+#: src/volunteers/queries.ts
+msgid "Some of these details don't add up. Check them and try again."
+msgstr "有些信息对不上，请检查后再试一次。"
+
+#: src/pages/board/MembershipForm.tsx
+msgid "Someone else"
+msgstr "其他人"
+
+#: src/data/contact.ts
 msgid "Something else"
 msgstr "其他"
+
+#: src/components/auth/errors.ts
+msgid "Something went wrong. Try again."
+msgstr "出了点问题，请再试一次。"
 
 #: src/pages/club/sections.tsx
 msgid "Sponsor the club"
 msgstr "赞助俱乐部"
 
-#: src/pages/contact/ContactSection.tsx
+#: src/data/contact.ts
 msgid "Sponsorship"
 msgstr "赞助"
 
-#: src/data/events.ts
-msgid "Spring 2027, date to be announced"
-msgstr "2027年春季，日期待定"
+#: src/pages/board/MembershipForm.tsx
+msgid "Start"
+msgstr "开始"
+
+#. Table column: where a membership request stands, and who sent it
+#: src/pages/board/MembershipList.tsx
+msgid "Status"
+msgstr "状态"
 
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "Study case"
@@ -1834,10 +2230,14 @@ msgstr "设计研究"
 msgid "Style"
 msgstr "风格"
 
-#: src/data/club.ts
-#: src/data/news.ts
-msgid "Summer break"
-msgstr "暑期停训"
+#. Button that opens the calendar feed options
+#: src/pages/events/SubscribeButton.tsx
+msgid "Subscribe"
+msgstr "订阅"
+
+#: src/pages/events/SubscribeButton.tsx
+msgid "Subscribe to events"
+msgstr "订阅活动"
 
 #: src/components/layout/SiteFooter.tsx
 msgid "Switch color, shape, size, menu and width to compare design variants."
@@ -1848,6 +2248,10 @@ msgstr "切换颜色、形状、大小、菜单和宽度，比较不同设计方
 msgid "System"
 msgstr "跟随系统"
 
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "Take <0>{name}</0> off this shift?"
+msgstr "把<0>{name}</0>从这个班次移除吗？"
+
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "Tap to serve"
 msgstr "点一下发球"
@@ -1856,69 +2260,100 @@ msgstr "点一下发球"
 msgid "Tap to serve again"
 msgstr "点一下再发一次"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Text"
-msgstr "文字"
-
-#: src/data/news.ts
-msgid "Thanks for a great season! The hall is quiet now, and there is no training over the summer."
-msgstr "感谢大家度过了精彩的赛季！场馆现在安静下来了，暑假期间没有训练。"
-
 #: src/pages/events/EventPage.tsx
 msgid "Thanks to everyone who helped."
 msgstr "感谢所有帮忙的人。"
 
-#. placeholder {0}: form.values.name
 #: src/pages/contact/ContactSection.tsx
-msgid "Thanks, {0}!"
-msgstr "谢谢你，{0}！"
+msgid "Thanks, {name}!"
+msgstr "谢谢你，{name}！"
 
-#: src/pages/join/JoinDone.tsx
-msgid "Thanks, {parentName}!"
-msgstr "谢谢你，{parentName}！"
+#: src/pages/contact/ContactSection.tsx
+msgid "That didn't go through"
+msgstr "没发出去"
+
+#: src/components/auth/errors.ts
+msgid "That email won't work. Try another one."
+msgstr "这个邮箱用不了，换一个试试。"
+
+#: src/components/auth/errors.ts
+msgid "That link didn't work. Get a new one below."
+msgstr "这个链接无效，请在下面获取新链接。"
+
+#: src/components/auth/errors.ts
+msgid "That link has expired. Get a new one below."
+msgstr "这个链接已过期，请在下面获取新链接。"
+
+#: src/memberships/queries.ts
+msgid "That membership is gone. Someone may have deleted it."
+msgstr "这条会员记录不见了，可能有人删掉了。"
 
 #: src/pages/study/notfound/concepts/CourtOut.tsx
 msgid "That one landed out"
 msgstr "这球出界了"
 
-#: src/data/news.ts
-msgid "The annual meeting is where members have their say about the club. Come along and make your voice heard."
-msgstr "在年度会员大会上，会员可以对俱乐部的事务发表意见。快来说说你的想法吧。"
+#: src/components/auth/avatar.ts
+msgid "That photo is over 15 MB. Pick a smaller one."
+msgstr "这张照片超过15MB，请选一张小一点的。"
+
+#: src/volunteers/queries.ts
+msgid "That spot is gone. Someone may have removed it."
+msgstr "这个名额不见了，可能有人移除了。"
+
+#: src/memberships/queries.ts
+msgid "That's a lot of open requests! Wait for the board to answer first."
+msgstr "待处理的申请太多啦！请先等理事会回复。"
+
+#: src/components/auth/avatar.ts
+msgid "That's not a photo. Pick an image file."
+msgstr "这不是照片，请选一个图片文件。"
 
 #. Author of a news post: the club board. Norwegian: Styret
+#. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
+#: src/pages/board/MembersPage.tsx
+#: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
 msgid "The board"
 msgstr "理事会"
+
+#: src/pages/join/JoinPage.tsx
+msgid "The board applies any discounts after you sign up."
+msgstr "报名后，理事会会帮你算上优惠。"
+
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "The board is still writing this page"
+msgstr "理事会还在写这个页面"
+
+#: src/pages/join/JoinPage.tsx
+msgid "The board will confirm it and let you know about payment."
+msgstr "理事会确认后会通知你怎么付款。"
 
 #. Main menu
 #: src/components/layout/nav.ts
 msgid "The club"
 msgstr "俱乐部"
 
-#: src/data/events.ts
-msgid "The club’s autumn tournament at Bygdøhus, and an important source of income for the club."
-msgstr "俱乐部在Bygdøhus举办的秋季比赛，也是俱乐部的重要收入来源。"
-
-#: src/data/events.ts
-msgid "The club’s spring tournament at Bygdøhus. Members help in the hall, kiosk and secretariat."
-msgstr "俱乐部在Bygdøhus举办的春季比赛。会员在场馆组、小卖部和秘书处帮忙。"
-
-#: src/data/news.ts
-msgid "The hall is being set up for the national championships, so there is no training that day."
-msgstr "场馆要为NM（全国锦标赛）做布置，所以当天没有训练。"
+#: src/components/auth/UserMenu.tsx
+msgid "The editor has its own login."
+msgstr "编辑器需要单独登录。"
 
 #: src/pages/study/notfound/concepts/index.ts
 msgid "The hall scoreboard reads 4–04, fault."
 msgstr "场馆记分牌显示4–04，失误。"
 
-#: src/data/news.ts
-msgid "The new season is on, and the courts at Bygdøhus are busy again. Same days, same times as last season."
-msgstr "新赛季开始啦，Bygdøhus的球场又热闹起来了。训练日和时间都和上赛季一样。"
+#: src/pages/board/MembershipForm.tsx
+msgid "The price can't be below 0"
+msgstr "价格不能低于0"
 
-#: src/data/news.ts
-msgid "The rackets get a short rest during the autumn break."
-msgstr "秋假期间，球拍也要歇一歇。"
+#: src/pages/board/MembershipList.tsx
+msgid "The request from {name} is open again"
+msgstr "{name}的申请已恢复为待处理"
+
+#: src/components/layout/RouteFallbacks.tsx
+msgid "The shuttle got stuck in the net"
+msgstr "羽毛球挂网了"
 
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "The umpire looked twice. This page is not on the court. It may have moved, or the link has a typo."
@@ -1937,29 +2372,25 @@ msgstr "主题"
 msgid "Theme: {0}"
 msgstr "主题：{0}"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "This cannot be undone."
-msgstr "此操作无法撤销。"
-
-#: src/pages/join/JoinPage.tsx
-msgid "This is a demo of a new sign-up flow. Nothing is sent or saved."
-msgstr "这是新报名流程的演示，不会发送或保存任何内容。"
-
-#: src/components/auth/LoginModal.tsx
-msgid "This is a demo. Nothing is checked: any password works, and nothing leaves this browser."
-msgstr "这是演示版，不做任何验证：任何密码都能用，数据也不会离开这个浏览器。"
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "These people are on a shift that was removed in Sanity."
+msgstr "这些人所在的班次已在Sanity里删除。"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "This is an earlier season. Times may have changed since."
 msgstr "这是以前的赛季，时间可能已经变了。"
 
+#: src/components/auth/errors.ts
+msgid "This login isn't switched on yet."
+msgstr "这种登录方式还没开通。"
+
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 msgid "This page is out of play. Keep the shuttle up while you're here, or head back to the club."
 msgstr "这个页面已经出局了。来都来了，颠颠球吧，或者回到俱乐部。"
 
-#: src/pages/NotFoundPage.tsx
-msgid "This page may have moved, or the link has a typo."
-msgstr "这个页面可能已经移走了，或者链接有拼写错误。"
+#: src/pages/board/volunteers/VolunteerDialogs.tsx
+msgid "This shift is full. Adding one more overbooks it."
+msgstr "这个班次已满，再加一人就超员了。"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "This week"
@@ -1969,17 +2400,19 @@ msgstr "本周"
 msgid "This week in the hall"
 msgstr "本周场馆安排"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Three short steps. You pay when the season starts, by card or Vipps."
-msgstr "只需三小步。赛季开始时付款，可以刷卡或用Vipps。"
-
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "Three ways to say “page not found” in badminton. Try them, then pick a favorite."
 msgstr "用羽毛球的方式说“找不到页面”，一共三种。都试试，选出你最喜欢的。"
 
-#: src/pages/join/JoinPage.tsx
-msgid "To pay this season"
-msgstr "本赛季应付"
+#. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Thwack!"
+msgstr "砰！"
+
+#. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
+#: src/pages/study/notfound/concepts/KeepItUp.tsx
+msgid "Tock!"
+msgstr "嘭！"
 
 #. Marker on the events timeline between upcoming and past events
 #: src/components/styles/court/CourtHero.tsx
@@ -1988,14 +2421,22 @@ msgstr "本赛季应付"
 msgid "Today"
 msgstr "今天"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Tone"
-msgstr "类型"
+#: src/components/auth/errors.ts
+msgid "Too many emails for now. Try again later."
+msgstr "邮件发得太多了，请稍后再试。"
+
+#: src/components/auth/errors.ts
+msgid "Too many tries. Try again in a bit."
+msgstr "尝试次数太多，请稍等一下再试。"
 
 #. Where the main menu sits
 #: src/components/layout/VariantMenu.tsx
 msgid "Top bar"
 msgstr "顶栏"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Topic"
+msgstr "主题"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Total"
@@ -2006,23 +2447,20 @@ msgstr "合计"
 msgid "Tournament"
 msgstr "比赛"
 
+#. Event type
 #. Main menu
 #. News category
 #: src/components/layout/nav.ts
+#: src/data/events.ts
 #: src/data/news.ts
 #: src/pages/membership/MembershipPage.tsx
-#: src/pages/NotFoundPage.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Training"
 msgstr "训练"
 
-#: src/pages/contact/ContactSection.tsx
+#: src/data/contact.ts
 msgid "Training and groups"
 msgstr "训练和分组"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Training breaks"
-msgstr "停训"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Training changes, events, volunteering and club news, with dates."
@@ -2032,23 +2470,19 @@ msgstr "训练变动、活动、志愿服务和俱乐部动态，附带日期。
 msgid "Training groups"
 msgstr "训练分组"
 
-#: src/data/news.ts
-msgid "Training has started again"
-msgstr "训练重新开始了"
-
 #: src/pages/study/notfound/concepts/CourtOut.tsx
 #: src/pages/study/notfound/concepts/KeepItUp.tsx
 #: src/pages/study/notfound/concepts/Scoreboard.tsx
 msgid "Training times"
 msgstr "训练时间"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Training times for this season are coming soon."
+msgstr "本赛季的训练时间即将公布。"
+
 #: src/components/training/NextTraining.tsx
 msgid "Training today"
 msgstr "今天有训练"
-
-#: src/data/club.ts
-msgid "Trial membership"
-msgstr "体验会员"
 
 #. Event type: travel to another club’s tournament
 #: src/data/events.ts
@@ -2061,13 +2495,22 @@ msgstr "外出参赛"
 msgid "Try a session"
 msgstr "来试一次"
 
+#: src/components/auth/UserMenu.tsx
+#: src/components/events/ShiftBoard.tsx
+#: src/components/layout/RouteFallbacks.tsx
+#: src/pages/board/LoadError.tsx
+#: src/pages/contact/ContactSection.tsx
+msgid "Try again"
+msgstr "再试一次"
+
+#. placeholder {0}: CLUB.email
+#: src/pages/contact/ContactSection.tsx
+msgid "Try again, or email us at <0>{0}</0>."
+msgstr "再试一次，或发邮件到<0>{0}</0>。"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Try another category, or see all the news."
 msgstr "换个分类试试，或者查看全部新闻。"
-
-#: src/components/auth/EditModeAffix.tsx
-msgid "Turn off"
-msgstr "关闭"
 
 #: src/data/photos.ts
 msgid "Two rackets and a shuttle on a court line"
@@ -2077,44 +2520,51 @@ msgstr "场地线上的两只球拍和一个羽毛球"
 msgid "Umpire"
 msgstr "裁判"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Under 18: a parent signs up with you"
-msgstr "未满18岁：需要家长和你一起报名"
+#. Button: undo declining a membership request
+#: src/pages/board/MembershipList.tsx
+msgid "Undo decline"
+msgstr "撤销拒绝"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-msgid "Unreal!"
-msgstr "太神了！"
+#: src/pages/board/MembersPage.tsx
+msgid "Unpaid only"
+msgstr "只看未付款"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Unsaved changes"
-msgstr "有未保存的修改"
+#: src/components/auth/MyMemberships.tsx
+msgid "Until {until}"
+msgstr "有效至{until}"
 
 #. Events filter option
+#. Events filter option
+#: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventsPage.tsx
 msgid "Upcoming"
 msgstr "即将开始"
 
 #: src/components/auth/LoginModal.tsx
-msgid "Use {adminEmail} to log in as admin. Any other email logs you in as a member."
-msgstr "用{adminEmail}以管理员身份登录。用其他任何邮箱登录都是会员身份。"
+msgid "Use another email"
+msgstr "换个邮箱"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Use other details"
+msgstr "用其他信息"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Variants"
 msgstr "设计方案"
 
-#: src/data/news.ts
-msgid "Vårtreff needs helping hands in the hall, kiosk and secretariat."
-msgstr "Vårtreff需要人手来场馆组、小卖部和秘书处帮忙。"
-
-#: src/data/club.ts
-msgid "Vice chair, events"
-msgstr "副主席，负责活动"
+#. Payment method: the Norwegian mobile payment app
+#: src/pages/board/format.ts
+msgid "Vipps"
+msgstr "Vipps"
 
 #. placeholder {0}: CLUB.vipps
 #: src/pages/membership/MembershipPage.tsx
 msgid "Vipps number {0}"
 msgstr "Vipps号码{0}"
 
+#. Sticky title of the board page that lists who is on each volunteer shift
+#: src/components/layout/PageTitle.tsx
+#: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventPage.tsx
 msgid "Volunteer shifts"
 msgstr "志愿者班次"
@@ -2124,38 +2574,54 @@ msgstr "志愿者班次"
 msgid "Volunteering"
 msgstr "志愿服务"
 
-#: src/data/news.ts
-msgid "Volunteers for Vårtreff"
-msgstr "Vårtreff招募志愿者"
+#. Board screen for volunteer shifts
+#: src/components/auth/UserMenu.tsx
+msgid "Volunteers"
+msgstr "志愿者"
 
-#: src/data/events.ts
-msgid "Waffle batter and cakes for the kiosk are also part of the volunteering."
-msgstr "为小卖部准备华夫饼面糊和蛋糕，也算志愿服务的一部分。"
+#: src/components/events/ShiftBoard.tsx
+msgid "Want a shift?"
+msgstr "想领个班次？"
 
 #: src/pages/club/sections.tsx
 msgid "Want to back badminton at Bygdøhus? We’d love to hear from you."
 msgstr "想支持Bygdøhus的羽毛球运动吗？欢迎联系我们。"
 
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Want to change or end a membership? <0>Write to the board</0>."
+msgstr "想更改或终止会员？<0>联系理事会</0>。"
+
+#: src/pages/events/EventPage.tsx
+msgid "Want to help?"
+msgstr "想帮忙吗？"
+
 #: src/components/layout/SponsorStrip.tsx
 msgid "Want to sponsor the club?"
 msgstr "想赞助俱乐部吗？"
 
-#. Tone of the site notice
-#: src/pages/admin/AdminPage.tsx
-msgid "Warning"
-msgstr "警告"
+#: src/components/auth/errors.ts
+msgid "We can't send email to that address yet."
+msgstr "暂时还不能给这个地址发邮件。"
 
 #: src/pages/study/notfound/concepts/CourtOut.tsx
 msgid "We checked the replay: this page is past the baseline. It may have moved, or the link has a typo."
 msgstr "我们看了回放：这个页面出了底线。它可能已经移走了，或者链接有拼写错误。"
 
-#: src/data/club.ts
-msgid "We help you apply to the city for support, so everyone can play."
-msgstr "我们帮你向市政府申请补助，让每个人都能来打球。"
+#: src/components/layout/RouteFallbacks.tsx
+msgid "We could not load the page. Check your connection and try again."
+msgstr "页面加载失败，请检查网络后再试一次。"
+
+#: src/components/auth/avatar.ts
+msgid "We couldn't open that photo. Try another one."
+msgstr "打不开这张照片，换一张试试。"
+
+#: src/components/auth/LoginModal.tsx
+msgid "We sent a login link to <0>{email}</0>. Open it in this browser."
+msgstr "我们已把登录链接发到<0>{email}</0>。请在这个浏览器里打开。"
 
 #: src/pages/training/TrainingPage.tsx
-msgid "We train on Monday, Tuesday and Thursday evenings, from August to June."
-msgstr "每年8月到次年6月，我们每周一、周二和周四晚上训练。"
+msgid "We train on {weekdays} evenings, from {fromMonth} to {toMonth}."
+msgstr "我们在{weekdays}晚上训练，从{fromMonth}到{toMonth}。"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "Week"
@@ -2170,14 +2636,6 @@ msgstr "第{0}周"
 msgid "Weekly schedule"
 msgstr "每周安排"
 
-#: src/data/news.ts
-msgid "Welcome back! Training times are the same as last season."
-msgstr "欢迎回来！训练时间和上赛季一样。"
-
-#: src/pages/join/JoinDone.tsx
-msgid "Welcome to the club, {firstName}!"
-msgstr "欢迎加入俱乐部，{firstName}！"
-
 #: src/pages/contact/ContactSection.tsx
 msgid "What is it about?"
 msgstr "关于什么事？"
@@ -2187,13 +2645,25 @@ msgstr "关于什么事？"
 msgid "What to bring"
 msgstr "要带什么"
 
+#: src/pages/club/sections.tsx
+msgid "What we store about you, why, and who helps us keep it."
+msgstr "我们保存你的哪些信息、为什么保存，以及谁帮我们保管。"
+
 #: src/pages/home/HomePage.tsx
 msgid "Where do you want to start?"
 msgstr "你想从哪里开始？"
 
+#: src/pages/board/MembersPage.tsx
+msgid "Who has a membership, and who still needs to pay."
+msgstr "谁是会员，谁还没付款。"
+
 #: src/pages/join/JoinPage.tsx
 msgid "Who is joining?"
 msgstr "谁要入会？"
+
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Who to find"
+msgstr "还缺人手"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Width"
@@ -2204,10 +2674,6 @@ msgstr "宽度"
 msgid "With coach"
 msgstr "有教练"
 
-#: src/components/training/AddClosureModal.tsx
-msgid "Write a short reason"
-msgstr "简单写一下原因"
-
 #: src/pages/contact/ContactSection.tsx
 msgid "Write another message"
 msgstr "再写一条消息"
@@ -2216,75 +2682,82 @@ msgstr "再写一条消息"
 msgid "Write at least a short sentence"
 msgstr "请至少写一句话"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "Write the notice text, or hide the notice"
-msgstr "请填写通知内容，或者隐藏通知"
+#: src/pages/club/sections.tsx
+#: src/pages/events/EventPage.tsx
+#: src/pages/privacy/PrivacyPage.tsx
+msgid "Write to the board"
+msgstr "联系理事会"
 
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/events/EventsPage.tsx
+#: src/pages/news/NewsPage.tsx
 msgid "Year"
 msgstr "年"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Yes, reset everything"
-msgstr "是的，全部重置"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 msgstr "可以。孩子可以先办体验会员，成人可以单次参加。价格见上方。"
 
-#: src/pages/admin/AdminPage.tsx
-msgid "You are logged in as a member. Log in as admin to edit the site content."
-msgstr "你目前以会员身份登录。以管理员身份登录才能编辑网站内容。"
+#: src/memberships/queries.ts
+msgid "You already asked for this one. The board will get back to you."
+msgstr "你已经申请过这个了，理事会会回复你。"
+
+#: src/pages/join/JoinPage.tsx
+msgid "You already have this one this season."
+msgstr "本赛季你已经有这个会员了。"
 
 #: src/pages/club/sections.tsx
 msgid "You can also talk to a board member you trust."
 msgstr "你也可以找一位你信任的理事聊聊。"
 
-#: src/pages/join/JoinPage.tsx
-msgid "You need to accept to continue"
-msgstr "需要同意才能继续"
+#: src/volunteers/queries.ts
+msgid "You can't change that shift."
+msgstr "你不能修改这个班次。"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You helped"
+msgstr "你参与了"
+
+#: src/components/events/ShiftBoard.tsx
+msgid "You helped out"
+msgstr "你参与过的班次"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "You pay both fees together, by card or Vipps, when the season starts or right after you join."
 msgstr "两项费用一起付，可以刷卡或用Vipps，在赛季开始时或入会后马上支付。"
 
-#: src/pages/join/JoinPage.tsx
-msgid "You, the parent"
-msgstr "你（家长）"
-
 #: src/components/events/ShiftBoard.tsx
-msgid "You’re in"
+msgid "You're in"
 msgstr "已报名"
 
 #: src/components/events/ShiftBoard.tsx
-msgid "You’re on"
-msgstr "你报名的班次"
+msgid "You're on"
+msgstr "你的班次"
 
 #: src/components/auth/UserMenu.tsx
 msgid "Your account"
 msgstr "你的账户"
 
 #: src/pages/join/JoinPage.tsx
-msgid "Your child"
-msgstr "你的孩子"
+msgid "Your child’s name"
+msgstr "孩子的姓名"
 
 #: src/pages/club/sections.tsx
 msgid "Your data"
 msgstr "你的数据"
 
-#: src/pages/join/JoinPage.tsx
-msgid "Your email"
-msgstr "你的邮箱"
+#: src/components/auth/MyMemberships.tsx
+msgid "Your memberships"
+msgstr "你的会员"
+
+#: src/pages/membership/MyMembershipPage.tsx
+msgid "Your memberships and requests, all in one spot."
+msgstr "你的会员和申请，都在这里。"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Your message is on its way to the board."
+msgstr "你的消息正在发给理事会。"
 
 #: src/pages/join/JoinPage.tsx
-msgid "Your name"
-msgstr "你的姓名"
-
-#: src/pages/admin/AdminPage.tsx
-msgid "Your notice text shows here."
-msgstr "你的通知内容会显示在这里。"
-
-#: src/pages/join/JoinPage.tsx
-msgid "Your phone"
-msgstr "你的电话"
+msgid "Your pick"
+msgstr "你的选择"
