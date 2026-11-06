@@ -1,0 +1,7 @@
+.studio {
+  height: 100dvh;
+}
+
+:global([data-ui='Popover']:has(img[src*='cdn.sanity.io/images/pyrmmpch/'])) {
+  display: none;
+}

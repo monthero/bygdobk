@@ -1,0 +1,30 @@
+.frame {
+  position: relative;
+  overflow: hidden;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card-bg-color) 15%, transparent) 0%,
+      color-mix(in srgb, var(--card-bg-color) 70%, transparent) 45%,
+      color-mix(in srgb, var(--card-bg-color) 92%, transparent) 75%,
+      var(--card-bg-color) 100%
+    ),
+    linear-gradient(rgb(0 0 0 / 0.2), rgb(0 0 0 / 0.2));
+}
+
+.title {
+  position: absolute;
+  inset: auto 16px 16px;
+  z-index: 1;
+}

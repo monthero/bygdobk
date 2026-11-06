@@ -27,6 +27,7 @@ export default defineConfig({
       'typescript/require-array-sort-compare': ['error', { ignoreStringArrays: false }],
       'unicorn/prefer-at': 'error',
       'eslint/no-nested-ternary': 'error',
+      'eslint/no-underscore-dangle': ['warn', { allow: ['_key', '_type', '_ref', '_id'] }],
       'unicorn/prefer-number-properties': 'error',
       'unicorn/no-array-sort': 'off',
       'unicorn/no-array-reverse': 'off',
@@ -39,7 +40,7 @@ export default defineConfig({
       'vite-plus/prefer-vite-plus-imports': 'error',
     },
     overrides: [{ files: ['src/routes/**'], rules: { 'react/only-export-components': 'off' } }],
-    ignorePatterns: ['dist/**', 'src/routeTree.gen.ts'],
+    ignorePatterns: ['dist/**', 'src/routeTree.gen.ts', 'supabase/functions/**'],
     jsPlugins: [{ name: 'vite-plus', specifier: 'vite-plus/oxlint-plugin' }],
   },
   plugins: [

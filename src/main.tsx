@@ -9,6 +9,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { App } from './App';
+import { contentQuery } from './cms/content';
+import { queryClient } from './cms/queryClient';
 import { activateLocale } from './i18n/activate';
 import { DEFAULT_LOCALE, localeInPath, withLocale } from './i18n/locales';
 import { readLocation, replaceLocation } from './i18n/url';
@@ -21,6 +23,7 @@ const initialLocale = () => {
 };
 
 const boot = async () => {
+  void queryClient.prefetchQuery(contentQuery);
   const locale = initialLocale();
   const { pathname, rest } = readLocation();
   const localized = withLocale(pathname, locale);

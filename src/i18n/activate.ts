@@ -6,7 +6,9 @@ import { intlLocale, LOCALE_META, type Locale } from './locales';
 const DAYJS_LOCALES: Record<Exclude<Locale, 'en'>, () => Promise<unknown>> = {
   nb: () => import('dayjs/locale/nb'),
   sv: () => import('dayjs/locale/sv'),
+  da: () => import('dayjs/locale/da'),
   fi: () => import('dayjs/locale/fi'),
+  is: () => import('dayjs/locale/is'),
   zh: () => import('dayjs/locale/zh-cn'),
 };
 

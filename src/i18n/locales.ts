@@ -1,4 +1,4 @@
-export const LOCALES = ['en', 'nb', 'sv', 'fi', 'zh'] as const;
+export const LOCALES = ['en', 'nb', 'sv', 'da', 'fi', 'is', 'zh'] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const SOURCE_LOCALE: Locale = 'en';
@@ -8,8 +8,22 @@ export const LOCALE_META: Record<Locale, { name: string; lang: string; intl: str
   nb: { name: 'Norsk (bokmål)', lang: 'nb', intl: 'nb-NO', dayjs: 'nb', order: 0 },
   en: { name: 'English', lang: 'en', intl: 'en-GB', dayjs: 'en', order: 1 },
   sv: { name: 'Svenska', lang: 'sv', intl: 'sv-SE', dayjs: 'sv', order: 2 },
-  fi: { name: 'Suomi', lang: 'fi', intl: 'fi-FI', dayjs: 'fi', order: 3 },
-  zh: { name: '简体中文', lang: 'zh-Hans', intl: 'zh-CN', dayjs: 'zh-cn', order: 4 },
+  da: { name: 'Dansk', lang: 'da', intl: 'da-DK', dayjs: 'da', order: 3 },
+  fi: { name: 'Suomi', lang: 'fi', intl: 'fi-FI', dayjs: 'fi', order: 4 },
+  is: { name: 'Íslenska', lang: 'is', intl: 'is-IS', dayjs: 'is', order: 5 },
+  zh: { name: '简体中文', lang: 'zh-Hans', intl: 'zh-CN', dayjs: 'zh-cn', order: 6 },
+};
+
+export const REQUIRED_LOCALES: ReadonlySet<Locale> = new Set<Locale>(['nb', 'en']);
+
+export const CONTENT_FALLBACK: Record<Locale, Locale> = {
+  nb: 'nb',
+  en: 'nb',
+  sv: 'nb',
+  da: 'nb',
+  fi: 'nb',
+  is: 'nb',
+  zh: 'en',
 };
 
 export const LOCALES_BY_ORDER = LOCALES.toSorted((a, b) => LOCALE_META[a].order - LOCALE_META[b].order);
@@ -30,8 +44,12 @@ export const stripLocale = (pathname: string) => {
   return locale ? pathname.slice(locale.length + 1) || '/' : pathname;
 };
 
+export const ADMIN_PATH = '/admin';
+
+export const isAdminPath = (pathname: string) => pathname === ADMIN_PATH || pathname.startsWith(`${ADMIN_PATH}/`);
+
 export const withLocale = (pathname: string, locale: Locale) => {
   const bare = stripLocale(pathname);
-  if (locale === DEFAULT_LOCALE) return bare;
+  if (locale === DEFAULT_LOCALE || isAdminPath(bare)) return bare;
   return bare === '/' ? `/${locale}` : `/${locale}${bare}`;
 };
