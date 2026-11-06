@@ -18,7 +18,7 @@ const THEME = buildTheme({
 const LISTS = ['event', 'newsPost', 'membershipPlan', 'discount', 'boardMember'];
 
 const SINGLETONS = [
-  { type: 'siteSettings', id: SITE_SETTINGS_ID, title: 'Site notice' },
+  { type: 'siteSettings', id: SITE_SETTINGS_ID, title: 'Site settings' },
   { type: 'privacyPage', id: PRIVACY_PAGE_ID, title: 'Privacy' },
 ];
 

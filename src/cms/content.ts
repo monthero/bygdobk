@@ -6,6 +6,7 @@ import { Group, PlanAudience, PriceKind } from '~/data/club';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { NoticeTone } from '~/data/notice';
+import { SocialPlatform } from '~/data/socials';
 import { currentLocale } from '~/i18n/current';
 import { CONTENT_FALLBACK, DEFAULT_LOCALE, LOCALES, type Locale } from '~/i18n/locales';
 
@@ -156,6 +157,8 @@ const Plan = z.object({
 
 const Discount = z.object({ title: LocaleString, body: LocaleString });
 
+const Social = z.object({ platform: SocialPlatform, url: z.url({ protocol: /^https$/ }) });
+
 const BoardMember = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
@@ -169,6 +172,7 @@ const RawContent = z.object({
   notice: Notice.nullish()
     .transform((n) => n ?? NO_NOTICE)
     .catch(NO_NOTICE),
+  socials: listOf('social link', Social),
   news: listOf('news post', NewsPost),
   events: listOf('event', Event),
   plans: listOf('membership plan', Plan),
@@ -179,6 +183,7 @@ type RawContent = z.output<typeof RawContent>;
 
 const CONTENT_GROQ = `{
   "notice": *[_id == "siteSettings"][0].notice,
+  "socials": *[_id == "siteSettings"][0].socials[] { platform, url },
   "news": *[_type == "newsPost"] | order(date desc) {
     "slug": slug.current, date, kind, title, summary, body, links,
     "banner": banner { ..., "lqip": asset->metadata.lqip },

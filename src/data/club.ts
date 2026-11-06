@@ -15,8 +15,6 @@ export const CLUB = {
   email: 'styret@bygdobk.no',
   orgNr: '993 621 358',
   vipps: '84624',
-  facebookUrl: 'https://www.facebook.com/groups/1290988944285749/',
-  instagramUrl: 'https://www.instagram.com/bygdobk/',
   whistleblowingUrl: 'https://www.idrettsforbundet.no/tema/varsling/jeg-vil-varsle/',
   sportModernUrl: 'https://www.sportmodern.no',
   founded: 1936,

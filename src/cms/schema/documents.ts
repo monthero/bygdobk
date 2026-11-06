@@ -4,6 +4,7 @@ import { Group, PlanAudience, PriceKind } from '~/data/club';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { NoticeTone } from '~/data/notice';
+import { SOCIAL_NAMES, SocialPlatform } from '~/data/socials';
 import { weekdayName } from '~/utils/dates';
 
 import { BannerInput } from './BannerInput';
@@ -36,7 +37,7 @@ const order = defineField({ name: 'order', title: 'Order', type: 'number', descr
 
 export const siteSettings = defineType({
   name: 'siteSettings',
-  title: 'Site notice',
+  title: 'Site settings',
   type: 'document',
   fields: [
     defineField({
@@ -55,8 +56,42 @@ export const siteSettings = defineType({
         defineField({ name: 'text', title: 'Text', type: 'localeText' }),
       ],
     }),
+    defineField({
+      name: 'socials',
+      title: 'Social links',
+      description: 'Shown in the footer, the menu and on the contact page, in this order.',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          name: 'social',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'platform',
+              title: 'Platform',
+              type: 'string',
+              options: { list: SocialPlatform.options.map((value) => ({ title: SOCIAL_NAMES[value], value })) },
+              validation: required,
+            }),
+            defineField({
+              name: 'url',
+              title: 'Link',
+              type: 'url',
+              validation: (rule) => rule.required().uri({ scheme: ['https'] }),
+            }),
+          ],
+          preview: {
+            select: { platform: 'platform', url: 'url' },
+            prepare: ({ platform, url }: Record<string, string | undefined>) => {
+              const known = SocialPlatform.safeParse(platform);
+              return { title: known.success ? SOCIAL_NAMES[known.data] : platform, subtitle: url };
+            },
+          },
+        }),
+      ],
+    }),
   ],
-  preview: { prepare: () => ({ title: 'Site notice' }) },
+  preview: { prepare: () => ({ title: 'Site settings' }) },
 });
 
 export const privacyPage = defineType({
