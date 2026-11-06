@@ -47,24 +47,13 @@
 }
 
 .image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  composes: layer zoom from '../../styles/media.module.css';
   transform: translateZ(0) scale(1.06);
   transform-origin: 50% 40%;
-  backface-visibility: hidden;
-  will-change: transform;
-  transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1);
 
   .member:hover &,
   .member:focus-within & {
     transform: translateZ(0) scale(1.1);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
   }
 }
 

@@ -31,23 +31,12 @@
 }
 
 .image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  composes: layer zoom from '../../../styles/media.module.css';
   object-position: center 60%;
   transform: translateZ(0) scale(1.02);
-  backface-visibility: hidden;
-  will-change: transform;
-  transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1);
 
   .card:hover & {
     transform: translateZ(0) scale(1.08);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
   }
 }
 

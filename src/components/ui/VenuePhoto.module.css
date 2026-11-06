@@ -13,10 +13,6 @@
 }
 
 .image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  composes: layer from '../../styles/media.module.css';
   object-position: center 70%;
 }

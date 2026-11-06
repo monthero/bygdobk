@@ -1,0 +1,22 @@
+.cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.layer {
+  composes: cover;
+  position: absolute;
+  inset: 0;
+}
+
+.zoom {
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
