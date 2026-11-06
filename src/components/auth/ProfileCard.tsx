@@ -45,30 +45,30 @@ export const ProfileCard: FC<{ user: User; isMember: boolean }> = ({ user, isMem
     <FileButton onChange={pick} accept={AVATAR_ACCEPT} resetRef={resetRef} disabled={busy}>
       {({ onClick }) => (
         <Stack gap="xs">
-          <Group justify="space-between" wrap="nowrap" gap="xs">
-            <Group gap="sm" wrap="nowrap" miw={0}>
-              <UnstyledButton onClick={onClick} disabled={busy} aria-label={t`Change your photo`} bdrs="50%">
-                <Indicator
-                  label={CAMERA_BADGE}
-                  size={22}
-                  offset={6}
-                  position="bottom-end"
-                  withBorder
-                  color="gray"
-                  disabled={busy}
-                >
-                  <Box pos="relative">
-                    <Avatar
-                      src={user.avatarUrl}
-                      name={user.name}
-                      color="initials"
-                      size="lg"
-                      imageProps={AVATAR_IMAGE_PROPS}
-                    />
-                    <LoadingOverlay visible={busy} overlayProps={OVERLAY_PROPS} loaderProps={OVERLAY_LOADER} />
-                  </Box>
-                </Indicator>
-              </UnstyledButton>
+          <Group gap="sm" wrap="nowrap" miw={0}>
+            <UnstyledButton onClick={onClick} disabled={busy} aria-label={t`Change your photo`} bdrs="50%">
+              <Indicator
+                label={CAMERA_BADGE}
+                size={22}
+                offset={6}
+                position="bottom-end"
+                withBorder
+                color="gray"
+                disabled={busy}
+              >
+                <Box pos="relative">
+                  <Avatar
+                    src={user.avatarUrl}
+                    name={user.name}
+                    color="initials"
+                    size="lg"
+                    imageProps={AVATAR_IMAGE_PROPS}
+                  />
+                  <LoadingOverlay visible={busy} overlayProps={OVERLAY_PROPS} loaderProps={OVERLAY_LOADER} />
+                </Box>
+              </Indicator>
+            </UnstyledButton>
+            <Stack gap={4} miw={0}>
               <Stack gap={0} miw={0}>
                 <Text fw={600} truncate>
                   {user.name}
@@ -77,48 +77,39 @@ export const ProfileCard: FC<{ user: User; isMember: boolean }> = ({ user, isMem
                   {user.email}
                 </Text>
               </Stack>
-            </Group>
-            <Group gap={4} wrap="nowrap">
-              {isMember && (
-                <Badge color="teal" variant="light">
-                  {i18n._(MEMBER_LABEL)}
-                </Badge>
+              {(isMember || user.isAdmin) && (
+                <Group gap={4}>
+                  {isMember && (
+                    <Badge color="teal" variant="light">
+                      {i18n._(MEMBER_LABEL)}
+                    </Badge>
+                  )}
+                  {user.isAdmin && (
+                    <Badge color="grape" variant="light">
+                      {i18n._(ADMIN_LABEL)}
+                    </Badge>
+                  )}
+                </Group>
               )}
-              {user.isAdmin && (
-                <Badge color="grape" variant="light">
-                  {i18n._(ADMIN_LABEL)}
-                </Badge>
-              )}
-            </Group>
+            </Stack>
           </Group>
-          <Group gap="xs" grow>
+          {user.avatarUrl && (
             <Button
               size="xs"
-              variant="default"
-              leftSection={<Camera />}
-              loading={change.isPending}
-              disabled={remove.isPending}
-              onClick={onClick}
+              variant="subtle"
+              color="gray"
+              w="fit-content"
+              leftSection={<Trash />}
+              loading={remove.isPending}
+              disabled={change.isPending}
+              onClick={() => {
+                change.reset();
+                remove.mutate();
+              }}
             >
-              <Trans>Change photo</Trans>
+              <Trans>Remove photo</Trans>
             </Button>
-            {user.avatarUrl && (
-              <Button
-                size="xs"
-                variant="subtle"
-                color="gray"
-                leftSection={<Trash />}
-                loading={remove.isPending}
-                disabled={change.isPending}
-                onClick={() => {
-                  change.reset();
-                  remove.mutate();
-                }}
-              >
-                <Trans>Remove photo</Trans>
-              </Button>
-            )}
-          </Group>
+          )}
           {error && (
             <Text size="sm" c="red" role="alert">
               {i18n._(avatarErrorMessage(error))}

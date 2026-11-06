@@ -501,10 +501,6 @@ msgid "Challenge. Checking the replay…"
 msgstr "Udfordring. Vi tjekker gentagelsen…"
 
 #: src/components/auth/ProfileCard.tsx
-msgid "Change photo"
-msgstr "Skift billede"
-
-#: src/components/auth/ProfileCard.tsx
 msgid "Change your photo"
 msgstr "Skift dit billede"
 

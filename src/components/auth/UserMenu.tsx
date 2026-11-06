@@ -41,6 +41,7 @@ import { ProfileCard } from './ProfileCard';
 
 const EDITOR_PARAMS = { _splat: '' };
 const EMPTY_MEMBERSHIPS: Membership[] = [];
+const PANEL_WIDTH = 340;
 
 const signOut = async () => {
   const supabase = await getSupabase();
@@ -179,6 +180,7 @@ export const AccountButton: FC<{ position?: FloatingPosition }> = ({ position })
 
   return (
     <ResponsivePanel
+      width={PANEL_WIDTH}
       title={userId ? <Trans>Your account</Trans> : <Trans>Account</Trans>}
       closeLabel={t`Close account menu`}
       position={position}
