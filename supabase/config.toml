@@ -7,3 +7,11 @@ verify_jwt = false
 [functions.calendar]
 # Calendar apps can't send keys, so the feed is public.
 verify_jwt = false
+
+[auth.email.template.magic_link]
+subject = "Logg inn hos Bygdø BK · Log in to Bygdø BK"
+content_path = "./supabase/templates/login-link.html"
+
+[auth.email.template.confirmation]
+subject = "Logg inn hos Bygdø BK · Log in to Bygdø BK"
+content_path = "./supabase/templates/login-link.html"

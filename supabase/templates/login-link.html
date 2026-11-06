@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="nb">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Logg inn hos Bygdø BK</title>
+  </head>
+  <body style="margin: 0; padding: 0; background: #f5f4ec">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background: #f5f4ec">
+      <tr>
+        <td align="center" style="padding: 32px 16px">
+          <table
+            role="presentation"
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            style="
+              max-width: 480px;
+              background: #ffffff;
+              border-radius: 16px;
+              font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+              color: #15150d;
+            "
+          >
+            <tr>
+              <td style="padding: 32px 32px 0">
+                <img
+                  src="{{ .SiteURL }}/apple-touch-icon.png"
+                  width="56"
+                  height="56"
+                  alt="Bygdø Badmintonklubb"
+                  style="display: block; border-radius: 12px"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 24px 32px 8px">
+                <h1 style="margin: 0 0 8px; font-size: 22px; line-height: 1.3">Logg inn hos Bygdø BK</h1>
+                <p style="margin: 0; font-size: 16px; line-height: 1.5">Trykk på knappen, så er du inne.</p>
+                <p lang="en" style="margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: #6b6a5e">
+                  Log in to Bygdø BK: tap the button and you're in.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 20px 32px 24px">
+                <a
+                  href="{{ .ConfirmationURL }}"
+                  style="
+                    display: inline-block;
+                    padding: 14px 28px;
+                    border-radius: 999px;
+                    background: #f6a54c;
+                    color: #15150d;
+                    font-size: 16px;
+                    font-weight: 700;
+                    text-decoration: none;
+                  "
+                  >Logg inn · Log in</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 0 32px 28px; font-size: 13px; line-height: 1.5; color: #6b6a5e">
+                <p style="margin: 0 0 12px">
+                  Lenken virker i én time og bare én gang. Åpne den i samme nettleser som du ba om den i. Ba du ikke
+                  om denne e-posten? Da kan du bare se bort fra den.
+                </p>
+                <p lang="en" style="margin: 0">
+                  The link works for one hour, and only once. Open it in the same browser you asked for it in. Didn't
+                  ask for this email? You can ignore it.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 16px 32px 28px; border-top: 1px solid #ecebe0; font-size: 12px; color: #6b6a5e">
+                <a href="{{ .SiteURL }}" style="color: #6b6a5e">Bygdø Badmintonklubb</a> · Bygdøhus, Huk Aveny 45,
+                0287 Oslo
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
