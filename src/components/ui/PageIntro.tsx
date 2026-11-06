@@ -20,7 +20,13 @@ export const PageIntroBase: FC<PageIntroProps> = ({ eyebrow, title, lede, photo,
     <header className={classes.intro} data-photo={photo ? true : undefined}>
       {photo && (
         <div className={classes.photo}>
-          <img src={photo.src} alt={i18n._(photo.alt)} className={classes.image} fetchPriority="high" />
+          <img
+            src={photo.src}
+            alt={i18n._(photo.alt)}
+            className={classes.image}
+            style={{ objectPosition: photo.position }}
+            fetchPriority="high"
+          />
         </div>
       )}
       <Container className={classes.inner}>

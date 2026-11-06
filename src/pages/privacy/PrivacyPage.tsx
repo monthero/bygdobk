@@ -8,6 +8,7 @@ import { ArticleBody } from '~/components/news';
 import { PageIntro } from '~/components/styles';
 import { ArrowRight, ShieldCheck } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
+import { PHOTOS } from '~/data/photos';
 import { date, formatDate, LONG_DATE } from '~/utils/dates';
 
 import classes from './PrivacyPage.module.css';
@@ -28,7 +29,7 @@ const ContactButton: FC = () => (
 
 const NotWritten: FC = () => (
   <>
-    <PageIntro title={<Trans>Privacy</Trans>} />
+    <PageIntro photo={PHOTOS.privacyPhone} title={<Trans>Privacy</Trans>} />
     <Container py={{ base: 28, md: 40 }}>
       <Stack align="center" ta="center" gap="md" py={24}>
         <ThemeIcon size={64} radius="xl" variant="light">
@@ -53,7 +54,11 @@ export const PrivacyPage: FC = () => {
   const updated = page.updatedAt && formatDate(date(page.updatedAt), LONG_DATE);
   return (
     <>
-      <PageIntro title={page.title} lede={updated && <Trans>Last updated {updated}</Trans>} />
+      <PageIntro
+        photo={PHOTOS.privacyPhone}
+        title={page.title}
+        lede={updated && <Trans>Last updated {updated}</Trans>}
+      />
       <Container py={{ base: 28, md: 40 }}>
         <Stack gap={36} className={classes.column}>
           <article>

@@ -21,6 +21,7 @@ export const FlightPageIntro: FC<PageIntroProps> = ({ eyebrow, title, lede, phot
           role={photo ? 'img' : undefined}
           aria-label={photo ? i18n._(photo.alt) : undefined}
           className={classes.photo}
+          style={{ backgroundPosition: photo?.position }}
         />
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className={classes.art} aria-hidden="true">
           <path d={WIDE_TRAIL} data-fit="wide" vectorEffect="non-scaling-stroke" className={classes.trail} />

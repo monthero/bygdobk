@@ -8,10 +8,11 @@ import bygdohusOutside from '~/assets/photos/bygdohus-outside.webp';
 import hallSunset from '~/assets/photos/hall-sunset.webp';
 import playerServe from '~/assets/photos/player-serve.webp';
 import playersCourt from '~/assets/photos/players-court.webp';
+import privacyPhone from '~/assets/photos/privacy-phone.webp';
 import racketCourt from '~/assets/photos/racket-court.webp';
 import shuttleRacket from '~/assets/photos/shuttle-racket.webp';
 
-export type Photo = { src: string; alt: MessageDescriptor };
+export type Photo = { src: string; alt: MessageDescriptor; position?: string };
 
 export const PhotoName = z.enum([
   'playersCourt',
@@ -22,6 +23,7 @@ export const PhotoName = z.enum([
   'bygdohusCourts',
   'bygdohusCoaching',
   'bygdohusOutside',
+  'privacyPhone',
 ]);
 export type PhotoName = z.infer<typeof PhotoName>;
 
@@ -57,5 +59,10 @@ export const PHOTOS = {
   [PhotoName.enum.bygdohusOutside]: {
     src: bygdohusOutside,
     alt: msg`Bygdøhus seen from the car park`,
+  },
+  [PhotoName.enum.privacyPhone]: {
+    src: privacyPhone,
+    alt: msg`A woman looking at her phone, her face covered by a digital grid`,
+    position: 'center 22%',
   },
 } satisfies Record<PhotoName, Photo>;

@@ -32,7 +32,13 @@ export const CourtPageIntro: FC<PageIntroProps> = ({ eyebrow, title, lede, photo
       <div className={classes.panel}>
         {photo && (
           <div className={classes.photo}>
-            <img src={photo.src} alt={i18n._(photo.alt)} className={classes.image} fetchPriority="high" />
+            <img
+              src={photo.src}
+              alt={i18n._(photo.alt)}
+              className={classes.image}
+              style={{ objectPosition: photo.position }}
+              fetchPriority="high"
+            />
           </div>
         )}
         <div className={classes.court}>
