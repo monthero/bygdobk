@@ -8,6 +8,7 @@ import type { Plan } from '~/cms/content';
 import { Check, CheckCircle, Clock, DownloadSimple } from '~/components/ui';
 import type { AdminMembership } from '~/memberships/model';
 import { kr } from '~/pages/join/offers';
+import { percent } from '~/utils/numbers';
 
 import { planName } from './format';
 import { csvFileName, downloadCsv, membersCsv } from './membersCsv';
@@ -30,8 +31,6 @@ const count = (tally: Tally, m: AdminMembership) => {
     tally.received += m.priceNok;
   }
 };
-
-const percent = (part: number, whole: number) => (whole > 0 ? (part * 100) / whole : 0);
 
 const tallyOf = (memberships: readonly AdminMembership[], plans: ReadonlyMap<string, Plan>) => {
   const total = newTally();

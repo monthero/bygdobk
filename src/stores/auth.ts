@@ -30,11 +30,16 @@ export const useAuth = create<AuthState>()(() => ({ session: null, ready: false,
 
 const AuthUrlParam = z.enum(['code', 'error', 'error_code', 'error_description']);
 
-const removeAuthParams = () => {
+const authParamsInUrl = () => {
   const url = new URL(window.location.href);
   const hash = new URLSearchParams(url.hash.slice(1));
   const inHash = AuthUrlParam.options.some((key) => hash.has(key));
   const inSearch = AuthUrlParam.options.some((key) => url.searchParams.has(key));
+  return { url, inHash, inSearch };
+};
+
+const removeAuthParams = () => {
+  const { url, inHash, inSearch } = authParamsInUrl();
   if (!inHash && !inSearch) return false;
   for (const key of AuthUrlParam.options) url.searchParams.delete(key);
   if (inHash) url.hash = '';
@@ -63,9 +68,8 @@ const hasStoredSession = () => {
 };
 
 const hasAuthParams = () => {
-  const url = new URL(window.location.href);
-  const hash = new URLSearchParams(url.hash.slice(1));
-  return AuthUrlParam.options.some((key) => url.searchParams.has(key) || hash.has(key));
+  const { inHash, inSearch } = authParamsInUrl();
+  return inHash || inSearch;
 };
 
 let started: Promise<void> | undefined;

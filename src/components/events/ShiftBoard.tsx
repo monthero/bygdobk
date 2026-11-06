@@ -22,6 +22,7 @@ import { ArrowCounterClockwise, ArrowUpRight, CheckCircle, HandHeart, Warning } 
 import { Team, TEAMS } from '~/data/events';
 import { useUi } from '~/stores/ui';
 import { date, formatDate } from '~/utils/dates';
+import { percent } from '~/utils/numbers';
 import type { ShiftCounts, ShiftVolunteer } from '~/volunteers/model';
 import {
   useMyShifts,
@@ -89,7 +90,7 @@ const Fill: FC<{ taken: Taken; spots: number }> = ({ taken, spots }) => {
       <Progress
         size="sm"
         radius="xl"
-        value={Math.min(100, (taken * 100) / spots)}
+        value={percent(taken, spots)}
         color={full ? 'teal' : undefined}
         aria-label={t`${taken} of ${spots} spots taken`}
       />

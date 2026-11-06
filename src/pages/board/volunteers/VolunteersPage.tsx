@@ -30,6 +30,7 @@ import { usePageTitle } from '~/hooks/usePageTitle';
 import { LoadError } from '~/pages/board/LoadError';
 import { date, formatDate, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
+import { percent } from '~/utils/numbers';
 import { volunteerName, type AdminShiftVolunteer } from '~/volunteers/model';
 import { useEventVolunteers } from '~/volunteers/queries';
 
@@ -120,7 +121,7 @@ const ShiftPanel = memo<{ shift: Shift; volunteers: readonly AdminShiftVolunteer
         <Progress
           size="sm"
           radius="xl"
-          value={Math.min(100, (taken * 100) / shift.spots)}
+          value={percent(taken, shift.spots)}
           color={full ? 'teal' : undefined}
           aria-label={t`${taken} of ${shift.spots} spots taken`}
         />
