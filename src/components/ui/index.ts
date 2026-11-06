@@ -2,7 +2,7 @@ export { PageIntroBase, type PageIntroProps } from './PageIntro';
 export { PhotoBadge } from './PhotoBadge';
 export { BottomSheet } from './BottomSheet';
 export { ResponsivePanel, type PanelVariant } from './ResponsivePanel';
-export { Segmented, SegmentedMulti, type SegmentedOption } from './Segmented';
+export { Segmented, type SegmentedOption } from './Segmented';
 export { AddressLink } from './AddressLink';
 export { CopyLinkButton } from './CopyLinkButton';
 export { SocialLinks } from './SocialLinks';

@@ -51,13 +51,6 @@
     & > button::after {
       border-radius: 0;
     }
-
-    &[data-multiple] > button[aria-pressed='true']::after {
-      inset-inline: 10px;
-      height: 8px;
-      border-inline: 2px solid var(--bk-accent-strong);
-      background: linear-gradient(var(--bk-accent-strong), var(--bk-accent-strong)) left bottom / 100% 3px no-repeat;
-    }
   }
 
   & main table.mantine-Table-table:not(footer *, [role='dialog'] *) {

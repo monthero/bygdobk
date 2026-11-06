@@ -40,9 +40,10 @@
   color: var(--bk-accent-strong);
 }
 
-.divider {
-  align-self: center;
-  height: 24px;
+.year {
+  font-weight: 600;
+  border-color: var(--bk-border);
+  background: var(--bk-surface);
 }
 
 .subscribe {

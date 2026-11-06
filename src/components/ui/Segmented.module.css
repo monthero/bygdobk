@@ -99,25 +99,3 @@
   flex: none;
   border-radius: 50%;
 }
-
-.root[data-multiple] {
-  & .option[aria-pressed='true']::after {
-    opacity: 1;
-    transform: none;
-  }
-
-  & .option:first-of-type {
-    margin-inline-end: 9px;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset-inline-end: -7px;
-      top: 50%;
-      width: 1px;
-      height: 18px;
-      background: var(--bk-border);
-      transform: translateY(-50%);
-    }
-  }
-}

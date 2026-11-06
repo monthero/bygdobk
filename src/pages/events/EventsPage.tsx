@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Button, Container, Divider, Stack, Text, Timeline, Title } from '@mantine/core';
+import { Button, Container, Select, Stack, Text, Timeline, Title } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
@@ -8,7 +8,7 @@ import { useSiteContent } from '~/cms/content';
 import { EVENT_ICONS, EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
-import { CalendarBlank, Segmented, SegmentedMulti, type SegmentedOption } from '~/components/ui';
+import { CalendarBlank, Segmented, type SegmentedOption } from '~/components/ui';
 import { EventsShow } from '~/data/events';
 import { PHOTOS } from '~/data/photos';
 import { date, formatDate, LONG_DATE, today, todayIso } from '~/utils/dates';
@@ -23,7 +23,7 @@ const ICON_SIZE = 20;
 const UPCOMING_CLASSES = { itemBullet: classes.nextBullet };
 const PAST_CLASSES = { item: classes.past, itemBullet: classes.pastBullet };
 const NOW_CLASSES = { itemTitle: classes.nowTitle };
-const NO_YEARS: number[] = [];
+const YEAR_CLASS_NAMES = { input: classes.year };
 const NO_EVENTS: VisitorEvent[] = [];
 const ALL = 'all';
 type ShowFilter = EventsShow | typeof ALL;
@@ -34,34 +34,29 @@ const eventYear = (event: VisitorEvent) => date(event.startDate).year();
 
 export const EventsPage: FC = () => {
   const { t } = useLingui();
-  const { ar: years = NO_YEARS, vis } = route.useSearch();
+  const { ar, vis } = route.useSearch();
   const navigate = route.useNavigate();
   const { events } = useSiteContent();
   const dayIso = todayIso();
 
   const visible = useMemo(() => events.filter(isVisitorEvent), [events]);
-  const yearOptions = useMemo<SegmentedOption<number>[]>(
-    () =>
-      Array.from(new Set(visible.values().map(eventYear)), (y) => ({ value: y, label: y })).sort(
-        (a, b) => a.value - b.value,
-      ),
-    [visible],
-  );
+  const years = useMemo(() => [...new Set(visible.values().map(eventYear))].sort((a, b) => b - a), [visible]);
+  const yearOptions = useMemo(() => Array.from(years, String), [years]);
+  const thisYear = date(dayIso).year();
+  const defaultYear = years.includes(thisYear) ? thisYear : years.at(0);
+  const year = ar !== undefined && years.includes(ar) ? ar : defaultYear;
 
-  const { upcoming, past, thisYear, nothingPlanned } = useMemo(() => {
+  const { upcoming, past, nothingPlanned } = useMemo(() => {
     const day = date(dayIso);
-    const picked = new Set(years);
-    const shown = picked.size > 0 ? visible.filter((e) => picked.has(eventYear(e))) : visible;
+    const shown = visible.filter((e) => eventYear(e) === year);
     return {
       upcoming: vis === EventsShow.enum.tidligere ? NO_EVENTS : shown.filter((e) => !isPast(e, day)),
       past: vis === EventsShow.enum.kommende ? NO_EVENTS : shown.filter((e) => isPast(e, day)).reverse(),
-      thisYear: day.year(),
       nothingPlanned: !visible.some((e) => !isPast(e, day)),
     };
-  }, [visible, dayIso, years, vis]);
+  }, [visible, dayIso, year, vis]);
 
-  const showToday =
-    !vis && (years.length === 0 || (years.some((y) => y <= thisYear) && years.some((y) => y >= thisYear)));
+  const showToday = !vis && year === thisYear;
   const isEmpty = upcoming.length === 0 && past.length === 0;
 
   const showOptions = useMemo<SegmentedOption<ShowFilter>[]>(
@@ -73,8 +68,11 @@ export const EventsPage: FC = () => {
     [t],
   );
 
-  const pickYears = (value: number[]) =>
-    navigate({ search: (prev) => ({ ...prev, ar: value.length > 0 ? value : undefined }), ...STAY });
+  const pickYear = (value: string | null) => {
+    if (!value) return;
+    const picked = Number(value);
+    void navigate({ search: (prev) => ({ ...prev, ar: picked === defaultYear ? undefined : picked }), ...STAY });
+  };
   const pickShow = (value: ShowFilter) =>
     navigate({ search: (prev) => ({ ...prev, vis: value === ALL ? undefined : value }), ...STAY });
   const showAll = () => navigate({ search: {}, ...STAY });
@@ -87,19 +85,20 @@ export const EventsPage: FC = () => {
         lede={<Trans>Our tournaments at Bygdøhus run on volunteers. Grab a shift!</Trans>}
       />
       <PageToolbar>
-        <Segmented label={t`Show`} options={showOptions} value={vis ?? ALL} onChange={pickShow} />
-        {yearOptions.length > 1 && (
-          <>
-            <Divider orientation="vertical" className={classes.divider} />
-            <SegmentedMulti
-              label={t`Year`}
-              allLabel={<Trans comment="Year filter option that shows events from every year">All years</Trans>}
-              options={yearOptions}
-              value={years}
-              onChange={pickYears}
-            />
-          </>
+        {years.length > 1 && (
+          <Select
+            aria-label={t`Year`}
+            data={yearOptions}
+            value={String(year)}
+            onChange={pickYear}
+            allowDeselect={false}
+            radius="xl"
+            w={136}
+            leftSection={<CalendarBlank />}
+            classNames={YEAR_CLASS_NAMES}
+          />
         )}
+        <Segmented label={t`Show`} options={showOptions} value={vis ?? ALL} onChange={pickShow} />
         <div className={classes.subscribe}>
           <SubscribeButton />
         </div>
