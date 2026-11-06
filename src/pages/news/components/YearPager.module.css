@@ -1,0 +1,39 @@
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding-top: var(--mantine-spacing-lg);
+  border-top: 1px solid var(--bk-border);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+
+  &:hover {
+    color: var(--bk-accent-strong);
+  }
+
+  &:focus-visible {
+    border-radius: var(--mantine-radius-sm);
+    outline: 2px solid var(--bk-accent-strong);
+    outline-offset: 2px;
+  }
+
+  &[data-older] {
+    margin-inline-start: auto;
+  }
+}
+
+.arrow {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}

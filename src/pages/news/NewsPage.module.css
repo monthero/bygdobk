@@ -84,3 +84,31 @@
 .emptyIcon {
   color: var(--bk-accent-strong);
 }
+
+.search {
+  margin-bottom: var(--mantine-spacing-xl);
+
+  [data-bk='toolbar'] & {
+    width: 260px;
+    margin: 0;
+    margin-inline-start: auto;
+  }
+}
+
+.results {
+  transition: opacity 0.15s;
+
+  &[data-stale] {
+    opacity: 0.6;
+  }
+}
+
+.content {
+  scroll-margin-top: calc(var(--app-shell-header-offset, 0px) + 56px);
+}
+
+.year {
+  font-weight: 600;
+  border-color: var(--bk-border);
+  background: var(--bk-surface);
+}

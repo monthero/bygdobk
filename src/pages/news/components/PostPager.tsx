@@ -3,23 +3,22 @@ import { Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo, type FC, type ReactNode } from 'react';
 
+import type { NewsPost } from '~/cms/content';
 import { ArrowLeft, ArrowRight } from '~/components/ui';
-import type { NewsPost } from '~/data/news';
 
 import classes from './PostPager.module.css';
 
 const PagerLink: FC<{ post: NewsPost; label: ReactNode; newer?: boolean }> = ({ post, label, newer = false }) => {
-  const { i18n } = useLingui();
   const Arrow = newer ? ArrowRight : ArrowLeft;
   return (
-    <Link to="/nyheter/$slug" params={{ slug: post.id }} className={classes.link} data-newer={newer || undefined}>
+    <Link to="/nyheter/$slug" params={{ slug: post.slug }} className={classes.link} data-newer={newer || undefined}>
       <Arrow className={classes.arrow} aria-hidden />
       <span className={classes.text}>
         <Text size="xs" fw={700} tt="uppercase" c="dimmed">
           {label}
         </Text>
         <Text fw={700} lineClamp={2} className={classes.title}>
-          {i18n._(post.title)}
+          {post.title}
         </Text>
       </span>
     </Link>

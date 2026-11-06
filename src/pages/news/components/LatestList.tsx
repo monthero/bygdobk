@@ -3,8 +3,9 @@ import { Badge, Paper, Stack, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 
-import { KIND_COLORS } from '~/components/news';
-import { NEWS_KINDS, type NewsPost } from '~/data/news';
+import type { NewsPost } from '~/cms/content';
+import { KIND_COLORS, PostBanner } from '~/components/news';
+import { NEWS_KINDS } from '~/data/news';
 import { date, formatDate, SHORT_DATE } from '~/utils/dates';
 
 import classes from './LatestList.module.css';
@@ -14,19 +15,19 @@ export const LatestList = memo<{ posts: NewsPost[] }>(({ posts }) => {
   return (
     <Paper withBorder radius="lg" className={classes.panel}>
       {posts.map((post) => (
-        <Link key={post.id} to="/nyheter/$slug" params={{ slug: post.id }} className={classes.row}>
+        <Link key={post.slug} to="/nyheter/$slug" params={{ slug: post.slug }} className={classes.row}>
           <Stack gap={6} align="flex-start" className={classes.text}>
             <Text size="xs" c="dimmed" className="tabular">
               {formatDate(date(post.date), SHORT_DATE)}
             </Text>
             <Text fw={700} lineClamp={2} className={classes.title}>
-              {i18n._(post.title)}
+              {post.title}
             </Text>
             <Badge size="sm" variant="light" color={KIND_COLORS[post.kind]}>
               {i18n._(NEWS_KINDS[post.kind])}
             </Badge>
           </Stack>
-          <img src={post.cover.src} alt="" className={classes.thumb} />
+          <PostBanner post={post} aspect={4 / 3} sizes="88px" decorative className={classes.thumb} />
         </Link>
       ))}
     </Paper>

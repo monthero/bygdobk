@@ -3,7 +3,8 @@ import { Badge, Group, Stack, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 
-import { NEWS_KINDS, type NewsPost } from '~/data/news';
+import type { NewsPost } from '~/cms/content';
+import { NEWS_KINDS } from '~/data/news';
 import { date, formatDate, SHORT_DATE } from '~/utils/dates';
 
 import { KIND_COLORS } from './kinds';
@@ -17,7 +18,7 @@ export const NewsList = memo<Props>(({ posts }) => {
   return (
     <Stack gap={0} className={classes.list}>
       {posts.map((post) => (
-        <Link key={post.id} to="/nyheter/$slug" params={{ slug: post.id }} className={classes.item}>
+        <Link key={post.slug} to="/nyheter/$slug" params={{ slug: post.slug }} className={classes.item}>
           <Group gap="sm" mb={4}>
             <Text size="sm" c="dimmed" className="tabular">
               {formatDate(date(post.date), SHORT_DATE)}
@@ -27,10 +28,10 @@ export const NewsList = memo<Props>(({ posts }) => {
             </Badge>
           </Group>
           <Text fw={700} size="lg">
-            {i18n._(post.title)}
+            {post.title}
           </Text>
           <Text c="dimmed" lineClamp={2}>
-            {i18n._(post.summary)}
+            {post.summary}
           </Text>
         </Link>
       ))}

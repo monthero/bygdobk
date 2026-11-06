@@ -1,11 +1,12 @@
 import { createFileRoute, notFound } from '@tanstack/react-router';
 
-import { newsBySlug } from '~/data/news';
+import { loadSiteContent } from '~/cms/content';
 import { NewsPostPage } from '~/pages/news/NewsPostPage';
 
 export const Route = createFileRoute('/nyheter/$slug')({
-  beforeLoad: ({ params }) => {
-    if (!newsBySlug(params.slug)) throw notFound();
+  beforeLoad: async ({ params }) => {
+    const { news } = await loadSiteContent();
+    if (!news.some((p) => p.slug === params.slug)) throw notFound();
   },
   component: NewsPostPage,
 });

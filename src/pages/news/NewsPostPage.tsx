@@ -3,15 +3,16 @@ import { Anchor, Avatar, Button, Container, Group, SimpleGrid, Stack, Text, Titl
 import { getRouteApi, Link } from '@tanstack/react-router';
 import { memo, useMemo, type FC } from 'react';
 
-import { EventCard } from '~/components/events';
-import { NewsCard } from '~/components/news';
+import { isPast } from '~/cms/calendar';
+import { useSiteContent, type NewsPost } from '~/cms/content';
+import { EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
+import { ArticleBody, NewsCard } from '~/components/news';
 import { ArrowRight, ArrowUpRight, ClubLogo } from '~/components/ui';
-import { eventBySlug, isPast, type ClubEvent } from '~/data/events';
-import { NEWS, NEWS_AUTHORS, newsBySlug, type NewsLink, type NewsPost } from '~/data/news';
+import { EventKind } from '~/data/events';
+import { NEWS_AUTHORS, NewsAuthor } from '~/data/news';
 import { NotFoundPage } from '~/pages/NotFoundPage';
-import { dayjs, ISO_DAY } from '~/utils/dates';
+import { today } from '~/utils/dates';
 
-import { ArticleBody } from './components/ArticleBody';
 import { ArticleHero } from './components/ArticleHero';
 import { ClosureNotice } from './components/ClosureNotice';
 import { PostPager } from './components/PostPager';
@@ -22,45 +23,55 @@ import classes from './NewsPostPage.module.css';
 const route = getRouteApi('/nyheter/$slug');
 
 const MORE_COUNT = 3;
+const AUTHOR = NEWS_AUTHORS[NewsAuthor.enum.board];
 
-const neighbors = (post: NewsPost) => {
-  const index = NEWS.indexOf(post);
-  const newer = index > 0 ? NEWS.at(index - 1) : undefined;
-  const older = NEWS.at(index + 1);
-  const skip = new Set([post, newer, older]);
-  const more = NEWS.values()
-    .filter((p) => !skip.has(p))
+type NewsLink = NewsPost['links'][number];
+
+const neighbors = (post: NewsPost, news: NewsPost[]) => {
+  const index = news.findIndex((p) => p.slug === post.slug);
+  const newer = index > 0 ? news.at(index - 1) : undefined;
+  const older = news.at(index + 1);
+  const skip = new Set([post.slug, newer?.slug, older?.slug]);
+  const more = news
+    .values()
+    .filter((p) => !skip.has(p.slug))
     .take(MORE_COUNT)
     .toArray();
   return { newer, older, more };
 };
 
 const ArticleLink: FC<{ link: NewsLink }> = ({ link }) => {
-  const { i18n } = useLingui();
-  const label = i18n._(link.label);
-  if ('to' in link)
+  if (link.page)
     return (
-      <Button component={Link} to={link.to} hash={link.hash} variant="light" radius="xl" rightSection={<ArrowRight />}>
-        {label}
+      <Button
+        component={Link}
+        to={link.page}
+        hash={link.hash}
+        variant="light"
+        radius="xl"
+        rightSection={<ArrowRight />}
+      >
+        {link.label}
       </Button>
     );
+  if (!link.url) return null;
   return (
     <Button
       component="a"
-      href={link.href}
+      href={link.url}
       target="_blank"
       rel="noreferrer"
       variant="light"
       radius="xl"
       rightSection={<ArrowUpRight />}
     >
-      {label}
+      {link.label}
     </Button>
   );
 };
 
-const EventPointer: FC<{ event: ClubEvent }> = ({ event }) => {
-  const open = event.shifts !== undefined && !isPast(event, dayjs().format(ISO_DAY));
+const EventPointer: FC<{ event: VisitorEvent }> = ({ event }) => {
+  const open = event.shifts.length > 0 && !isPast(event, today());
   return (
     <Button
       renderRoot={(props) => <Link {...props} to="/arrangementer/$slug" params={{ slug: event.slug }} />}
@@ -76,9 +87,11 @@ const EventPointer: FC<{ event: ClubEvent }> = ({ event }) => {
 
 const Article = memo<{ post: NewsPost }>(({ post }) => {
   const { i18n } = useLingui();
-  const { newer, older, more } = useMemo(() => neighbors(post), [post]);
-  const event = post.event ? eventBySlug(post.event) : undefined;
-  const author = NEWS_AUTHORS[post.author];
+  const { news, events } = useSiteContent();
+  const { newer, older, more } = useMemo(() => neighbors(post, news), [post, news]);
+  const linked = post.eventId ? events.find((e) => e.id === post.eventId) : undefined;
+  const event = linked && isVisitorEvent(linked) ? linked : undefined;
+  const pause = linked?.kind === EventKind.enum.break ? linked : undefined;
 
   return (
     <>
@@ -92,28 +105,28 @@ const Article = memo<{ post: NewsPost }>(({ post }) => {
                 <ClubLogo mark height={30} />
               </Avatar>
               <div>
-                <Anchor component={Link} to={author.page} hash={author.hash} fw={700} c="inherit">
-                  {i18n._(author.name)}
+                <Anchor component={Link} to={AUTHOR.page} hash={AUTHOR.hash} fw={700} c="inherit">
+                  {i18n._(AUTHOR.name)}
                 </Anchor>
                 <Text size="sm" c="dimmed">
-                  {i18n._(author.role)}
+                  {i18n._(AUTHOR.role)}
                 </Text>
               </div>
             </Group>
-            <ShareButtons title={i18n._(post.title)} text={i18n._(post.summary)} />
+            <ShareButtons title={post.title} text={post.summary} />
           </div>
 
           <article>
             <ArticleBody blocks={post.body} />
           </article>
 
-          {post.closure && <ClosureNotice id={post.closure} />}
+          {pause && <ClosureNotice event={pause} />}
           {event && <EventPointer event={event} />}
 
-          {post.links && (
+          {post.links.length > 0 && (
             <Group gap="sm">
               {post.links.map((link) => (
-                <ArticleLink key={link.label.id} link={link} />
+                <ArticleLink key={link._key} link={link} />
               ))}
             </Group>
           )}
@@ -145,7 +158,7 @@ const Article = memo<{ post: NewsPost }>(({ post }) => {
             </Group>
             <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="lg">
               {more.map((p) => (
-                <NewsCard key={p.id} post={p} />
+                <NewsCard key={p.slug} post={p} />
               ))}
             </SimpleGrid>
           </Container>
@@ -157,7 +170,8 @@ const Article = memo<{ post: NewsPost }>(({ post }) => {
 
 export const NewsPostPage: FC = () => {
   const { slug } = route.useParams();
-  const post = newsBySlug(slug);
+  const { news } = useSiteContent();
+  const post = news.find((p) => p.slug === slug);
   if (!post) return <NotFoundPage />;
   return <Article post={post} />;
 };
