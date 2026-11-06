@@ -55,6 +55,7 @@ export { default as TiktokLogo } from '~icons/ph/tiktok-logo';
 export { default as XLogo } from '~icons/ph/x-logo';
 export { default as ThreadsLogo } from '~icons/ph/threads-logo';
 export { default as SnapchatLogo } from '~icons/ph/snapchat-logo';
+export { default as SpondLogo } from '~icons/bk/spond';
 export { default as DownloadSimple } from '~icons/ph/download-simple';
 export { default as Racket } from '~icons/bk/racket';
 export { default as Sneaker } from '~icons/ph/sneaker';

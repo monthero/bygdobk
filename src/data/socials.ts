@@ -3,6 +3,7 @@ import { z } from 'zod';
 export const SocialPlatform = z.enum([
   'instagram',
   'facebook',
+  'spond',
   'linkedin',
   'youtube',
   'tiktok',
@@ -15,6 +16,7 @@ export type SocialPlatform = z.infer<typeof SocialPlatform>;
 export const SOCIAL_NAMES: Record<SocialPlatform, string> = {
   [SocialPlatform.enum.instagram]: 'Instagram',
   [SocialPlatform.enum.facebook]: 'Facebook',
+  [SocialPlatform.enum.spond]: 'Spond',
   [SocialPlatform.enum.linkedin]: 'LinkedIn',
   [SocialPlatform.enum.youtube]: 'YouTube',
   [SocialPlatform.enum.tiktok]: 'TikTok',

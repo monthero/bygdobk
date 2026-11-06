@@ -11,6 +11,7 @@ import {
   LinkedinLogo,
   SnapchatLogo,
   ThreadsLogo,
+  SpondLogo,
   TiktokLogo,
   XLogo,
   YoutubeLogo,
@@ -21,6 +22,7 @@ import classes from './SocialLinks.module.css';
 const ICONS: Record<SocialPlatform, typeof InstagramLogo> = {
   [SocialPlatform.enum.instagram]: InstagramLogo,
   [SocialPlatform.enum.facebook]: FacebookLogo,
+  [SocialPlatform.enum.spond]: SpondLogo,
   [SocialPlatform.enum.linkedin]: LinkedinLogo,
   [SocialPlatform.enum.youtube]: YoutubeLogo,
   [SocialPlatform.enum.tiktok]: TiktokLogo,
