@@ -6,7 +6,7 @@ import { LOCALES, type Locale } from '~/i18n/locales';
 
 import { mergeParsed, safeJSONStorage } from './persistence';
 
-const STORAGE_KEY = 'bigdo-locale';
+const STORAGE_KEY = 'bygdo-locale';
 
 const LocaleData = z.object({
   chosen: z.enum(LOCALES).nullable().catch(null),

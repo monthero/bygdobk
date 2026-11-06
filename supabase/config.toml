@@ -1,4 +1,4 @@
-project_id = "bigdo"
+project_id = "bygdo"
 
 [functions.contact]
 # Called with the publishable key, which the function checks itself.

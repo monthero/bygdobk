@@ -80,7 +80,7 @@ const check = async (browser: Browser, job: Job): Promise<Violation[]> => {
     font: 'chakra',
   };
   await context.addInitScript(
-    ([s, v]) => localStorage.setItem('bigdo-settings', JSON.stringify({ state: s, version: v })),
+    ([s, v]) => localStorage.setItem('bygdo-settings', JSON.stringify({ state: s, version: v })),
     [state, SETTINGS_VERSION] as const,
   );
   const page = await context.newPage();

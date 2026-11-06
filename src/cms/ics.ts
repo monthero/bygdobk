@@ -3,9 +3,9 @@ import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
 
-export const SITE_URL = 'https://bigdobk.vercel.app';
+export const SITE_URL = 'https://bygdobk.vercel.app';
 
-const UID_DOMAIN = new URL(SITE_URL).host;
+const UID_DOMAIN = 'bygdobk.no';
 const TIME_ZONE = 'Europe/Oslo';
 const MAX_OCTETS = 75;
 const CRLF = '\r\n';

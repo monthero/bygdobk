@@ -38,7 +38,7 @@ const structure: StructureResolver = (S) =>
     ]);
 
 export const STUDIO_CONFIG = defineConfig({
-  name: 'bigdo',
+  name: 'bygdo',
   title: CLUB.name,
   projectId: ENV.VITE_SANITY_PROJECT_ID,
   dataset: ENV.VITE_SANITY_DATASET,

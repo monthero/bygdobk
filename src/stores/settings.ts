@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 
 import { mergeParsed, safeJSONStorage } from './persistence';
 
-const STORAGE_KEY = 'bigdo-settings';
+const STORAGE_KEY = 'bygdo-settings';
 
 export const ColorScheme = z.enum(['light', 'dark', 'auto']);
 export type ColorScheme = z.infer<typeof ColorScheme>;

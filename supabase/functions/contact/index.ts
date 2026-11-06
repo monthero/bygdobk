@@ -2,7 +2,7 @@ import { withSupabase } from 'npm:@supabase/server@1';
 import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 import { z } from 'npm:zod@4';
 
-const ALLOWED_ORIGINS = new Set(['http://localhost:5173', 'https://bigdobk.vercel.app']);
+const ALLOWED_ORIGINS = new Set(['http://localhost:5173', 'https://bygdobk.vercel.app']);
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 const CONTACT_TO = Deno.env.get('CONTACT_TO');
