@@ -1,50 +1,64 @@
+import { useMemo } from 'react';
 import { z } from 'zod';
 
-import { Group, GROUP_SLUGS, PriceKind, PRICES, seasonTotal, type Price } from '~/data/club';
+import { useSiteContent, type Plan } from '~/cms/content';
+import { Group, GROUP_SLUGS, PlanAudience, PriceKind } from '~/data/club';
 import { numberFormat } from '~/i18n/current';
 
 export const Joiner = z.enum(['me', 'child']);
 export type Joiner = z.infer<typeof Joiner>;
 
-const PRICE_IDS = new Set(PRICES.map((p) => p.id));
-const GROUP_IDS = new Set<string>(Group.options);
-
 export const JOIN_SEARCH = z.object({
-  steg: z.number().int().min(1).max(4).optional().catch(undefined),
   gruppe: GROUP_SLUGS.schema,
-  pris: z
-    .string()
-    .refine((id) => PRICE_IDS.has(id))
-    .optional()
-    .catch(undefined),
+  pris: z.string().min(1).optional().catch(undefined),
   for: Joiner.optional().catch(undefined),
 });
 
-export const kr = (n: number) => `kr\u00a0${numberFormat().format(n)}`;
+export const kr = (n: number) => `kr ${numberFormat().format(n)}`;
 
-const priceOfKind = (kind: PriceKind) => {
-  const price = PRICES.find((p) => p.kind === kind);
-  if (!price) throw new Error(`No ${kind} price`);
-  return price;
+export const planTotal = (plan: Plan) => plan.membership + plan.training;
+
+const JOINER_AUDIENCE: Record<Joiner, PlanAudience> = {
+  [Joiner.enum.me]: PlanAudience.enum.adult,
+  [Joiner.enum.child]: PlanAudience.enum.child,
 };
 
-export const DROPIN = priceOfKind(PriceKind.enum.dropin);
-export const DROPIN_VISIT = DROPIN.perVisit ?? 0;
-export const TRIAL = priceOfKind(PriceKind.enum.trial);
-export const SEASON_FROM = Math.min(
-  ...PRICES.values()
+const AUDIENCE_JOINER: Partial<Record<PlanAudience, Joiner>> = {
+  [PlanAudience.enum.adult]: Joiner.enum.me,
+  [PlanAudience.enum.child]: Joiner.enum.child,
+};
+
+export const joinerOfPlan = (plan: Plan | undefined) => (plan ? AUDIENCE_JOINER[plan.audience] : undefined);
+
+export const fitsJoiner = (plan: Plan, joiner: Joiner | undefined) =>
+  !joiner || plan.audience === PlanAudience.enum.all || plan.audience === JOINER_AUDIENCE[joiner];
+
+export const groupOfPlan = (plan: Plan): Group | undefined => {
+  if (plan.kind === PriceKind.enum.trial) return Group.enum.rekrutt;
+  return plan.kind === PriceKind.enum.season ? plan.group : undefined;
+};
+
+export const planForGroup = (plans: readonly Plan[], group: Group | undefined) =>
+  group ? plans.find((p) => p.kind === PriceKind.enum.season && p.group === group) : undefined;
+
+const offersOf = (plans: readonly Plan[]) => {
+  const dropin = plans.find((p) => p.kind === PriceKind.enum.dropin);
+  const trial = plans.find((p) => p.kind === PriceKind.enum.trial);
+  const seasonTotals = plans
+    .values()
     .filter((p) => p.kind === PriceKind.enum.season)
-    .map(seasonTotal),
-);
-
-export const TRY_SEARCH = { pris: DROPIN.id, for: Joiner.enum.me };
-export const TRIAL_SEARCH = { pris: TRIAL.id, for: Joiner.enum.child };
-
-export const groupOfPrice = (price: Price): Group | undefined => {
-  if (price.kind === PriceKind.enum.trial) return Group.enum.rekrutt;
-  if (price.kind === PriceKind.enum.season && GROUP_IDS.has(price.id)) return Group.parse(price.id);
-  return undefined;
+    .map(planTotal)
+    .toArray();
+  return {
+    dropin,
+    trial,
+    seasonFrom: seasonTotals.length > 0 ? Math.min(...seasonTotals) : undefined,
+    trySearch: { pris: dropin?.id, for: Joiner.enum.me },
+    trialSearch: { pris: trial?.id, for: Joiner.enum.child },
+  };
 };
 
-export const priceForGroup = (group: Group | undefined) =>
-  group ? PRICES.find((p) => p.kind === PriceKind.enum.season && groupOfPrice(p) === group) : undefined;
+export const useOffers = () => {
+  const { plans } = useSiteContent();
+  return useMemo(() => offersOf(plans), [plans]);
+};

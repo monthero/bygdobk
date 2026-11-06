@@ -1,10 +1,12 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Button, Card, Group, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
 import sportModernLogo from '~/assets/sponsors/sport-modern.svg';
-import { ArrowUpRight, EnvelopeSimple, Sneaker, Truck, TShirt } from '~/components/ui';
+import { ArrowUpRight, ChatCircle, Sneaker, Truck, TShirt } from '~/components/ui';
 import { CLUB } from '~/data/club';
+import { contactLink, ContactTopic } from '~/data/contact';
 
 import classes from './MemberDeal.module.css';
 
@@ -13,8 +15,9 @@ const KRONER = { style: 'currency', currency: 'NOK', maximumFractionDigits: 0 } 
 const FREE_SHIPPING_FROM = 1000;
 
 export const MemberDeal: FC = () => {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const limit = i18n.number(FREE_SHIPPING_FROM, KRONER);
+  const codeLink = contactLink(ContactTopic.enum.membership, t`Hi! Could you send me the Sport Modern member code?`);
   const perks = [
     { icon: <TShirt />, value: i18n.number(0.2, PERCENT), label: <Trans>off clothes and rackets</Trans> },
     {
@@ -58,7 +61,11 @@ export const MemberDeal: FC = () => {
             <Trans>Give the club code when you order. Forgot it? Ask the board.</Trans>
           </Text>
           <Group gap="xs">
-            <Button component="a" href={`mailto:${CLUB.email}`} variant="default" leftSection={<EnvelopeSimple />}>
+            <Button
+              renderRoot={(props) => <Link {...props} {...codeLink} />}
+              variant="default"
+              leftSection={<ChatCircle />}
+            >
               <Trans>Ask for the code</Trans>
             </Button>
             <Button

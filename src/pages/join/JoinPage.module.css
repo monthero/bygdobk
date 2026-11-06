@@ -5,15 +5,24 @@
   }
 }
 
-.stepBody {
-  @media (max-width: $mantine-breakpoint-sm) {
-    .step:not([data-progress]) & {
-      display: none;
-    }
-  }
-}
-
 .question {
   font-size: var(--mantine-font-size-lg);
   font-weight: 700;
+}
+
+.handoff {
+  background: var(--bk-surface);
+
+  &[data-picked] {
+    border-color: var(--mantine-primary-color-filled);
+    box-shadow: 0 0 0 3px var(--bk-accent-soft);
+  }
+}
+
+.go {
+  align-self: flex-start;
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    align-self: stretch;
+  }
 }

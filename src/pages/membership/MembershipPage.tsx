@@ -19,49 +19,29 @@ import {
 import { Link } from '@tanstack/react-router';
 import type { FC, ReactNode } from 'react';
 
+import { useSiteContent, type Plan } from '~/cms/content';
 import { PageIntro } from '~/components/styles';
-import { ArrowRight, ArrowUpRight, CalendarBlank, UserPlus } from '~/components/ui';
-import {
-  CLUB,
-  DEAL_HASH,
-  CURRENT_SEASON,
-  DISCOUNTS,
-  Group as TrainingGroup,
-  GROUP_SLUGS,
-  PriceKind,
-  PRICES,
-  seasonTotal,
-  type Price,
-} from '~/data/club';
+import { ArrowRight, CalendarBlank, UserPlus } from '~/components/ui';
+import { CLUB, DEAL_HASH, GROUP_SLUGS, PriceKind } from '~/data/club';
+import { contactLink, ContactTopic } from '~/data/contact';
 import { PHOTOS } from '~/data/photos';
-import { numberFormat } from '~/i18n/current';
+import { useSeasons } from '~/hooks/useSeasons';
+import { groupOfPlan, kr, planTotal } from '~/pages/join/offers';
 import { BRING_HASH } from '~/pages/training/TrainingPage';
 
 import { MemberDeal } from './MemberDeal';
 
-const MAILTO = `mailto:${CLUB.email}`;
-
-const renderBringLink = (props: Record<string, unknown>) => (
-  <Link {...props} to="/trening/$sesong" params={{ sesong: CURRENT_SEASON.id }} hash={BRING_HASH} />
-);
-
-const kr = (n: number) => `kr ${numberFormat().format(n)}`;
-
-const trainingPrice = (p: Price) => {
+const trainingPrice = (p: Plan) => {
   if (p.perVisit) return <Trans>{kr(p.perVisit)} per visit</Trans>;
   if (p.kind === PriceKind.enum.trial) return <Trans>Included</Trans>;
   return p.training ? kr(p.training) : '–';
 };
 
-const totalPrice = (p: Price) => (p.kind === PriceKind.enum.dropin ? '–' : kr(seasonTotal(p)));
+const totalPrice = (p: Plan) => (p.kind === PriceKind.enum.dropin ? '–' : kr(planTotal(p)));
 
-const groupOf = (p: Price) =>
-  p.kind === PriceKind.enum.trial ? TrainingGroup.enum.rekrutt : TrainingGroup.safeParse(p.id).data;
-
-const PriceName: FC<{ price: Price }> = ({ price }) => {
-  const { i18n } = useLingui();
-  const group = groupOf(price);
-  const name = i18n._(price.name);
+const PriceName: FC<{ price: Plan; season: string }> = ({ price, season }) => {
+  const group = groupOfPlan(price);
+  const name = price.name;
   return (
     <div>
       {group ? (
@@ -71,7 +51,7 @@ const PriceName: FC<{ price: Price }> = ({ price }) => {
             <Link
               {...props}
               to="/trening/$sesong"
-              params={{ sesong: CURRENT_SEASON.id }}
+              params={{ sesong: season }}
               search={{ gruppe: GROUP_SLUGS.toSlug(group) }}
             />
           )}
@@ -84,7 +64,7 @@ const PriceName: FC<{ price: Price }> = ({ price }) => {
         </Text>
       )}
       <Text size="sm" c="dimmed">
-        {i18n._(price.note)}
+        {price.note}
       </Text>
       {price.kind === PriceKind.enum.dropin && (
         <Text size="sm" c="dimmed">
@@ -106,8 +86,24 @@ const PriceLine: FC<{ label: ReactNode; value: ReactNode; strong?: boolean }> = 
   </Group>
 );
 
+const ASK_LINK = contactLink(ContactTopic.enum.membership);
+
 export const MembershipPage: FC = () => {
   const { t } = useLingui();
+  const { plans, discounts } = useSiteContent();
+  const { current } = useSeasons();
+  const renderBringLink = (props: Record<string, unknown>) => (
+    <Link {...props} to="/trening/$sesong" params={{ sesong: current.id }} hash={BRING_HASH} />
+  );
+  const midSeasonLink = contactLink(
+    ContactTopic.enum.membership,
+    t`Hi! I'd like to join mid-season. What would the price be?`,
+  );
+  const changeLink = contactLink(ContactTopic.enum.membership, t`Hi! I'd like to change or end my membership.`);
+  const paymentLink = contactLink(
+    ContactTopic.enum.membership,
+    t`Hi! I have a question about paying for my membership.`,
+  );
 
   const steps = [
     { title: t`Choose a group`, body: t`Beginners, Junior, Adults or a trial. Not sure? Start as a beginner.` },
@@ -135,11 +131,8 @@ export const MembershipPage: FC = () => {
       q: t`How do I change or end my membership?`,
       a: (
         <Trans>
-          Log in to{' '}
-          <Anchor href={CLUB.memberLoginUrl} target="_blank">
-            My membership <ArrowUpRight />
-          </Anchor>
-          , or <Anchor href={MAILTO}>email the board</Anchor> before the new season starts.
+          <Anchor renderRoot={(props) => <Link {...props} {...changeLink} />}>Write to the board</Anchor> before the new
+          season starts.
         </Trans>
       ),
     },
@@ -147,7 +140,7 @@ export const MembershipPage: FC = () => {
       q: t`Questions about payment?`,
       a: (
         <Trans>
-          Email the board at <Anchor href={MAILTO}>{CLUB.email}</Anchor>.
+          <Anchor renderRoot={(props) => <Link {...props} {...paymentLink} />}>Write to the board</Anchor>.
         </Trans>
       ),
     },
@@ -157,7 +150,7 @@ export const MembershipPage: FC = () => {
     <>
       <PageIntro
         photo={PHOTOS.shuttleRacket}
-        eyebrow={<Trans>Season {CURRENT_SEASON.label}</Trans>}
+        eyebrow={<Trans>Season {current.label}</Trans>}
         title={<Trans>Membership and prices</Trans>}
         lede={
           <Trans>
@@ -170,7 +163,7 @@ export const MembershipPage: FC = () => {
           <Button component={Link} to="/medlemskap/bli-medlem" size="md" leftSection={<UserPlus />}>
             <Trans>Join the club</Trans>
           </Button>
-          <Button component="a" href={CLUB.memberLoginUrl} target="_blank" size="md" variant="default">
+          <Button component={Link} to="/medlemskap/mine" size="md" variant="default">
             <Trans>My membership</Trans>
           </Button>
         </Group>
@@ -194,12 +187,34 @@ export const MembershipPage: FC = () => {
               <Alert icon={<CalendarBlank />} variant="light" color="brand">
                 <Trans>
                   One season runs from August to June, like the school year. Joining mid-season?{' '}
-                  <Anchor href={MAILTO} inherit c="inherit" fw={600} underline="always">
+                  <Anchor
+                    renderRoot={(props) => <Link {...props} {...midSeasonLink} />}
+                    inherit
+                    c="inherit"
+                    fw={600}
+                    underline="always"
+                  >
                     Ask the board
                   </Anchor>{' '}
                   about the price.
                 </Trans>
               </Alert>
+              {plans.length === 0 && (
+                <Text c="dimmed">
+                  <Trans>
+                    No prices here yet.{' '}
+                    <Anchor
+                      renderRoot={(props) => <Link {...props} {...ASK_LINK} />}
+                      inherit
+                      c="inherit"
+                      fw={600}
+                      underline="always"
+                    >
+                      Ask the board
+                    </Anchor>
+                  </Trans>
+                </Text>
+              )}
               <Table.ScrollContainer minWidth={520} visibleFrom="sm">
                 <Table verticalSpacing="sm" highlightOnHover>
                   <Table.Thead>
@@ -219,10 +234,10 @@ export const MembershipPage: FC = () => {
                     </Table.Tr>
                   </Table.Thead>
                   <Table.Tbody>
-                    {PRICES.map((p) => (
+                    {plans.map((p) => (
                       <Table.Tr key={p.id}>
                         <Table.Td>
-                          <PriceName price={p} />
+                          <PriceName price={p} season={current.id} />
                         </Table.Td>
                         <Table.Td ta="end" className="tabular">
                           {kr(p.membership)}
@@ -239,9 +254,9 @@ export const MembershipPage: FC = () => {
                 </Table>
               </Table.ScrollContainer>
               <Stack gap="sm" hiddenFrom="sm">
-                {PRICES.map((p) => (
+                {plans.map((p) => (
                   <Card key={p.id} withBorder radius="lg" padding="md">
-                    <PriceName price={p} />
+                    <PriceName price={p} season={current.id} />
                     <Stack gap={4} mt="sm">
                       <PriceLine label={<Trans>Membership</Trans>} value={kr(p.membership)} />
                       <PriceLine label={<Trans>Training</Trans>} value={trainingPrice(p)} />
@@ -258,12 +273,28 @@ export const MembershipPage: FC = () => {
               <Title order={2}>
                 <Trans>Discounts and help</Trans>
               </Title>
-              {DISCOUNTS.map((d) => (
-                <Card key={d.title.id} withBorder radius="lg" padding="md">
-                  <Text fw={700}>{t(d.title)}</Text>
-                  <Text c="dimmed">{t(d.body)}</Text>
+              {discounts.map((d) => (
+                <Card key={d.title} withBorder radius="lg" padding="md">
+                  <Text fw={700}>{d.title}</Text>
+                  <Text c="dimmed">{d.body}</Text>
                 </Card>
               ))}
+              {discounts.length === 0 && (
+                <Text c="dimmed">
+                  <Trans>
+                    <Anchor
+                      renderRoot={(props) => <Link {...props} {...ASK_LINK} />}
+                      inherit
+                      c="inherit"
+                      fw={600}
+                      underline="always"
+                    >
+                      Ask the board
+                    </Anchor>{' '}
+                    about discounts and support.
+                  </Trans>
+                </Text>
+              )}
             </Stack>
           </Grid.Col>
         </Grid>
