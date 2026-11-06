@@ -1,12 +1,13 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Container, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import { memo, useCallback, useMemo, useState, type FC } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState, type FC } from 'react';
 
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { Segmented, type SegmentedOption } from '~/components/ui';
 import { PHOTOS } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
+import { loadVariantFonts } from '~/utils/variantFonts';
 
 import { IDEAS, type Idea } from './ideas';
 
@@ -43,6 +44,7 @@ const IdeaFrame = memo<{ idea: Idea; index: number }>(({ idea, index }) => {
 export const NotFoundGallery: FC = () => {
   const { i18n, t } = useLingui();
   usePageTitle(t`404 ideas`);
+  useEffect(loadVariantFonts, []);
   const [shown, setShown] = useState(ALL);
   const pick = useCallback((value: string) => setShown(value), []);
   const options = useMemo<SegmentedOption<string>[]>(

@@ -8,8 +8,9 @@ import { usePreferenceSync } from '~/components/auth/preferences';
 import { useStyleKit } from '~/components/styles';
 import { useStandaloneNav } from '~/hooks/useStandaloneNav';
 import type { FileRoutesById } from '~/routeTree.gen';
-import { NavLayout, useSettings } from '~/stores/settings';
+import { HeadingFont, NavLayout, Style, useSettings } from '~/stores/settings';
 import { useUi } from '~/stores/ui';
+import { loadVariantFonts } from '~/utils/variantFonts';
 
 import { MobileMenu } from './MobileMenu';
 import { ScrollTitleBar } from './ScrollTitleBar';
@@ -47,9 +48,15 @@ export const RootLayout: FC = () => {
   const [loginLoaded, setLoginLoaded] = useState(loginOpened);
   if (loginOpened && !loginLoaded) setLoginLoaded(true);
 
+  const font = useSettings((s) => s.font);
+
   useEffect(() => {
     document.documentElement.dataset.style = style;
   }, [style]);
+
+  useEffect(() => {
+    if (style !== Style.enum.classic || font !== HeadingFont.enum.chakra) loadVariantFonts();
+  }, [style, font]);
 
   useEffect(close, [pathname, close]);
 

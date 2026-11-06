@@ -1,5 +1,12 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@fontsource-variable/instrument-sans';
+import '@fontsource/chakra-petch/latin-500.css';
+import '@fontsource/chakra-petch/latin-600.css';
+import '@fontsource/chakra-petch/latin-700.css';
+import '@fontsource/chakra-petch/latin-ext-500.css';
+import '@fontsource/chakra-petch/latin-ext-600.css';
+import '@fontsource/chakra-petch/latin-ext-700.css';
 import './styles/global.css';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';

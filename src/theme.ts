@@ -205,7 +205,7 @@ export const buildTheme = ({ palette, shape, density, width, font }: ThemeOption
     autoContrast: true,
     luminanceThreshold: 0.4,
     scale: SCALES[density],
-    fontFamily: sans('Instrument Sans'),
+    fontFamily: sans('Instrument Sans Variable'),
     headings: { fontFamily: HEADING_FONTS[font].family, fontWeight: HEADING_FONTS[font].weight },
     defaultRadius: 'md',
     radius: RADII[shape],

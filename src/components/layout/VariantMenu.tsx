@@ -29,6 +29,7 @@ import {
   Width,
 } from '~/stores/settings';
 import { HEADING_FONTS, PALETTE_SWATCH } from '~/theme';
+import { loadVariantFonts } from '~/utils/variantFonts';
 
 const PALETTE_NAMES: Record<Palette, MessageDescriptor> = {
   [Palette.enum.fjord]: msg({ message: 'Fjord blue', comment: 'Color palette name' }),
@@ -114,7 +115,7 @@ export const VariantMenu: FC = () => {
     values.map((value) => ({ value, label: i18n._(labels[value]) }));
 
   return (
-    <Popover position="top-start" width={320} shadow="md" withArrow>
+    <Popover position="top-start" width={320} shadow="md" withArrow onOpen={loadVariantFonts}>
       <Popover.Target>
         <Button variant="default" leftSection={<SlidersHorizontal />} rightSection={<CaretDown />}>
           <Trans>Variants</Trans>
