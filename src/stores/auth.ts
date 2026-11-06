@@ -1,58 +1,59 @@
+import { AuthPKCECodeVerifierMissingError, type AuthError, type Session } from '@supabase/supabase-js';
 import { z } from 'zod';
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-import { mergeParsed, safeJSONStorage } from './persistence';
+import { LOCALES } from '~/i18n/locales';
+import { replaceLocation } from '~/i18n/url';
+import { supabase } from '~/supabase/client';
 
-const STORAGE_KEY = 'bigdo-auth';
-
-export const Role = z.enum(['admin', 'member']);
-export type Role = z.infer<typeof Role>;
+import { ColorScheme } from './settings';
+import { useUi } from './ui';
 
 export const User = z.object({
-  name: z.string().min(1),
-  email: z.email(),
-  role: Role,
+  name: z.string(),
+  email: z.string(),
+  isAdmin: z.boolean(),
+  locale: z.enum(LOCALES).nullable().catch(null),
+  colorScheme: ColorScheme.nullable().catch(null),
+  avatarUrl: z.url().nullable().catch(null),
 });
 export type User = z.infer<typeof User>;
 
-export const DEMO_USERS: Record<Role, User> = {
-  [Role.enum.admin]: { name: 'Sanford Chin', email: 'sanford@example.com', role: Role.enum.admin },
-  [Role.enum.member]: { name: 'Vasco Monteiro', email: 'vasco@example.com', role: Role.enum.member },
-};
-
-const AuthData = z.object({
-  user: User.nullable().catch(null),
-  editMode: z.boolean().catch(false),
-});
-type AuthData = z.infer<typeof AuthData>;
-
-interface AuthState extends AuthData {
-  login: (user: User) => void;
-  logout: () => void;
-  setEditMode: (on: boolean) => void;
+export interface AuthState {
+  session: Session | null;
+  ready: boolean;
+  linkError: AuthError | null;
 }
 
-const DEFAULTS: AuthData = AuthData.parse({});
+export const useAuth = create<AuthState>()(() => ({ session: null, ready: false, linkError: null }));
 
-export const useAuth = create<AuthState>()(
-  persist(
-    (set) => ({
-      ...DEFAULTS,
-      login: (user) => set({ user, editMode: false }),
-      logout: () => set({ user: null, editMode: false }),
-      setEditMode: (on) => set(({ user }) => ({ editMode: on && user?.role === Role.enum.admin })),
-    }),
-    {
-      name: STORAGE_KEY,
-      version: 2,
-      storage: safeJSONStorage<AuthData>(),
-      partialize: ({ user, editMode }): AuthData => ({ user, editMode }),
-      migrate: (persisted) => {
-        const { user, editMode } = AuthData.parse(persisted ?? {});
-        return { user: user && DEMO_USERS[user.role], editMode };
-      },
-      merge: mergeParsed(AuthData, () => DEFAULTS),
-    },
-  ),
-);
+const AuthUrlParam = z.enum(['code', 'error', 'error_code', 'error_description']);
+
+const removeAuthParams = () => {
+  const url = new URL(window.location.href);
+  const hash = new URLSearchParams(url.hash.slice(1));
+  const inHash = AuthUrlParam.options.some((key) => hash.has(key));
+  const inSearch = AuthUrlParam.options.some((key) => url.searchParams.has(key));
+  if (!inHash && !inSearch) return false;
+  for (const key of AuthUrlParam.options) url.searchParams.delete(key);
+  if (inHash) url.hash = '';
+  replaceLocation(url.pathname + url.search + url.hash);
+  return true;
+};
+
+const checkLoginLink = async () => {
+  const { error } = await supabase.auth.initialize();
+  if (!removeAuthParams()) return;
+  const { data } = await supabase.auth.getSession();
+  if (data.session) return;
+  // A code is left in the URL when the link is opened in another browser than the one that asked for it.
+  useAuth.setState({ linkError: error ?? new AuthPKCECodeVerifierMissingError() });
+  useUi.getState().openLogin();
+};
+
+supabase.auth.onAuthStateChange((_event, session) => {
+  useAuth.setState({ session, ready: true });
+  if (session) useUi.getState().closeLogin();
+});
+
+void checkLoginLink();

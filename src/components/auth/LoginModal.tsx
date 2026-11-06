@@ -1,63 +1,161 @@
+import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Alert, Button, Divider, Modal, PasswordInput, SimpleGrid, Stack, Text, TextInput } from '@mantine/core';
+import { Alert, Badge, Button, Divider, Group, Modal, Stack, Text, TextInput, ThemeIcon } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
-import { memo, useMemo, type FC } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { memo, useMemo, useState, type FC } from 'react';
 import { z } from 'zod';
 
-import { BottomSheet, Info, SignIn } from '~/components/ui';
+import { BottomSheet, Check, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, Warning } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Translate } from '~/i18n/current';
-import { DEMO_USERS, Role, useAuth, type User } from '~/stores/auth';
+import { useAuth } from '~/stores/auth';
 import { useUi } from '~/stores/ui';
+import { supabase } from '~/supabase/client';
 
-const userForEmail = (email: string): User => {
-  const known = Object.values(DEMO_USERS).find((u) => u.email.toLowerCase() === email.toLowerCase());
-  if (known) return known;
-  const name = email.split('@').at(0) ?? email;
-  return { name, email, role: Role.enum.member };
-};
+import { authErrorMessage, LINK_FAILED } from './errors';
+import { useAuthSettings } from './hooks';
 
 const loginSchema = (t: Translate) =>
   z.object({
-    email: z.email(t(msg`Enter a valid email address`)),
-    password: z.string().min(1, t(msg`Enter any password`)),
+    email: z
+      .string()
+      .trim()
+      .pipe(z.email(t(msg`Enter a valid email address`))),
   });
 
-const LoginForm: FC<{ onDone: () => void }> = ({ onDone }) => {
+const SENT_ICON = <EnvelopeSimple width={28} height={28} />;
+
+const sendLink = async (email: string) => {
+  const { error } = await supabase.auth.signInWithOtp({ email, options: { emailRedirectTo: window.location.href } });
+  if (error) throw error;
+};
+
+const continueWithGoogle = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.href },
+  });
+  if (error) throw error;
+};
+
+const close = () => {
+  useUi.getState().closeLogin();
+  useAuth.setState({ linkError: null });
+};
+
+const ErrorAlert: FC<{ error: unknown; fallback?: MessageDescriptor }> = ({ error, fallback }) => {
+  const { i18n } = useLingui();
+  return (
+    <Alert color="red" variant="light" icon={<Warning />} ta="start">
+      {i18n._(authErrorMessage(error, fallback))}
+    </Alert>
+  );
+};
+
+type Sent = { email: string; count: number };
+
+type LinkSentProps = { sent: Sent; error: unknown; resending: boolean; onResend: () => void; onBack: () => void };
+
+const LinkSent: FC<LinkSentProps> = ({ sent, error, resending, onResend, onBack }) => {
+  const { email, count } = sent;
+  return (
+    <Stack gap="md" align="center" ta="center" py="sm">
+      <ThemeIcon size={56} radius="xl" variant="light">
+        {SENT_ICON}
+      </ThemeIcon>
+      <Stack gap={4}>
+        <Text fw={700} size="lg">
+          <Trans>Check your email</Trans>
+        </Text>
+        <Text>
+          <Trans>
+            We sent a login link to <strong>{email}</strong>. Open it in this browser.
+          </Trans>
+        </Text>
+      </Stack>
+      {count > 1 && !resending && (
+        <Badge color="teal" variant="light" leftSection={<Check />}>
+          <Trans>New link sent</Trans>
+        </Badge>
+      )}
+      {error !== null && <ErrorAlert error={error} />}
+      <Group justify="center" gap="xs">
+        <Button variant="default" onClick={onBack}>
+          <Trans>Use another email</Trans>
+        </Button>
+        <Button variant="subtle" loading={resending} onClick={onResend}>
+          <Trans>Send again</Trans>
+        </Button>
+      </Group>
+    </Stack>
+  );
+};
+
+const LoginForm: FC = () => {
   const { t } = useLingui();
-  const login = useAuth((s) => s.login);
+  const linkError = useAuth((s) => s.linkError);
+  const settings = useAuthSettings();
+  const [sent, setSent] = useState<Sent | null>(null);
 
   const schema = useMemo(() => loginSchema(t), [t]);
 
   const form = useForm({
     mode: 'controlled',
-    initialValues: { email: '', password: '' },
+    initialValues: { email: '' },
     validate: schemaResolver(schema, { sync: true }),
   });
 
-  const adminEmail = DEMO_USERS.admin.email;
+  const google = useMutation({ mutationFn: continueWithGoogle });
+  const link = useMutation({
+    mutationFn: sendLink,
+    onMutate: () => useAuth.setState({ linkError: null }),
+    onSuccess: (_data, email) => setSent((prev) => ({ email, count: prev?.email === email ? prev.count + 1 : 1 })),
+  });
 
-  const enter = (user: User) => {
-    login(user);
-    onDone();
-  };
+  if (sent) {
+    return (
+      <LinkSent
+        sent={sent}
+        error={link.error}
+        resending={link.isPending}
+        onResend={() => link.mutate(sent.email)}
+        onBack={() => {
+          link.reset();
+          setSent(null);
+        }}
+      />
+    );
+  }
+
+  const googleOff = settings.data?.external.google === false;
 
   return (
     <Stack gap="md">
-      <Alert icon={<Info />} color="yellow" variant="light">
-        <Trans>This is a demo. Nothing is checked: any password works, and nothing leaves this browser.</Trans>
-      </Alert>
-      <SimpleGrid cols={{ base: 1, xs: 2 }} spacing="sm">
-        <Button variant="light" onClick={() => enter(DEMO_USERS.member)}>
-          <Trans>Continue as member</Trans>
+      <Text size="sm" c="dimmed">
+        <Trans>No password needed.</Trans>
+      </Text>
+      {linkError && <ErrorAlert error={linkError} fallback={LINK_FAILED} />}
+      <Stack gap={6}>
+        <Button
+          variant="default"
+          leftSection={<GoogleLogo />}
+          loading={settings.isPending || google.isPending || google.isSuccess}
+          disabled={googleOff}
+          onClick={() => google.mutate()}
+        >
+          <Trans>Continue with Google</Trans>
         </Button>
-        <Button variant="light" onClick={() => enter(DEMO_USERS.admin)}>
-          <Trans>Continue as admin</Trans>
-        </Button>
-      </SimpleGrid>
-      <Divider label={t`or log in with email`} />
-      <form onSubmit={form.onSubmit(({ email }) => enter(userForEmail(email.trim())))} noValidate>
+        {googleOff && (
+          <Text size="xs" c="dimmed" ta="center">
+            <Trans>Google login isn't switched on yet.</Trans>
+          </Text>
+        )}
+        {google.isError && <ErrorAlert error={google.error} />}
+      </Stack>
+      <Divider label={t`or get a link by email`} />
+      <form onSubmit={form.onSubmit(({ email }) => link.mutate(email.trim()))} noValidate>
         <Stack gap="sm">
           <TextInput
             label={t`Email`}
@@ -66,12 +164,9 @@ const LoginForm: FC<{ onDone: () => void }> = ({ onDone }) => {
             data-autofocus
             {...form.getInputProps('email')}
           />
-          <PasswordInput label={t`Password`} autoComplete="current-password" {...form.getInputProps('password')} />
-          <Text size="xs" c="dimmed">
-            <Trans>Use {adminEmail} to log in as admin. Any other email logs you in as a member.</Trans>
-          </Text>
-          <Button type="submit" leftSection={<SignIn />}>
-            <Trans>Log in</Trans>
+          {link.isError && <ErrorAlert error={link.error} />}
+          <Button type="submit" leftSection={<PaperPlaneTilt />} loading={link.isPending}>
+            <Trans>Send me a link</Trans>
           </Button>
         </Stack>
       </form>
@@ -82,7 +177,6 @@ const LoginForm: FC<{ onDone: () => void }> = ({ onDone }) => {
 export const LoginModal = memo(() => {
   const { t } = useLingui();
   const opened = useUi((s) => s.loginOpened);
-  const close = useUi((s) => s.closeLogin);
   const mobile = useIsMobile();
 
   if (mobile) {
@@ -92,7 +186,7 @@ export const LoginModal = memo(() => {
           <Text fw={600} size="lg">
             {t`Log in`}
           </Text>
-          <LoginForm onDone={close} />
+          <LoginForm />
         </Stack>
       </BottomSheet>
     );
@@ -100,7 +194,7 @@ export const LoginModal = memo(() => {
 
   return (
     <Modal opened={opened} onClose={close} title={t`Log in`} centered>
-      <LoginForm onDone={close} />
+      <LoginForm />
     </Modal>
   );
 });

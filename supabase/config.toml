@@ -1,0 +1,9 @@
+project_id = "bigdo"
+
+[functions.contact]
+# Called with the publishable key, which the function checks itself.
+verify_jwt = false
+
+[functions.calendar]
+# Calendar apps can't send keys, so the feed is public.
+verify_jwt = false

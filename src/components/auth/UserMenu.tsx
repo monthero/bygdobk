@@ -1,116 +1,165 @@
-import type { MessageDescriptor } from '@lingui/core';
-import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import {
   ActionIcon,
+  Alert,
   Avatar,
-  Badge,
   Button,
   Divider,
   Group,
+  Skeleton,
   Stack,
-  Switch,
   Text,
   type FloatingPosition,
-  type MantineColor,
 } from '@mantine/core';
+import { useMutation } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
-import { GearSix, ResponsivePanel, SignIn, SignOut, User as UserIcon, UserPlus } from '~/components/ui';
-import { Role, useAuth } from '~/stores/auth';
+import {
+  ArrowCounterClockwise,
+  ArrowUpRight,
+  HandHeart,
+  IdentificationCard,
+  PencilSimple,
+  ResponsivePanel,
+  SignIn,
+  SignOut,
+  User as UserIcon,
+  UserPlus,
+  Warning,
+} from '~/components/ui';
+import { isCurrent, isOwn, type Membership } from '~/memberships/model';
+import { useMyMemberships } from '~/memberships/queries';
 import { useUi } from '~/stores/ui';
+import { supabase } from '~/supabase/client';
 
-import { useUser } from './hooks';
+import { AVATAR_IMAGE_PROPS } from './avatar';
+import { authErrorMessage } from './errors';
+import { useAuthReady, useIsAdmin, useProfile, useSessionEmail, useSessionUserId } from './hooks';
+import { MyMemberships } from './MyMemberships';
+import { ProfileCard } from './ProfileCard';
 
-const ROLE_LABELS: Record<Role, MessageDescriptor> = {
-  [Role.enum.admin]: msg({ message: 'Admin', comment: 'User role: can edit the site' }),
-  [Role.enum.member]: msg({ message: 'Member', comment: 'User role: club member' }),
+const EDITOR_PARAMS = { _splat: '' };
+const EMPTY_MEMBERSHIPS: Membership[] = [];
+
+const signOut = async () => {
+  const { error } = await supabase.auth.signOut({ scope: 'local' });
+  if (error) throw error;
 };
 
-const ROLE_COLORS: Record<Role, MantineColor> = {
-  [Role.enum.admin]: 'grape',
-  [Role.enum.member]: 'teal',
-};
-
-const AccountContent: FC<{ close: () => void }> = ({ close }) => {
-  const { i18n, t } = useLingui();
-  const user = useUser();
-  const editMode = useAuth((s) => s.editMode);
-  const setEditMode = useAuth((s) => s.setEditMode);
-  const logout = useAuth((s) => s.logout);
+const LoggedOut: FC<{ close: () => void }> = ({ close }) => {
   const openLogin = useUi((s) => s.openLogin);
-
-  if (!user) {
-    return (
-      <Stack gap="sm">
-        <Text size="sm" c="dimmed">
-          <Trans>Log in to sign up for volunteer shifts. Board members can edit the site.</Trans>
-        </Text>
-        <Button
-          leftSection={<SignIn />}
-          onClick={() => {
-            close();
-            openLogin();
-          }}
-        >
-          <Trans>Log in</Trans>
-        </Button>
-        <Button
-          component={Link}
-          to="/medlemskap/bli-medlem"
-          variant="default"
-          leftSection={<UserPlus />}
-          onClick={close}
-        >
-          <Trans>Join the club</Trans>
-        </Button>
-      </Stack>
-    );
-  }
-
-  const { name, email, role } = user;
   return (
     <Stack gap="sm">
-      <Group justify="space-between" wrap="nowrap" gap="xs">
-        <Group gap="sm" wrap="nowrap" miw={0}>
-          <Avatar name={name} color="initials" />
-          <Stack gap={0} miw={0}>
-            <Text fw={600} truncate>
-              {name}
-            </Text>
-            <Text size="xs" c="dimmed" truncate>
-              {email}
-            </Text>
+      <Text size="sm" c="dimmed">
+        <Trans>Log in to sign up for volunteer shifts. Board members can edit the site.</Trans>
+      </Text>
+      <Button
+        leftSection={<SignIn />}
+        onClick={() => {
+          close();
+          openLogin();
+        }}
+      >
+        <Trans>Log in</Trans>
+      </Button>
+      <Button component={Link} to="/medlemskap/bli-medlem" variant="default" leftSection={<UserPlus />} onClick={close}>
+        <Trans>Join the club</Trans>
+      </Button>
+    </Stack>
+  );
+};
+
+const LoggedIn: FC<{ close: () => void }> = ({ close }) => {
+  const { i18n } = useLingui();
+  const email = useSessionEmail();
+  const profile = useProfile();
+  const isAdmin = useIsAdmin();
+  const userId = useSessionUserId();
+  const { data: memberships = EMPTY_MEMBERSHIPS } = useMyMemberships();
+  const isMember = memberships.some((m) => isOwn(m, userId) && isCurrent(m));
+  const logout = useMutation({ mutationFn: signOut, onSuccess: close });
+  const user = profile.data;
+
+  return (
+    <Stack gap="sm">
+      {user && <ProfileCard user={user} isMember={isMember} />}
+      <MyMemberships memberships={memberships} />
+      {profile.isPending && (
+        <Group gap="sm" wrap="nowrap" aria-busy>
+          <Skeleton circle height={56} />
+          <Stack gap={6} flex={1}>
+            <Skeleton height={12} width="60%" />
+            <Skeleton height={10} width="80%" />
           </Stack>
         </Group>
-        <Badge color={ROLE_COLORS[role]} variant="light">
-          {i18n._(ROLE_LABELS[role])}
-        </Badge>
-      </Group>
-      {role === Role.enum.admin && (
+      )}
+      {profile.isError && (
         <>
-          <Divider />
-          <Switch
-            label={t`Edit mode`}
-            description={t`Edit content on the pages`}
-            checked={editMode}
-            onChange={(e) => setEditMode(e.currentTarget.checked)}
-          />
-          <Button component={Link} to="/admin" variant="default" leftSection={<GearSix />} onClick={close}>
-            <Trans>Admin panel</Trans>
+          <Alert color="red" variant="light" icon={<Warning />}>
+            <Trans>Logged in as {email}, but your profile didn't load.</Trans>
+          </Alert>
+          <Button
+            variant="default"
+            leftSection={<ArrowCounterClockwise />}
+            loading={profile.isFetching}
+            onClick={() => void profile.refetch()}
+          >
+            <Trans>Try again</Trans>
           </Button>
         </>
       )}
+      {isAdmin && (
+        <>
+          <Divider />
+          <Button
+            variant="light"
+            leftSection={<PencilSimple />}
+            rightSection={<ArrowUpRight />}
+            onClick={close}
+            renderRoot={(props) => (
+              <Link {...props} to="/admin/$" params={EDITOR_PARAMS} target="_blank" rel="noopener" />
+            )}
+          >
+            <Trans>Edit the site</Trans>
+          </Button>
+          <Text size="xs" c="dimmed">
+            <Trans>The editor has its own login.</Trans>
+          </Text>
+          <Group gap="xs" grow>
+            <Button
+              variant="default"
+              size="xs"
+              leftSection={<IdentificationCard />}
+              onClick={close}
+              renderRoot={(props) => <Link {...props} to="/styret/medlemmer" />}
+            >
+              <Trans>Memberships</Trans>
+            </Button>
+            <Button
+              variant="default"
+              size="xs"
+              leftSection={<HandHeart />}
+              onClick={close}
+              renderRoot={(props) => <Link {...props} to="/styret/dugnad" />}
+            >
+              <Trans comment="Board screen for volunteer shifts">Volunteers</Trans>
+            </Button>
+          </Group>
+        </>
+      )}
       <Divider />
+      {logout.isError && (
+        <Text size="sm" c="red">
+          {i18n._(authErrorMessage(logout.error))}
+        </Text>
+      )}
       <Button
         variant="subtle"
         color="red"
         leftSection={<SignOut />}
-        onClick={() => {
-          logout();
-          close();
-        }}
+        loading={logout.isPending}
+        onClick={() => logout.mutate()}
       >
         <Trans>Log out</Trans>
       </Button>
@@ -120,27 +169,37 @@ const AccountContent: FC<{ close: () => void }> = ({ close }) => {
 
 export const AccountButton: FC<{ position?: FloatingPosition }> = ({ position }) => {
   const { t } = useLingui();
-  const user = useUser();
-  const label = user ? t`Account menu for ${user.name}` : t`Account`;
+  const ready = useAuthReady();
+  const userId = useSessionUserId();
+  const email = useSessionEmail();
+  const profile = useProfile();
+  const name = profile.data?.name;
+  const label = name ? t`Account menu for ${name}` : t`Account`;
 
   return (
     <ResponsivePanel
-      title={user ? <Trans>Your account</Trans> : <Trans>Account</Trans>}
+      title={userId ? <Trans>Your account</Trans> : <Trans>Account</Trans>}
       closeLabel={t`Close account menu`}
       position={position}
       renderTarget={(props) =>
-        user ? (
-          <ActionIcon variant="subtle" size="lg" radius="xl" aria-label={label} {...props}>
-            <Avatar name={user.name} color="initials" size={34} />
+        userId ? (
+          <ActionIcon variant="subtle" size="lg" radius="xl" aria-label={label} loading={profile.isLoading} {...props}>
+            <Avatar
+              src={profile.data?.avatarUrl}
+              name={name ?? email}
+              color="initials"
+              size={34}
+              imageProps={AVATAR_IMAGE_PROPS}
+            />
           </ActionIcon>
         ) : (
-          <ActionIcon variant="default" size="lg" radius="md" aria-label={label} {...props}>
+          <ActionIcon variant="default" size="lg" radius="md" aria-label={label} loading={!ready} {...props}>
             <UserIcon />
           </ActionIcon>
         )
       }
     >
-      {({ close }) => <AccountContent close={close} />}
+      {({ close }) => (userId ? <LoggedIn close={close} /> : <LoggedOut close={close} />)}
     </ResponsivePanel>
   );
 };
