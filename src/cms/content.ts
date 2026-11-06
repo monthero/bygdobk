@@ -14,7 +14,7 @@ import { InternalPath, NewsKind } from '~/data/news';
 import { NoticeTone } from '~/data/notice';
 import { SocialPlatform } from '~/data/socials';
 import { currentLocale } from '~/i18n/current';
-import { CONTENT_FALLBACK, type Locale } from '~/i18n/locales';
+import { contentLocaleParams, type Locale } from '~/i18n/locales';
 
 import { sanityQuery } from './client';
 import { CONTENT_GROQ, NEWS_BODIES_GROQ, NEWS_BODY_GROQ, PRIVACY_GROQ } from './queries';
@@ -183,15 +183,13 @@ export type Plan = SiteContent['plans'][number];
 
 const STALE_TIME = 5 * 60_000;
 
-const localeParams = (locale: Locale) => ({ locale, fallback: CONTENT_FALLBACK[locale] });
-
 const contentKey = (locale: Locale) => ['content', locale] as const;
 
 export const contentQuery = (locale: Locale) =>
   queryOptions({
     queryKey: contentKey(locale),
     queryFn: async ({ signal }) =>
-      RawContent.parse(await sanityQuery(CONTENT_GROQ, { params: localeParams(locale), signal })),
+      RawContent.parse(await sanityQuery(CONTENT_GROQ, { params: contentLocaleParams(locale), signal })),
     staleTime: STALE_TIME,
   });
 
@@ -217,7 +215,7 @@ export const privacyPageQuery = (locale: Locale) =>
     queryKey: privacyKey(locale),
     queryFn: async ({ signal }) => {
       const parsed = RawPrivacyPage.safeParse(
-        await sanityQuery(PRIVACY_GROQ, { params: localeParams(locale), signal }),
+        await sanityQuery(PRIVACY_GROQ, { params: contentLocaleParams(locale), signal }),
       );
       if (parsed.success) return parsed.data;
       console.warn('Skipped an invalid privacy page from Sanity', z.prettifyError(parsed.error));
@@ -244,7 +242,7 @@ export const newsBodyQuery = (slug: string, locale: Locale) =>
   queryOptions({
     queryKey: ['newsBody', slug, locale] as const,
     queryFn: async ({ signal }) => {
-      const result = await sanityQuery(NEWS_BODY_GROQ, { params: { ...localeParams(locale), slug }, signal });
+      const result = await sanityQuery(NEWS_BODY_GROQ, { params: { ...contentLocaleParams(locale), slug }, signal });
       return NewsBody.parse(result)?.body ?? NO_BLOCKS;
     },
     staleTime: STALE_TIME,
@@ -264,7 +262,7 @@ const newsBodiesQuery = (locale: Locale) =>
   queryOptions({
     queryKey: newsBodiesKey(locale),
     queryFn: async ({ signal }) =>
-      NewsBodies.parse(await sanityQuery(NEWS_BODIES_GROQ, { params: localeParams(locale), signal })),
+      NewsBodies.parse(await sanityQuery(NEWS_BODIES_GROQ, { params: contentLocaleParams(locale), signal })),
     staleTime: STALE_TIME,
   });
 

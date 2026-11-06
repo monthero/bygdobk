@@ -1,7 +1,16 @@
 import { z } from 'zod';
 
-import { DEFAULT_LOCALE, LOCALE_META, localeInPath, stripLocale, type Locale } from '../src/i18n/locales.js';
-import { imageBuilder, LocaleText, localized, sanityQuery, VISITOR_KINDS } from './_sanity.js';
+import { localized } from '../src/cms/queries.js';
+import { VISITOR_KINDS } from '../src/data/eventKinds.js';
+import {
+  contentLocaleParams,
+  DEFAULT_LOCALE,
+  LOCALE_META,
+  localeInPath,
+  stripLocale,
+  type Locale,
+} from '../src/i18n/locales.js';
+import { imageBuilder, sanityQuery } from './_sanity.js';
 
 const SITE_NAME = 'Bygdø Badmintonklubb';
 const IMAGE_WIDTH = 1200;
@@ -19,13 +28,15 @@ const DESCRIPTIONS: Record<Locale, string> = {
   zh: '奥斯陆 Bygdøhus 的羽毛球，人人都能打。Bygdø Badmintonklubb 的训练、会员、活动和新闻。',
 };
 
-const NEWS_GROQ = `*[_type == "newsPost" && slug.current == $slug][0] { title, summary, banner }`;
-const EVENT_GROQ = `*[_type == "event" && kind in $kinds && slug.current == $slug][0] { title, description }`;
+const NEWS_GROQ = `*[_type == "newsPost" && slug.current == $slug][0] { ${localized('title', 'summary')}, banner }`;
+const EVENT_GROQ = `*[_type == "event" && kind in $kinds && slug.current == $slug][0] { ${localized('title', 'description')} }`;
 
-const Detail = z
-  .object({ title: LocaleText, summary: LocaleText, description: LocaleText, banner: z.unknown() })
-  .partial()
-  .nullable();
+const Text = z
+  .string()
+  .nullish()
+  .transform((text) => text?.trim() || undefined);
+
+const Detail = z.object({ title: Text, summary: Text, description: Text, banner: z.unknown() }).partial().nullable();
 
 type Preview = { title: string; description: string; image: string; type: 'website' | 'article' };
 
@@ -49,12 +60,12 @@ const detailPreview = async (path: string, locale: Locale, defaultImage: string)
   if (!match) return null;
   const [, section, slug] = match;
   const isNews = section === 'nyheter';
-  const detail = await sanityQuery(Detail, isNews ? NEWS_GROQ : EVENT_GROQ, { slug, kinds: VISITOR_KINDS });
-  const title = localized(detail?.title, locale);
-  if (!detail || !title) return null;
+  const params = { ...contentLocaleParams(locale), slug, kinds: VISITOR_KINDS };
+  const detail = await sanityQuery(Detail, isNews ? NEWS_GROQ : EVENT_GROQ, params);
+  if (!detail?.title) return null;
   return {
-    title,
-    description: localized(isNews ? detail.summary : detail.description, locale) ?? DESCRIPTIONS[locale],
+    title: detail.title,
+    description: (isNews ? detail.summary : detail.description) ?? DESCRIPTIONS[locale],
     image: bannerUrl(detail.banner) ?? defaultImage,
     type: 'article',
   };

@@ -26,6 +26,8 @@ export const CONTENT_FALLBACK: Record<Locale, Locale> = {
   zh: 'en',
 };
 
+export const contentLocaleParams = (locale: Locale) => ({ locale, fallback: CONTENT_FALLBACK[locale] });
+
 export const LOCALES_BY_ORDER = LOCALES.toSorted((a, b) => LOCALE_META[a].order - LOCALE_META[b].order);
 
 export const isLocale = (value: unknown): value is Locale => (LOCALES as readonly unknown[]).includes(value);

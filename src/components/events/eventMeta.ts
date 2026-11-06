@@ -4,7 +4,7 @@ import { eventDays, isPast, type CalendarEvent } from '~/cms/calendar';
 import { SITE_URL, type IcsEvent } from '~/cms/ics';
 import { ClipboardText, MapPin, PauseCircle, Racket, Trophy, UsersThree } from '~/components/ui';
 import { CLUB } from '~/data/club';
-import { EventKind } from '~/data/events';
+import { EventKind, VISITOR_KINDS } from '~/data/events';
 import { currentLocale } from '~/i18n/current';
 import { withLocale } from '~/i18n/locales';
 import { DAY_AND_TIME, dayjs, formatDate, formatDateRange, LONG_DATE, today, wallTime } from '~/utils/dates';
@@ -18,17 +18,12 @@ export const EVENT_ICONS: Record<EventKind, typeof Trophy> = {
   [EventKind.enum.trip]: MapPin,
 };
 
-const VISITOR_KINDS = new Set<EventKind>([
-  EventKind.enum.tournament,
-  EventKind.enum.social,
-  EventKind.enum.meeting,
-  EventKind.enum.trip,
-]);
+const VISITOR_KIND_SET = new Set(VISITOR_KINDS);
 
 export type VisitorEvent = CalendarEvent & { slug: string; title: string };
 
 export const isVisitorEvent = (event: CalendarEvent): event is VisitorEvent =>
-  VISITOR_KINDS.has(event.kind) && Boolean(event.slug && event.title);
+  VISITOR_KIND_SET.has(event.kind) && Boolean(event.slug && event.title);
 
 export const eventWhen = (event: CalendarEvent) => {
   if (!event.dateConfirmed) return event.whenText ?? '';

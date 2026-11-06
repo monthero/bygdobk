@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
+import { VISITOR_KINDS } from '../src/data/eventKinds.js';
 import { DEFAULT_LOCALE, LOCALE_META, LOCALES, withLocale, type Locale } from '../src/i18n/locales.js';
-import { sanityQuery, VISITOR_KINDS } from './_sanity.js';
+import { sanityQuery } from './_sanity.js';
 
 const PAGES = [
   '/',

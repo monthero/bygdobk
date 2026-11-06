@@ -1,7 +1,7 @@
 const pick = (field: string) =>
   `select(length(${field}[$locale]) > 0 => ${field}[$locale], length(${field}[$fallback]) > 0 => ${field}[$fallback], ${field}.nb)`;
 
-const localized = (...fields: string[]) => fields.map((field) => `"${field}": ${pick(field)}`).join(', ');
+export const localized = (...fields: string[]) => fields.map((field) => `"${field}": ${pick(field)}`).join(', ');
 
 export const CONTENT_GROQ = `{
   "notice": *[_id == "siteSettings"][0].notice { visible, tone, ${localized('text')} },

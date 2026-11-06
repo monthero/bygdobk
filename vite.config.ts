@@ -6,7 +6,7 @@ import Icons from 'unplugin-icons/vite';
 import { defineConfig, type Plugin } from 'vite-plus';
 
 import { CONTENT_GROQ } from './src/cms/queries.ts';
-import { sanityQueryUrl } from './src/cms/queryUrl.ts';
+import { sanityQueryUrl } from './src/cms/sanityApi.ts';
 import { ADMIN_PATH, CONTENT_FALLBACK } from './src/i18n/locales.ts';
 
 const contentPreload = (): Plugin => {

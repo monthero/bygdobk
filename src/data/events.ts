@@ -2,6 +2,8 @@ import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 import { z } from 'zod';
 
+import { EventKind } from './eventKinds';
+
 export const Team = z.enum(['hall', 'kiosk', 'secretariat']);
 export type Team = z.infer<typeof Team>;
 
@@ -20,8 +22,7 @@ export const TEAMS: Record<Team, { name: MessageDescriptor; what: MessageDescrip
   },
 };
 
-export const EventKind = z.enum(['training', 'tournament', 'social', 'meeting', 'trip', 'break']);
-export type EventKind = z.infer<typeof EventKind>;
+export { EventKind, VISITOR_KINDS } from './eventKinds';
 
 const SHIFT_KINDS = new Set<string>([EventKind.enum.tournament, EventKind.enum.social]);
 
