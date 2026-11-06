@@ -16,7 +16,7 @@ export const SponsorStrip = memo(() => {
     <aside className={classes.strip} aria-label={t`Partners`}>
       <Container size="lg" className={classes.inner}>
         <a href={CLUB.sportModernUrl} target="_blank" rel="noreferrer" className={classes.logo}>
-          <img src={sportModernLogo} alt="Sport Modern" width={227} height={55} />
+          <img src={sportModernLogo} alt="Sport Modern" width={227} height={55} loading="lazy" decoding="async" />
         </a>
         <Stack gap={2} className={classes.partner}>
           <Text size="xs" fw={700} tt="uppercase" c="dimmed" className={classes.eyebrow}>

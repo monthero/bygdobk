@@ -3,7 +3,7 @@ import { ActionIcon, Anchor, Button, Card, Group, SimpleGrid, Stack, Text, Theme
 import { useClipboard } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { Link } from '@tanstack/react-router';
-import type { CSSProperties, FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import { imageBuilder } from '~/cms/client';
 import { useSiteContent, type BoardMember } from '~/cms/content';
@@ -70,7 +70,16 @@ const BoardCard: FC<{ member: BoardMember }> = ({ member }) => {
   const firstName = member.name.split(' ').at(0) ?? member.name;
   return (
     <Card withBorder radius="lg" padding={0} className={classes.member}>
-      <div className={classes.photo} style={{ '--photo': `url(${photoUrl(member)})` } as CSSProperties}>
+      <div className={classes.photo}>
+        <img
+          src={photoUrl(member)}
+          alt=""
+          width={PHOTO_SIZE}
+          height={PHOTO_SIZE}
+          loading="lazy"
+          decoding="async"
+          className={classes.image}
+        />
         <div className={classes.caption}>
           <Text fw={700} lh={1.25} className={classes.name}>
             {member.name}

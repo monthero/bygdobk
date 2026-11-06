@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Button, Card, List, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { Fragment, memo, useMemo, type CSSProperties, type FC, type ReactNode } from 'react';
+import { Fragment, memo, useMemo, type FC, type ReactNode } from 'react';
 
 import { useSiteContent } from '~/cms/content';
 import { ArrowRight, CalendarBlank, Coins, Racket, Shuttle, UsersThree } from '~/components/ui';
@@ -30,7 +30,9 @@ type CardProps = {
 const StartCard = memo<CardProps>(({ photo, title, facts, action }) => {
   return (
     <Card withBorder radius="lg" padding={0} className={classes.card}>
-      <div className={classes.photo} style={{ '--photo': `url(${photo.src})` } as CSSProperties} />
+      <div className={classes.photo}>
+        <img src={photo.src} alt="" loading="lazy" decoding="async" className={classes.image} />
+      </div>
       <Stack gap="md" p="lg" className={classes.body}>
         <Title order={3}>{title}</Title>
         <List spacing="sm" className={classes.facts}>

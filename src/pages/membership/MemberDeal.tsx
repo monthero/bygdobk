@@ -33,7 +33,7 @@ export const MemberDeal: FC = () => {
       <Stack gap="lg">
         <Group gap="lg" wrap="wrap">
           <a href={CLUB.sportModernUrl} target="_blank" rel="noreferrer" className={classes.logo}>
-            <img src={sportModernLogo} alt="Sport Modern" width={186} height={45} />
+            <img src={sportModernLogo} alt="Sport Modern" width={186} height={45} loading="lazy" decoding="async" />
           </a>
           <Text c="dimmed" className={classes.lede}>
             <Trans>Our members get these discounts at Sport Modern.</Trans>
