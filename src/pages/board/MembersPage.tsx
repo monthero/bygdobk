@@ -8,7 +8,7 @@ import { useSiteContent } from '~/cms/content';
 import { useProfile, useSignedOut } from '~/components/auth/hooks';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
-import { CalendarBlank, Clock, IdentificationCard, Plus, SearchInput } from '~/components/ui';
+import { CalendarBlank, Clock, Gauge, IdentificationCard, Plus, SearchInput } from '~/components/ui';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { membershipSeason, MembershipStatus, type AdminMembership } from '~/memberships/model';
@@ -23,6 +23,7 @@ import { LoadError } from './LoadError';
 import { MarkPaidModal } from './MarkPaidModal';
 import { MembershipFormModal } from './MembershipForm';
 import { MembershipList, MembershipListSkeleton } from './MembershipList';
+import { MembersOverview, MembersOverviewSkeleton } from './MembersOverview';
 
 const route = getRouteApi('/styret/medlemmer');
 
@@ -62,6 +63,7 @@ export const MembersPage: FC = () => {
   const [opened, setOpened] = useState(false);
 
   const onRequests = fane === MembersTab.enum.foresporsler;
+  const onOverview = fane === MembersTab.enum.oversikt;
   const seasonId = sesong ?? current.id;
   const season = seasons.find((s) => s.id === seasonId) ?? current;
   const planMap = useMemo(() => new Map(plans.map((p) => [p.id, p])), [plans]);
@@ -81,8 +83,21 @@ export const MembersPage: FC = () => {
 
   const requestCount = useMemo(() => memberships.filter(isRequest).length, [memberships]);
 
+  const inSeason = useMemo(
+    () =>
+      memberships
+        .filter(
+          (m) =>
+            m.status === MembershipStatus.enum.active &&
+            (seasonId === ALL_SEASONS || membershipSeason(m).id === seasonId),
+        )
+        .sort(byName),
+    [memberships, seasonId],
+  );
+
   const shown = useMemo(() => {
     const q = deferredQuery.trim().toLowerCase();
+    if (onOverview) return inSeason;
     if (onRequests) {
       return memberships
         .filter(
@@ -91,18 +106,11 @@ export const MembersPage: FC = () => {
         )
         .sort(byNewest);
     }
-    return memberships
-      .filter(
-        (m) =>
-          m.status === MembershipStatus.enum.active &&
-          (seasonId === ALL_SEASONS || membershipSeason(m).id === seasonId) &&
-          (!ubetalt || m.paidAt === null) &&
-          (!q || matchesQuery(m, q)),
-      )
-      .sort(byName);
-  }, [memberships, onRequests, avslatt, seasonId, ubetalt, deferredQuery]);
+    return inSeason.filter((m) => (!ubetalt || m.paidAt === null) && (!q || matchesQuery(m, q)));
+  }, [memberships, inSeason, onOverview, onRequests, avslatt, ubetalt, deferredQuery]);
   const unpaidCount = onRequests ? 0 : shown.filter((m) => m.paidAt === null).length;
-  const filtering = (!onRequests && ubetalt) || query.trim() !== '';
+  const onList = !onOverview && !onRequests;
+  const filtering = !onOverview && ((onList && ubetalt) || query.trim() !== '');
 
   const openDialog = useCallback((kind: DialogKind, membership?: AdminMembership) => {
     setDialog({ kind, membership });
@@ -134,6 +142,7 @@ export const MembersPage: FC = () => {
       ...STAY,
     });
   };
+  const showUnpaid = () => navigate({ search: (prev) => ({ ...prev, fane: undefined, ubetalt: true }), ...STAY });
   const clearFilters = () => {
     setQuery('');
     void navigate({ search: (prev) => ({ ...prev, ubetalt: undefined }), ...STAY });
@@ -168,18 +177,22 @@ export const MembersPage: FC = () => {
               w={150}
               leftSection={<CalendarBlank />}
             />
-            <Chip checked={ubetalt} onChange={toggleUnpaid} variant="light">
-              <Trans>Unpaid only</Trans>
-            </Chip>
+            {onList && (
+              <Chip checked={ubetalt} onChange={toggleUnpaid} variant="light">
+                <Trans>Unpaid only</Trans>
+              </Chip>
+            )}
           </>
         )}
-        <SearchInput
-          value={query}
-          onChange={setQuery}
-          label={t`Search`}
-          placeholder={t`Name or email`}
-          visibleFrom="sm"
-        />
+        {!onOverview && (
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            label={t`Search`}
+            placeholder={t`Name or email`}
+            visibleFrom="sm"
+          />
+        )}
         <Button ms="auto" radius="xl" leftSection={<Plus />} onClick={addMembership} visibleFrom="sm">
           <Trans>Add membership</Trans>
         </Button>
@@ -199,6 +212,9 @@ export const MembersPage: FC = () => {
         <Stack gap="md">
           <Tabs value={fane} onChange={pickTab}>
             <Tabs.List>
+              <Tabs.Tab value={MembersTab.enum.oversikt} leftSection={<Gauge />}>
+                <Trans comment="Tab: the season's membership numbers at a glance">Overview</Trans>
+              </Tabs.Tab>
               <Tabs.Tab value={MembersTab.enum.medlemmer} leftSection={<IdentificationCard />}>
                 <Trans comment="Tab: memberships the board has confirmed">Members</Trans>
               </Tabs.Tab>
@@ -217,14 +233,16 @@ export const MembersPage: FC = () => {
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          <SearchInput
-            value={query}
-            onChange={setQuery}
-            label={t`Search`}
-            placeholder={t`Name or email`}
-            hiddenFrom="sm"
-          />
-          {isPending && <MembershipListSkeleton />}
+          {!onOverview && (
+            <SearchInput
+              value={query}
+              onChange={setQuery}
+              label={t`Search`}
+              placeholder={t`Name or email`}
+              hiddenFrom="sm"
+            />
+          )}
+          {isPending && (onOverview ? <MembersOverviewSkeleton /> : <MembershipListSkeleton />)}
           {isError && (
             <LoadError
               title={t`Couldn't load the memberships`}
@@ -256,7 +274,10 @@ export const MembersPage: FC = () => {
               )}
             </Stack>
           )}
-          {shown.length > 0 && (
+          {onOverview && shown.length > 0 && (
+            <MembersOverview memberships={shown} plans={planMap} seasonId={seasonId} onShowUnpaid={showUnpaid} />
+          )}
+          {!onOverview && shown.length > 0 && (
             <>
               <Text size="sm" c="dimmed">
                 {onRequests ? (

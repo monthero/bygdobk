@@ -116,6 +116,7 @@ msgstr "{taken}/{spots}"
 msgid "{taken} of {spots} spots taken"
 msgstr "名额已占{taken}/{spots}"
 
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount}个未付款"
@@ -411,6 +412,11 @@ msgstr "请带上室内运动鞋。"
 #: src/pages/board/MembershipList.tsx
 msgid "By {by}, {day}"
 msgstr "{by}于{day}提交"
+
+#. Heading above a table that splits the numbers per membership plan
+#: src/pages/board/MembersOverview.tsx
+msgid "By plan"
+msgstr "按会员类型"
 
 #. Role under the author name of a news post
 #: src/data/news.ts
@@ -771,8 +777,15 @@ msgstr "完成！"
 msgid "Dot pattern"
 msgstr "点阵图案"
 
+#. Button: save the memberships as a file for Excel
+#: src/pages/board/MembersOverview.tsx
+msgid "Download spreadsheet"
+msgstr "下载表格"
+
 #. Shown briefly after the calendar file was downloaded
+#. Shown briefly after the file was downloaded
 #: src/components/events/EventDetails.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Downloaded"
 msgstr "已下载"
 
@@ -819,6 +832,7 @@ msgid "Edit the site"
 msgstr "编辑网站"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
 msgstr "邮箱"
@@ -827,6 +841,7 @@ msgstr "邮箱"
 msgid "Email login isn't switched on yet."
 msgstr "邮箱登录还没开通。"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 msgid "End"
 msgstr "结束"
@@ -898,9 +913,18 @@ msgstr "活动和志愿服务"
 msgid "Every spot is filled. Nice work!"
 msgstr "名额全满了，干得漂亮！"
 
+#: src/pages/board/MembersOverview.tsx
+msgid "Everyone has paid!"
+msgstr "大家都付款了！"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "所有打球的人都是会员。赛季价格是会员费加上你所在组别的训练费。"
+
+#. Table column: kroner the memberships should bring in
+#: src/pages/board/MembersOverview.tsx
+msgid "Expected"
+msgstr "应收"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
@@ -1290,6 +1314,7 @@ msgid "Member site"
 msgstr "会员网站"
 
 #. Tab: memberships the board has confirmed
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Members"
 msgstr "会员"
@@ -1333,6 +1358,7 @@ msgstr "会员已保存"
 #. Sticky title of the board page that lists memberships
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Memberships"
 msgstr "会员名单"
@@ -1378,6 +1404,7 @@ msgstr "我的孩子"
 msgid "My membership"
 msgstr "我的会员"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -1549,6 +1576,7 @@ msgstr "还没有人。"
 msgid "None"
 msgstr "无"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
 msgstr "未付款"
@@ -1557,6 +1585,7 @@ msgstr "未付款"
 msgid "Not paid yet"
 msgstr "还没付款"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Note"
@@ -1579,6 +1608,11 @@ msgstr "暂时还没有安排。新活动会显示在这里。"
 #: src/components/events/EventCard.tsx
 msgid "Now on"
 msgstr "进行中"
+
+#. Below the kroner received, e.g. of kr 112 800
+#: src/pages/board/MembersOverview.tsx
+msgid "of {expected}"
+msgstr "应收 {expected}"
 
 #: src/pages/membership/MemberDeal.tsx
 msgid "off clothes and rackets"
@@ -1719,6 +1753,11 @@ msgstr "出界！"
 msgid "Outline"
 msgstr "线框"
 
+#. Tab: the season's membership numbers at a glance
+#: src/pages/board/MembersPage.tsx
+msgid "Overview"
+msgstr "概览"
+
 #: src/pages/NotFoundPage.tsx
 msgid "Page not found"
 msgstr "页面未找到"
@@ -1730,16 +1769,21 @@ msgstr "页面找不到了，但这一回合还没结束"
 #. Switch: the membership is paid
 #. Table column: whether and when the membership was paid
 #: src/components/auth/MyMemberships.tsx
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Paid"
 msgstr "已付款"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/PaymentFields.tsx
 msgid "Paid on"
 msgstr "付款日期"
 
 #. Label for the payment method, like Vipps or cash
+#. Label for the payment method, like Vipps or cash
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/PaymentFields.tsx
 msgid "Paid with"
 msgstr "付款方式"
@@ -1820,8 +1864,11 @@ msgstr "在球场上选你的组"
 
 #. Label: the membership plan, like Adults or Junior
 #. Table column: the membership plan, like Adults or Junior
+#. Table column: the membership plan, like Adults or Junior
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Plan"
 msgstr "会员类型"
 
@@ -1868,6 +1915,11 @@ msgstr "上一个"
 msgid "Price"
 msgstr "价格"
 
+#. Spreadsheet column: price in Norwegian kroner
+#: src/pages/board/membersCsv.ts
+msgid "Price (kr)"
+msgstr "价格（挪威克朗）"
+
 #: src/pages/training/TrainingPage.tsx
 msgid "Prices and joining"
 msgstr "价格和入会"
@@ -1909,6 +1961,11 @@ msgstr "多拍进行中"
 #: src/pages/club/sections.tsx
 msgid "Read about privacy"
 msgstr "阅读隐私政策"
+
+#. Money paid in so far for memberships
+#: src/pages/board/MembersOverview.tsx
+msgid "Received"
+msgstr "已收款"
 
 #: src/components/events/EventDetails.tsx
 msgid "Registration closed"
@@ -2139,6 +2196,11 @@ msgstr "显示全部新闻"
 msgid "Show declined"
 msgstr "显示已拒绝"
 
+#. Button: list the members who have not paid yet
+#: src/pages/board/MembersOverview.tsx
+msgid "Show who"
+msgstr "查看名单"
+
 #. Design style with a flying shuttlecock
 #: src/components/layout/VariantMenu.tsx
 msgid "Shuttle in flight"
@@ -2225,11 +2287,13 @@ msgstr "赞助俱乐部"
 msgid "Sponsorship"
 msgstr "赞助"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "开始"
 
 #. Table column: where a membership request stands, and who sent it
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Status"
 msgstr "状态"
@@ -2451,6 +2515,7 @@ msgstr "顶栏"
 msgid "Topic"
 msgstr "主题"
 
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Total"
 msgstr "合计"

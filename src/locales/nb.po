@@ -116,6 +116,7 @@ msgstr "{taken} av {spots}"
 msgid "{taken} of {spots} spots taken"
 msgstr "{taken} av {spots} plasser tatt"
 
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} ikke betalt"
@@ -411,6 +412,11 @@ msgstr "Ta med innesko."
 #: src/pages/board/MembershipList.tsx
 msgid "By {by}, {day}"
 msgstr "Fra {by}, {day}"
+
+#. Heading above a table that splits the numbers per membership plan
+#: src/pages/board/MembersOverview.tsx
+msgid "By plan"
+msgstr "Per type"
 
 #. Role under the author name of a news post
 #: src/data/news.ts
@@ -771,8 +777,15 @@ msgstr "Ferdig!"
 msgid "Dot pattern"
 msgstr "Prikkmønster"
 
+#. Button: save the memberships as a file for Excel
+#: src/pages/board/MembersOverview.tsx
+msgid "Download spreadsheet"
+msgstr "Last ned regneark"
+
 #. Shown briefly after the calendar file was downloaded
+#. Shown briefly after the file was downloaded
 #: src/components/events/EventDetails.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Downloaded"
 msgstr "Lastet ned"
 
@@ -819,6 +832,7 @@ msgid "Edit the site"
 msgstr "Rediger nettsiden"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
 msgstr "E-post"
@@ -827,6 +841,7 @@ msgstr "E-post"
 msgid "Email login isn't switched on yet."
 msgstr "Innlogging med e-post er ikke slått på ennå."
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 msgid "End"
 msgstr "Slutt"
@@ -898,9 +913,18 @@ msgstr "Arrangementer og dugnad"
 msgid "Every spot is filled. Nice work!"
 msgstr "Alle plasser er fylt. Bra jobba!"
 
+#: src/pages/board/MembersOverview.tsx
+msgid "Everyone has paid!"
+msgstr "Alle har betalt!"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "Alle som spiller, er medlemmer. Prisen for sesongen er medlemskontingenten pluss treningsavgiften for gruppen din."
+
+#. Table column: kroner the memberships should bring in
+#: src/pages/board/MembersOverview.tsx
+msgid "Expected"
+msgstr "Forventet"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
@@ -1290,6 +1314,7 @@ msgid "Member site"
 msgstr "Medlemssiden"
 
 #. Tab: memberships the board has confirmed
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Members"
 msgstr "Medlemmer"
@@ -1333,6 +1358,7 @@ msgstr "Medlemskap lagret"
 #. Sticky title of the board page that lists memberships
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Memberships"
 msgstr "Medlemskap"
@@ -1378,6 +1404,7 @@ msgstr "Barnet mitt"
 msgid "My membership"
 msgstr "Mitt medlemskap"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -1549,6 +1576,7 @@ msgstr "Ingen ennå."
 msgid "None"
 msgstr "Ingen"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
 msgstr "Ikke betalt"
@@ -1557,6 +1585,7 @@ msgstr "Ikke betalt"
 msgid "Not paid yet"
 msgstr "Ikke betalt ennå"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Note"
@@ -1579,6 +1608,11 @@ msgstr "Ingenting planlagt ennå. Nye arrangementer dukker opp her."
 #: src/components/events/EventCard.tsx
 msgid "Now on"
 msgstr "Pågår nå"
+
+#. Below the kroner received, e.g. of kr 112 800
+#: src/pages/board/MembersOverview.tsx
+msgid "of {expected}"
+msgstr "av {expected}"
 
 #: src/pages/membership/MemberDeal.tsx
 msgid "off clothes and rackets"
@@ -1719,6 +1753,11 @@ msgstr "Ute!"
 msgid "Outline"
 msgstr "Omriss"
 
+#. Tab: the season's membership numbers at a glance
+#: src/pages/board/MembersPage.tsx
+msgid "Overview"
+msgstr "Oversikt"
+
 #: src/pages/NotFoundPage.tsx
 msgid "Page not found"
 msgstr "Fant ikke siden"
@@ -1730,16 +1769,21 @@ msgstr "Siden finnes ikke, men ballvekslingen er ikke over"
 #. Switch: the membership is paid
 #. Table column: whether and when the membership was paid
 #: src/components/auth/MyMemberships.tsx
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Paid"
 msgstr "Betalt"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/PaymentFields.tsx
 msgid "Paid on"
 msgstr "Betalt dato"
 
 #. Label for the payment method, like Vipps or cash
+#. Label for the payment method, like Vipps or cash
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/PaymentFields.tsx
 msgid "Paid with"
 msgstr "Betalt med"
@@ -1820,8 +1864,11 @@ msgstr "Velg gruppe på banen"
 
 #. Label: the membership plan, like Adults or Junior
 #. Table column: the membership plan, like Adults or Junior
+#. Table column: the membership plan, like Adults or Junior
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Plan"
 msgstr "Type"
 
@@ -1868,6 +1915,11 @@ msgstr "Forrige"
 msgid "Price"
 msgstr "Pris"
 
+#. Spreadsheet column: price in Norwegian kroner
+#: src/pages/board/membersCsv.ts
+msgid "Price (kr)"
+msgstr "Pris (kr)"
+
 #: src/pages/training/TrainingPage.tsx
 msgid "Prices and joining"
 msgstr "Priser og innmelding"
@@ -1909,6 +1961,11 @@ msgstr "Ballveksling pågår"
 #: src/pages/club/sections.tsx
 msgid "Read about privacy"
 msgstr "Les om personvern"
+
+#. Money paid in so far for memberships
+#: src/pages/board/MembersOverview.tsx
+msgid "Received"
+msgstr "Innbetalt"
 
 #: src/components/events/EventDetails.tsx
 msgid "Registration closed"
@@ -2139,6 +2196,11 @@ msgstr "Vis alle nyheter"
 msgid "Show declined"
 msgstr "Vis avslåtte"
 
+#. Button: list the members who have not paid yet
+#: src/pages/board/MembersOverview.tsx
+msgid "Show who"
+msgstr "Vis hvem"
+
 #. Design style with a flying shuttlecock
 #: src/components/layout/VariantMenu.tsx
 msgid "Shuttle in flight"
@@ -2225,11 +2287,13 @@ msgstr "Spons klubben"
 msgid "Sponsorship"
 msgstr "Sponsing"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "Start"
 
 #. Table column: where a membership request stands, and who sent it
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Status"
 msgstr "Status"
@@ -2451,6 +2515,7 @@ msgstr "Topplinje"
 msgid "Topic"
 msgstr "Tema"
 
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Total"
 msgstr "Totalt"

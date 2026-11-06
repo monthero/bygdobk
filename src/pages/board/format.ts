@@ -31,7 +31,7 @@ export const memberName = (m: AdminMembership) => personName(m.playerName, m.pro
 
 export const ALL_SEASONS = 'alle';
 
-export const MembersTab = z.enum(['medlemmer', 'foresporsler']);
+export const MembersTab = z.enum(['oversikt', 'medlemmer', 'foresporsler']);
 export type MembersTab = z.infer<typeof MembersTab>;
 
 export const SEASON_ID = /^\d{4}-\d{2}$/;

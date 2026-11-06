@@ -5,6 +5,7 @@ import { memo, useState, type FC } from 'react';
 
 import { calendarFile } from '~/cms/ics';
 import { AddressLink, ArrowUpRight, CalendarPlus, Check, Clock, LockSimple } from '~/components/ui';
+import { downloadFile } from '~/utils/download';
 import { venueMapUrl } from '~/utils/maps';
 
 import {
@@ -21,7 +22,7 @@ import {
 import classes from './EventDetails.module.css';
 
 const DONE_MS = 2500;
-const REVOKE_MS = 1000;
+const ICS_TYPE = 'text/calendar;charset=utf-8';
 
 export const EventVenue = memo<{ event: VisitorEvent }>(({ event }) => {
   const { t } = useLingui();
@@ -45,13 +46,8 @@ export const EventVenue = memo<{ event: VisitorEvent }>(({ event }) => {
   );
 });
 
-const downloadIcs = (event: VisitorEvent) => {
-  const blob = new Blob([calendarFile([icsEvent(event)])], { type: 'text/calendar;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = Object.assign(document.createElement('a'), { href: url, download: `${event.slug}.ics` });
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), REVOKE_MS);
-};
+const downloadIcs = (event: VisitorEvent) =>
+  downloadFile(calendarFile([icsEvent(event)]), `${event.slug}.ics`, ICS_TYPE);
 
 const AddToCalendar: FC<{ event: VisitorEvent }> = ({ event }) => {
   const [done, setDone] = useState(false);

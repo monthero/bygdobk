@@ -116,6 +116,7 @@ msgstr "{taken}/{spots}"
 msgid "{taken} of {spots} spots taken"
 msgstr "{taken}/{spots} paikkaa varattu"
 
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} maksamatta"
@@ -411,6 +412,11 @@ msgstr "Ota mukaan sisäkengät."
 #: src/pages/board/MembershipList.tsx
 msgid "By {by}, {day}"
 msgstr "Lähettäjä {by}, {day}"
+
+#. Heading above a table that splits the numbers per membership plan
+#: src/pages/board/MembersOverview.tsx
+msgid "By plan"
+msgstr "Jäsenyystyypeittäin"
 
 #. Role under the author name of a news post
 #: src/data/news.ts
@@ -771,8 +777,15 @@ msgstr "Valmista!"
 msgid "Dot pattern"
 msgstr "Pistekuvio"
 
+#. Button: save the memberships as a file for Excel
+#: src/pages/board/MembersOverview.tsx
+msgid "Download spreadsheet"
+msgstr "Lataa taulukko"
+
 #. Shown briefly after the calendar file was downloaded
+#. Shown briefly after the file was downloaded
 #: src/components/events/EventDetails.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Downloaded"
 msgstr "Ladattu"
 
@@ -819,6 +832,7 @@ msgid "Edit the site"
 msgstr "Muokkaa sivustoa"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
 msgstr "Sähköposti"
@@ -827,6 +841,7 @@ msgstr "Sähköposti"
 msgid "Email login isn't switched on yet."
 msgstr "Sähköpostikirjautuminen ei ole vielä käytössä."
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 msgid "End"
 msgstr "Loppu"
@@ -898,9 +913,18 @@ msgstr "Tapahtumat ja talkoot"
 msgid "Every spot is filled. Nice work!"
 msgstr "Kaikki paikat on täytetty. Hienoa!"
 
+#: src/pages/board/MembersOverview.tsx
+msgid "Everyone has paid!"
+msgstr "Kaikki ovat maksaneet!"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "Kaikki pelaajat ovat jäseniä. Kauden hinta on jäsenmaksu plus oman ryhmäsi harjoitusmaksu."
+
+#. Table column: kroner the memberships should bring in
+#: src/pages/board/MembersOverview.tsx
+msgid "Expected"
+msgstr "Odotettu"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
@@ -1290,6 +1314,7 @@ msgid "Member site"
 msgstr "Jäsensivusto"
 
 #. Tab: memberships the board has confirmed
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Members"
 msgstr "Jäsenet"
@@ -1333,6 +1358,7 @@ msgstr "Jäsenyys tallennettu"
 #. Sticky title of the board page that lists memberships
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Memberships"
 msgstr "Jäsenyydet"
@@ -1378,6 +1404,7 @@ msgstr "Lapseni"
 msgid "My membership"
 msgstr "Oma jäsenyys"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -1549,6 +1576,7 @@ msgstr "Ei vielä ketään."
 msgid "None"
 msgstr "Ei mitään"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
 msgstr "Maksamatta"
@@ -1557,6 +1585,7 @@ msgstr "Maksamatta"
 msgid "Not paid yet"
 msgstr "Ei vielä maksettu"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Note"
@@ -1579,6 +1608,11 @@ msgstr "Ei vielä suunniteltua. Uudet tapahtumat näkyvät täällä."
 #: src/components/events/EventCard.tsx
 msgid "Now on"
 msgstr "Käynnissä"
+
+#. Below the kroner received, e.g. of kr 112 800
+#: src/pages/board/MembersOverview.tsx
+msgid "of {expected}"
+msgstr "/ {expected}"
 
 #: src/pages/membership/MemberDeal.tsx
 msgid "off clothes and rackets"
@@ -1719,6 +1753,11 @@ msgstr "Ulkona!"
 msgid "Outline"
 msgstr "Ääriviiva"
 
+#. Tab: the season's membership numbers at a glance
+#: src/pages/board/MembersPage.tsx
+msgid "Overview"
+msgstr "Yleiskatsaus"
+
 #: src/pages/NotFoundPage.tsx
 msgid "Page not found"
 msgstr "Sivua ei löytynyt"
@@ -1730,16 +1769,21 @@ msgstr "Sivua ei löydy, mutta ralli jatkuu"
 #. Switch: the membership is paid
 #. Table column: whether and when the membership was paid
 #: src/components/auth/MyMemberships.tsx
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Paid"
 msgstr "Maksettu"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/PaymentFields.tsx
 msgid "Paid on"
 msgstr "Maksupäivä"
 
 #. Label for the payment method, like Vipps or cash
+#. Label for the payment method, like Vipps or cash
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/PaymentFields.tsx
 msgid "Paid with"
 msgstr "Maksutapa"
@@ -1820,8 +1864,11 @@ msgstr "Valitse ryhmäsi kentältä"
 
 #. Label: the membership plan, like Adults or Junior
 #. Table column: the membership plan, like Adults or Junior
+#. Table column: the membership plan, like Adults or Junior
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersOverview.tsx
 msgid "Plan"
 msgstr "Jäsenyystyyppi"
 
@@ -1868,6 +1915,11 @@ msgstr "Edellinen"
 msgid "Price"
 msgstr "Hinta"
 
+#. Spreadsheet column: price in Norwegian kroner
+#: src/pages/board/membersCsv.ts
+msgid "Price (kr)"
+msgstr "Hinta (NOK)"
+
 #: src/pages/training/TrainingPage.tsx
 msgid "Prices and joining"
 msgstr "Hinnat ja liittyminen"
@@ -1909,6 +1961,11 @@ msgstr "Ralli käynnissä"
 #: src/pages/club/sections.tsx
 msgid "Read about privacy"
 msgstr "Lue tietosuojasta"
+
+#. Money paid in so far for memberships
+#: src/pages/board/MembersOverview.tsx
+msgid "Received"
+msgstr "Saatu"
 
 #: src/components/events/EventDetails.tsx
 msgid "Registration closed"
@@ -2139,6 +2196,11 @@ msgstr "Näytä kaikki uutiset"
 msgid "Show declined"
 msgstr "Näytä hylätyt"
 
+#. Button: list the members who have not paid yet
+#: src/pages/board/MembersOverview.tsx
+msgid "Show who"
+msgstr "Näytä ketkä"
+
 #. Design style with a flying shuttlecock
 #: src/components/layout/VariantMenu.tsx
 msgid "Shuttle in flight"
@@ -2225,11 +2287,13 @@ msgstr "Sponsoroi seuraa"
 msgid "Sponsorship"
 msgstr "Sponsorointi"
 
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "Alku"
 
 #. Table column: where a membership request stands, and who sent it
+#: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Status"
 msgstr "Tila"
@@ -2451,6 +2515,7 @@ msgstr "Yläpalkki"
 msgid "Topic"
 msgstr "Aihe"
 
+#: src/pages/board/MembersOverview.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Total"
 msgstr "Yhteensä"
