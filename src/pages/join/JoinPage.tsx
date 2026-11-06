@@ -25,6 +25,7 @@ import { groupTimes } from '~/components/styles/court/schedule';
 import { ArrowRight, CheckCircle, Clock, PaperPlaneTilt, SignIn, User, UsersThree, Warning } from '~/components/ui';
 import { GROUP_SLUGS, PriceKind } from '~/data/club';
 import { PHOTOS } from '~/data/photos';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { membershipSeason, MembershipStatus, NAME_MAX, seasonDates, type Membership } from '~/memberships/model';
 import { membershipErrorMessage, useMyMemberships, useRequestMembership } from '~/memberships/queries';
@@ -118,6 +119,7 @@ const PriceAmount: FC<{ plan: Plan }> = ({ plan }) =>
 
 export const JoinPage: FC = () => {
   const { i18n, t } = useLingui();
+  usePageTitle(t`Join the club`, t`Membership`);
   const search = route.useSearch();
   const navigate = route.useNavigate();
   const { plans, events } = useSiteContent();

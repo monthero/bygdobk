@@ -36,6 +36,7 @@ import {
 } from '~/components/ui';
 import { CLUB, GROUP_SLUGS, GROUPS, Group as TrainingGroup } from '~/data/club';
 import { PHOTOS } from '~/data/photos';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { listFormat } from '~/i18n/current';
 import { formatDate, weekdayName } from '~/utils/dates';
@@ -86,6 +87,7 @@ const GroupLine = memo<{ group: TrainingGroup; sessions: Session[] }>(({ group, 
 
 export const TrainingPage: FC = () => {
   const { i18n, t } = useLingui();
+  usePageTitle(t`Training`);
   const { sesong } = route.useParams();
   const { gruppe } = route.useSearch();
   const navigate = route.useNavigate();

@@ -90,7 +90,7 @@ export const SiteFooter = memo(() => {
 
         <Stack gap={8} className={classes.variants}>
           <Text size="sm" fw={600}>
-            <Trans>Concept preview</Trans>
+            <Trans>Try a style</Trans>
           </Text>
           <Text size="xs" c="dimmed">
             <Trans>Switch color, shape, size, menu and width to compare design variants.</Trans>

@@ -10,6 +10,7 @@ import { ArticleBody, NewsCard } from '~/components/news';
 import { ArrowRight, ArrowUpRight, ClubLogo } from '~/components/ui';
 import { EventKind } from '~/data/events';
 import { NEWS_AUTHORS, NewsAuthor } from '~/data/news';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { NotFoundPage } from '~/pages/NotFoundPage';
 import { today } from '~/utils/dates';
 
@@ -169,9 +170,11 @@ const Article = memo<{ post: NewsPost }>(({ post }) => {
 });
 
 export const NewsPostPage: FC = () => {
+  const { t } = useLingui();
   const { slug } = route.useParams();
   const { news } = useSiteContent();
   const post = news.find((p) => p.slug === slug);
+  usePageTitle(post?.title, t`News`);
   if (!post) return <NotFoundPage />;
   return <Article post={post} />;
 };

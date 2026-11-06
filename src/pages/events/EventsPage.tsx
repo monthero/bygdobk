@@ -11,6 +11,7 @@ import { PageIntro } from '~/components/styles';
 import { CalendarBlank, Segmented, type SegmentedOption } from '~/components/ui';
 import { EventsShow } from '~/data/events';
 import { PHOTOS } from '~/data/photos';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { date, formatDate, LONG_DATE, today, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
 
@@ -34,6 +35,7 @@ const eventYear = (event: VisitorEvent) => date(event.startDate).year();
 
 export const EventsPage: FC = () => {
   const { t } = useLingui();
+  usePageTitle(t`Events`);
   const { ar, vis } = route.useSearch();
   const navigate = route.useNavigate();
   const { events } = useSiteContent();

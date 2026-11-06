@@ -1,4 +1,4 @@
-# Bygdø Badmintonklubb – a redesign proposal
+# Bygdø Badmintonklubb
 
 This is a proposal for a new website for [Bygdø Badmintonklubb](https://www.bygdobadminton.no), the badminton club at Bygdøhus in Oslo. It was made together with Sanford Chin, and it's a gift to the people who keep the club going: the board, the coaches and everyone who shows up to play.
 
@@ -7,13 +7,13 @@ The goal is simple. Whoever lands on the site should find what they came for rig
 ## What's inside
 
 - **Training:** the weekly schedule per season, breaks, and what to bring. When a tournament or a break lands on a training day, that session shows as off.
-- **Membership:** prices, what's included, the Sport Modern member deal, and a short "which plan fits me" helper that hands off to the club's member site.
+- **Membership:** prices, what's included, the Sport Modern member deal, and a short "which plan fits me" helper that sends a membership request to the board.
 - **Events:** tournaments, socials, meetings and trips, with volunteer shifts.
 - **News:** the latest posts, search, and an archive by year and month.
 - **The club:** the board, safe sport and sponsors.
 - **Contact:** a form that emails the board.
 
-The site is in Norwegian, English, Swedish, Finnish and Chinese. It works on phones as well as desktops, in light and dark mode.
+The site is in Norwegian, English, Swedish, Danish, Finnish, Icelandic and Chinese. It works on phones as well as desktops, in light and dark mode.
 
 The **Variants** menu in the footer lets you try different styles, colors, fonts and layouts, to compare directions side by side.
 

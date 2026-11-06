@@ -8,6 +8,7 @@ import { MyMemberships } from '~/components/auth/MyMemberships';
 import { PageIntro } from '~/components/styles';
 import { SignIn, UserPlus } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { useMyMemberships } from '~/memberships/queries';
 import { LoadError } from '~/pages/board/LoadError';
 import { useUi } from '~/stores/ui';
@@ -86,6 +87,8 @@ const Mine: FC = () => {
 };
 
 export const MyMembershipPage: FC = () => {
+  const { t } = useLingui();
+  usePageTitle(t`My membership`, t`Membership`);
   const ready = useAuthReady();
   const userId = useSessionUserId();
 

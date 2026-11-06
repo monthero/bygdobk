@@ -26,6 +26,7 @@ import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { HandHeart, PencilSimple, Trash, Trophy, UserPlus, Warning } from '~/components/ui';
 import { Team, TEAMS } from '~/data/events';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { LoadError } from '~/pages/board/LoadError';
 import { date, formatDate, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
@@ -310,6 +311,7 @@ const EventVolunteers: FC<{ event: VisitorEvent }> = ({ event }) => {
 
 export const VolunteersPage: FC = () => {
   const { t } = useLingui();
+  usePageTitle(t`Volunteer shifts`, t`The board`);
   const { arrangement } = route.useSearch();
   const navigate = route.useNavigate();
   const { events } = useSiteContent();

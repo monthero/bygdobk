@@ -5,12 +5,21 @@ import type { FC } from 'react';
 
 import { isPast } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
-import { EventActions, EventVenue, eventVenue, eventWhen, isVisitorEvent, shiftDays } from '~/components/events';
+import {
+  EventActions,
+  EventVenue,
+  eventVenue,
+  eventWhen,
+  isVisitorEvent,
+  shiftDays,
+  type VisitorEvent,
+} from '~/components/events';
 import { PageIntro, useStyleKit } from '~/components/styles';
 import { ArrowLeft, CalendarBlank, ChatCircle, HandHeart, Info, MapPin } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { EVENT_KINDS } from '~/data/events';
 import { PHOTOS } from '~/data/photos';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { NotFoundPage } from '~/pages/NotFoundPage';
 import { today } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
@@ -24,8 +33,9 @@ export const EventPage: FC = () => {
   const navigate = route.useNavigate();
   const { ShiftBoard } = useStyleKit();
   const { events } = useSiteContent();
-  const event = events.find((e) => e.slug === slug);
-  if (!event || !isVisitorEvent(event)) return <NotFoundPage />;
+  const event = events.find((e): e is VisitorEvent => e.slug === slug && isVisitorEvent(e));
+  usePageTitle(event?.title, t`Events`);
+  if (!event) return <NotFoundPage />;
 
   const eventTitle = event.title;
   const helpLink = contactLink(

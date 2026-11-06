@@ -1,16 +1,19 @@
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Container } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import type { FC } from 'react';
 
 import { PageIntro } from '~/components/styles';
 import { PHOTOS } from '~/data/photos';
+import { usePageTitle } from '~/hooks/usePageTitle';
 
 import { ContactSection } from './ContactSection';
 
 const route = getRouteApi('/kontakt');
 
 export const ContactPage: FC = () => {
+  const { t } = useLingui();
+  usePageTitle(t`Contact`);
   const { emne, melding } = route.useSearch();
   return (
     <>

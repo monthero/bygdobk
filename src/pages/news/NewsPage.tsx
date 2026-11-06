@@ -40,6 +40,7 @@ import {
 import { NEWS_KIND_SLUGS, NEWS_KINDS, NewsKind } from '~/data/news';
 import { PHOTOS } from '~/data/photos';
 import { useIsMobile } from '~/hooks/useIsMobile';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { Style, useSettings } from '~/stores/settings';
 import { date, formatDate, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
@@ -94,6 +95,7 @@ const EmptyState: FC<{ icon: ComponentType<SVGProps<SVGSVGElement>>; title: Reac
 
 export const NewsPage: FC = () => {
   const { i18n, t } = useLingui();
+  usePageTitle(t`News`);
   const { kategori, sok, ar } = route.useSearch();
   const navigate = route.useNavigate();
   const { NewsList } = useStyleKit();

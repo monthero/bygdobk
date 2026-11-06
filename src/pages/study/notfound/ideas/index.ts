@@ -6,9 +6,9 @@ import { CourtOut } from './CourtOut';
 import { KeepItUp } from './KeepItUp';
 import { Scoreboard } from './Scoreboard';
 
-export type Concept = { slug: string; name: MessageDescriptor; idea: MessageDescriptor; Component: FC };
+export type Idea = { slug: string; name: MessageDescriptor; idea: MessageDescriptor; Component: FC };
 
-export const CONCEPTS: Concept[] = [
+export const IDEAS: Idea[] = [
   {
     slug: 'court-out',
     name: msg`Out!`,

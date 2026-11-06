@@ -25,6 +25,7 @@ import { ArrowRight, CalendarBlank, UserPlus } from '~/components/ui';
 import { CLUB, DEAL_HASH, GROUP_SLUGS, PriceKind } from '~/data/club';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { PHOTOS } from '~/data/photos';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { groupOfPlan, kr, planTotal } from '~/pages/join/offers';
 import { BRING_HASH } from '~/pages/training/TrainingPage';
@@ -90,6 +91,7 @@ const ASK_LINK = contactLink(ContactTopic.enum.membership);
 
 export const MembershipPage: FC = () => {
   const { t } = useLingui();
+  usePageTitle(t`Membership`);
   const { plans, discounts } = useSiteContent();
   const { current } = useSeasons();
   const renderBringLink = (props: Record<string, unknown>) => (

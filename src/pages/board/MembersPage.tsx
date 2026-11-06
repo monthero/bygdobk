@@ -9,6 +9,7 @@ import { useProfile, useSignedOut } from '~/components/auth/hooks';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { CalendarBlank, Clock, IdentificationCard, Plus, SearchInput } from '~/components/ui';
+import { usePageTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { membershipSeason, MembershipStatus, type AdminMembership } from '~/memberships/model';
 import { useAllMemberships } from '~/memberships/queries';
@@ -42,6 +43,7 @@ const isRequest = (m: AdminMembership) => m.status === MembershipStatus.enum.req
 
 export const MembersPage: FC = () => {
   const { t } = useLingui();
+  usePageTitle(t`Memberships`, t`The board`);
   const { sesong, ubetalt = false, fane = MembersTab.enum.medlemmer, avslatt = false } = route.useSearch();
   const navigate = route.useNavigate();
   const { plans } = useSiteContent();

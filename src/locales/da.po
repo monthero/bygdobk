@@ -54,7 +54,7 @@ msgstr "{firstName}s e-mailadresse er kopieret"
 msgid "{firstName}'s phone number was copied to the clipboard"
 msgstr "{firstName}s telefonnummer er kopieret"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "{hits, plural, one {# slag} other {# slag}}: {callout}"
 
@@ -132,15 +132,15 @@ msgstr "<0>Skriv til bestyrelsen</0>, før den nye sæson starter."
 msgid "<0>Write to the board</0>."
 msgstr "<0>Skriv til bestyrelsen</0>."
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "404 · Out"
 msgstr "404 · Ude"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "404 · Rally on"
 msgstr "404 · Spil videre"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "404 · Service fault"
 msgstr "404 · Servefejl"
 
@@ -154,7 +154,7 @@ msgid "404 ideas"
 msgstr "404-idéer"
 
 #. The shuttle hit the racket away from the middle
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "A bit off-center"
 msgstr "Lidt skævt ramt"
 
@@ -166,7 +166,7 @@ msgstr "Et barn eller en uden konto."
 msgid "A coach leading a group session at Bygdøhus"
 msgstr "En træner leder en holdtræning i Bygdøhus"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "A court in perspective, the shuttle lands just out."
 msgstr "En bane i perspektiv, fjerbolden lander lige ude."
 
@@ -186,7 +186,7 @@ msgstr "En ketsjer"
 msgid "A shuttle on a racket, with players on green courts behind"
 msgstr "En fjerbold på en ketsjer med spillere på grønne baner bagved"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "A shuttle resting on a badminton racket"
 msgstr "En fjerbold, der ligger på en badmintonketsjer"
 
@@ -194,13 +194,17 @@ msgstr "En fjerbold, der ligger på en badmintonketsjer"
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "En fjerbold, der ligger på en ketsjer i en idrætshal"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
 msgstr "Et lille spil: hold fjerbolden i luften."
 
 #: src/data/club.ts
 msgid "A water bottle"
 msgstr "En vandflaske"
+
+#: src/data/photos.ts
+msgid "A woman looking at her phone, her face covered by a digital grid"
+msgstr "En kvinde kigger på sin mobil, med ansigtet dækket af et digitalt gitter"
 
 #: src/pages/club/ClubPage.tsx
 msgid "About the club"
@@ -305,9 +309,7 @@ msgstr "Alle nyheder"
 msgid "All seasons"
 msgstr "Alle sæsoner"
 
-#. Year filter option that shows events from every year
 #. Year picker while searching, since search covers every year
-#: src/pages/events/EventsPage.tsx
 #: src/pages/news/NewsPage.tsx
 msgid "All years"
 msgstr "Alle år"
@@ -348,9 +350,9 @@ msgstr "Bed om koden"
 msgid "Back on court {back}."
 msgstr "Tilbage på banen {back}."
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Back to the front page"
 msgstr "Tilbage til forsiden"
 
@@ -379,7 +381,7 @@ msgstr "Begyndere spiller med træner"
 msgid "Beginners, Junior, Adults or a trial. Not sure? Start as a beginner."
 msgstr "Begyndere, junior, voksne eller prøvemedlemskab. I tvivl? Start som begynder."
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Best"
 msgstr "Rekord"
 
@@ -437,7 +439,7 @@ msgstr "Bygdøhus set fra parkeringspladsen"
 msgid "Calendar link"
 msgstr "Kalenderlink"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Call stands: still not found"
 msgstr "Afgørelsen står ved magt: stadig ikke fundet"
 
@@ -480,15 +482,15 @@ msgstr "Kontant"
 msgid "Category"
 msgstr "Kategori"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Challenge the call"
 msgstr "Udfordr afgørelsen"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Challenge: page"
 msgstr "Udfordring: siden"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Challenge. Checking the replay…"
 msgstr "Udfordring. Vi tjekker gentagelsen…"
 
@@ -601,12 +603,9 @@ msgstr "Snart"
 msgid "Compact"
 msgstr "Kompakt"
 
-#: src/components/layout/SiteFooter.tsx
-msgid "Concept preview"
-msgstr "Forhåndsvisning af konceptet"
-
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/contact/ContactPage.tsx
 msgid "Contact"
 msgstr "Kontakt"
 
@@ -694,7 +693,7 @@ msgstr "Kunne ikke gemme dette på din profil. Det virker stadig på denne enhed
 msgid "Couldn't save your photo. Try again."
 msgstr "Kunne ikke gemme dit billede. Prøv igen."
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Court 1"
 msgstr "Bane 1"
 
@@ -885,6 +884,7 @@ msgstr "Arrangement"
 
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/events/EventPage.tsx
 #: src/pages/events/EventsPage.tsx
 #: src/pages/home/HomePage.tsx
 msgid "Events"
@@ -902,11 +902,11 @@ msgstr "Alle pladser er besat. Godt gået!"
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "Alle, der spiller, er medlemmer. Prisen for sæsonen er kontingentet plus træningsgebyret for dit hold."
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
 msgstr "Fejl"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault!"
 msgstr "Fejl!"
 
@@ -956,7 +956,7 @@ msgid "For new players, with a coach."
 msgstr "For nye spillere, med træner."
 
 #. The shuttle hit the racket frame, not the strings
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Frame shot!"
 msgstr "Lige på rammen!"
 
@@ -993,7 +993,7 @@ msgstr "Fuld bredde"
 msgid "Get in touch"
 msgstr "Kontakt os"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Get under it and hit it as it drops. Swing on the move to steer."
 msgstr "Kom ind under den, og slå, når den falder. Slå, mens du bevæger dig, for at styre."
 
@@ -1041,7 +1041,7 @@ msgstr "Halv pris på Begyndere din første sæson"
 msgid "Hall"
 msgstr "Hal"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
 msgstr "Resultattavlen i hallen"
 
@@ -1078,7 +1078,7 @@ msgstr "Hej! Jeg vil gerne starte midt i sæsonen. Hvad koster det?"
 msgid "Hi! We'd like to hear more about sponsoring the club."
 msgstr "Hej! Vi vil gerne høre mere om at sponsorere klubben."
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Hits"
 msgstr "Slag"
 
@@ -1126,6 +1126,7 @@ msgstr "Bliv medlem af Bygdø Badmintonklubb"
 #: src/components/layout/SiteNavbar.tsx
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/components/styles/HeroActions.tsx
+#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Join the club"
 msgstr "Bliv medlem"
@@ -1143,7 +1144,7 @@ msgstr "Junior"
 msgid "Just a name"
 msgstr "Kun et navn"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "Keep it up"
 msgstr "Hold bolden oppe"
 
@@ -1151,7 +1152,7 @@ msgstr "Hold bolden oppe"
 msgid "Keep the note to {NOTE_MAX} characters"
 msgstr "Noten må højst have {NOTE_MAX} tegn"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Keep-it-up game. Move the racket with the arrow keys and press Space or Enter to hit the shuttle when it falls to the racket."
 msgstr "Hold-bolden-oppe-spil. Flyt ketsjeren med piletasterne, og tryk på mellemrum eller Enter for at slå til fjerbolden, når den falder ned til ketsjeren."
 
@@ -1299,7 +1300,9 @@ msgstr "Medlemmer får op til 20 % rabat hos Sport Modern."
 
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
+#: src/pages/membership/MyMembershipPage.tsx
 msgid "Membership"
 msgstr "Medlemskab"
 
@@ -1338,16 +1341,16 @@ msgstr "Menu"
 msgid "Message"
 msgstr "Besked"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "Forbi efter {hits, plural, one {# slag} other {# slag}}. Tryk på mellemrum for at serve igen."
 
 #. The shuttle hit the racket away from the middle
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed the sweet spot"
 msgstr "Ramte ikke sweet spot"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed!"
 msgstr "Forbi!"
 
@@ -1385,7 +1388,7 @@ msgstr "Navn eller e-mail"
 msgid "New accounts are closed right now."
 msgstr "Der kan ikke oprettes nye konti lige nu."
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "New best: {best}"
 msgstr "Ny rekord: {best}"
 
@@ -1414,6 +1417,7 @@ msgstr "Nyere opslag: {newer}"
 #: src/components/layout/nav.ts
 #: src/pages/home/HomePage.tsx
 #: src/pages/news/NewsPage.tsx
+#: src/pages/news/NewsPostPage.tsx
 msgid "News"
 msgstr "Nyheder"
 
@@ -1447,7 +1451,7 @@ msgstr "Ingen konto med den e-mail"
 msgid "No breaks this season."
 msgstr "Ingen pauser i denne sæson."
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "No challenges left"
 msgstr "Ingen udfordringer tilbage"
 
@@ -1624,7 +1628,7 @@ msgid "Only the board sees this."
 msgstr "Kun bestyrelsen kan se dette."
 
 #. The shuttle hit the racket frame, not the strings
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Oops, rim shot!"
 msgstr "Ups, rammeslag!"
 
@@ -1663,7 +1667,7 @@ msgstr "Åbn tilmeldingslisten"
 msgid "Optional. Usually a parent's account."
 msgstr "Valgfrit. Som regel en forælders konto."
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "or <0>←</0> <1>→</1> and <2>Space</2>"
 msgstr "eller <0>←</0> <1>→</1> og <2>Mellemrum</2>"
 
@@ -1698,11 +1702,11 @@ msgstr "Vores partner"
 msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
 msgstr "Vores turneringer i Bygdøhus kører på frivillige kræfter. Tag en vagt!"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Out"
 msgstr "Ude"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "Out!"
 msgstr "Ude!"
 
@@ -1711,7 +1715,11 @@ msgstr "Ude!"
 msgid "Outline"
 msgstr "Omrids"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/NotFoundPage.tsx
+msgid "Page not found"
+msgstr "Siden blev ikke fundet"
+
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Page not found, but the rally isn't over"
 msgstr "Siden findes ikke, men duellen er ikke slut"
 
@@ -1821,7 +1829,7 @@ msgstr "Frit spil"
 msgid "Play for adult players."
 msgstr "Spil for voksne spillere."
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Play the replay again"
 msgstr "Afspil gentagelsen igen"
 
@@ -1834,12 +1842,12 @@ msgid "Players training on the courts at Bygdøhus"
 msgstr "Spillere træner på banerne i Bygdøhus"
 
 #. Pling is the sound of the shuttle hitting the racket frame. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Pling! That hit the frame"
 msgstr "Klonk! Den ramte rammen"
 
 #. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Pock!"
 msgstr "Pok!"
 
@@ -1890,7 +1898,7 @@ msgstr "Spørgsmål om dine data? Spørg bestyrelsen, så svarer vi."
 msgid "Rally"
 msgstr "Slagudveksling"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Rally in progress"
 msgstr "Duel i gang"
 
@@ -1927,11 +1935,11 @@ msgstr "Fjern billede"
 msgid "Remove volunteer?"
 msgstr "Fjern frivillig?"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Replay"
 msgstr "Gentagelse"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Replay of a line call: the shuttle flies over the net and lands just past the baseline. The call is out."
 msgstr "Gentagelse af en linjeafgørelse: fjerbolden flyver over nettet og lander lige bag baglinjen. Den dømmes ude."
 
@@ -1967,7 +1975,7 @@ msgstr "Afventer"
 msgid "Requests"
 msgstr "Anmodninger"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
 msgstr "Vurderer…"
 
@@ -1989,11 +1997,11 @@ msgstr "Tryg idræt"
 msgid "Save"
 msgstr "Gem"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
 msgstr "Stilling: Bygdø {home}, 404 {away}"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "Scoreboard"
 msgstr "Resultattavle"
 
@@ -2075,7 +2083,7 @@ msgstr "Serv"
 msgid "Serve · Rally · Point"
 msgstr "Serv · Slagudveksling · Point"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Service fault: page not found"
 msgstr "Servefejl: siden findes ikke"
 
@@ -2252,11 +2260,11 @@ msgstr "System"
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "Tag <0>{name}</0> af denne vagt?"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
 msgstr "Tryk for at serve"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve again"
 msgstr "Tryk for at serve igen"
 
@@ -2288,7 +2296,7 @@ msgstr "Linket er udløbet. Få et nyt nedenfor."
 msgid "That membership is gone. Someone may have deleted it."
 msgstr "Medlemskabet findes ikke længere. Nogen har måske slettet det."
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "That one landed out"
 msgstr "Den landede ude"
 
@@ -2332,6 +2340,7 @@ msgstr "Bestyrelsen bekræfter den og giver dig besked om betaling."
 
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/club/ClubPage.tsx
 msgid "The club"
 msgstr "Klubben"
 
@@ -2339,7 +2348,7 @@ msgstr "Klubben"
 msgid "The editor has its own login."
 msgstr "Redigeringsværktøjet har sit eget login."
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "The hall scoreboard reads 4–04, fault."
 msgstr "Resultattavlen i hallen viser 4–04, fejl."
 
@@ -2355,7 +2364,7 @@ msgstr "Anmodningen fra {name} er åben igen"
 msgid "The shuttle got stuck in the net"
 msgstr "Fjerbolden blev hængende i nettet"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "The umpire looked twice. This page is not on the court. It may have moved, or the link has a typo."
 msgstr "Dommeren kiggede to gange. Denne side er ikke på banen. Den kan være flyttet, eller linket har en tastefejl."
 
@@ -2384,7 +2393,7 @@ msgstr "Dette er en tidligere sæson. Tiderne kan have ændret sig siden."
 msgid "This login isn't switched on yet."
 msgstr "Dette login er ikke slået til endnu."
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "This page is out of play. Keep the shuttle up while you're here, or head back to the club."
 msgstr "Denne side er ude af spil. Hold fjerbolden oppe, mens du er her, eller gå tilbage til klubben."
 
@@ -2405,12 +2414,12 @@ msgid "Three ways to say “page not found” in badminton. Try them, then pick 
 msgstr "Tre måder at sige »siden findes ikke« på i badminton. Prøv dem, og vælg en favorit."
 
 #. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Thwack!"
 msgstr "Smæk!"
 
 #. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tock!"
 msgstr "Klask!"
 
@@ -2470,9 +2479,9 @@ msgstr "Ændringer i træningen, arrangementer, frivilligt arbejde og klubnyt, m
 msgid "Training groups"
 msgstr "Træningshold"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Training times"
 msgstr "Træningstider"
 
@@ -2495,6 +2504,10 @@ msgstr "Tur"
 msgid "Try a session"
 msgstr "Prøv en træning"
 
+#: src/components/layout/SiteFooter.tsx
+msgid "Try a style"
+msgstr "Prøv en stil"
+
 #: src/components/auth/UserMenu.tsx
 #: src/components/events/ShiftBoard.tsx
 #: src/components/layout/RouteFallbacks.tsx
@@ -2516,7 +2529,7 @@ msgstr "Prøv en anden kategori, eller se alle nyhederne."
 msgid "Two rackets and a shuttle on a court line"
 msgstr "To ketsjere og en fjerbold på en banelinje"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"
 msgstr "Dommer"
 
@@ -2603,7 +2616,7 @@ msgstr "Vil du sponsorere klubben?"
 msgid "We can't send email to that address yet."
 msgstr "Vi kan ikke sende e-mail til den adresse endnu."
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "We checked the replay: this page is past the baseline. It may have moved, or the link has a typo."
 msgstr "Vi har tjekket gentagelsen: denne side er bag baglinjen. Den kan være flyttet, eller linket har en tastefejl."
 

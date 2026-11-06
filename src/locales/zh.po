@@ -54,7 +54,7 @@ msgstr "{firstName}的邮箱地址已复制到剪贴板"
 msgid "{firstName}'s phone number was copied to the clipboard"
 msgstr "{firstName}的电话号码已复制到剪贴板"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "击球{hits, plural, one {#次} other {#次}}：{callout}"
 
@@ -132,15 +132,15 @@ msgstr "新赛季开始前，请<0>联系理事会</0>。"
 msgid "<0>Write to the board</0>."
 msgstr "<0>联系理事会</0>。"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "404 · Out"
 msgstr "404 · 出界"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "404 · Rally on"
 msgstr "404 · 接着打"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "404 · Service fault"
 msgstr "404 · 发球失误"
 
@@ -154,7 +154,7 @@ msgid "404 ideas"
 msgstr "404创意"
 
 #. The shuttle hit the racket away from the middle
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "A bit off-center"
 msgstr "有点偏了"
 
@@ -166,7 +166,7 @@ msgstr "孩子，或没有账户的人。"
 msgid "A coach leading a group session at Bygdøhus"
 msgstr "教练在Bygdøhus带领小组训练"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "A court in perspective, the shuttle lands just out."
 msgstr "透视视角的球场，羽毛球刚好落在界外。"
 
@@ -186,7 +186,7 @@ msgstr "一支球拍"
 msgid "A shuttle on a racket, with players on green courts behind"
 msgstr "球拍上放着一个羽毛球，后面是在绿色球场上打球的球员"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "A shuttle resting on a badminton racket"
 msgstr "一个羽毛球放在羽毛球拍上"
 
@@ -194,13 +194,17 @@ msgstr "一个羽毛球放在羽毛球拍上"
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "体育馆里，一个羽毛球放在球拍上"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
 msgstr "一个小游戏：别让羽毛球落地。"
 
 #: src/data/club.ts
 msgid "A water bottle"
 msgstr "一个水瓶"
+
+#: src/data/photos.ts
+msgid "A woman looking at her phone, her face covered by a digital grid"
+msgstr "一位女士看着手机,脸上覆盖着数字网格"
 
 #: src/pages/club/ClubPage.tsx
 msgid "About the club"
@@ -305,9 +309,7 @@ msgstr "全部新闻"
 msgid "All seasons"
 msgstr "全部赛季"
 
-#. Year filter option that shows events from every year
 #. Year picker while searching, since search covers every year
-#: src/pages/events/EventsPage.tsx
 #: src/pages/news/NewsPage.tsx
 msgid "All years"
 msgstr "全部年份"
@@ -348,9 +350,9 @@ msgstr "索取优惠码"
 msgid "Back on court {back}."
 msgstr "{back}重返球场。"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Back to the front page"
 msgstr "返回首页"
 
@@ -379,7 +381,7 @@ msgstr "新手组有教练"
 msgid "Beginners, Junior, Adults or a trial. Not sure? Start as a beginner."
 msgstr "新手组、青少年组、成人组或体验会员。拿不定主意？就从新手组开始吧。"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Best"
 msgstr "最高纪录"
 
@@ -437,7 +439,7 @@ msgstr "从停车场看Bygdøhus"
 msgid "Calendar link"
 msgstr "日历链接"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Call stands: still not found"
 msgstr "判罚维持：还是没找到"
 
@@ -480,15 +482,15 @@ msgstr "现金"
 msgid "Category"
 msgstr "类别"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Challenge the call"
 msgstr "挑战判罚"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Challenge: page"
 msgstr "挑战：页面"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Challenge. Checking the replay…"
 msgstr "挑战。正在查看回放…"
 
@@ -601,12 +603,9 @@ msgstr "即将到来"
 msgid "Compact"
 msgstr "紧凑"
 
-#: src/components/layout/SiteFooter.tsx
-msgid "Concept preview"
-msgstr "概念预览"
-
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/contact/ContactPage.tsx
 msgid "Contact"
 msgstr "联系"
 
@@ -694,7 +693,7 @@ msgstr "没能保存到你的个人资料，但在这台设备上仍然有效。
 msgid "Couldn't save your photo. Try again."
 msgstr "照片保存失败，请再试一次。"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Court 1"
 msgstr "1号场地"
 
@@ -885,6 +884,7 @@ msgstr "活动"
 
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/events/EventPage.tsx
 #: src/pages/events/EventsPage.tsx
 #: src/pages/home/HomePage.tsx
 msgid "Events"
@@ -902,11 +902,11 @@ msgstr "名额全满了，干得漂亮！"
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "所有打球的人都是会员。赛季价格是会员费加上你所在组别的训练费。"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
 msgstr "失误"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault!"
 msgstr "失误！"
 
@@ -956,7 +956,7 @@ msgid "For new players, with a coach."
 msgstr "适合新球员，有教练。"
 
 #. The shuttle hit the racket frame, not the strings
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Frame shot!"
 msgstr "拍框球！"
 
@@ -993,7 +993,7 @@ msgstr "全宽"
 msgid "Get in touch"
 msgstr "联系我们"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Get under it and hit it as it drops. Swing on the move to steer."
 msgstr "跑到球下，等它落下再击球。边移动边挥拍，就能控制方向。"
 
@@ -1041,7 +1041,7 @@ msgstr "第一个赛季新手组半价"
 msgid "Hall"
 msgstr "场馆组"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
 msgstr "场馆记分牌"
 
@@ -1078,7 +1078,7 @@ msgstr "你好！我想在赛季中途加入，价格是多少？"
 msgid "Hi! We'd like to hear more about sponsoring the club."
 msgstr "你好！我们想多了解一下赞助俱乐部的事。"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Hits"
 msgstr "击球数"
 
@@ -1126,6 +1126,7 @@ msgstr "加入Bygdø Badmintonklubb"
 #: src/components/layout/SiteNavbar.tsx
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/components/styles/HeroActions.tsx
+#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Join the club"
 msgstr "加入俱乐部"
@@ -1143,7 +1144,7 @@ msgstr "青少年组"
 msgid "Just a name"
 msgstr "只填姓名"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "Keep it up"
 msgstr "别让球落地"
 
@@ -1151,7 +1152,7 @@ msgstr "别让球落地"
 msgid "Keep the note to {NOTE_MAX} characters"
 msgstr "备注最多{NOTE_MAX}个字"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Keep-it-up game. Move the racket with the arrow keys and press Space or Enter to hit the shuttle when it falls to the racket."
 msgstr "颠球小游戏。用方向键移动球拍，羽毛球落到球拍上时按空格键或Enter键击球。"
 
@@ -1299,7 +1300,9 @@ msgstr "会员在Sport Modern享受最高八折优惠。"
 
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
+#: src/pages/membership/MyMembershipPage.tsx
 msgid "Membership"
 msgstr "会员"
 
@@ -1338,16 +1341,16 @@ msgstr "菜单"
 msgid "Message"
 msgstr "消息"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "击球{hits, plural, one {#次} other {#次}}后没接住。按空格键重新发球。"
 
 #. The shuttle hit the racket away from the middle
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed the sweet spot"
 msgstr "没打到甜区"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed!"
 msgstr "没接住！"
 
@@ -1385,7 +1388,7 @@ msgstr "姓名或邮箱"
 msgid "New accounts are closed right now."
 msgstr "目前暂停注册新账户。"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "New best: {best}"
 msgstr "新纪录：{best}"
 
@@ -1414,6 +1417,7 @@ msgstr "较新的文章：{newer}"
 #: src/components/layout/nav.ts
 #: src/pages/home/HomePage.tsx
 #: src/pages/news/NewsPage.tsx
+#: src/pages/news/NewsPostPage.tsx
 msgid "News"
 msgstr "新闻"
 
@@ -1447,7 +1451,7 @@ msgstr "没有用这个邮箱的账户"
 msgid "No breaks this season."
 msgstr "本赛季没有停训。"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "No challenges left"
 msgstr "没有剩余挑战了"
 
@@ -1624,7 +1628,7 @@ msgid "Only the board sees this."
 msgstr "只有理事会能看到。"
 
 #. The shuttle hit the racket frame, not the strings
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Oops, rim shot!"
 msgstr "哎呀，打框了！"
 
@@ -1663,7 +1667,7 @@ msgstr "打开报名表"
 msgid "Optional. Usually a parent's account."
 msgstr "选填。通常是家长的账户。"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "or <0>←</0> <1>→</1> and <2>Space</2>"
 msgstr "或<0>←</0> <1>→</1>和<2>空格键</2>"
 
@@ -1698,11 +1702,11 @@ msgstr "我们的合作伙伴"
 msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
 msgstr "我们在Bygdøhus的比赛靠志愿者撑起来。来领个班次吧！"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Out"
 msgstr "出界"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "Out!"
 msgstr "出界！"
 
@@ -1711,7 +1715,11 @@ msgstr "出界！"
 msgid "Outline"
 msgstr "线框"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/NotFoundPage.tsx
+msgid "Page not found"
+msgstr "页面未找到"
+
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Page not found, but the rally isn't over"
 msgstr "页面找不到了，但这一回合还没结束"
 
@@ -1821,7 +1829,7 @@ msgstr "自由打"
 msgid "Play for adult players."
 msgstr "成人球员的打球时间。"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Play the replay again"
 msgstr "再看一遍回放"
 
@@ -1834,12 +1842,12 @@ msgid "Players training on the courts at Bygdøhus"
 msgstr "球员们在Bygdøhus的球场上训练"
 
 #. Pling is the sound of the shuttle hitting the racket frame. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Pling! That hit the frame"
 msgstr "叮！打到拍框了"
 
 #. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Pock!"
 msgstr "啪！"
 
@@ -1890,7 +1898,7 @@ msgstr "对你的数据有疑问？问问理事会，我们会回答你。"
 msgid "Rally"
 msgstr "多拍"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Rally in progress"
 msgstr "多拍进行中"
 
@@ -1927,11 +1935,11 @@ msgstr "删除照片"
 msgid "Remove volunteer?"
 msgstr "移除志愿者？"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Replay"
 msgstr "回放"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Replay of a line call: the shuttle flies over the net and lands just past the baseline. The call is out."
 msgstr "界线判罚回放：羽毛球飞过球网，落在底线外一点点。判出界。"
 
@@ -1967,7 +1975,7 @@ msgstr "待审核"
 msgid "Requests"
 msgstr "申请"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
 msgstr "审核中…"
 
@@ -1989,11 +1997,11 @@ msgstr "安全运动"
 msgid "Save"
 msgstr "保存"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
 msgstr "比分：Bygdø {home}，404 {away}"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "Scoreboard"
 msgstr "记分牌"
 
@@ -2075,7 +2083,7 @@ msgstr "发球"
 msgid "Serve · Rally · Point"
 msgstr "发球 · 多拍 · 得分"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Service fault: page not found"
 msgstr "发球失误：找不到页面"
 
@@ -2252,11 +2260,11 @@ msgstr "跟随系统"
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "把<0>{name}</0>从这个班次移除吗？"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
 msgstr "点一下发球"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve again"
 msgstr "点一下再发一次"
 
@@ -2288,7 +2296,7 @@ msgstr "这个链接已过期，请在下面获取新链接。"
 msgid "That membership is gone. Someone may have deleted it."
 msgstr "这条会员记录不见了，可能有人删掉了。"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "That one landed out"
 msgstr "这球出界了"
 
@@ -2332,6 +2340,7 @@ msgstr "理事会确认后会通知你怎么付款。"
 
 #. Main menu
 #: src/components/layout/nav.ts
+#: src/pages/club/ClubPage.tsx
 msgid "The club"
 msgstr "俱乐部"
 
@@ -2339,7 +2348,7 @@ msgstr "俱乐部"
 msgid "The editor has its own login."
 msgstr "编辑器需要单独登录。"
 
-#: src/pages/study/notfound/concepts/index.ts
+#: src/pages/study/notfound/ideas/index.ts
 msgid "The hall scoreboard reads 4–04, fault."
 msgstr "场馆记分牌显示4–04，失误。"
 
@@ -2355,7 +2364,7 @@ msgstr "{name}的申请已恢复为待处理"
 msgid "The shuttle got stuck in the net"
 msgstr "羽毛球挂网了"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "The umpire looked twice. This page is not on the court. It may have moved, or the link has a typo."
 msgstr "裁判看了两遍，这个页面不在场上。它可能已经移走了，或者链接有拼写错误。"
 
@@ -2384,7 +2393,7 @@ msgstr "这是以前的赛季，时间可能已经变了。"
 msgid "This login isn't switched on yet."
 msgstr "这种登录方式还没开通。"
 
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "This page is out of play. Keep the shuttle up while you're here, or head back to the club."
 msgstr "这个页面已经出局了。来都来了，颠颠球吧，或者回到俱乐部。"
 
@@ -2405,12 +2414,12 @@ msgid "Three ways to say “page not found” in badminton. Try them, then pick 
 msgstr "用羽毛球的方式说“找不到页面”，一共三种。都试试，选出你最喜欢的。"
 
 #. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Thwack!"
 msgstr "砰！"
 
 #. Sound of a clean racket hit. Adapt the sound word, do not translate literally.
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tock!"
 msgstr "嘭！"
 
@@ -2470,9 +2479,9 @@ msgstr "训练变动、活动、志愿服务和俱乐部动态，附带日期。
 msgid "Training groups"
 msgstr "训练分组"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
-#: src/pages/study/notfound/concepts/KeepItUp.tsx
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
+#: src/pages/study/notfound/ideas/KeepItUp.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Training times"
 msgstr "训练时间"
 
@@ -2495,6 +2504,10 @@ msgstr "外出参赛"
 msgid "Try a session"
 msgstr "来试一次"
 
+#: src/components/layout/SiteFooter.tsx
+msgid "Try a style"
+msgstr "试试其他风格"
+
 #: src/components/auth/UserMenu.tsx
 #: src/components/events/ShiftBoard.tsx
 #: src/components/layout/RouteFallbacks.tsx
@@ -2516,7 +2529,7 @@ msgstr "换个分类试试，或者查看全部新闻。"
 msgid "Two rackets and a shuttle on a court line"
 msgstr "场地线上的两只球拍和一个羽毛球"
 
-#: src/pages/study/notfound/concepts/Scoreboard.tsx
+#: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"
 msgstr "裁判"
 
@@ -2603,7 +2616,7 @@ msgstr "想赞助俱乐部吗？"
 msgid "We can't send email to that address yet."
 msgstr "暂时还不能给这个地址发邮件。"
 
-#: src/pages/study/notfound/concepts/CourtOut.tsx
+#: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "We checked the replay: this page is past the baseline. It may have moved, or the link has a typo."
 msgstr "我们看了回放：这个页面出了底线。它可能已经移走了，或者链接有拼写错误。"
 
