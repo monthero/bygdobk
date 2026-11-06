@@ -3,7 +3,7 @@ import { Anchor, Container, Stack, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo, type FC } from 'react';
 
-import { AddressLink, SocialLinks, ArrowUpRight, ClubLogo } from '~/components/ui';
+import { AddressLink, SocialLinks, ClubLogo } from '~/components/ui';
 import { CLUB } from '~/data/club';
 import { FooterMark, useSettings } from '~/stores/settings';
 
@@ -77,13 +77,13 @@ export const SiteFooter = memo(() => {
         </nav>
 
         <Stack gap={6} className={classes.links}>
-          <Anchor href={CLUB.memberLoginUrl} target="_blank" size="sm" c="inherit">
-            <Trans>My membership</Trans> <ArrowUpRight className={classes.ext} />
+          <Anchor component={Link} to="/medlemskap/mine" size="sm" c="inherit">
+            <Trans>My membership</Trans>
           </Anchor>
           <Anchor component={Link} to="/klubben" hash="varsling" size="sm" c="inherit">
             <Trans>Report a concern</Trans>
           </Anchor>
-          <Anchor component={Link} to="/klubben" hash="personvern" size="sm" c="inherit">
+          <Anchor component={Link} to="/personvern" size="sm" c="inherit">
             <Trans>Privacy</Trans>
           </Anchor>
         </Stack>

@@ -1,3 +1,25 @@
 .headerControl {
   text-transform: none;
 }
+
+.event {
+  &[data-faded] {
+    opacity: 0.6;
+  }
+
+  &[data-off] {
+    color: var(--mantine-color-dimmed);
+  }
+}
+
+.title {
+  .event[data-off] & {
+    text-decoration: line-through;
+  }
+}
+
+.offNote {
+  display: block;
+  font-weight: 600;
+  color: var(--bk-warn);
+}

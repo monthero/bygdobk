@@ -6,6 +6,7 @@ import { memo } from 'react';
 import sportModernLogo from '~/assets/sponsors/sport-modern.svg';
 import { ArrowRight, Handshake } from '~/components/ui';
 import { CLUB, DEAL_HASH } from '~/data/club';
+import { contactLink, ContactTopic, SPONSOR_DRAFT } from '~/data/contact';
 
 import classes from './SponsorStrip.module.css';
 
@@ -41,8 +42,7 @@ export const SponsorStrip = memo(() => {
             </Text>
           </div>
           <Button
-            component="a"
-            href={`mailto:${CLUB.email}`}
+            renderRoot={(props) => <Link {...props} {...contactLink(ContactTopic.enum.sponsor, t(SPONSOR_DRAFT))} />}
             variant="light"
             radius="xl"
             rightSection={<ArrowRight />}

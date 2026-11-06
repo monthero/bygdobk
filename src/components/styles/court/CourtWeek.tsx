@@ -1,51 +1,51 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Button, Container, Group, Stack, Text, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { memo, type CSSProperties, type FC } from 'react';
+import { memo, useMemo, type CSSProperties, type FC } from 'react';
 
+import { isTraining, occurrences, type CalendarEvent } from '~/cms/calendar';
+import { useSiteContent } from '~/cms/content';
 import { ArrowRight } from '~/components/ui';
-import { CURRENT_SEASON, GROUP_SLUGS, GROUPS, type Session } from '~/data/club';
-import { useClosures } from '~/stores/content';
-import { dayjs, formatDate, minutesOf } from '~/utils/dates';
-import { closureOn, closureReason, isLive } from '~/utils/training';
+import { GROUP_SLUGS, GROUPS } from '~/data/club';
+import { useSeasons } from '~/hooks/useSeasons';
+import { listFormat } from '~/i18n/current';
+import { date, formatDate, ISO_DAY, wallNow, type Dayjs } from '~/utils/dates';
+import { isLive, offTitles, plannedSessions, type PlannedSession } from '~/utils/training';
 
 import { dayRange } from './schedule';
 
 import classes from './CourtWeek.module.css';
 
-const SCHEDULE = CURRENT_SEASON.schedule;
-const { first: FIRST, last: LAST } = dayRange(SCHEDULE);
-const SPAN = LAST - FIRST;
 const WEEKDAYS = [1, 2, 3, 4, 5];
+const DEFAULT_TIMES = [{ start: '17:00', end: '22:00' }];
 
-const HOURS = Array.from({ length: Math.floor(LAST / 60) - Math.ceil(FIRST / 60) + 1 }, (_, i) => {
-  const hour = Math.ceil(FIRST / 60) + i;
-  return {
-    label: `${String(hour).padStart(2, '0')}:00`,
-    style: { '--at': (hour * 60 - FIRST) / SPAN } as CSSProperties,
-  };
-});
+type Placed = { session: PlannedSession; lane: number };
+type Axis = { first: number; span: number };
 
-type Placed = { session: Session; lane: number };
+const thisMondayIso = () => wallNow().startOf('isoWeek').format(ISO_DAY);
 
-const placeInLanes = (sessions: readonly Session[]) => {
+const minuteOfDay = (d: Dayjs) => d.hour() * 60 + d.minute();
+
+const timesOf = (s: PlannedSession) => ({ start: s.event.startTime ?? '00:00', end: s.event.endTime ?? '23:59' });
+
+const placeInLanes = (sessions: readonly PlannedSession[]) => {
   const laneEnds: number[] = [];
   const placed: Placed[] = [];
-  for (const session of [...sessions].sort((a, b) => minutesOf(a.start) - minutesOf(b.start))) {
-    const start = minutesOf(session.start);
+  for (const session of sessions) {
+    const start = minuteOfDay(session.start);
     const free = laneEnds.findIndex((end) => end <= start);
     const lane = free === -1 ? laneEnds.length : free;
-    laneEnds[lane] = minutesOf(session.end);
+    laneEnds[lane] = minuteOfDay(session.end);
     placed.push({ session, lane });
   }
   return { placed, lanes: Math.max(1, laneEnds.length) };
 };
 
-const barStyle = ({ session, lane }: Placed, lanes: number) => {
-  const { color } = GROUPS[session.group];
+const barStyle = ({ session, lane }: Placed, lanes: number, { first, span }: Axis) => {
+  const color = session.off ? 'gray' : GROUPS[session.group].color;
   return {
-    '--start': (minutesOf(session.start) - FIRST) / SPAN,
-    '--end': (minutesOf(session.end) - FIRST) / SPAN,
+    '--start': (minuteOfDay(session.start) - first) / span,
+    '--end': (minuteOfDay(session.end) - first) / span,
     '--lane': lane,
     '--lanes': lanes,
     '--bar': `var(--mantine-color-${color}-light)`,
@@ -54,21 +54,43 @@ const barStyle = ({ session, lane }: Placed, lanes: number) => {
   } as CSSProperties;
 };
 
-const DAYS = WEEKDAYS.map((weekday) => {
-  const { placed, lanes } = placeInLanes(SCHEDULE.filter((s) => s.weekday === weekday));
-  return { weekday, bars: placed.map((p) => ({ session: p.session, style: barStyle(p, lanes) })) };
-});
+const otherEventsOn = (events: readonly CalendarEvent[], day: Dayjs, replacing: ReadonlySet<string>) =>
+  events.filter((e) => !isTraining(e) && !replacing.has(e.id) && !occurrences(e, day, day).next().done);
 
-const HourLines = memo(() =>
-  HOURS.map(({ label, style }) => <span key={label} className={classes.hourLine} style={style} aria-hidden />),
+const weekPlan = (events: readonly CalendarEvent[], monday: Dayjs) => {
+  const sessions = plannedSessions(events, monday, monday.add(WEEKDAYS.length - 1, 'day'));
+  const { first, last } = dayRange(sessions.length > 0 ? sessions.map(timesOf) : DEFAULT_TIMES);
+  const axis = { first: Math.floor(first / 60) * 60, span: Math.ceil(last / 60) * 60 - Math.floor(first / 60) * 60 };
+  const hours = Array.from({ length: axis.span / 60 + 1 }, (_, i) => {
+    const hour = axis.first / 60 + i;
+    return { label: `${String(hour).padStart(2, '0')}:00`, style: { '--at': (i * 60) / axis.span } as CSSProperties };
+  });
+  const days = WEEKDAYS.map((weekday) => {
+    const day = monday.add(weekday - 1, 'day');
+    const daySessions = sessions.filter((s) => s.day.isSame(day, 'day'));
+    const replacing = new Set(daySessions.values().flatMap((s) => (s.off ? [s.off.id] : [])));
+    const { placed, lanes } = placeInLanes(daySessions);
+    return {
+      day,
+      bars: placed.map((p) => ({ session: p.session, style: barStyle(p, lanes, axis) })),
+      allOff: daySessions.length > 0 && daySessions.every((s) => s.off),
+      others: otherEventsOn(events, day, replacing),
+    };
+  });
+  return { hours, days };
+};
+
+const HourLines = memo<{ hours: { label: string; style: CSSProperties }[] }>(({ hours }) =>
+  hours.map(({ label, style }) => <span key={label} className={classes.hourLine} style={style} aria-hidden />),
 );
 
 export const CourtWeek: FC = () => {
   const { i18n, t } = useLingui();
-  const closures = useClosures();
-  const now = dayjs();
-  const monday = now.startOf('isoWeek');
-  const nowMinutes = now.hour() * 60 + now.minute();
+  const { events } = useSiteContent();
+  const { current } = useSeasons();
+  const now = wallNow();
+  const mondayIso = thisMondayIso();
+  const { hours, days } = useMemo(() => weekPlan(events, date(mondayIso)), [events, mondayIso]);
 
   return (
     <Container component="section" pt={16} pb={56} aria-labelledby="court-week-title">
@@ -89,7 +111,7 @@ export const CourtWeek: FC = () => {
 
         <div className={classes.week}>
           <div className={classes.axis} aria-hidden>
-            {HOURS.map(({ label, style }) => (
+            {hours.map(({ label, style }) => (
               <span key={label} className={classes.tick} style={style}>
                 {label}
               </span>
@@ -97,15 +119,14 @@ export const CourtWeek: FC = () => {
           </div>
 
           <ol className={classes.days}>
-            {DAYS.map(({ weekday, bars }) => {
-              const day = monday.add(weekday - 1, 'day');
+            {days.map(({ day, bars, allOff, others }) => {
               const isToday = day.isSame(now, 'day');
               const isPast = day.isBefore(now, 'day');
-              const closure = bars.length > 0 ? closureOn(day, closures) : undefined;
-              const open = bars.length > 0 && !closure;
+              const open = bars.length > 0 && !allOff;
+              const closedBy = allOff ? listFormat().format(offTitles(bars.map((b) => b.session))) : '';
               return (
                 <li
-                  key={weekday}
+                  key={day.valueOf()}
                   className={classes.day}
                   data-today={isToday || undefined}
                   data-past={isPast || undefined}
@@ -125,27 +146,30 @@ export const CourtWeek: FC = () => {
                   </div>
 
                   <div className={classes.court} data-empty={bars.length === 0 || undefined}>
-                    <HourLines />
+                    <HourLines hours={hours} />
                     {open &&
                       bars.map(({ session, style }) => {
                         const live = isLive(session, now);
-                        const done = isPast || (isToday && minutesOf(session.end) <= nowMinutes);
+                        const done = !session.end.isAfter(now);
+                        const reason = session.off?.title;
                         return (
                           <Link
-                            key={`${session.group}-${session.start}`}
+                            key={`${session.group}-${session.start.valueOf()}`}
                             to="/trening/$sesong"
-                            params={{ sesong: CURRENT_SEASON.id }}
+                            params={{ sesong: current.id }}
                             search={{ gruppe: GROUP_SLUGS.toSlug(session.group) }}
                             className={classes.bar}
                             style={style}
                             data-done={done || undefined}
                             data-live={live || undefined}
+                            data-off={reason ? true : undefined}
                           >
                             <span className={classes.barName}>{i18n._(GROUPS[session.group].name)}</span>
                             <span className={`${classes.barTime} tabular`}>
-                              <span>{session.start}</span>
-                              <span>–{session.end}</span>
+                              <span>{session.event.startTime}</span>
+                              <span>–{session.event.endTime}</span>
                             </span>
+                            {reason && <span className={classes.offNote}>{t`No training: ${reason}`}</span>}
                             {live && (
                               <Badge size="xs" color="green" variant="filled" className={classes.liveBadge}>
                                 <Trans>On now</Trans>
@@ -155,15 +179,29 @@ export const CourtWeek: FC = () => {
                         );
                       })}
                     {!open && (
-                      <div className={classes.empty} data-closed={closure ? true : undefined}>
+                      <div className={classes.empty} data-closed={allOff || undefined}>
                         <Text size="sm" fw={600}>
                           <Trans>No training</Trans>
                         </Text>
-                        {closure && (
+                        {closedBy && (
                           <Text size="xs" c="dimmed">
-                            {closureReason(i18n, closure)}
+                            {closedBy}
                           </Text>
                         )}
+                        {others.map((e) => (
+                          <Text key={e.id} size="xs" className={classes.other}>
+                            {e.title}
+                          </Text>
+                        ))}
+                      </div>
+                    )}
+                    {open && others.length > 0 && (
+                      <div className={classes.others}>
+                        {others.map((e) => (
+                          <Text key={e.id} size="xs" className={classes.other}>
+                            {e.title}
+                          </Text>
+                        ))}
                       </div>
                     )}
                   </div>

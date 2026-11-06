@@ -1,9 +1,9 @@
 import type { FC } from 'react';
 
+import type { NewsPost } from '~/cms/content';
 import type { ShiftBoardProps } from '~/components/events';
 import type { PageIntroProps } from '~/components/ui';
 import type { Group } from '~/data/club';
-import type { NewsPost } from '~/data/news';
 
 export type StyleKit = {
   HomeHero: FC;

@@ -136,12 +136,6 @@
   margin-bottom: 8px;
 }
 
-.ext {
-  width: 12px;
-  height: 12px;
-  vertical-align: -1px;
-}
-
 .variants {
   grid-column: 1 / -1;
   align-items: flex-start;

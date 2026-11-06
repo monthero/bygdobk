@@ -1,7 +1,7 @@
 .field {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-height: 500px;
   aspect-ratio: 360 / 320;
   border: 1px solid var(--bk-border);
   border-radius: var(--mantine-radius-lg);

@@ -1,13 +1,15 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Alert, Badge, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
 
+import { useSiteContent } from '~/cms/content';
 import { AddressLink, ArrowRight, MapPin, Warning } from '~/components/ui';
-import { CURRENT_SEASON, GROUP_SLUGS, GROUPS, type Group as TrainingGroup } from '~/data/club';
-import { useClosures } from '~/stores/content';
-import { dayjs, formatDate } from '~/utils/dates';
-import { closureReason, isLive, nextTrainingDay } from '~/utils/training';
+import { GROUP_SLUGS, GROUPS, type Group as TrainingGroup } from '~/data/club';
+import { useSeasons } from '~/hooks/useSeasons';
+import { listFormat } from '~/i18n/current';
+import { formatDate, today } from '~/utils/dates';
+import { isLive, nextTrainingDay, offTitles } from '~/utils/training';
 
 import classes from './NextTraining.module.css';
 
@@ -17,12 +19,14 @@ const DAY_FORMAT: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric'
 
 export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
   const { i18n } = useLingui();
-  const closures = useClosures();
-  const next = nextTrainingDay(closures, group);
+  const { events } = useSiteContent();
+  const { current } = useSeasons();
+  const next = useMemo(() => nextTrainingDay(events, group), [events, group]);
   if (!next) return null;
 
-  const isToday = next.day.isSame(dayjs(), 'day');
+  const isToday = next.day.isSame(today(), 'day');
   const dayLabel = formatDate(next.day, DAY_FORMAT);
+  const allOff = next.sessions.every((s) => s.off);
 
   return (
     <Paper withBorder radius="lg" p="lg" shadow="sm" className={classes.card} data-frosted={frosted || undefined}>
@@ -36,29 +40,45 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
           </Title>
         </div>
 
-        {next.closure ? (
+        {allOff ? (
           <Alert color="yellow" icon={<Warning />} title={<Trans>No training</Trans>}>
-            {closureReason(i18n, next.closure)}
+            {listFormat().format(offTitles(next.sessions))}
           </Alert>
         ) : (
           <Stack gap={8}>
-            {next.sessions.map((s) => (
-              <Group key={`${s.group}-${s.start}`} justify="space-between" wrap="nowrap" className={classes.row}>
-                <Group gap={8} wrap="nowrap">
-                  <Badge color={GROUPS[s.group].color} variant="light" size="lg">
-                    {i18n._(GROUPS[s.group].name)}
-                  </Badge>
-                  {isLive(s) && (
-                    <Badge color="green" variant="dot" size="sm">
-                      <Trans>On now</Trans>
-                    </Badge>
-                  )}
+            {next.sessions.map((s) => {
+              const reason = s.off?.title;
+              return (
+                <Group
+                  key={`${s.group}-${s.start.valueOf()}`}
+                  justify="space-between"
+                  wrap="nowrap"
+                  className={classes.row}
+                  data-off={s.off ? true : undefined}
+                >
+                  <Stack gap={2}>
+                    <Group gap={8} wrap="nowrap">
+                      <Badge color={s.off ? 'gray' : GROUPS[s.group].color} variant="light" size="lg">
+                        {i18n._(GROUPS[s.group].name)}
+                      </Badge>
+                      {isLive(s) && (
+                        <Badge color="green" variant="dot" size="sm">
+                          <Trans>On now</Trans>
+                        </Badge>
+                      )}
+                    </Group>
+                    {reason && (
+                      <Text size="sm" className={classes.offNote}>
+                        <Trans>No training: {reason}</Trans>
+                      </Text>
+                    )}
+                  </Stack>
+                  <Text fw={600} className={`${classes.time} tabular`}>
+                    {s.event.startTime}–{s.event.endTime}
+                  </Text>
                 </Group>
-                <Text fw={600} className="tabular">
-                  {s.start}–{s.end}
-                </Text>
-              </Group>
-            ))}
+              );
+            })}
           </Stack>
         )}
 
@@ -76,7 +96,7 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
             <Link
               {...props}
               to="/trening/$sesong"
-              params={{ sesong: CURRENT_SEASON.id }}
+              params={{ sesong: current.id }}
               search={{ gruppe: group && GROUP_SLUGS.toSlug(group) }}
             />
           )}

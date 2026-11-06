@@ -1,6 +1,8 @@
 import type { FC } from 'react';
+import FlagDa from '~icons/bk/flag-da';
 import FlagEn from '~icons/bk/flag-en';
 import FlagFi from '~icons/bk/flag-fi';
+import FlagIs from '~icons/bk/flag-is';
 import FlagNb from '~icons/bk/flag-nb';
 import FlagSv from '~icons/bk/flag-sv';
 import FlagZh from '~icons/bk/flag-zh';
@@ -9,7 +11,15 @@ import type { Locale } from '~/i18n/locales';
 
 import classes from './LocaleFlag.module.css';
 
-const FLAGS: Record<Locale, typeof FlagEn> = { en: FlagEn, fi: FlagFi, nb: FlagNb, sv: FlagSv, zh: FlagZh };
+const FLAGS: Record<Locale, typeof FlagEn> = {
+  da: FlagDa,
+  en: FlagEn,
+  fi: FlagFi,
+  is: FlagIs,
+  nb: FlagNb,
+  sv: FlagSv,
+  zh: FlagZh,
+};
 
 export const LocaleFlag: FC<{ locale: Locale }> = ({ locale }) => {
   const Flag = FLAGS[locale];

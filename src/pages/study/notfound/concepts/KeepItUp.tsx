@@ -1,9 +1,10 @@
-import { plural } from '@lingui/core/macro';
+import type { MessageDescriptor } from '@lingui/core';
+import { msg, plural } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Button, Group, Kbd, Stack, Text, Title, VisuallyHidden } from '@mantine/core';
 import { useReducedMotion } from '@mantine/hooks';
 import { Link } from '@tanstack/react-router';
-import { createRef, memo, useEffect, useId, useRef, useState } from 'react';
+import { createRef, memo, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import type { FC, KeyboardEvent, MouseEvent, PointerEvent, RefObject } from 'react';
 import { z } from 'zod';
 
@@ -34,7 +35,7 @@ const PITCH_DAMPING = 0.04;
 const TURNOVER_NUDGE = 8;
 const MAX_LAUNCH_ANGLE = 0.38;
 const LAUNCH_ANGLE_LIMIT = 0.6;
-const CENTER_PULL = 0.0012;
+const CENTER_PULL = 0.216;
 const BASE_WOBBLE = 0.12;
 const WOBBLE_PER_HIT = 0.004;
 const RACKET_CARRY = 0.55;
@@ -53,16 +54,23 @@ const HIT_TOP = RACKET_Y - 38;
 const HIT_BOTTOM = RACKET_Y + 9;
 const SWEET_Y = RACKET_Y - 8;
 const HIT_REACH = 40;
+const HEAD_HALF_WIDTH = 35;
+const SWEET_SPOT = 0.45;
+const RIM_START = 0.82;
+const OFF_CENTER_POWER = 0.85;
+const OFF_CENTER_TILT = 1.4;
+const RIM_POWER = 0.62;
+const RIM_KICK = 0.8;
+const RIM_SPIN = 16;
 const MIN_HIT_VY = -60;
 const WEAK_POWER = 0.9;
 const SWEET_BONUS = 0.12;
+const POP_MARGIN = 8;
 const SWING_WINDOW = 0.07;
 const SWING_COOLDOWN = 0.4;
 const RESTART_DELAY = 400;
-const WALL_LEFT = 22;
-const WALL_RIGHT = VIEW_W - 22;
-const RACKET_MIN = 44;
-const RACKET_MAX = VIEW_W - 44;
+const WALL_INSET = 22;
+const RACKET_INSET = 44;
 const RACKET_EASE = 1 - Math.exp(-16 * STEP);
 const RACKET_VELOCITY_EASE = 1 - Math.exp(-40 * STEP);
 const ARROW_STEP = 28;
@@ -71,22 +79,56 @@ const MAX_PACE_HITS = 40;
 const RAD_TO_DEG = 180 / Math.PI;
 const BEST_KEY = 'bigdo:404:keep-it-up:best';
 const NON_ID_CHARS = /[^\w-]/g;
-const REST_TRANSFORM = `translate(${VIEW_W * 0.5} ${REST_Y}) rotate(0)`;
 const SHUTTLE_SIZE = `scale(${SHUTTLE_SCALE})`;
-const RACKET_TRANSFORM = `translate(${VIEW_W * 0.5} ${RACKET_Y})`;
 const MESH_MAINS = [-28, -21, -14, -7, 0, 7, 14, 21, 28];
 const MESH_CROSSES = [-7.5, -5, -2.5, 0, 2.5, 5, 7.5];
 const GRIP_WRAPS = [48, 54, 60, 66];
-const LAMPS = [70, 180, 290];
-const PANEL_SEAMS = [60, 120, 180, 240, 300];
+const LAMP_GAP = 110;
+const LAMP_MARGIN = 70;
+const PANEL_GAP = 60;
 const BURST_RAYS = [0, 60, 120, 180, 240, 300];
 const FEATHER_SHAFTS = [-2, -1, 0, 1, 2];
 
 const Phase = z.enum(['ready', 'playing', 'landing', 'missed']);
 type Phase = z.infer<typeof Phase>;
 
+const Quality = z.enum(['clean', 'offCenter', 'rim']);
+type Quality = z.infer<typeof Quality>;
+
+const CALLOUTS: Record<Quality, MessageDescriptor[]> = {
+  [Quality.enum.clean]: [
+    msg({
+      message: 'Pock!',
+      comment: 'Sound of a clean racket hit. Adapt the sound word, do not translate literally.',
+    }),
+    msg({
+      message: 'Thwack!',
+      comment: 'Sound of a clean racket hit. Adapt the sound word, do not translate literally.',
+    }),
+    msg({
+      message: 'Tock!',
+      comment: 'Sound of a clean racket hit. Adapt the sound word, do not translate literally.',
+    }),
+  ],
+  [Quality.enum.offCenter]: [
+    msg({ message: 'A bit off-center', comment: 'The shuttle hit the racket away from the middle' }),
+    msg({ message: 'Missed the sweet spot', comment: 'The shuttle hit the racket away from the middle' }),
+  ],
+  [Quality.enum.rim]: [
+    msg({ message: 'Oops, rim shot!', comment: 'The shuttle hit the racket frame, not the strings' }),
+    msg({
+      message: 'Pling! That hit the frame',
+      comment:
+        'Pling is the sound of the shuttle hitting the racket frame. Adapt the sound word, do not translate literally.',
+    }),
+    msg({ message: 'Frame shot!', comment: 'The shuttle hit the racket frame, not the strings' }),
+  ],
+};
+
 type Sim = {
+  width: number;
   phase: Phase;
+  quality: Quality;
   x: number;
   y: number;
   vx: number;
@@ -165,8 +207,10 @@ const writeBest = (value: number) => {
   }
 };
 
-const createSim = (racketX = VIEW_W * 0.5): Sim => ({
+const createSim = (width = VIEW_W, racketX = width * 0.5): Sim => ({
+  width,
   phase: Phase.enum.ready,
+  quality: Quality.enum.clean,
   x: racketX,
   y: REST_Y,
   vx: 0,
@@ -192,7 +236,7 @@ const createSim = (racketX = VIEW_W * 0.5): Sim => ({
 
 const launch = (sim: Sim, offset: number, power: number) => {
   const wobble = (Math.random() * 2 - 1) * (BASE_WOBBLE + Math.min(sim.hits, MAX_PACE_HITS) * WOBBLE_PER_HIT);
-  const pull = (VIEW_W * 0.5 - sim.x) * CENTER_PULL;
+  const pull = (1 - (2 * sim.x) / sim.width) * CENTER_PULL;
   const angle = clamp(offset * MAX_LAUNCH_ANGLE + wobble + pull, -LAUNCH_ANGLE_LIMIT, LAUNCH_ANGLE_LIMIT);
   const speed = LAUNCH_SPEED * power;
   sim.vx = speed * Math.sin(angle) + clamp(sim.racketVx * RACKET_CARRY, -MAX_CARRY, MAX_CARRY);
@@ -206,10 +250,26 @@ const inReach = (sim: Sim) =>
   sim.y >= HIT_TOP && sim.y <= HIT_BOTTOM && sim.vy > MIN_HIT_VY && Math.abs(sim.x - sim.racketX) < HIT_REACH;
 
 const strike = (sim: Sim) => {
+  const dx = sim.x - sim.racketX;
+  const spot = Math.abs(dx) / HEAD_HALF_WIDTH;
+  const offset = dx / HIT_REACH;
   const timing = clamp(1 - Math.abs(sim.y - SWEET_Y) / (SWEET_Y - HIT_TOP), 0, 1);
+  const power = WEAK_POWER + SWEET_BONUS * timing;
   sim.swingLeft = 0;
   sim.hits += 1;
-  launch(sim, (sim.x - sim.racketX) / HIT_REACH, WEAK_POWER + SWEET_BONUS * timing);
+  if (spot < SWEET_SPOT) {
+    sim.quality = Quality.enum.clean;
+    launch(sim, offset, power);
+    return;
+  }
+  if (spot < RIM_START) {
+    sim.quality = Quality.enum.offCenter;
+    launch(sim, offset * OFF_CENTER_TILT, power * OFF_CENTER_POWER);
+    return;
+  }
+  sim.quality = Quality.enum.rim;
+  launch(sim, offset + (Math.random() * 2 - 1) * RIM_KICK, power * RIM_POWER);
+  sim.spin += (Math.random() * 2 - 1) * RIM_SPIN;
 };
 
 const land = (sim: Sim) => {
@@ -231,8 +291,9 @@ const fly = (sim: Sim) => {
   sim.vy += (GRAVITY - DRAG * speed * sim.vy) * STEP;
   sim.x += sim.vx * STEP;
   sim.y += sim.vy * STEP;
-  if (sim.x < WALL_LEFT || sim.x > WALL_RIGHT) {
-    sim.x = clamp(sim.x, WALL_LEFT, WALL_RIGHT);
+  const wallRight = sim.width - WALL_INSET;
+  if (sim.x < WALL_INSET || sim.x > wallRight) {
+    sim.x = clamp(sim.x, WALL_INSET, wallRight);
     sim.vx *= -WALL_RESTITUTION;
     sim.vy *= WALL_FRICTION;
   }
@@ -292,6 +353,23 @@ const step = (sim: Sim) => {
   else topple(sim);
 };
 
+const resize = (sim: Sim, width: number) => {
+  if (sim.phase === Phase.enum.ready) {
+    Object.assign(sim, createSim(width));
+    return;
+  }
+  const shift = (width - sim.width) * 0.5;
+  const shuttleX = (x: number) => clamp(x + shift, WALL_INSET, width - WALL_INSET);
+  const racketX = (x: number) => clamp(x + shift, RACKET_INSET, width - RACKET_INSET);
+  sim.width = width;
+  sim.x = shuttleX(sim.x);
+  sim.prevX = shuttleX(sim.prevX);
+  sim.racketX = racketX(sim.racketX);
+  sim.prevRacketX = racketX(sim.prevRacketX);
+  sim.targetX = racketX(sim.targetX);
+  sim.contactX += shift;
+};
+
 const isSettled = (sim: Sim) => {
   if (sim.racketX !== sim.targetX || sim.racketVx !== 0) return false;
   if (sim.phase === Phase.enum.ready) return true;
@@ -318,13 +396,39 @@ const paint = (sim: Sim, refs: SceneRefs, alpha: number) => {
   }
 };
 
-const flash = (sim: Sim, refs: SceneRefs, message: string | undefined) => {
+const flash = (sim: Sim, refs: SceneRefs, message: string) => {
   refs.burst.current?.setAttribute('transform', `translate(${sim.contactX.toFixed(1)} ${sim.contactY.toFixed(1)})`);
   refs.burstRays.current?.animate(BURST_KEYFRAMES, BURST_TIMING);
   const pop = refs.pop.current;
-  if (!message || !pop) return;
+  if (!pop) return;
   pop.textContent = message;
+  const half = pop.getComputedTextLength() * 0.5 + POP_MARGIN;
+  const x = half * 2 < sim.width ? clamp(sim.contactX, half, sim.width - half) : sim.width * 0.5;
+  pop.setAttribute('x', (x - sim.contactX).toFixed(1));
   pop.animate(POP_KEYFRAMES, POP_TIMING);
+};
+
+const mirrored = (center: number, gap: number, reach: number) => {
+  const count = Math.floor(reach / gap);
+  return Array.from({ length: count * 2 + 1 }, (_, i) => center + (i - count) * gap);
+};
+
+const useViewWidth = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [viewW, setViewW] = useState(VIEW_W);
+  useLayoutEffect(() => {
+    const field = ref.current;
+    if (!field) return;
+    const update = () => {
+      if (field.clientHeight === 0) return;
+      setViewW(Math.max(VIEW_W, Math.round((VIEW_H * field.clientWidth) / field.clientHeight)));
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(field);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, viewW };
 };
 
 const RACKET_STRINGS_PATH = [...MESH_MAINS.map((x) => `M${x} -12V12`), ...MESH_CROSSES.map((y) => `M-40 ${y}H40`)].join(
@@ -381,14 +485,15 @@ const Racket: FC = () => {
   );
 };
 
-type CourtProps = { refs?: SceneRefs; label?: string };
+type CourtProps = { viewW: number; refs?: SceneRefs; label?: string };
 
-const CourtScene: FC<CourtProps> = ({ refs, label }) => {
+const CourtScene: FC<CourtProps> = ({ viewW, refs, label }) => {
   const id = `keep-it-up-${useId().replace(NON_ID_CHARS, '')}`;
+  const center = viewW * 0.5;
   return (
     <svg
       ref={refs?.svg}
-      viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+      viewBox={`0 0 ${viewW} ${VIEW_H}`}
       className={classes.scene}
       role={label ? 'img' : undefined}
       aria-label={label}
@@ -404,8 +509,8 @@ const CourtScene: FC<CourtProps> = ({ refs, label }) => {
           <stop offset="1" className={classes.glowEdge} />
         </radialGradient>
       </defs>
-      <rect width={VIEW_W} height={WALL_BASE} fill={`url(#${id}-wall)`} />
-      {LAMPS.map((x) => (
+      <rect width={viewW} height={WALL_BASE} fill={`url(#${id}-wall)`} />
+      {mirrored(center, LAMP_GAP, center - LAMP_MARGIN).map((x) => (
         <g key={x} transform={`translate(${x} 0)`}>
           <ellipse cy="20" rx="90" ry="170" fill={`url(#${id}-glow)`} />
           <line className={classes.lampCord} y1="0" y2="12" />
@@ -413,36 +518,31 @@ const CourtScene: FC<CourtProps> = ({ refs, label }) => {
           <ellipse className={classes.bulb} cy="20.5" rx="9" ry="1.8" />
         </g>
       ))}
-      <g className={classes.decal} transform={`translate(${VIEW_W * 0.5 - 22} 96)`}>
+      <g className={classes.decal} transform={`translate(${center - 22} 96)`}>
         <ClubLogo mark height={58} />
       </g>
-      <rect className={classes.padding} y={WALL_BASE - 34} width={VIEW_W} height="34" />
-      <line className={classes.paddingEdge} x1="0" x2={VIEW_W} y1={WALL_BASE - 34} y2={WALL_BASE - 34} />
+      <rect className={classes.padding} y={WALL_BASE - 34} width={viewW} height="34" />
+      <line className={classes.paddingEdge} x1="0" x2={viewW} y1={WALL_BASE - 34} y2={WALL_BASE - 34} />
       <path
         className={classes.paddingEdge}
-        d={PANEL_SEAMS.map((x) => `M${x} ${WALL_BASE - 34}V${WALL_BASE}`).join('')}
+        d={mirrored(center, PANEL_GAP, center - PANEL_GAP * 0.5)
+          .map((x) => `M${x} ${WALL_BASE - 34}V${WALL_BASE}`)
+          .join('')}
       />
-      <rect className={classes.floor} y={WALL_BASE} width={VIEW_W} height={VIEW_H - WALL_BASE} />
-      <line className={classes.floorEdge} x1="0" x2={VIEW_W} y1={WALL_BASE} y2={WALL_BASE} />
+      <rect className={classes.floor} y={WALL_BASE} width={viewW} height={VIEW_H - WALL_BASE} />
+      <line className={classes.floorEdge} x1="0" x2={viewW} y1={WALL_BASE} y2={WALL_BASE} />
       <path
         className={classes.courtLine}
-        d={`M0 ${WALL_BASE + 12}H${VIEW_W}M64 ${WALL_BASE + 12}L28 ${VIEW_H}M${VIEW_W - 64} ${WALL_BASE + 12}L${VIEW_W - 28} ${VIEW_H}`}
+        d={`M0 ${WALL_BASE + 12}H${viewW}M64 ${WALL_BASE + 12}L28 ${VIEW_H}M${viewW - 64} ${WALL_BASE + 12}L${viewW - 28} ${VIEW_H}`}
       />
-      <ellipse
-        ref={refs?.racketShadow}
-        className={classes.shadow}
-        cx={VIEW_W * 0.5}
-        cy={FLOOR_Y + 2}
-        rx="30"
-        ry="3.4"
-      />
-      <ellipse ref={refs?.shadow} className={classes.shadow} cx={VIEW_W * 0.5} cy={FLOOR_Y + 2} rx="5" ry="1.7" />
-      <g ref={refs?.racket} transform={RACKET_TRANSFORM}>
+      <ellipse ref={refs?.racketShadow} className={classes.shadow} cx={center} cy={FLOOR_Y + 2} rx="30" ry="3.4" />
+      <ellipse ref={refs?.shadow} className={classes.shadow} cx={center} cy={FLOOR_Y + 2} rx="5" ry="1.7" />
+      <g ref={refs?.racket} transform={`translate(${center} ${RACKET_Y})`}>
         <g ref={refs?.swing} className={classes.swing}>
           <Racket />
         </g>
       </g>
-      <g ref={refs?.shuttle} transform={REST_TRANSFORM}>
+      <g ref={refs?.shuttle} transform={`translate(${center} ${REST_Y}) rotate(0)`}>
         <g transform={SHUTTLE_SIZE}>
           <Shuttle />
         </g>
@@ -474,26 +574,34 @@ const createRefs = (): SceneRefs => ({
 });
 
 const KeepItUpGame: FC = () => {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const [refs] = useState(createRefs);
+  const { ref: fieldRef, viewW } = useViewWidth();
   const sim = useRef<Sim>(createSim());
   const frame = useRef(0);
   const [phase, setPhase] = useState<Phase>(Phase.enum.ready);
   const [hits, setHits] = useState(0);
+  const [callout, setCallout] = useState('');
   const [best, setBest] = useState(readBest);
   const [newBest, setNewBest] = useState(false);
   const bestRef = useRef(best);
   const shownHits = useRef(0);
+  const calloutTurn = useRef(0);
   const statusId = useId();
 
-  const milestones: Record<number, string> = {
-    5: t`Nice!`,
-    10: t`Great rally!`,
-    20: t`Club champion!`,
-    40: t`Unreal!`,
+  const nextCallout = (quality: Quality) => {
+    const options = CALLOUTS[quality];
+    calloutTurn.current += 1;
+    const option = options.at(calloutTurn.current % options.length);
+    return option ? i18n._(option) : '';
   };
 
   useEffect(() => () => cancelAnimationFrame(frame.current), []);
+
+  useLayoutEffect(() => {
+    resize(sim.current, viewW);
+    paint(sim.current, refs, 1);
+  }, [refs, viewW]);
 
   const run = () => {
     if (frame.current) return;
@@ -509,8 +617,10 @@ const KeepItUpGame: FC = () => {
       }
       if (s.hits !== shownHits.current) {
         shownHits.current = s.hits;
+        const text = nextCallout(s.quality);
         setHits(s.hits);
-        flash(s, refs, milestones[s.hits]);
+        setCallout(text);
+        flash(s, refs, text);
       }
       if (s.phase === Phase.enum.landing && s.bounced && s.vy === 0) {
         s.phase = Phase.enum.missed;
@@ -539,7 +649,7 @@ const KeepItUpGame: FC = () => {
   };
 
   const serve = (s: Sim) => {
-    Object.assign(s, createSim(s.racketX), {
+    Object.assign(s, createSim(s.width, s.racketX), {
       racketVx: s.racketVx,
       targetX: s.targetX,
       phase: Phase.enum.playing,
@@ -569,7 +679,7 @@ const KeepItUpGame: FC = () => {
   };
 
   const aim = (x: number) => {
-    sim.current.targetX = clamp(x, RACKET_MIN, RACKET_MAX);
+    sim.current.targetX = clamp(x, RACKET_INSET, sim.current.width - RACKET_INSET);
     run();
   };
 
@@ -610,13 +720,15 @@ const KeepItUpGame: FC = () => {
     if (event.detail === 0) hit();
   };
 
-  const status =
-    phase === Phase.enum.missed
-      ? t`Missed after ${plural(hits, { one: '# hit', other: '# hits' })}. Press Space to serve again.`
-      : '';
+  let status = '';
+  if (phase === Phase.enum.missed) {
+    status = t`Missed after ${plural(hits, { one: '# hit', other: '# hits' })}. Press Space to serve again.`;
+  } else if (hits > 0) {
+    status = t`${plural(hits, { one: '# hit', other: '# hits' })}: ${callout}`;
+  }
 
   return (
-    <div className={classes.field} data-phase={phase}>
+    <div ref={fieldRef} className={classes.field} data-phase={phase}>
       <button
         type="button"
         className={classes.surface}
@@ -627,7 +739,7 @@ const KeepItUpGame: FC = () => {
         onKeyDown={onKeyDown}
         onClick={onClick}
       >
-        <Court refs={refs} />
+        <Court viewW={viewW} refs={refs} />
       </button>
       <div className={classes.hud} aria-hidden>
         <div className={classes.stat}>
@@ -682,18 +794,21 @@ const KeepItUpGame: FC = () => {
   );
 };
 
-export const KeepItUp: FC = () => {
+const StillCourt: FC = () => {
   const { t } = useLingui();
+  const { ref, viewW } = useViewWidth();
+  return (
+    <div ref={ref} className={classes.field}>
+      <Court viewW={viewW} label={t`A shuttle resting on a badminton racket`} />
+    </div>
+  );
+};
+
+export const KeepItUp: FC = () => {
   const reduced = useReducedMotion(false, { getInitialValueInEffect: false });
   return (
-    <Stack align="center" ta="center" gap="lg" w="100%" maw={720} mx="auto">
-      {reduced ? (
-        <div className={classes.field}>
-          <Court label={t`A shuttle resting on a badminton racket`} />
-        </div>
-      ) : (
-        <KeepItUpGame />
-      )}
+    <Stack align="center" ta="center" gap="lg" w="100%">
+      {reduced ? <StillCourt /> : <KeepItUpGame />}
       <Badge size="lg" variant="light" radius="xl">
         <Trans>404 · Rally on</Trans>
       </Badge>
@@ -714,3 +829,5 @@ export const KeepItUp: FC = () => {
     </Stack>
   );
 };
+
+export default KeepItUp;

@@ -2,6 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { ActionIcon, Button, type FloatingPosition } from '@mantine/core';
 import type { FC } from 'react';
 
+import { savePreferences } from '~/components/auth/preferences';
 import { LocaleFlag, ResponsivePanel } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { DEFAULT_LOCALE, isLocale, LOCALE_META, LOCALES_BY_ORDER, type Locale } from '~/i18n/locales';
@@ -11,7 +12,7 @@ import { PanelOptions, type PanelOption } from './PanelOptions';
 
 import classes from './LanguageSwitch.module.css';
 
-const LOCALE_CODES: Record<Locale, string> = { nb: 'NO', en: 'EN', sv: 'SV', fi: 'FI', zh: 'ZH' };
+const LOCALE_CODES: Record<Locale, string> = { nb: 'NO', en: 'EN', sv: 'SV', da: 'DA', fi: 'FI', is: 'IS', zh: 'ZH' };
 
 const OPTIONS: PanelOption<Locale>[] = LOCALES_BY_ORDER.map((locale) => ({
   value: locale,
@@ -64,7 +65,9 @@ export const LanguageSwitch: FC<{ position?: FloatingPosition }> = ({ position }
           variant={variant}
           onPick={(locale) => {
             close();
-            if (locale !== current) void switchLocale(locale);
+            if (locale === current) return;
+            void switchLocale(locale);
+            void savePreferences({ locale });
           }}
         />
       )}

@@ -1,4 +1,3 @@
-export { AddClosureModal } from './AddClosureModal';
 export { BringList } from './BringList';
 export { ClosureList } from './ClosureList';
 export { NextTraining } from './NextTraining';

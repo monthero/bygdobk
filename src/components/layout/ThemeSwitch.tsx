@@ -4,6 +4,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { ActionIcon, type FloatingPosition } from '@mantine/core';
 import { useMemo, type FC } from 'react';
 
+import { savePreferences } from '~/components/auth/preferences';
 import { CircleHalf, Moon, ResponsivePanel, Sun } from '~/components/ui';
 import { ColorScheme, useSettings } from '~/stores/settings';
 
@@ -18,7 +19,10 @@ const SCHEMES: Record<ColorScheme, { label: MessageDescriptor; Icon: typeof Sun 
   },
 };
 
-const pick = (value: ColorScheme) => useSettings.getState().set({ colorScheme: value });
+const pick = (value: ColorScheme) => {
+  useSettings.getState().set({ colorScheme: value });
+  void savePreferences({ colorScheme: value });
+};
 
 export const ThemeSwitch: FC<{ position?: FloatingPosition }> = ({ position }) => {
   const { i18n, t } = useLingui();

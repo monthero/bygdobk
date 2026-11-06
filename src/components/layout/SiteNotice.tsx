@@ -1,8 +1,9 @@
 import { Alert, Container, type MantineColor } from '@mantine/core';
-import { memo, type FC, type ReactNode } from 'react';
+import { memo, type ReactNode } from 'react';
 
+import { useSiteContent } from '~/cms/content';
 import { Info, Warning } from '~/components/ui';
-import { NoticeTone, useContent, type Notice } from '~/stores/content';
+import { NoticeTone } from '~/data/notice';
 
 const TONES: Record<NoticeTone, { color: MantineColor; icon: ReactNode }> = {
   [NoticeTone.enum.info]: { color: 'brand', icon: <Info /> },
@@ -11,19 +12,16 @@ const TONES: Record<NoticeTone, { color: MantineColor; icon: ReactNode }> = {
 
 const TEXT_STYLE = { whiteSpace: 'pre-line' } as const;
 
-export const NoticeAlert: FC<{ notice: Notice }> = ({ notice }) => (
-  <Alert color={TONES[notice.tone].color} icon={TONES[notice.tone].icon} variant="light" style={TEXT_STYLE}>
-    {notice.text}
-  </Alert>
-);
-
 export const SiteNotice = memo(() => {
-  const notice = useContent((s) => s.notice);
-  if (!notice.visible || !notice.text.trim()) return null;
+  const { notice } = useSiteContent();
+  if (!notice.visible || !notice.text?.trim()) return null;
+  const { color, icon } = TONES[notice.tone];
 
   return (
     <Container pt="md">
-      <NoticeAlert notice={notice} />
+      <Alert color={color} icon={icon} variant="light" style={TEXT_STYLE}>
+        {notice.text}
+      </Alert>
     </Container>
   );
 });

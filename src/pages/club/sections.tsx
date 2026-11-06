@@ -2,10 +2,14 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { ActionIcon, Anchor, Button, Card, Group, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { useClipboard } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
+import { Link } from '@tanstack/react-router';
 import type { CSSProperties, FC, ReactNode } from 'react';
 
-import { ArrowUpRight, Check, EnvelopeSimple, Handshake, Info, Phone, ShieldCheck } from '~/components/ui';
-import { BOARD, CLUB, type BoardMember } from '~/data/club';
+import { imageBuilder } from '~/cms/client';
+import { useSiteContent, type BoardMember } from '~/cms/content';
+import { ArrowRight, ArrowUpRight, Check, EnvelopeSimple, Handshake, Info, Phone, ShieldCheck } from '~/components/ui';
+import { CLUB } from '~/data/club';
+import { contactLink, ContactTopic, SPONSOR_DRAFT } from '~/data/contact';
 
 import classes from './sections.module.css';
 
@@ -29,6 +33,10 @@ const IconCard: FC<{ icon: ReactNode; color?: string; title: ReactNode; children
 );
 
 const PHONE_GROUPS = /^(\d{3})(\d{2})(\d{3})$/;
+const PHOTO_SIZE = 320;
+
+const photoUrl = (member: BoardMember) =>
+  imageBuilder.image(member.photo).width(PHOTO_SIZE).height(PHOTO_SIZE).fit('crop').auto('format').url();
 const COPIED_MS = 1600;
 
 const CopyAction: FC<{ value: string; label: string; done: string; icon: ReactNode }> = ({
@@ -58,17 +66,17 @@ const CopyAction: FC<{ value: string; label: string; done: string; icon: ReactNo
 };
 
 const BoardCard: FC<{ member: BoardMember }> = ({ member }) => {
-  const { i18n, t } = useLingui();
+  const { t } = useLingui();
   const firstName = member.name.split(' ').at(0) ?? member.name;
   return (
     <Card withBorder radius="lg" padding={0} className={classes.member}>
-      <div className={classes.photo} style={{ '--photo': `url(${member.photo})` } as CSSProperties}>
+      <div className={classes.photo} style={{ '--photo': `url(${photoUrl(member)})` } as CSSProperties}>
         <div className={classes.caption}>
           <Text fw={700} lh={1.25} className={classes.name}>
             {member.name}
           </Text>
           <Text size="sm" lh={1.3} className={classes.role}>
-            {i18n._(member.role)}
+            {member.role}
           </Text>
         </div>
         <div className={classes.contact}>
@@ -92,13 +100,16 @@ const BoardCard: FC<{ member: BoardMember }> = ({ member }) => {
   );
 };
 
-export const BoardSection: FC = () => (
-  <SimpleGrid cols={{ base: 2, sm: 3, lg: 5 }} spacing="md">
-    {BOARD.map((member) => (
-      <BoardCard key={member.name} member={member} />
-    ))}
-  </SimpleGrid>
-);
+export const BoardSection: FC = () => {
+  const { board } = useSiteContent();
+  return (
+    <SimpleGrid cols={{ base: 2, sm: 3, lg: 5 }} spacing="md">
+      {board.map((member) => (
+        <BoardCard key={member.id} member={member} />
+      ))}
+    </SimpleGrid>
+  );
+};
 
 export const SafetySection: FC = () => (
   <Card withBorder radius="lg" padding="lg">
@@ -132,24 +143,27 @@ export const SafetySection: FC = () => (
   </Card>
 );
 
-export const SponsorSection: FC = () => (
-  <IconCard icon={<Handshake width={22} height={22} />} title={<Trans>Sponsor the club</Trans>}>
-    <Text c="dimmed">
-      <Trans>Want to back badminton at Bygdøhus? We’d love to hear from you.</Trans>
-    </Text>
-    <Anchor href={`mailto:${CLUB.email}`}>
-      <Trans>Email the board</Trans>
-    </Anchor>
-  </IconCard>
-);
+export const SponsorSection: FC = () => {
+  const { t } = useLingui();
+  return (
+    <IconCard icon={<Handshake width={22} height={22} />} title={<Trans>Sponsor the club</Trans>}>
+      <Text c="dimmed">
+        <Trans>Want to back badminton at Bygdøhus? We’d love to hear from you.</Trans>
+      </Text>
+      <Anchor renderRoot={(props) => <Link {...props} {...contactLink(ContactTopic.enum.sponsor, t(SPONSOR_DRAFT))} />}>
+        <Trans>Write to the board</Trans>
+      </Anchor>
+    </IconCard>
+  );
+};
 
 export const PrivacySection: FC = () => (
   <IconCard icon={<Info width={22} height={22} />} color="gray" title={<Trans>Your data</Trans>}>
     <Text c="dimmed">
-      <Trans>Member data is stored in the sports federation’s member system.</Trans>
+      <Trans>What we store about you, why, and who helps us keep it.</Trans>
     </Text>
-    <Anchor href={CLUB.privacyUrl} target="_blank" rel="noreferrer">
-      <Trans>Platform terms</Trans> <ArrowUpRight />
+    <Anchor component={Link} to="/personvern">
+      <Trans>Read about privacy</Trans> <ArrowRight />
     </Anchor>
   </IconCard>
 );

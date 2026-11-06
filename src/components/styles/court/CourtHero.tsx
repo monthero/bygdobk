@@ -2,14 +2,15 @@ import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Container, Grid, Stack, Text, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { memo, type CSSProperties, type FC } from 'react';
+import { memo, useMemo, type CSSProperties, type FC } from 'react';
 
+import { useSiteContent } from '~/cms/content';
 import { ArrowRight } from '~/components/ui';
-import { CURRENT_SEASON, GROUP_SLUGS, GROUPS, Group as TrainingGroup } from '~/data/club';
+import { GROUP_SLUGS, GROUPS, Group as TrainingGroup } from '~/data/club';
+import { useSeasons } from '~/hooks/useSeasons';
 import { numberFormat } from '~/i18n/current';
-import { useClosures } from '~/stores/content';
-import { dayjs, weekdayName } from '~/utils/dates';
-import { closureOn, isLive } from '~/utils/training';
+import { wallNow } from '~/utils/dates';
+import { isLive, plannedSessions, seasonTraining, weeklySessions } from '~/utils/training';
 
 import { HeroActions } from '../HeroActions';
 import { CourtNextTraining } from './CourtNextTraining';
@@ -28,7 +29,7 @@ import {
   WIDTH,
   type Line,
 } from './geometry';
-import { slotsOf } from './schedule';
+import { slotDays, slotsOf } from './schedule';
 
 import classes from './CourtHero.module.css';
 
@@ -55,7 +56,6 @@ const zone = (group: TrainingGroup, x: number, y: number) => {
       '--zone-hover': `var(--mantine-color-${color}-light-hover)`,
       '--zone-ink': `var(--mantine-color-${color}-light-color)`,
     } as CSSProperties,
-    slots: slotsOf(group),
   };
 };
 
@@ -103,10 +103,11 @@ const meters = (value: number) => `${numberFormat({ minimumFractionDigits: 2 }).
 
 export const CourtHero: FC = () => {
   const { i18n, t } = useLingui();
-  const closures = useClosures();
-  const now = dayjs();
-  const closedToday = Boolean(closureOn(now, closures));
-  const todays = CURRENT_SEASON.schedule.filter((s) => !closedToday && s.weekday === now.isoWeekday());
+  const { events } = useSiteContent();
+  const { current } = useSeasons();
+  const now = wallNow();
+  const sessions = useMemo(() => weeklySessions(seasonTraining(events, current)), [events, current]);
+  const todays = plannedSessions(events, now, now).filter((s) => !s.off);
 
   return (
     <section className={classes.hero}>
@@ -147,22 +148,23 @@ export const CourtHero: FC = () => {
                   </span>
                 ))}
                 <ul className={classes.zones} aria-label={t`Training groups`}>
-                  {ZONES.map(({ group, style, slots }) => {
+                  {ZONES.map(({ group, style }) => {
                     const { name, color } = GROUPS[group];
+                    const slots = slotsOf(group, sessions);
                     const today = todays.filter((s) => s.group === group);
                     const live = today.some((s) => isLive(s, now));
                     return (
                       <li key={group} className={classes.zoneItem} style={style}>
                         <Link
                           to="/trening/$sesong"
-                          params={{ sesong: CURRENT_SEASON.id }}
+                          params={{ sesong: current.id }}
                           search={{ gruppe: GROUP_SLUGS.toSlug(group) }}
                           className={classes.zone}
                         >
                           <span className={classes.zoneName}>{i18n._(name)}</span>
                           {slots.map((slot) => (
                             <span key={slot.start + slot.end} className={classes.zoneTime}>
-                              <span>{slot.weekdays.map((d) => weekdayName(d, 'short')).join(', ')}</span>{' '}
+                              <span>{slotDays(slot)}</span>{' '}
                               <span className="tabular">
                                 {slot.start}–{slot.end}
                               </span>

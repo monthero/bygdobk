@@ -1,84 +1,113 @@
-import type { I18n, MessageDescriptor } from '@lingui/core';
-import { z } from 'zod';
+import {
+  affects,
+  eventDays,
+  isTraining,
+  occurrences,
+  replacedBy,
+  seasonOf,
+  seasonOn,
+  trainingSeasons,
+  type CalendarEvent,
+  type Occurrence,
+  type Season,
+} from '~/cms/calendar';
+import { Group } from '~/data/club';
+import { EventKind } from '~/data/events';
 
-import { CLOSURES, CURRENT_SEASON, SEASONS, type Group, type Season, type Session } from '~/data/club';
-import type { EditedClosure } from '~/stores/content';
+import { date, minutesOf, today, wallNow, type Dayjs } from './dates';
 
-import { date, dayjs, ISO_DAY, minutesOf, type Dayjs } from './dates';
+export type Session = { weekday: number; group: Group; start: string; end: string };
 
-export const ClosureSource = z.enum(['site', 'edited']);
-export type ClosureSource = z.infer<typeof ClosureSource>;
+export type PlannedSession = Occurrence & { group: Group; off?: CalendarEvent };
 
-export type TrainingClosure = {
-  id: string;
-  from: string;
-  to: string;
-  reason: MessageDescriptor | string;
-  source: ClosureSource;
-};
+type TrainingDay = { day: Dayjs; sessions: PlannedSession[] };
 
-const SITE_CLOSURES: TrainingClosure[] = CLOSURES.map((c) => ({ ...c, source: ClosureSource.enum.site }));
-
+const NEXT_TRAINING_DAYS = 14;
 const RESUME_SEARCH_DAYS = 28;
 
-export const toTrainingClosure = (c: EditedClosure): TrainingClosure => ({ ...c, source: ClosureSource.enum.edited });
+const groupOrder = (a: Group, b: Group) => Group.options.indexOf(a) - Group.options.indexOf(b);
 
-export const mergeClosures = (edited: readonly EditedClosure[]): TrainingClosure[] =>
-  [...SITE_CLOSURES, ...edited.map(toTrainingClosure)].sort((a, b) => a.from.localeCompare(b.from));
-
-export const closureReason = (i18n: I18n, closure: TrainingClosure) =>
-  typeof closure.reason === 'string' ? closure.reason : i18n._(closure.reason);
-
-export const closureOn = (day: Dayjs, closures: readonly TrainingClosure[]): TrainingClosure | undefined => {
-  const iso = day.format(ISO_DAY);
-  return closures.find((c) => c.from <= iso && iso <= c.to);
+const seasonAround = (day: Dayjs): Season => {
+  const { id, label } = seasonOf(day);
+  const start = date(`${id.slice(0, 4)}-07-01`);
+  return { id, label, start, end: start.add(1, 'year').subtract(1, 'day') };
 };
 
-export const closuresInSeason = (closures: readonly TrainingClosure[], season: Season) =>
-  closures.filter((c) => c.to >= season.start && c.from <= season.end);
-
-export const upcomingClosures = (closures: readonly TrainingClosure[], weeks: number, now: Dayjs = dayjs()) => {
-  const from = now.format(ISO_DAY);
-  const until = now.add(weeks, 'week').format(ISO_DAY);
-  return closures.filter((c) => c.to >= from && c.from <= until);
+export const seasonList = (events: readonly CalendarEvent[], day = today()) => {
+  const seasons = trainingSeasons(events);
+  return seasons.length > 0 ? seasons : [seasonAround(day)];
 };
 
-const seasonOn = (iso: string) => SEASONS.find((s) => s.start <= iso && iso <= s.end);
+export const currentSeason = (seasons: readonly Season[], day = today()) =>
+  seasonOn(seasons, day) ?? seasons.findLast((s) => s.start.isAfter(day, 'day')) ?? seasons.at(0) ?? seasonAround(day);
 
-export const trainingResumes = (closure: TrainingClosure, closures: readonly TrainingClosure[]) => {
-  const first = date(closure.to).add(1, 'day');
-  for (let offset = 0; offset < RESUME_SEARCH_DAYS; offset++) {
-    const day = first.add(offset, 'day');
-    const trains = seasonOn(day.format(ISO_DAY))?.schedule.some((s) => s.weekday === day.isoWeekday());
-    if (trains && !closureOn(day, closures)) return day;
+export const seasonTraining = (events: readonly CalendarEvent[], season: Pick<Season, 'id'>) =>
+  events.filter((e) => isTraining(e) && seasonOf(date(e.startDate)).id === season.id);
+
+export const weeklySessions = (training: readonly CalendarEvent[]): Session[] => {
+  const sessions = new Map<string, Session>();
+  for (const { group, startTime, endTime, recurrence } of training) {
+    if (!group || !startTime || !endTime || !recurrence) continue;
+    for (const weekday of recurrence.weekdays) {
+      sessions.set(`${weekday}-${group}-${startTime}-${endTime}`, { weekday, group, start: startTime, end: endTime });
+    }
   }
-  return undefined;
+  return Array.from(sessions.values()).sort(
+    (a, b) => a.weekday - b.weekday || minutesOf(a.start) - minutesOf(b.start) || groupOrder(a.group, b.group),
+  );
 };
 
-export type UpcomingDay = { day: Dayjs; sessions: Session[]; closure?: TrainingClosure };
+export const plannedSessions = (
+  events: readonly CalendarEvent[],
+  from: Dayjs,
+  to: Dayjs,
+  group?: Group,
+): PlannedSession[] => {
+  const planned: PlannedSession[] = [];
+  for (const event of events) {
+    if (!isTraining(event) || !event.group || (group && event.group !== group)) continue;
+    for (const occurrence of occurrences(event, from.startOf('day'), to)) {
+      planned.push({ ...occurrence, group: event.group, off: replacedBy(occurrence, events) });
+    }
+  }
+  return planned.sort((a, b) => a.start.valueOf() - b.start.valueOf() || groupOrder(a.group, b.group));
+};
 
 export const nextTrainingDay = (
-  closures: readonly TrainingClosure[],
+  events: readonly CalendarEvent[],
   group?: Group,
-  now: Dayjs = dayjs(),
-): UpcomingDay | undefined => {
-  const nowMinutes = now.hour() * 60 + now.minute();
-  for (let offset = 0; offset < 14; offset++) {
-    const day = now.startOf('day').add(offset, 'day');
-    const sessions = CURRENT_SEASON.schedule.filter(
-      (s) =>
-        (!group || s.group === group) &&
-        s.weekday === day.isoWeekday() &&
-        (offset > 0 || minutesOf(s.end) > nowMinutes),
-    );
-    if (sessions.length) return { day, sessions, closure: closureOn(day, closures) };
-  }
-  return undefined;
+  now: Dayjs = wallNow(),
+): TrainingDay | undefined => {
+  const upcoming = plannedSessions(events, now, now.add(NEXT_TRAINING_DAYS - 1, 'day'), group).filter((s) =>
+    s.end.isAfter(now),
+  );
+  const first = upcoming.at(0);
+  if (!first) return undefined;
+  return { day: first.day, sessions: upcoming.filter((s) => s.day.isSame(first.day, 'day')) };
 };
 
-export const isLive = (session: Session, now: Dayjs = dayjs()) => {
-  const minutes = now.hour() * 60 + now.minute();
-  return (
-    session.weekday === now.isoWeekday() && minutesOf(session.start) <= minutes && minutes < minutesOf(session.end)
+export const isLive = (session: PlannedSession, now: Dayjs = wallNow()) =>
+  !session.off && !session.start.isAfter(now) && now.isBefore(session.end);
+
+export const offTitles = (sessions: readonly PlannedSession[]) =>
+  Array.from(new Set(sessions.values().flatMap((s) => (s.off?.title ? [s.off.title] : []))));
+
+const happensBetween = (event: CalendarEvent, from: Dayjs, to: Dayjs) => !occurrences(event, from, to).next().done;
+
+export const trainingBreaks = (events: readonly CalendarEvent[], from: Dayjs, to: Dayjs) => {
+  const replacing = new Set(
+    plannedSessions(events, from, to)
+      .values()
+      .flatMap((s) => (s.off ? [s.off.id] : [])),
   );
+  return events.filter(
+    (e) => replacing.has(e.id) || (e.kind === EventKind.enum.break && happensBetween(e, from.startOf('day'), to)),
+  );
+};
+
+export const trainingResumes = (event: CalendarEvent, events: readonly CalendarEvent[]) => {
+  const from = eventDays(event).last.add(1, 'day');
+  return plannedSessions(events, from, from.add(RESUME_SEARCH_DAYS - 1, 'day')).find(
+    (s) => !s.off && affects(event, s.group),
+  )?.day;
 };

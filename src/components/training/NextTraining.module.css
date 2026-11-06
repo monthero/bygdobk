@@ -32,6 +32,15 @@
   &:last-child {
     border-bottom: 0;
   }
+
+  &[data-off] .time {
+    color: var(--mantine-color-dimmed);
+    text-decoration: line-through;
+  }
+}
+
+.offNote {
+  color: var(--bk-warn);
 }
 
 .arrow {

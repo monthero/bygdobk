@@ -3,25 +3,28 @@ import { Anchor, Button, Container, Grid, Group, Stack, Text, Title } from '@man
 import { Link } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
-import { EventCard } from '~/components/events';
+import { isPast, type CalendarEvent } from '~/cms/calendar';
+import { useSiteContent, type NewsPost } from '~/cms/content';
+import { EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { useStyleKit } from '~/components/styles';
 import { ArrowRight, CalendarBlank, CourtTexture } from '~/components/ui';
-import { EVENTS_BY_DATE, isPast } from '~/data/events';
-import { currentPosts, NEWS } from '~/data/news';
-import { dayjs, ISO_DAY } from '~/utils/dates';
+import { date, todayIso } from '~/utils/dates';
+import { currentPosts } from '~/utils/news';
 
 import { StartCards } from './components/StartCards';
 
 const NEWS_COUNT = 3;
 
-const homeContent = (todayIso: string) => {
-  const events = EVENTS_BY_DATE.filter((e) => e.from !== null && !isPast(e, todayIso));
-  const undated = events.length ? undefined : EVENTS_BY_DATE.find((e) => e.from === null && !isPast(e, todayIso));
-  const shown = new Set(events.map((e) => e.slug));
-  if (undated) shown.add(undated.slug);
-  const news = currentPosts(NEWS, todayIso)
+const homeContent = (allNews: NewsPost[], allEvents: readonly CalendarEvent[], dayIso: string) => {
+  const day = date(dayIso);
+  const coming = allEvents.filter((e): e is VisitorEvent => isVisitorEvent(e) && !isPast(e, day));
+  const events = coming.filter((e) => e.dateConfirmed);
+  const undated = events.length ? undefined : coming.find((e) => !e.dateConfirmed);
+  const shown = new Set(events.values().map((e) => e.id));
+  if (undated) shown.add(undated.id);
+  const news = currentPosts(allNews, allEvents, day)
     .values()
-    .filter((p) => !p.event || !shown.has(p.event))
+    .filter((p) => !p.eventId || !shown.has(p.eventId))
     .take(NEWS_COUNT)
     .toArray();
   return { events, undated, news };
@@ -34,8 +37,12 @@ const FLUSH_BUTTON_STYLE = {
 
 export const HomePage: FC = () => {
   const { HomeHero, HomeExtra, SectionDivider, NewsList } = useStyleKit();
-  const todayIso = dayjs().format(ISO_DAY);
-  const { events, undated, news } = useMemo(() => homeContent(todayIso), [todayIso]);
+  const content = useSiteContent();
+  const dayIso = todayIso();
+  const { events, undated, news } = useMemo(
+    () => homeContent(content.news, content.events, dayIso),
+    [content.news, content.events, dayIso],
+  );
 
   return (
     <>
@@ -93,7 +100,7 @@ export const HomePage: FC = () => {
                 </Button>
               </Group>
               {events.map((event) => (
-                <EventCard key={event.slug} event={event} compact />
+                <EventCard key={event.id} event={event} compact />
               ))}
               {events.length === 0 && (
                 <Group gap="xs" wrap="nowrap">
@@ -108,14 +115,14 @@ export const HomePage: FC = () => {
                           )}
                           fw={700}
                         >
-                          {undated.name}
+                          {undated.title}
                         </Anchor>
                         , date coming soon
                       </Trans>
                     </Text>
                   ) : (
                     <Text>
-                      <Trans>Next event: date coming soon</Trans>
+                      <Trans>Nothing planned yet. New events show up here.</Trans>
                     </Text>
                   )}
                 </Group>

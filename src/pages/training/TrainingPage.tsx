@@ -14,44 +14,34 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { getRouteApi, Link } from '@tanstack/react-router';
 import { memo, useMemo, type FC } from 'react';
 
-import { useCanEdit } from '~/components/auth';
+import type { Season } from '~/cms/calendar';
+import { useSiteContent } from '~/cms/content';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
-import { slotsOf } from '~/components/styles/court/schedule';
-import { AddClosureModal, BringList, ClosureList, TrainingSchedule } from '~/components/training';
+import { groupTimes } from '~/components/styles/court/schedule';
+import { BringList, ClosureList, TrainingSchedule } from '~/components/training';
 import {
   ArrowRight,
   ArrowUpRight,
   CalendarBlank,
   Info,
   MapPin,
-  Plus,
   Segmented,
   type SegmentedOption,
   VenuePhoto,
   Warning,
 } from '~/components/ui';
-import {
-  CLUB,
-  CURRENT_SEASON,
-  GROUP_SLUGS,
-  GROUPS,
-  Group as TrainingGroup,
-  seasonById,
-  SEASONS,
-  type Season,
-} from '~/data/club';
+import { CLUB, GROUP_SLUGS, GROUPS, Group as TrainingGroup } from '~/data/club';
 import { PHOTOS } from '~/data/photos';
+import { useSeasons } from '~/hooks/useSeasons';
 import { listFormat } from '~/i18n/current';
-import { useClosures } from '~/stores/content';
-import { weekdayName } from '~/utils/dates';
+import { formatDate, weekdayName } from '~/utils/dates';
 import { MAP_LINK } from '~/utils/maps';
 import { STAY } from '~/utils/navigation';
-import { closuresInSeason } from '~/utils/training';
+import { seasonTraining, trainingBreaks, weeklySessions, type Session } from '~/utils/training';
 
 import classes from './TrainingPage.module.css';
 
@@ -61,18 +51,11 @@ const route = getRouteApi('/trening/$sesong');
 
 const ALL = 'all';
 type GroupFilter = TrainingGroup | typeof ALL;
-const SEASON_OPTIONS = SEASONS.map((s) => ({ value: s.id, label: s.label }));
 const SEASON_CLASS_NAMES = { input: classes.season };
 const NO_BREAKS = <Trans>No breaks this season.</Trans>;
+const MONTH: Intl.DateTimeFormatOptions = { month: 'long' };
 
-const timesOf = (group: TrainingGroup, season: Season) =>
-  slotsOf(group, season.schedule)
-    .map(
-      (slot) => `${listFormat().format(slot.weekdays.map((d) => weekdayName(d, 'short')))} ${slot.start}–${slot.end}`,
-    )
-    .join(', ');
-
-const GroupLine = memo<{ group: TrainingGroup; season: Season }>(({ group, season }) => {
+const GroupLine = memo<{ group: TrainingGroup; sessions: Session[] }>(({ group, sessions }) => {
   const { i18n } = useLingui();
   const { name, who, coached, color } = GROUPS[group];
   return (
@@ -85,7 +68,7 @@ const GroupLine = memo<{ group: TrainingGroup; season: Season }>(({ group, seaso
         {coached ? <Trans>With coach</Trans> : <Trans>No coach</Trans>}
       </Text>
       <Text fw={600} className={classes.times}>
-        {timesOf(group, season)}
+        {groupTimes(group, sessions).join(', ')}
       </Text>
       <Anchor
         fw={600}
@@ -106,15 +89,21 @@ export const TrainingPage: FC = () => {
   const { sesong } = route.useParams();
   const { gruppe } = route.useSearch();
   const navigate = route.useNavigate();
-  const season = seasonById(sesong) ?? CURRENT_SEASON;
+  const { events } = useSiteContent();
+  const { seasons, current } = useSeasons();
+  const season: Season = seasons.find((s) => s.id === sesong) ?? current;
   const group = GROUP_SLUGS.fromSlug(gruppe);
-  const isCurrent = season.id === CURRENT_SEASON.id;
-  const currentLabel = CURRENT_SEASON.label;
+  const isCurrent = season.id === current.id;
+  const currentLabel = current.label;
 
-  const all = useClosures();
-  const closures = useMemo(() => closuresInSeason(all, season), [all, season]);
-  const canEdit = useCanEdit();
-  const [adding, { open: openAdd, close: closeAdd }] = useDisclosure(false);
+  const seasonOptions = useMemo(() => seasons.map((s) => ({ value: s.id, label: s.label })), [seasons]);
+  const sessions = useMemo(() => weeklySessions(seasonTraining(events, season)), [events, season]);
+  const breaks = useMemo(() => trainingBreaks(events, season.start, season.end), [events, season]);
+  const weekdays = listFormat().format(
+    Array.from(new Set(sessions.values().map((s) => s.weekday)), (d) => weekdayName(d)),
+  );
+  const fromMonth = formatDate(season.start, MONTH);
+  const toMonth = formatDate(season.end, MONTH);
 
   const groups = group ? [group] : TrainingGroup.options;
 
@@ -141,13 +130,21 @@ export const TrainingPage: FC = () => {
         photo={PHOTOS.bygdohusCourts}
         eyebrow={<Trans>Season {season.label}</Trans>}
         title={<Trans>Training</Trans>}
-        lede={<Trans>We train on Monday, Tuesday and Thursday evenings, from August to June.</Trans>}
+        lede={
+          sessions.length > 0 ? (
+            <Trans>
+              We train on {weekdays} evenings, from {fromMonth} to {toMonth}.
+            </Trans>
+          ) : (
+            <Trans>Training times for this season are coming soon.</Trans>
+          )
+        }
       />
 
       <PageToolbar>
         <Select
           aria-label={t`Season`}
-          data={SEASON_OPTIONS}
+          data={seasonOptions}
           value={season.id}
           onChange={pickSeason}
           allowDeselect={false}
@@ -173,7 +170,7 @@ export const TrainingPage: FC = () => {
                   color="dark"
                   rightSection={<ArrowRight />}
                   renderRoot={(props) => (
-                    <Link {...props} to="/trening/$sesong" params={{ sesong: CURRENT_SEASON.id }} search={{ gruppe }} />
+                    <Link {...props} to="/trening/$sesong" params={{ sesong: current.id }} search={{ gruppe }} />
                   )}
                 >
                   <Trans>Go to season {currentLabel}</Trans>
@@ -188,7 +185,7 @@ export const TrainingPage: FC = () => {
             <Paper withBorder radius="lg" px="lg" py="xs">
               <ul className={classes.groups}>
                 {groups.map((g) => (
-                  <GroupLine key={g} group={g} season={season} />
+                  <GroupLine key={g} group={g} sessions={sessions} />
                 ))}
               </ul>
             </Paper>
@@ -227,20 +224,12 @@ export const TrainingPage: FC = () => {
 
       <Container pb={40}>
         <Stack gap="md">
-          <Group justify="space-between">
-            <Title order={2}>
-              <Trans>Breaks this season</Trans>
-            </Title>
-            {canEdit && (
-              <Button variant="light" leftSection={<Plus />} onClick={openAdd}>
-                <Trans>Add break</Trans>
-              </Button>
-            )}
-          </Group>
-          <ClosureList closures={closures} editable={canEdit} empty={NO_BREAKS} />
+          <Title order={2}>
+            <Trans>Breaks this season</Trans>
+          </Title>
+          <ClosureList breaks={breaks} empty={NO_BREAKS} />
         </Stack>
       </Container>
-      <AddClosureModal opened={adding} onClose={closeAdd} />
     </>
   );
 };

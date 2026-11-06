@@ -194,6 +194,12 @@
     box-shadow: 0 0 0 2px var(--mantine-color-green-filled);
   }
 
+  &[data-off] {
+    color: var(--mantine-color-dimmed);
+    background: var(--bk-surface-2);
+    border-top-style: dashed;
+  }
+
   @media (max-width: $mantine-breakpoint-sm) {
     top: calc(var(--lane) / var(--lanes) * 100% + 3px);
     left: calc(var(--start) * 100% + 3px);
@@ -226,6 +232,40 @@
   font-size: 0.75rem;
   line-height: 1.2;
   white-space: nowrap;
+
+  .bar[data-off] & {
+    text-decoration: line-through;
+  }
+}
+
+.offNote {
+  overflow: hidden;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  color: var(--bk-warn);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    white-space: nowrap;
+  }
+}
+
+.other {
+  color: var(--mantine-color-dimmed);
+  opacity: 0.75;
+}
+
+.others {
+  position: absolute;
+  inset: auto 4px 4px;
+  z-index: 2;
+  padding: 2px 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--bk-surface);
+  border-radius: var(--mantine-radius-xs);
 }
 
 .liveBadge {

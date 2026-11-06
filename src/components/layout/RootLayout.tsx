@@ -4,7 +4,8 @@ import { useDisclosure } from '@mantine/hooks';
 import { Outlet, useRouterState, type RouterState } from '@tanstack/react-router';
 import { useEffect, type FC } from 'react';
 
-import { EditModeAffix, LoginModal } from '~/components/auth';
+import { LoginModal } from '~/components/auth';
+import { usePreferenceSync } from '~/components/auth/preferences';
 import { useStyleKit } from '~/components/styles';
 import { useStandaloneNav } from '~/hooks/useStandaloneNav';
 import type { FileRoutesById } from '~/routeTree.gen';
@@ -37,6 +38,7 @@ export const RootLayout: FC = () => {
   const showStrip = useRouterState({ select: selectShowStrip });
   const side = navLayout === NavLayout.enum.side;
   const standalone = useStandaloneNav();
+  usePreferenceSync();
   const style = useSettings((s) => s.style);
   const { PageDecor } = useStyleKit();
 
@@ -77,7 +79,6 @@ export const RootLayout: FC = () => {
       <MobileMenu opened={opened} onClose={close} />
       <PageDecor />
       <LoginModal />
-      <EditModeAffix />
     </>
   );
 };

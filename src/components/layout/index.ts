@@ -1,4 +1,4 @@
 export { VariantMenu } from './VariantMenu';
 export { RootLayout } from './RootLayout';
-export { NoticeAlert } from './SiteNotice';
+export { ContentError, PageLoader } from './RouteFallbacks';
 export { PageToolbar } from './PageToolbar';

@@ -63,4 +63,13 @@
 
 .session {
   white-space: nowrap;
+
+  &[data-off] {
+    text-decoration: line-through;
+  }
+}
+
+.off {
+  display: block;
+  color: var(--bk-warn);
 }

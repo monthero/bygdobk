@@ -5,7 +5,7 @@ import { memo, type CSSProperties } from 'react';
 
 import { AddressLink, ClubLogo, Shuttle, SocialLinks, UserPlus } from '~/components/ui';
 import { CLUB } from '~/data/club';
-import { TRY_SEARCH } from '~/pages/join/offers';
+import { useOffers } from '~/pages/join/offers';
 
 import { NAV } from './nav';
 
@@ -23,6 +23,7 @@ type Props = { opened: boolean; onClose: () => void };
 
 export const MobileMenu = memo<Props>(({ opened, onClose }) => {
   const { i18n, t } = useLingui();
+  const { trySearch } = useOffers();
 
   return (
     <Drawer
@@ -62,7 +63,7 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
           size="md"
           variant="default"
           leftSection={<Shuttle />}
-          renderRoot={(props) => <Link {...props} to="/medlemskap/bli-medlem" search={TRY_SEARCH} onClick={onClose} />}
+          renderRoot={(props) => <Link {...props} to="/medlemskap/bli-medlem" search={trySearch} onClick={onClose} />}
         >
           <Trans>Try a session</Trans>
         </Button>
