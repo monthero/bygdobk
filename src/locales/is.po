@@ -1248,6 +1248,10 @@ msgstr "Skrá út"
 msgid "Logged in as {email}, but your profile didn't load."
 msgstr "Skráð inn með {email}, en ekki tókst að sækja prófílinn þinn."
 
+#: src/components/auth/errors.ts
+msgid "Login was canceled."
+msgstr "Hætt var við innskráningu."
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "Leita að aðganginum…"
@@ -2281,12 +2285,12 @@ msgid "That didn't go through"
 msgstr "Sending tókst ekki"
 
 #: src/components/auth/errors.ts
-msgid "That email won't work. Try another one."
-msgstr "Þetta netfang virkar ekki. Prófaðu annað."
+msgid "That didn't work. Try again, or get a link by email."
+msgstr "Það virkaði ekki. Reyndu aftur eða fáðu tengil í tölvupósti."
 
 #: src/components/auth/errors.ts
-msgid "That link didn't work. Get a new one below."
-msgstr "Tengillinn virkaði ekki. Fáðu nýjan hér fyrir neðan."
+msgid "That email won't work. Try another one."
+msgstr "Þetta netfang virkar ekki. Prófaðu annað."
 
 #: src/components/auth/errors.ts
 msgid "That link has expired. Get a new one below."

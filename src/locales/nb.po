@@ -1248,6 +1248,10 @@ msgstr "Logg ut"
 msgid "Logged in as {email}, but your profile didn't load."
 msgstr "Logget inn som {email}, men profilen din ble ikke lastet."
 
+#: src/components/auth/errors.ts
+msgid "Login was canceled."
+msgstr "Innloggingen ble avbrutt."
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "Ser etter kontoen…"
@@ -2281,12 +2285,12 @@ msgid "That didn't go through"
 msgstr "Det gikk ikke gjennom"
 
 #: src/components/auth/errors.ts
-msgid "That email won't work. Try another one."
-msgstr "Den e-posten fungerer ikke. Prøv en annen."
+msgid "That didn't work. Try again, or get a link by email."
+msgstr "Det fungerte ikke. Prøv igjen, eller få en lenke på e-post."
 
 #: src/components/auth/errors.ts
-msgid "That link didn't work. Get a new one below."
-msgstr "Lenken fungerte ikke. Be om en ny nedenfor."
+msgid "That email won't work. Try another one."
+msgstr "Den e-posten fungerer ikke. Prøv en annen."
 
 #: src/components/auth/errors.ts
 msgid "That link has expired. Get a new one below."

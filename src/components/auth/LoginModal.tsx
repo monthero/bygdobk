@@ -14,7 +14,7 @@ import { useAuth } from '~/stores/auth';
 import { useUi } from '~/stores/ui';
 import { supabase } from '~/supabase/client';
 
-import { authErrorMessage, LINK_FAILED } from './errors';
+import { authErrorMessage, LOGIN_FAILED } from './errors';
 import { useAuthSettings } from './hooks';
 
 const loginSchema = (t: Translate) =>
@@ -136,7 +136,7 @@ const LoginForm: FC = () => {
       <Text size="sm" c="dimmed">
         <Trans>No password needed.</Trans>
       </Text>
-      {linkError && <ErrorAlert error={linkError} fallback={LINK_FAILED} />}
+      {linkError && <ErrorAlert error={linkError} fallback={LOGIN_FAILED} />}
       <Stack gap={6}>
         <Button
           variant="default"

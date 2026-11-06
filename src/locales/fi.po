@@ -1248,6 +1248,10 @@ msgstr "Kirjaudu ulos"
 msgid "Logged in as {email}, but your profile didn't load."
 msgstr "Olet kirjautunut: {email}, mutta profiilisi ei latautunut."
 
+#: src/components/auth/errors.ts
+msgid "Login was canceled."
+msgstr "Kirjautuminen peruttiin."
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "Etsitään tiliä…"
@@ -2281,12 +2285,12 @@ msgid "That didn't go through"
 msgstr "Viesti ei mennyt perille"
 
 #: src/components/auth/errors.ts
-msgid "That email won't work. Try another one."
-msgstr "Tämä sähköposti ei käy. Kokeile toista."
+msgid "That didn't work. Try again, or get a link by email."
+msgstr "Se ei toiminut. Yritä uudelleen tai pyydä linkki sähköpostiin."
 
 #: src/components/auth/errors.ts
-msgid "That link didn't work. Get a new one below."
-msgstr "Linkki ei toiminut. Pyydä uusi alta."
+msgid "That email won't work. Try another one."
+msgstr "Tämä sähköposti ei käy. Kokeile toista."
 
 #: src/components/auth/errors.ts
 msgid "That link has expired. Get a new one below."

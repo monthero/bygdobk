@@ -1248,6 +1248,10 @@ msgstr "退出登录"
 msgid "Logged in as {email}, but your profile didn't load."
 msgstr "已用{email}登录，但个人资料没加载出来。"
 
+#: src/components/auth/errors.ts
+msgid "Login was canceled."
+msgstr "登录已取消。"
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "正在查找账户…"
@@ -2281,12 +2285,12 @@ msgid "That didn't go through"
 msgstr "没发出去"
 
 #: src/components/auth/errors.ts
-msgid "That email won't work. Try another one."
-msgstr "这个邮箱用不了，换一个试试。"
+msgid "That didn't work. Try again, or get a link by email."
+msgstr "没有成功，请再试一次，或通过邮件获取链接。"
 
 #: src/components/auth/errors.ts
-msgid "That link didn't work. Get a new one below."
-msgstr "这个链接无效，请在下面获取新链接。"
+msgid "That email won't work. Try another one."
+msgstr "这个邮箱用不了，换一个试试。"
 
 #: src/components/auth/errors.ts
 msgid "That link has expired. Get a new one below."

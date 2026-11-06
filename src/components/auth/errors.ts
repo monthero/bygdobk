@@ -38,11 +38,14 @@ const OFFLINE = msg`Can't reach the server. Check your connection.`;
 
 const SOMETHING_WRONG = msg`Something went wrong. Try again.`;
 
-export const LINK_FAILED = msg`That link didn't work. Get a new one below.`;
+const CANCELED = msg`Login was canceled.`;
+
+export const LOGIN_FAILED = msg`That didn't work. Try again, or get a link by email.`;
 
 export const authErrorMessage = (error: unknown, fallback = SOMETHING_WRONG): MessageDescriptor => {
   if (isAuthRetryableFetchError(error)) return OFFLINE;
   if (!isAuthError(error)) return fallback;
+  if (isAuthImplicitGrantRedirectError(error) && error.details?.error === 'access_denied') return CANCELED;
   const code = AuthErrorCode.safeParse(isAuthImplicitGrantRedirectError(error) ? error.details?.code : error.code);
   return code.success ? MESSAGES[code.data] : fallback;
 };
