@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /admin
+Disallow: /styret
+Disallow: /*/styret
+Disallow: /medlemskap/mine
+Disallow: /*/medlemskap/mine
+
+Sitemap: https://bygdobk.vercel.app/sitemap.xml
