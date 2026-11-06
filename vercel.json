@@ -4,6 +4,7 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "trailingSlash": false,
+  "crons": [{ "path": "/api/keepalive", "schedule": "17 5 * * *" }],
   "headers": [
     {
       "source": "/assets/(.*)",
