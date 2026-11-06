@@ -4,5 +4,14 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "trailingSlash": false,
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/kalender.ics",
+      "destination": "https://zlxdoolpodirahjjsoqy.supabase.co/functions/v1/calendar"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
