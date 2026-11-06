@@ -14,3 +14,19 @@
     color: var(--bk-accent-strong);
   }
 }
+
+.signUp {
+  & svg {
+    flex: none;
+    color: var(--bk-accent-strong);
+  }
+
+  &[data-state='closingSoon'] {
+    font-weight: 600;
+    color: var(--mantine-color-orange-light-color);
+
+    & svg {
+      color: inherit;
+    }
+  }
+}

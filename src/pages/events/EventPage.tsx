@@ -3,54 +3,64 @@ import { Alert, Button, Container, Group, Stack, Text, ThemeIcon, Title } from '
 import { getRouteApi, Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
-import { daySlug, eventWhen } from '~/components/events';
+import { isPast } from '~/cms/calendar';
+import { useSiteContent } from '~/cms/content';
+import { EventActions, EventVenue, eventVenue, eventWhen, isVisitorEvent, shiftDays } from '~/components/events';
 import { PageIntro, useStyleKit } from '~/components/styles';
-import { AddressLink, ArrowLeft, CalendarBlank, HandHeart, Info, MapPin } from '~/components/ui';
-import { eventBySlug, isPast } from '~/data/events';
+import { ArrowLeft, CalendarBlank, ChatCircle, HandHeart, Info, MapPin } from '~/components/ui';
+import { contactLink, ContactTopic } from '~/data/contact';
+import { EVENT_KINDS } from '~/data/events';
 import { PHOTOS } from '~/data/photos';
 import { NotFoundPage } from '~/pages/NotFoundPage';
-import { ISO_DAY, dayjs } from '~/utils/dates';
+import { today } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
 
 const route = getRouteApi('/arrangementer/$slug');
 
-const NO_DAYS: string[] = [];
-
 export const EventPage: FC = () => {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const { slug } = route.useParams();
   const { dag } = route.useSearch();
   const navigate = route.useNavigate();
   const { ShiftBoard } = useStyleKit();
-  const event = eventBySlug(slug);
-  if (!event) return <NotFoundPage />;
+  const { events } = useSiteContent();
+  const event = events.find((e) => e.slug === slug);
+  if (!event || !isVisitorEvent(event)) return <NotFoundPage />;
 
-  const past = isPast(event, dayjs().format(ISO_DAY));
-  const shifts = event.shifts;
-  const days = shifts?.days ?? NO_DAYS;
-  const day = days.find((d) => daySlug(d) === dag) ?? days.at(1) ?? days.at(0) ?? '';
+  const eventTitle = event.title;
+  const helpLink = contactLink(
+    ContactTopic.enum.tournaments,
+    t`Hi! I'd like to help at ${eventTitle}. Let me know where you need a hand.`,
+  );
+  const past = isPast(event, today());
+  const hasShifts = event.shifts.length > 0;
+  const days = shiftDays(event.shifts);
+  const mainDay = days.find((d) => event.shifts.some((s) => s.day === d && !s.setup));
+  const day = days.find((d) => d === dag) ?? mainDay ?? days.at(0) ?? '';
 
   return (
     <>
       <PageIntro
         photo={PHOTOS.hallSunset}
-        eyebrow={i18n._(event.season)}
-        title={event.name}
-        lede={i18n._(event.description)}
+        eyebrow={i18n._(EVENT_KINDS[event.kind].label)}
+        title={event.title}
+        lede={event.description}
       >
         <Group gap="lg" mt="sm">
           <Group gap={6}>
             <CalendarBlank />
             <Text fw={600} className="tabular">
-              {eventWhen(event, i18n._(event.season))}
+              {eventWhen(event)}
             </Text>
           </Group>
-          <Group gap={6}>
-            <MapPin />
-            <Text>
-              <AddressLink />
-            </Text>
-          </Group>
+          {eventVenue(event) && (
+            <Group gap={6} wrap="nowrap">
+              <MapPin />
+              <Text>
+                <EventVenue event={event} />
+              </Text>
+            </Group>
+          )}
         </Group>
       </PageIntro>
 
@@ -66,17 +76,18 @@ export const EventPage: FC = () => {
           >
             <Trans>All events</Trans>
           </Button>
+          <EventActions event={event} />
           {past && (
             <Alert icon={<HandHeart />} variant="light" color="teal" title={<Trans>Done!</Trans>}>
               <Trans>Thanks to everyone who helped.</Trans>
             </Alert>
           )}
           {!past && event.tip && (
-            <Alert icon={<Info />} variant="light" title={i18n._(event.tip.title)}>
-              {i18n._(event.tip.text)}
+            <Alert icon={<Info />} variant="light" title={event.tip.title}>
+              {event.tip.text}
             </Alert>
           )}
-          {shifts && (
+          {hasShifts && (
             <Stack gap="md">
               <Group gap="sm">
                 <ThemeIcon variant="light" radius="xl" size="lg">
@@ -87,15 +98,33 @@ export const EventPage: FC = () => {
                 </Title>
               </Group>
               <ShiftBoard
+                eventId={event.id}
+                signupUrl={event.signupUrl}
                 days={days}
-                shifts={shifts.list}
+                shifts={event.shifts}
                 day={day}
-                onDayChange={(d) => navigate({ search: { dag: daySlug(d) }, ...STAY })}
+                onDayChange={(d) => navigate({ search: { dag: d }, ...STAY })}
                 readOnly={past}
               />
             </Stack>
           )}
-          {!shifts && !past && (
+          {!hasShifts && !past && event.ownEvent && event.dateConfirmed && (
+            <Alert icon={<HandHeart />} variant="light" title={<Trans>Want to help?</Trans>}>
+              <Stack gap="sm" align="flex-start">
+                <Text size="sm">
+                  <Trans>No shifts listed yet. Tell the board you can help.</Trans>
+                </Text>
+                <Button
+                  size="xs"
+                  renderRoot={(props) => <Link {...props} {...helpLink} />}
+                  leftSection={<ChatCircle />}
+                >
+                  <Trans>Write to the board</Trans>
+                </Button>
+              </Stack>
+            </Alert>
+          )}
+          {!hasShifts && !past && event.ownEvent && !event.dateConfirmed && (
             <Alert icon={<Info />} variant="light" color="gray" title={<Trans>Shifts come later</Trans>}>
               <Trans>The volunteer shifts open here when the date is set. Members get a message in Spond.</Trans>
             </Alert>

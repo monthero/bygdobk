@@ -1,0 +1,30 @@
+.external {
+  margin-inline-start: 2px;
+  vertical-align: -0.1em;
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.actions {
+  max-width: 760px;
+}
+
+.deadline {
+  & svg {
+    flex: none;
+    color: var(--bk-accent-strong);
+  }
+
+  &[data-state='closingSoon'] {
+    color: var(--mantine-color-orange-light-color);
+  }
+
+  &[data-state='closed'] {
+    color: var(--mantine-color-dimmed);
+  }
+
+  &[data-state='closingSoon'] svg,
+  &[data-state='closed'] svg {
+    color: inherit;
+  }
+}

@@ -3,14 +3,18 @@ import { Button, Container, Divider, Stack, Text, Timeline, Title } from '@manti
 import { getRouteApi } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
-import { EVENT_ICONS, EventCard } from '~/components/events';
+import { isPast } from '~/cms/calendar';
+import { useSiteContent } from '~/cms/content';
+import { EVENT_ICONS, EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { CalendarBlank, Segmented, SegmentedMulti, type SegmentedOption } from '~/components/ui';
-import { EVENT_YEARS, EVENTS_BY_DATE, EventsShow, eventYear, isPast, splitEvents, type ClubEvent } from '~/data/events';
+import { EventsShow } from '~/data/events';
 import { PHOTOS } from '~/data/photos';
-import { date, dayjs, formatDate, ISO_DAY, LONG_DATE } from '~/utils/dates';
+import { date, formatDate, LONG_DATE, today, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
+
+import { SubscribeButton } from './SubscribeButton';
 
 import classes from './EventsPage.module.css';
 
@@ -19,35 +23,45 @@ const ICON_SIZE = 20;
 const UPCOMING_CLASSES = { itemBullet: classes.nextBullet };
 const PAST_CLASSES = { item: classes.past, itemBullet: classes.pastBullet };
 const NOW_CLASSES = { itemTitle: classes.nowTitle };
-const YEAR_OPTIONS: SegmentedOption<number>[] = EVENT_YEARS.map((y) => ({ value: y, label: y }));
 const NO_YEARS: number[] = [];
-const NO_EVENTS: ClubEvent[] = [];
+const NO_EVENTS: VisitorEvent[] = [];
 const ALL = 'all';
 type ShowFilter = EventsShow | typeof ALL;
 
 const route = getRouteApi('/arrangementer/');
 
+const eventYear = (event: VisitorEvent) => date(event.startDate).year();
+
 export const EventsPage: FC = () => {
   const { t } = useLingui();
   const { ar: years = NO_YEARS, vis } = route.useSearch();
   const navigate = route.useNavigate();
-  const todayIso = dayjs().format(ISO_DAY);
-  const { upcoming, past } = useMemo(() => {
-    const picked = new Set(years);
-    const split = splitEvents(
-      todayIso,
-      picked.size > 0 ? EVENTS_BY_DATE.filter((e) => picked.has(eventYear(e))) : EVENTS_BY_DATE,
-    );
-    return {
-      upcoming: vis === EventsShow.enum.tidligere ? NO_EVENTS : split.upcoming,
-      past: vis === EventsShow.enum.kommende ? NO_EVENTS : split.past,
-    };
-  }, [todayIso, years, vis]);
+  const { events } = useSiteContent();
+  const dayIso = todayIso();
 
-  const thisYear = dayjs().year();
+  const visible = useMemo(() => events.filter(isVisitorEvent), [events]);
+  const yearOptions = useMemo<SegmentedOption<number>[]>(
+    () =>
+      Array.from(new Set(visible.values().map(eventYear)), (y) => ({ value: y, label: y })).sort(
+        (a, b) => a.value - b.value,
+      ),
+    [visible],
+  );
+
+  const { upcoming, past, thisYear, nothingPlanned } = useMemo(() => {
+    const day = date(dayIso);
+    const picked = new Set(years);
+    const shown = picked.size > 0 ? visible.filter((e) => picked.has(eventYear(e))) : visible;
+    return {
+      upcoming: vis === EventsShow.enum.tidligere ? NO_EVENTS : shown.filter((e) => !isPast(e, day)),
+      past: vis === EventsShow.enum.kommende ? NO_EVENTS : shown.filter((e) => isPast(e, day)).reverse(),
+      thisYear: day.year(),
+      nothingPlanned: !visible.some((e) => !isPast(e, day)),
+    };
+  }, [visible, dayIso, years, vis]);
+
   const showToday =
     !vis && (years.length === 0 || (years.some((y) => y <= thisYear) && years.some((y) => y >= thisYear)));
-  const nothingPlanned = !EVENTS_BY_DATE.some((e) => !isPast(e, todayIso));
   const isEmpty = upcoming.length === 0 && past.length === 0;
 
   const showOptions = useMemo<SegmentedOption<ShowFilter>[]>(
@@ -74,18 +88,21 @@ export const EventsPage: FC = () => {
       />
       <PageToolbar>
         <Segmented label={t`Show`} options={showOptions} value={vis ?? ALL} onChange={pickShow} />
-        {EVENT_YEARS.length > 1 && (
+        {yearOptions.length > 1 && (
           <>
             <Divider orientation="vertical" className={classes.divider} />
             <SegmentedMulti
               label={t`Year`}
               allLabel={<Trans comment="Year filter option that shows events from every year">All years</Trans>}
-              options={YEAR_OPTIONS}
+              options={yearOptions}
               value={years}
               onChange={pickYears}
             />
           </>
         )}
+        <div className={classes.subscribe}>
+          <SubscribeButton />
+        </div>
       </PageToolbar>
       <Container py={40}>
         {isEmpty && (
@@ -111,7 +128,7 @@ export const EventsPage: FC = () => {
               const Icon = EVENT_ICONS[event.kind];
               return (
                 <Timeline.Item
-                  key={event.slug}
+                  key={event.id}
                   bullet={<Icon width={ICON_SIZE} height={ICON_SIZE} />}
                   lineVariant="dashed"
                   classNames={UPCOMING_CLASSES}
@@ -127,7 +144,7 @@ export const EventsPage: FC = () => {
                 classNames={NOW_CLASSES}
               >
                 <Text size="sm" c="dimmed" className="tabular">
-                  {formatDate(date(todayIso), LONG_DATE)}
+                  {formatDate(today(), LONG_DATE)}
                 </Text>
                 {nothingPlanned && (
                   <Text mt="xs">
@@ -140,7 +157,7 @@ export const EventsPage: FC = () => {
               const Icon = EVENT_ICONS[event.kind];
               return (
                 <Timeline.Item
-                  key={event.slug}
+                  key={event.id}
                   bullet={<Icon width={ICON_SIZE} height={ICON_SIZE} />}
                   classNames={PAST_CLASSES}
                 >

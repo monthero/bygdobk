@@ -1,30 +1,65 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Card, Group, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { memo } from 'react';
+import { memo, type FC } from 'react';
 
-import { HandHeart } from '~/components/ui';
-import { EVENT_KINDS, isOngoing, isPast, type ClubEvent } from '~/data/events';
-import { ISO_DAY, dayjs } from '~/utils/dates';
+import { isOngoing, isPast } from '~/cms/calendar';
+import { Clock, HandHeart } from '~/components/ui';
+import { EVENT_KINDS } from '~/data/events';
+import { today } from '~/utils/dates';
+import { useShiftCounts } from '~/volunteers/queries';
 
-import { EVENT_ICONS, eventWhen } from './eventMeta';
-import { shiftTotals } from './shifts';
+import { EVENT_ICONS, eventWhen, registrationOf, RegistrationState, type VisitorEvent } from './eventMeta';
+import { peopleNeeded, spotsTaken } from './shifts';
 
 import classes from './EventCard.module.css';
 
-type Props = { event: ClubEvent; compact?: boolean };
+type Props = { event: VisitorEvent; compact?: boolean };
+
+const ShiftFill: FC<{ event: VisitorEvent; needed: number }> = ({ event, needed }) => {
+  const { data } = useShiftCounts(event.id);
+  const filled = data && spotsTaken(event.shifts, data);
+  return (
+    <Group gap={6} wrap="nowrap" className={classes.shifts}>
+      <HandHeart aria-hidden />
+      <Text size="sm" className="tabular">
+        {filled !== undefined ? (
+          <Trans>
+            {filled} of {needed} spots filled
+          </Trans>
+        ) : (
+          <Plural value={needed} one="# volunteer needed" other="# volunteers needed" />
+        )}
+      </Text>
+    </Group>
+  );
+};
+
+const SignUpBy: FC<{ event: VisitorEvent }> = ({ event }) => {
+  const registration = registrationOf(event);
+  if (!registration?.deadline || registration.state === RegistrationState.enum.closed) return null;
+  const { deadline } = registration;
+  return (
+    <Group gap={6} wrap="nowrap" className={classes.signUp} data-state={registration.state}>
+      <Clock aria-hidden />
+      <Text size="sm" className="tabular">
+        <Trans>Sign up by {deadline}</Trans>
+      </Text>
+    </Group>
+  );
+};
 
 const EventSummary = memo<Props>(({ event, compact = false }) => {
   const { i18n } = useLingui();
-  const today = dayjs().format(ISO_DAY);
-  const past = isPast(event, today);
-  const ongoing = isOngoing(event, today);
+  const day = today();
+  const past = isPast(event, day);
+  const ongoing = isOngoing(event, day);
   const kind = EVENT_KINDS[event.kind];
-  const shifts = event.shifts && shiftTotals(event.shifts.list);
+  const needed = peopleNeeded(event.shifts);
   return (
     <Stack gap={compact ? 2 : 6}>
       <Group gap="xs">
-        {compact ? <Text fw={700}>{event.name}</Text> : <Title order={3}>{event.name}</Title>}
+        {compact ? <Text fw={700}>{event.title}</Text> : <Title order={3}>{event.title}</Title>}
         <Badge size="sm" variant="light" color={kind.color}>
           {i18n._(kind.label)}
         </Badge>
@@ -45,19 +80,11 @@ const EventSummary = memo<Props>(({ event, compact = false }) => {
         c={compact ? 'dimmed' : undefined}
         className="tabular"
       >
-        {eventWhen(event, i18n._(event.season))}
+        {eventWhen(event)}
       </Text>
-      {!compact && <Text c="dimmed">{i18n._(event.description)}</Text>}
-      {shifts && (
-        <Group gap={6} wrap="nowrap" className={classes.shifts}>
-          <HandHeart aria-hidden />
-          <Text size="sm" className="tabular">
-            <Trans comment="Volunteer shift spots filled for an event">
-              {shifts.taken} of {shifts.spots} shifts taken
-            </Trans>
-          </Text>
-        </Group>
-      )}
+      {!compact && event.description && <Text c="dimmed">{event.description}</Text>}
+      <SignUpBy event={event} />
+      {needed > 0 && <ShiftFill event={event} needed={needed} />}
     </Stack>
   );
 });

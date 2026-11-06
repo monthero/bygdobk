@@ -44,3 +44,7 @@
   align-self: center;
   height: 24px;
 }
+
+.subscribe {
+  margin-inline-start: auto;
+}

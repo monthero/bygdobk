@@ -1,5 +1,45 @@
-.card {
-  &[data-mine] {
-    border-color: var(--mantine-color-teal-filled);
+.shift {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'info info'
+    'fill action';
+  align-items: center;
+  gap: var(--mantine-spacing-xs) var(--mantine-spacing-md);
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    grid-template-columns: minmax(0, 1fr) 10rem 9rem;
+    grid-template-areas: 'info fill action';
   }
+
+  &[data-mine] {
+    border-color: var(--bk-ok);
+    background: var(--bk-ok-soft);
+  }
+}
+
+.shift__info {
+  grid-area: info;
+}
+
+.shift__fill {
+  grid-area: fill;
+}
+
+.shift__action {
+  grid-area: action;
+  justify-self: end;
+}
+
+.shift__error {
+  grid-column: 1 / -1;
+}
+
+.mine {
+  border-color: var(--bk-ok);
+}
+
+.mine__icon {
+  flex: none;
+  color: var(--bk-ok);
 }
