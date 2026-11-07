@@ -1,34 +1,56 @@
-import { Trans, useLingui } from '@lingui/react/macro';
-import { Anchor, Button, Container, Stack, Text, ThemeIcon } from '@mantine/core';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
+import { Anchor, Button, Container, Text, ThemeIcon } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 
-import sportModernLogo from '~/assets/sponsors/sport-modern.svg';
+import { useSiteContent } from '~/cms/content';
 import { ArrowRight, Handshake } from '~/components/ui';
-import { CLUB, DEAL_HASH } from '~/data/club';
+import { DEAL_HASH } from '~/data/club';
 import { contactLink, ContactTopic, SPONSOR_DRAFT } from '~/data/contact';
 
 import classes from './SponsorStrip.module.css';
 
+const LOGO_HEIGHT = 48;
+
 export const SponsorStrip = memo(() => {
   const { t } = useLingui();
+  const partners = useSiteContent().sponsors.filter((s) => s.inStrip);
   return (
     <aside className={classes.strip} aria-label={t`Partners`}>
       <Container size="lg" className={classes.inner}>
-        <a href={CLUB.sportModernUrl} target="_blank" rel="noreferrer" className={classes.logo}>
-          <img src={sportModernLogo} alt="Sport Modern" width={227} height={55} loading="lazy" decoding="async" />
-        </a>
-        <Stack gap={2} className={classes.partner}>
-          <Text size="xs" fw={700} tt="uppercase" c="dimmed" className={classes.eyebrow}>
-            <Trans>Our partner</Trans>
-          </Text>
-          <Text size="sm">
-            <Trans>Members get up to 20% off at Sport Modern.</Trans>{' '}
-            <Anchor component={Link} to="/medlemskap" hash={DEAL_HASH} size="sm" className={classes.more}>
-              <Trans>How it works</Trans>
-            </Anchor>
-          </Text>
-        </Stack>
+        {partners.length > 0 && (
+          <div className={classes.partners}>
+            <Text size="xs" fw={700} tt="uppercase" c="dimmed" className={classes.eyebrow}>
+              <Plural value={partners.length} one="Our partner" other="Our partners" />
+            </Text>
+            <ul className={classes.list}>
+              {partners.map(({ id, name, url, logo, stripText, deal }) => (
+                <li key={id} className={classes.partner}>
+                  <a href={url} target="_blank" rel="noreferrer" className={classes.logo}>
+                    <img
+                      src={logo.url}
+                      alt={name}
+                      width={Math.round(logo.width * (LOGO_HEIGHT / logo.height))}
+                      height={LOGO_HEIGHT}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </a>
+                  {(stripText || deal) && (
+                    <Text size="sm" className={classes.partnerText}>
+                      {stripText}{' '}
+                      {deal && (
+                        <Anchor component={Link} to="/medlemskap" hash={DEAL_HASH} size="sm" className={classes.more}>
+                          <Trans>How it works</Trans>
+                        </Anchor>
+                      )}
+                    </Text>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         <div className={classes.sponsor}>
           <ThemeIcon size={44} radius="md" variant="light" className={classes.sponsorIcon}>
             <Handshake />

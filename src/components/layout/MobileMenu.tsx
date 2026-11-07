@@ -3,8 +3,8 @@ import { Anchor, Button, Drawer, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo, type CSSProperties } from 'react';
 
+import { useClub } from '~/cms/siteData';
 import { AddressLink, ClubLogo, Shuttle, SocialLinks, UserPlus } from '~/components/ui';
-import { CLUB } from '~/data/club';
 import { useOffers } from '~/pages/join/offers';
 
 import { NAV } from './nav';
@@ -24,6 +24,7 @@ type Props = { opened: boolean; onClose: () => void };
 export const MobileMenu = memo<Props>(({ opened, onClose }) => {
   const { i18n, t } = useLingui();
   const { trySearch } = useOffers();
+  const { email } = useClub();
 
   return (
     <Drawer
@@ -79,9 +80,11 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
             <Text size="sm">
               <AddressLink />
             </Text>
-            <Anchor href={`mailto:${CLUB.email}`} size="sm">
-              {CLUB.email}
-            </Anchor>
+            {email && (
+              <Anchor href={`mailto:${email}`} size="sm">
+                {email}
+              </Anchor>
+            )}
           </div>
         </div>
         <SocialLinks label={false} className={classes.social} />

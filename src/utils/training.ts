@@ -16,7 +16,9 @@ import { EventKind } from '~/data/events';
 
 import { date, minutesOf, today, wallNow, type Dayjs } from './dates';
 
-export type Session = { weekday: number; group: Group; start: string; end: string };
+type Venue = NonNullable<CalendarEvent['venue']>;
+
+export type Session = { weekday: number; group: Group; start: string; end: string; venue?: Venue };
 
 export type PlannedSession = Occurrence & { group: Group; off?: CalendarEvent };
 
@@ -46,10 +48,16 @@ export const seasonTraining = (events: readonly CalendarEvent[], season: Pick<Se
 
 export const weeklySessions = (training: readonly CalendarEvent[]): Session[] => {
   const sessions = new Map<string, Session>();
-  for (const { group, startTime, endTime, recurrence } of training) {
+  for (const { group, startTime, endTime, recurrence, venue } of training) {
     if (!group || !startTime || !endTime || !recurrence) continue;
     for (const weekday of recurrence.weekdays) {
-      sessions.set(`${weekday}-${group}-${startTime}-${endTime}`, { weekday, group, start: startTime, end: endTime });
+      sessions.set(`${weekday}-${group}-${startTime}-${endTime}-${venue?.name ?? ''}`, {
+        weekday,
+        group,
+        start: startTime,
+        end: endTime,
+        venue,
+      });
     }
   }
   return Array.from(sessions.values()).sort(

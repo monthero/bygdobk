@@ -1,12 +1,12 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { Button, Card, List, SimpleGrid, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { Fragment, memo, useMemo, type FC, type ReactNode } from 'react';
 
 import { useSiteContent } from '~/cms/content';
+import { useGroups, useSitePhoto } from '~/cms/siteData';
 import { ArrowRight, CalendarBlank, Coins, Racket, Shuttle, UsersThree } from '~/components/ui';
-import { CLUB, GROUPS } from '~/data/club';
-import { PHOTOS, type Photo } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { listFormat } from '~/i18n/current';
 import { Joiner, kr, useOffers } from '~/pages/join/offers';
 import { formatDate } from '~/utils/dates';
@@ -21,17 +21,29 @@ const EMPTY_SESSIONS: PlannedSession[] = [];
 type Fact = { id: string; icon: ReactNode; text: ReactNode; note?: ReactNode };
 
 type CardProps = {
-  photo: Photo;
+  slot: PhotoSlot;
   title: ReactNode;
   facts: Fact[];
   action: ReactNode;
 };
 
-const StartCard = memo<CardProps>(({ photo, title, facts, action }) => {
+const CARD_SIZES = '(min-width: 62em) 33vw, (min-width: 48em) 50vw, 100vw';
+
+const StartCard = memo<CardProps>(({ slot, title, facts, action }) => {
+  const photo = useSitePhoto(slot);
   return (
     <Card withBorder radius="lg" padding={0} className={classes.card}>
       <div className={classes.photo}>
-        <img src={photo.src} alt="" loading="lazy" decoding="async" className={classes.image} />
+        <img
+          src={photo.src}
+          srcSet={photo.srcSet}
+          sizes={CARD_SIZES}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className={classes.image}
+          style={{ objectPosition: photo.position }}
+        />
       </div>
       <Stack gap="md" p="lg" className={classes.body}>
         <Title order={3}>{title}</Title>
@@ -61,8 +73,8 @@ const StartCard = memo<CardProps>(({ photo, title, facts, action }) => {
 });
 
 export const StartCards: FC = () => {
-  const { i18n } = useLingui();
-  const { events } = useSiteContent();
+  const { events, payment } = useSiteContent();
+  const groups = useGroups();
   const { dropin, trial, trySearch } = useOffers();
   const next = useMemo(() => nextTrainingDay(events), [events]);
 
@@ -78,7 +90,8 @@ export const StartCards: FC = () => {
         <Fragment key={`${s.group}-${s.start.valueOf()}`}>
           {index > 0 && ' · '}
           <span className={classes.session} data-off={s.off ? true : undefined}>
-            {i18n._(GROUPS[s.group].name)} {s.event.startTime}–{s.event.endTime}
+            {groups[s.group].name} {s.event.startTime}–{s.event.endTime}
+            {s.event.venue && ` (${s.event.venue.name})`}
           </span>
         </Fragment>
       ))}
@@ -93,7 +106,7 @@ export const StartCards: FC = () => {
   return (
     <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="lg">
       <StartCard
-        photo={PHOTOS.bygdohusCourts}
+        slot={PhotoSlot.enum.startTraining}
         title={<Trans>New to badminton?</Trans>}
         facts={[
           ...(dropin?.perVisit === undefined
@@ -121,7 +134,7 @@ export const StartCards: FC = () => {
       />
 
       <StartCard
-        photo={PHOTOS.bygdohusCoaching}
+        slot={PhotoSlot.enum.startJoin}
         title={<Trans>Signing up a child?</Trans>}
         facts={[
           ...(trial
@@ -149,7 +162,7 @@ export const StartCards: FC = () => {
       />
 
       <StartCard
-        photo={PHOTOS.bygdohusOutside}
+        slot={PhotoSlot.enum.startMembers}
         title={<Trans>Already a member?</Trans>}
         facts={[
           {
@@ -164,10 +177,12 @@ export const StartCards: FC = () => {
                 {
                   id: 'vipps',
                   icon: <Coins />,
-                  text: (
+                  text: payment.vipps ? (
                     <Trans>
-                      Drop-in: Vipps {kr(dropin.perVisit)} to {CLUB.vipps}
+                      Drop-in: Vipps {kr(dropin.perVisit)} to {payment.vipps}
                     </Trans>
+                  ) : (
+                    <Trans>Drop-in: {kr(dropin.perVisit)} per visit</Trans>
                   ),
                 },
               ]),

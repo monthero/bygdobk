@@ -251,6 +251,15 @@
   }
 }
 
+.place {
+  overflow: hidden;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  opacity: 0.8;
+}
+
 .other {
   color: var(--mantine-color-dimmed);
   opacity: 0.75;

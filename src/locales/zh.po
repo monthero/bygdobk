@@ -31,6 +31,16 @@ msgstr "{0, plural, one {#篇文章} other {#篇文章}}"
 msgid "{0, plural, one {# request} other {# requests}}"
 msgstr "{0, plural, other {#份申请}}"
 
+#. placeholder {0}: deals.length
+#: src/pages/membership/MembershipPage.tsx
+msgid "{0, plural, one {Member deal} other {Member deals}}"
+msgstr "{0, plural, other {会员优惠}}"
+
+#. placeholder {0}: partners.length
+#: src/components/layout/SponsorStrip.tsx
+msgid "{0, plural, one {Our partner} other {Our partners}}"
+msgstr "{0, plural, other {我们的合作伙伴}}"
+
 #. placeholder {0}: kr(plan.membership)
 #. placeholder {1}: kr(plan.perVisit)
 #: src/pages/join/JoinPage.tsx
@@ -199,6 +209,10 @@ msgstr "体育馆里，一个羽毛球放在球拍上"
 msgid "A tiny game: keep the shuttle in the air."
 msgstr "一个小游戏：别让羽毛球落地。"
 
+#: src/pages/membership/MembershipPage.tsx
+msgid "a trial"
+msgstr "体验会员"
+
 #: src/data/club.ts
 msgid "A water bottle"
 msgstr "一个水瓶"
@@ -225,6 +239,11 @@ msgstr "账户邮箱"
 #: src/components/auth/UserMenu.tsx
 msgid "Account menu for {name}"
 msgstr "{name}的账户菜单"
+
+#. placeholder {0}: payment.accountNumber
+#: src/pages/membership/MembershipPage.tsx
+msgid "Account number: {0}"
+msgstr "账号：{0}"
 
 #: src/pages/board/MembershipList.tsx
 msgid "Actions"
@@ -263,11 +282,6 @@ msgstr "添加到日历"
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "管理员"
-
-#. Training group for adults. Norwegian: Senior (voksne)
-#: src/data/club.ts
-msgid "Adults"
-msgstr "成人组"
 
 #. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
@@ -343,6 +357,10 @@ msgstr "批准"
 msgid "Archive"
 msgstr "存档"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Ask about a spot"
+msgstr "询问名额"
+
 #: src/pages/membership/MemberDeal.tsx
 msgid "Ask for the code"
 msgstr "索取优惠码"
@@ -368,17 +386,11 @@ msgstr "在Bygdøhus，人人都能打羽毛球"
 msgid "Bank transfer"
 msgstr "银行转账"
 
-#. Training group for new players. Norwegian: Rekrutt
-#: src/data/club.ts
-msgid "Beginners"
-msgstr "新手组"
-
 #: src/pages/home/components/StartCards.tsx
 msgid "Beginners play with a coach"
 msgstr "新手组有教练"
 
 #: src/components/styles/flight/HowToJoin.tsx
-#: src/pages/membership/MembershipPage.tsx
 msgid "Beginners, Junior, Adults or a trial. Not sure? Start as a beginner."
 msgstr "新手组、青少年组、成人组或体验会员。拿不定主意？就从新手组开始吧。"
 
@@ -578,10 +590,6 @@ msgstr "俱乐部配色"
 msgid "Coached"
 msgstr "有教练"
 
-#: src/data/club.ts
-msgid "Coached sessions for children and teens who have played a bit."
-msgstr "为有一点基础的儿童和青少年提供有教练指导的训练。"
-
 #: src/pages/home/components/StartCards.tsx
 msgid "Coached training for kids and teens"
 msgstr "儿童和青少年的有教练指导的训练"
@@ -610,6 +618,10 @@ msgstr "紧凑"
 #: src/pages/contact/ContactPage.tsx
 msgid "Contact"
 msgstr "联系"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Contact form message from {name}"
+msgstr "来自{name}的联系表单留言"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Contact form: {topic} (from {name})"
@@ -798,7 +810,12 @@ msgid "Drop-in {0} (+ {1} membership) · Season from {2}"
 msgstr "单次参加{0}（另付{1}会员费）· 整个赛季{2}起"
 
 #. placeholder {0}: kr(dropin.perVisit)
-#. placeholder {1}: CLUB.vipps
+#: src/pages/home/components/StartCards.tsx
+msgid "Drop-in: {0} per visit"
+msgstr "单次参加：每次{0}"
+
+#. placeholder {0}: kr(dropin.perVisit)
+#. placeholder {1}: payment.vipps
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "单次参加：用Vipps付{0}到{1}"
@@ -861,10 +878,6 @@ msgstr "请输入价格"
 msgid "Enter a valid email address"
 msgstr "请输入有效的邮箱地址"
 
-#: src/data/events.ts
-msgid "Enter results, call matches and share information."
-msgstr "录入比分、叫场和发布信息。"
-
 #: src/pages/board/MembershipForm.tsx
 msgid "Enter the account's email"
 msgstr "请输入账户邮箱"
@@ -900,10 +913,6 @@ msgstr "活动"
 #: src/pages/home/HomePage.tsx
 msgid "Events"
 msgstr "活动"
-
-#: src/data/contact.ts
-msgid "Events and volunteering"
-msgstr "活动和志愿服务"
 
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
@@ -971,18 +980,10 @@ msgstr "页脚菜单"
 msgid "For"
 msgstr "给谁"
 
-#: src/data/club.ts
-msgid "For new players, with a coach."
-msgstr "适合新球员，有教练。"
-
 #. The shuttle hit the racket frame, not the strings
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Frame shot!"
 msgstr "拍框球！"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "Free shipping"
-msgstr "免运费"
 
 #: src/components/auth/MyMemberships.tsx
 msgid "From {from}"
@@ -994,8 +995,10 @@ msgstr "{from}起生效"
 msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
 msgstr "从第一次挥拍到全力扣杀。新手、青少年和成人，每周三个晚上。"
 
+#. A training group takes no new players
 #. Volunteer shift with no free spots
 #: src/components/events/ShiftBoard.tsx
+#: src/components/training/GroupStatusBadge.tsx
 msgid "Full"
 msgstr "已满"
 
@@ -1016,10 +1019,6 @@ msgstr "联系我们"
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Get under it and hit it as it drops. Swing on the move to steer."
 msgstr "跑到球下，等它落下再击球。边移动边挥拍，就能控制方向。"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "Give the club code when you order. Forgot it? Ask the board."
-msgstr "下单时提供俱乐部代码。忘了？问问理事会。"
 
 #. Color palette name, a soft blue-green
 #: src/components/layout/VariantMenu.tsx
@@ -1056,11 +1055,6 @@ msgstr "组别"
 msgid "Half price on Beginners your first season"
 msgstr "第一个赛季新手组半价"
 
-#. Volunteer team that sets up courts and equipment
-#: src/data/events.ts
-msgid "Hall"
-msgstr "场馆组"
-
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
 msgstr "场馆记分牌"
@@ -1074,8 +1068,8 @@ msgid "Heading font"
 msgstr "标题字体"
 
 #: src/pages/membership/MemberDeal.tsx
-msgid "Hi! Could you send me the Sport Modern member code?"
-msgstr "你好！能把Sport Modern的会员优惠码发给我吗？"
+msgid "Hi! Could you send me the {name} member code?"
+msgstr "你好！能把{name}的会员优惠码发给我吗？"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Hi! I have a question about paying for my membership."
@@ -1093,6 +1087,10 @@ msgstr "你好！我想在{eventTitle}帮忙。哪里需要人手，告诉我一
 #: src/pages/membership/MembershipPage.tsx
 msgid "Hi! I'd like to join mid-season. What would the price be?"
 msgstr "你好！我想在赛季中途加入，价格是多少？"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Hi! Let me know when a spot opens up in a group."
+msgstr "你好！哪个组有空位了请告诉我。"
 
 #: src/data/contact.ts
 msgid "Hi! We'd like to hear more about sponsoring the club."
@@ -1151,14 +1149,13 @@ msgstr "加入Bygdø Badmintonklubb"
 msgid "Join the club"
 msgstr "加入俱乐部"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Join the waiting list"
+msgstr "加入候补名单"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Jump to"
 msgstr "跳转到"
-
-#. Training group for children and teens
-#: src/data/club.ts
-msgid "Junior"
-msgstr "青少年组"
 
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Just a name"
@@ -1180,11 +1177,6 @@ msgstr "颠球小游戏。用方向键移动球拍，羽毛球落到球拍上时
 #: src/components/styles/HeroActions.tsx
 msgid "Kids 7–12: try half a season for {0}"
 msgstr "7–12岁儿童：花{0}体验半个赛季"
-
-#. Volunteer team that runs the food stand
-#: src/data/events.ts
-msgid "Kiosk"
-msgstr "小卖部"
 
 #: src/components/layout/LanguageSwitch.tsx
 msgid "Language"
@@ -1300,10 +1292,6 @@ msgstr "会议"
 msgid "Member"
 msgstr "会员"
 
-#: src/pages/membership/MembershipPage.tsx
-msgid "Member deal"
-msgstr "会员优惠"
-
 #. Payment method: paid on the external membership website
 #: src/pages/board/format.ts
 msgid "Member site"
@@ -1316,12 +1304,12 @@ msgid "Members"
 msgstr "会员"
 
 #: src/pages/membership/MembershipPage.tsx
-msgid "Members also get up to 20% off at Sport Modern. <0>See the member deal</0>"
-msgstr "会员在Sport Modern还能享受最高八折优惠。<0>查看会员优惠</0>"
+msgid "Members also get a deal at {onlyDealName}. <0>See the member deal</0>"
+msgstr "会员在{onlyDealName}还能享受优惠。<0>查看会员优惠</0>"
 
-#: src/components/layout/SponsorStrip.tsx
-msgid "Members get up to 20% off at Sport Modern."
-msgstr "会员在Sport Modern享受最高八折优惠。"
+#: src/pages/membership/MembershipPage.tsx
+msgid "Members also get deals from our partners. <0>See the member deals</0>"
+msgstr "会员还能享受合作伙伴的优惠。<0>查看会员优惠</0>"
 
 #. Main menu
 #: src/components/layout/nav.ts
@@ -1334,10 +1322,6 @@ msgstr "会员"
 #: src/pages/board/MembershipForm.tsx
 msgid "Membership added"
 msgstr "会员已添加"
-
-#: src/data/contact.ts
-msgid "Membership and payment"
-msgstr "会员和付款"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Membership and prices"
@@ -1581,6 +1565,10 @@ msgstr "未付款"
 msgid "Not paid yet"
 msgstr "还没付款"
 
+#: src/pages/membership/MembershipPage.tsx
+msgid "Not sure? Start as a beginner."
+msgstr "拿不定主意？就从新手组开始吧。"
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
@@ -1610,14 +1598,6 @@ msgstr "进行中"
 msgid "of {expected}"
 msgstr "应收 {expected}"
 
-#: src/pages/membership/MemberDeal.tsx
-msgid "off clothes and rackets"
-msgstr "服装和球拍优惠"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "off shoes, accessories, bags and shuttles"
-msgstr "鞋、配件、球包和羽毛球优惠"
-
 #: src/pages/news/components/PostPager.tsx
 msgid "Older and newer posts"
 msgstr "较早和较新的文章"
@@ -1645,10 +1625,6 @@ msgstr "班次已不存在"
 msgid "On now"
 msgstr "进行中"
 
-#: src/pages/membership/MemberDeal.tsx
-msgid "on orders over {limit}"
-msgstr "订单满{limit}"
-
 #: src/pages/membership/MembershipPage.tsx
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "一个赛季从8月到次年6月，和学年一样。赛季中途加入？价格请<0>问问理事会</0>。"
@@ -1670,7 +1646,6 @@ msgstr "哎呀，打框了！"
 msgid "Open in calendar app"
 msgstr "在日历应用中打开"
 
-#: src/components/events/EventDetails.tsx
 #: src/components/ui/AddressLink.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Open in maps"
@@ -1679,15 +1654,6 @@ msgstr "在地图中打开"
 #: src/components/layout/SiteHeader.tsx
 msgid "Open menu"
 msgstr "打开菜单"
-
-#. Free play for all members. Norwegian: Fritt spill
-#: src/data/club.ts
-msgid "Open play"
-msgstr "自由打"
-
-#: src/data/club.ts
-msgid "Open play for all members."
-msgstr "所有会员都能来自由打。"
 
 #: src/components/auth/errors.ts
 msgid "Open the link in the same browser you asked for it in."
@@ -1713,7 +1679,7 @@ msgstr "或在有教练指导的训练中借一副"
 msgid "or get a link by email"
 msgstr "或通过邮件获取链接"
 
-#. placeholder {0}: CLUB.orgNr
+#. placeholder {0}: club.orgNr
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/contact/ContactSection.tsx
 msgid "Org. no. {0}"
@@ -1723,14 +1689,6 @@ msgstr "组织编号{0}"
 #: src/pages/board/format.ts
 msgid "Other"
 msgstr "其他"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "Our members get these discounts at Sport Modern."
-msgstr "我们的会员在Sport Modern享受这些优惠。"
-
-#: src/components/layout/SponsorStrip.tsx
-msgid "Our partner"
-msgstr "我们的合作伙伴"
 
 #: src/pages/events/EventsPage.tsx
 msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
@@ -1871,10 +1829,6 @@ msgstr "会员类型"
 #: src/components/styles/court/CourtHero.tsx
 msgid "Play"
 msgstr "自由打"
-
-#: src/data/club.ts
-msgid "Play for adult players."
-msgstr "成人球员的打球时间。"
 
 #: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Play the replay again"
@@ -2041,10 +1995,6 @@ msgstr "审核中…"
 msgid "Round"
 msgstr "圆角"
 
-#: src/data/events.ts
-msgid "Run the kiosk: waffles, toast and pizza baguettes."
-msgstr "经营小卖部：华夫饼、吐司和披萨法棍。"
-
 #: src/pages/club/ClubPage.tsx
 msgid "Safe sport"
 msgstr "安全运动"
@@ -2086,11 +2036,6 @@ msgstr "赛季"
 #: src/pages/training/TrainingPage.tsx
 msgid "Season {0}"
 msgstr "{0}赛季"
-
-#. Volunteer team that runs the match desk
-#: src/data/events.ts
-msgid "Secretariat"
-msgstr "秘书处"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "See groups and times"
@@ -2144,10 +2089,6 @@ msgstr "发球 · 多拍 · 得分"
 msgid "Service fault: page not found"
 msgstr "发球失误：找不到页面"
 
-#: src/data/events.ts
-msgid "Set up courts and equipment, count balls and tidy up afterwards."
-msgstr "布置场地和器材，清点羽毛球，结束后收拾整理。"
-
 #: src/components/events/ShiftBoard.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
@@ -2172,8 +2113,8 @@ msgid "Shifts come later"
 msgstr "班次稍后公布"
 
 #: src/pages/membership/MemberDeal.tsx
-msgid "Shop at Sport Modern"
-msgstr "去Sport Modern购物"
+msgid "Shop at {name}"
+msgstr "去{name}购物"
 
 #: src/pages/events/EventsPage.tsx
 msgid "Show"
@@ -2263,13 +2204,13 @@ msgstr "柔和"
 msgid "Some of these details don't add up. Check them and try again."
 msgstr "有些信息对不上，请检查后再试一次。"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Some sessions this season are elsewhere:"
+msgstr "本赛季部分训练在其他场馆："
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Someone else"
 msgstr "其他人"
-
-#: src/data/contact.ts
-msgid "Something else"
-msgstr "其他"
 
 #: src/components/auth/errors.ts
 msgid "Something went wrong. Try again."
@@ -2278,10 +2219,6 @@ msgstr "出了点问题，请再试一次。"
 #: src/pages/club/sections.tsx
 msgid "Sponsor the club"
 msgstr "赞助俱乐部"
-
-#: src/data/contact.ts
-msgid "Sponsorship"
-msgstr "赞助"
 
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
@@ -2449,6 +2386,10 @@ msgstr "主题：{0}"
 msgid "These people are on a shift that was removed in Sanity."
 msgstr "这些人所在的班次已在Sanity里删除。"
 
+#: src/pages/join/JoinPage.tsx
+msgid "This group has a waiting list. The board lets you know when there is a spot."
+msgstr "这个组有候补名单。有空位时理事会会通知你。"
+
 #: src/pages/training/TrainingPage.tsx
 msgid "This is an earlier season. Times may have changed since."
 msgstr "这是以前的赛季，时间可能已经变了。"
@@ -2532,10 +2473,6 @@ msgstr "比赛"
 msgid "Training"
 msgstr "训练"
 
-#: src/data/contact.ts
-msgid "Training and groups"
-msgstr "训练和分组"
-
 #: src/pages/news/NewsPage.tsx
 msgid "Training changes, events, volunteering and club news, with dates."
 msgstr "训练变动、活动、志愿服务和俱乐部动态，附带日期。"
@@ -2581,7 +2518,7 @@ msgstr "试试其他风格"
 msgid "Try again"
 msgstr "再试一次"
 
-#. placeholder {0}: CLUB.email
+#. placeholder {0}: club.email
 #: src/pages/contact/ContactSection.tsx
 msgid "Try again, or email us at <0>{0}</0>."
 msgstr "再试一次，或发邮件到<0>{0}</0>。"
@@ -2635,10 +2572,9 @@ msgstr "设计方案"
 msgid "Vipps"
 msgstr "Vipps"
 
-#. placeholder {0}: CLUB.vipps
 #: src/pages/membership/MembershipPage.tsx
-msgid "Vipps number {0}"
-msgstr "Vipps号码{0}"
+msgid "Vipps number {vipps}"
+msgstr "Vipps号码{vipps}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx
@@ -2656,6 +2592,11 @@ msgstr "志愿服务"
 #: src/components/auth/UserMenu.tsx
 msgid "Volunteers"
 msgstr "志愿者"
+
+#. A training group takes new players only from a waiting list
+#: src/components/training/GroupStatusBadge.tsx
+msgid "Waiting list"
+msgstr "候补名单"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Want a shift?"
@@ -2799,10 +2740,6 @@ msgstr "你参与了"
 #: src/components/events/ShiftBoard.tsx
 msgid "You helped out"
 msgstr "你参与过的班次"
-
-#: src/pages/membership/MembershipPage.tsx
-msgid "You pay both fees together, by card or Vipps, when the season starts or right after you join."
-msgstr "两项费用一起付，可以刷卡或用Vipps，在赛季开始时或入会后马上支付。"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "You're in"

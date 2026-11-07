@@ -1,10 +1,13 @@
 import { defineArrayMember, defineField, defineType, type CustomValidator } from 'sanity';
+import { z } from 'zod';
 
-import { Group, PlanAudience, PriceKind } from '~/data/club';
+import { Group, GroupStatus, PlanAudience, PriceKind } from '~/data/club';
+import { ContactTopic, TOPIC_ID } from '~/data/contact';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { NoticeTone } from '~/data/notice';
 import { SOCIAL_NAMES, SocialPlatform } from '~/data/socials';
+import { PERK_ICON_NAMES, PerkIcon } from '~/data/sponsors';
 import { weekdayName } from '~/utils/dates';
 
 import { BannerInput } from './BannerInput';
@@ -35,15 +38,156 @@ const hasAsset = (image: unknown) =>
 
 const order = defineField({ name: 'order', title: 'Order', type: 'number', description: 'Lower comes first' });
 
+const SettingsTab = z.enum(['club', 'notice', 'socials', 'payment', 'contact']);
+
+type ContactTopicItem = { id?: string };
+
+const topicIds: CustomValidator<ContactTopicItem[] | undefined> = (topics) => {
+  const ids = (topics ?? []).map((topic) => topic.id);
+  return new Set(ids).size === ids.length ? true : 'Each topic needs its own ID';
+};
+
+const builtInTopics: CustomValidator<ContactTopicItem[] | undefined> = (topics) => {
+  const ids = new Set((topics ?? []).map((topic) => topic.id));
+  const missing = ContactTopic.options.filter((id) => !ids.has(id));
+  return missing.length === 0
+    ? true
+    : `Buttons on the site open these topics: ${missing.join(', ')}. Without them, they open the first topic.`;
+};
+
 export const siteSettings = defineType({
   name: 'siteSettings',
   title: 'Site settings',
   type: 'document',
+  groups: [
+    { name: SettingsTab.enum.club, title: 'Club', default: true },
+    { name: SettingsTab.enum.notice, title: 'Notice' },
+    { name: SettingsTab.enum.socials, title: 'Social links' },
+    { name: SettingsTab.enum.payment, title: 'Payment' },
+    { name: SettingsTab.enum.contact, title: 'Contact form' },
+  ],
   fields: [
+    defineField({
+      name: 'club',
+      title: 'Club details',
+      description: 'Shown in the footer, the menu, on the contact page and on training and events.',
+      type: 'object',
+      group: SettingsTab.enum.club,
+      options: { collapsible: false },
+      fields: [
+        defineField({
+          name: 'email',
+          title: 'Board email',
+          type: 'email',
+          description: 'Shown on the site, and gets contact form messages unless a topic says otherwise.',
+          validation: required,
+        }),
+        defineField({
+          name: 'venue',
+          title: 'Home hall',
+          description: 'Where training happens. Events without their own venue are held here too.',
+          type: 'object',
+          fields: [
+            defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
+            defineField({ name: 'address', title: 'Address', type: 'string', validation: required }),
+            defineField({
+              name: 'mapUrl',
+              title: 'Map link',
+              type: 'url',
+              description: 'Optional. Without it, the site opens the address in the visitor’s map app.',
+            }),
+          ],
+        }),
+        defineField({
+          name: 'orgNr',
+          title: 'Organization number',
+          type: 'string',
+          description: 'From the Brønnøysund Register Centre, for example 993 621 358.',
+          validation: (rule) => rule.regex(/^\d{3} ?\d{3} ?\d{3}$/, { name: 'organization number' }),
+        }),
+        defineField({
+          name: 'whistleblowingUrl',
+          title: 'Whistleblowing link',
+          type: 'url',
+          description: 'Where members can report problems outside the club. Shown on the club page.',
+          validation: (rule) => rule.uri({ scheme: ['https'] }),
+        }),
+      ],
+    }),
+    defineField({
+      name: 'payment',
+      title: 'Payment',
+      description: 'Shown on the membership pages and on the front page.',
+      type: 'object',
+      group: SettingsTab.enum.payment,
+      options: { collapsible: false },
+      fields: [
+        defineField({
+          name: 'vipps',
+          title: 'Vipps number',
+          type: 'string',
+          description: 'Shown next to drop-in prices. Leave empty to hide it.',
+          validation: (rule) => rule.regex(/^\d{4,6}$/, { name: 'Vipps number' }),
+        }),
+        defineField({
+          name: 'accountNumber',
+          title: 'Bank account number',
+          type: 'string',
+          description: 'Optional, for example 1234 56 78901.',
+          validation: (rule) => rule.regex(/^\d{4} ?\d{2} ?\d{5}$/, { name: 'account number' }),
+        }),
+        defineField({
+          name: 'instructions',
+          title: 'How to pay',
+          type: 'localeText',
+          description: 'The "Pay" step on the membership page.',
+          validation: required,
+        }),
+      ],
+    }),
+    defineField({
+      name: 'contactTopics',
+      title: 'Contact form topics',
+      description: 'The list visitors pick from on the contact page, in this order.',
+      type: 'array',
+      group: SettingsTab.enum.contact,
+      validation: (rule) => [rule.required().min(1).custom(topicIds), rule.custom(builtInTopics).warning()],
+      of: [
+        defineArrayMember({
+          name: 'contactTopic',
+          type: 'object',
+          fields: [
+            defineField({ name: 'label', title: 'Label', type: 'localeString', validation: required }),
+            defineField({
+              name: 'id',
+              title: 'ID',
+              type: 'string',
+              description: `Short and lowercase. Buttons on the site use these: ${ContactTopic.options.join(', ')}.`,
+              validation: (rule) => rule.required().regex(TOPIC_ID, { name: 'ID' }),
+            }),
+            defineField({
+              name: 'recipients',
+              title: 'Send to',
+              type: 'array',
+              of: [defineArrayMember({ type: 'email' })],
+              description: 'Leave empty to send to the board email.',
+            }),
+          ],
+          preview: {
+            select: { title: 'label.nb', id: 'id', recipients: 'recipients' },
+            prepare: ({ title, id, recipients }: { title?: string; id?: string; recipients?: string[] }) => ({
+              title,
+              subtitle: [id, recipients?.length ? recipients.join(', ') : 'Board email'].join(' · '),
+            }),
+          },
+        }),
+      ],
+    }),
     defineField({
       name: 'notice',
       title: 'Notice at the top of every page',
       type: 'object',
+      group: SettingsTab.enum.notice,
       fields: [
         defineField({ name: 'visible', title: 'Show the notice', type: 'boolean', initialValue: false }),
         defineField({
@@ -61,6 +205,7 @@ export const siteSettings = defineType({
       title: 'Social links',
       description: 'Shown in the footer, the menu and on the contact page, in this order.',
       type: 'array',
+      group: SettingsTab.enum.socials,
       of: [
         defineArrayMember({
           name: 'social',
@@ -306,7 +451,10 @@ export const event = defineType({
       name: 'venue',
       title: 'Venue',
       type: 'object',
-      hidden: isPlain,
+      description: 'Leave empty if it is in the home hall from Site settings. A trip always needs a venue.',
+      hidden: ({ document }) => kindOf(document) === EventKind.enum.break,
+      validation: (rule) =>
+        rule.custom(requiredFor((doc) => doc.kind === EventKind.enum.trip, 'Say where the trip goes')),
       fields: [
         defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
         defineField({ name: 'address', title: 'Address', type: 'string' }),
@@ -314,7 +462,7 @@ export const event = defineType({
           name: 'mapUrl',
           title: 'Map link',
           type: 'url',
-          description: 'Optional. Without it, the site links to a map search for the address.',
+          description: 'Optional. Without it, the site opens the address in the visitor’s map app.',
         }),
       ],
     }),
@@ -514,4 +662,179 @@ export const boardMember = defineType({
   ],
   orderings: [{ title: 'Order', name: 'order', by: [{ field: 'order', direction: 'asc' }] }],
   preview: { select: { title: 'name', subtitle: 'role.nb', media: 'photo' } },
+});
+
+const STATUS_TITLES: Record<GroupStatus, string> = {
+  [GroupStatus.enum.open]: 'Open for new members',
+  [GroupStatus.enum.waitlist]: 'Waiting list',
+  [GroupStatus.enum.full]: 'Full, no new members',
+};
+
+const fixedKey = (values: readonly string[]) =>
+  defineField({ name: 'key', type: 'string', readOnly: true, hidden: true, options: options(values) });
+
+export const trainingGroup = defineType({
+  name: 'trainingGroup',
+  title: 'Training group',
+  type: 'document',
+  fields: [
+    fixedKey(Group.options),
+    defineField({ name: 'name', title: 'Name', type: 'localeString', validation: required }),
+    defineField({
+      name: 'who',
+      title: 'Who it is for',
+      type: 'localeText',
+      description: 'Shown on the training page.',
+      validation: required,
+    }),
+    defineField({ name: 'coached', title: 'With a coach', type: 'boolean', initialValue: false }),
+    defineField({
+      name: 'status',
+      title: 'New members',
+      type: 'string',
+      options: {
+        list: GroupStatus.options.map((value) => ({ title: STATUS_TITLES[value], value })),
+        layout: 'radio',
+      },
+      initialValue: GroupStatus.enum.open,
+      validation: required,
+    }),
+    defineField({
+      name: 'statusNote',
+      title: 'Note about new members',
+      type: 'localeText',
+      description: 'Optional. For example "We take new players again in January."',
+      hidden: ({ document }) => document?.status === GroupStatus.enum.open,
+    }),
+  ],
+  preview: {
+    select: { title: 'name.nb', status: 'status' },
+    prepare: ({ title, status }: Record<string, string | undefined>) => {
+      const known = GroupStatus.safeParse(status);
+      return { title, subtitle: known.success ? STATUS_TITLES[known.data] : undefined };
+    },
+  },
+});
+
+export const volunteerTeam = defineType({
+  name: 'volunteerTeam',
+  title: 'Volunteer team',
+  type: 'document',
+  fields: [
+    fixedKey(Team.options),
+    defineField({ name: 'name', title: 'Name', type: 'localeString', validation: required }),
+    defineField({
+      name: 'what',
+      title: 'What the team does',
+      type: 'localeText',
+      description: 'Shown when members sign up for shifts.',
+      validation: required,
+    }),
+  ],
+  preview: { select: { title: 'name.nb', subtitle: 'what.nb' } },
+});
+
+export const sponsor = defineType({
+  name: 'sponsor',
+  title: 'Sponsor',
+  type: 'document',
+  fields: [
+    defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
+    defineField({
+      name: 'logo',
+      title: 'Logo',
+      type: 'image',
+      description: 'A wide logo works best. SVG or PNG with a see-through background.',
+      validation: required,
+    }),
+    defineField({
+      name: 'url',
+      title: 'Website',
+      type: 'url',
+      validation: (rule) => rule.required().uri({ scheme: ['https'] }),
+    }),
+    defineField({
+      name: 'inStrip',
+      title: 'Show in the partner strip',
+      type: 'boolean',
+      description: 'The strip above the footer on every page.',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'stripText',
+      title: 'Text in the partner strip',
+      type: 'localeString',
+      description: 'For example "Members get up to 20% off at Sport Modern."',
+      hidden: ({ document }) => document?.inStrip === false,
+      validation: (rule) =>
+        rule.custom((text, { document }) => (document?.inStrip !== false && !text ? 'Required' : true)),
+    }),
+    defineField({
+      name: 'deal',
+      title: 'Member deal',
+      type: 'object',
+      description: 'Optional. Shown on the membership page.',
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        defineField({
+          name: 'intro',
+          title: 'Intro',
+          type: 'localeString',
+          description: 'For example "Our members get these discounts at Sport Modern."',
+        }),
+        defineField({
+          name: 'perks',
+          title: 'Perks',
+          type: 'array',
+          validation: (rule) => rule.max(4),
+          of: [
+            defineArrayMember({
+              name: 'perk',
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'icon',
+                  title: 'Icon',
+                  type: 'string',
+                  options: { list: PerkIcon.options.map((value) => ({ title: PERK_ICON_NAMES[value], value })) },
+                  initialValue: PerkIcon.enum.tag,
+                  validation: required,
+                }),
+                defineField({
+                  name: 'value',
+                  title: 'Big text',
+                  type: 'localeString',
+                  description: 'For example "20 %" or "Free shipping".',
+                  validation: required,
+                }),
+                defineField({
+                  name: 'label',
+                  title: 'Small text',
+                  type: 'localeString',
+                  description: 'For example "off clothes and rackets".',
+                  validation: required,
+                }),
+              ],
+              preview: { select: { title: 'value.nb', subtitle: 'label.nb' } },
+            }),
+          ],
+        }),
+        defineField({
+          name: 'howTo',
+          title: 'How to use it',
+          type: 'localeString',
+          description: 'For example "Give the club code when you order."',
+        }),
+        defineField({
+          name: 'askForCode',
+          title: 'Show an "Ask for the code" button',
+          type: 'boolean',
+          initialValue: false,
+        }),
+      ],
+    }),
+    order,
+  ],
+  orderings: [{ title: 'Order', name: 'order', by: [{ field: 'order', direction: 'asc' }] }],
+  preview: { select: { title: 'name', subtitle: 'url', media: 'logo' } },
 });

@@ -1,21 +1,21 @@
-import { Trans, useLingui } from '@lingui/react/macro';
-import { Anchor, Badge, Button, Group, Paper, Stack, Text } from '@mantine/core';
+import { Trans } from '@lingui/react/macro';
+import { Badge, Button, Group, Paper, Stack, Text } from '@mantine/core';
 import { useTimeout } from '@mantine/hooks';
 import { memo, useState, type FC } from 'react';
 
 import { calendarFile } from '~/cms/ics';
+import { useClub } from '~/cms/siteData';
 import { AddressLink, ArrowUpRight, CalendarPlus, Check, Clock, LockSimple } from '~/components/ui';
 import { downloadFile } from '~/utils/download';
-import { venueMapUrl } from '~/utils/maps';
 
 import {
   canAddToCalendar,
   eventVenue,
   icsEvent,
-  isHomeVenue,
   registrationOf,
   RegistrationState,
   type Registration,
+  type Venue,
   type VisitorEvent,
 } from './eventMeta';
 
@@ -25,35 +25,22 @@ const DONE_MS = 2500;
 const ICS_TYPE = 'text/calendar;charset=utf-8';
 
 export const EventVenue = memo<{ event: VisitorEvent }>(({ event }) => {
-  const { t } = useLingui();
-  const venue = eventVenue(event);
+  const venue = eventVenue(event, useClub().venue);
   if (!venue) return null;
-  if (isHomeVenue(venue)) return <AddressLink />;
-  const place = [venue.name, venue.address].filter(Boolean).join(', ');
   return (
-    <Anchor
-      href={venueMapUrl(venue)}
-      target="_blank"
-      rel="noopener noreferrer"
-      inherit
-      c="inherit"
-      underline="always"
-      title={t`Open in maps`}
-    >
-      {place}
-      <ArrowUpRight aria-hidden className={classes.external} />
-    </Anchor>
+    <AddressLink place={venue}>{event.venue && <ArrowUpRight aria-hidden className={classes.external} />}</AddressLink>
   );
 });
 
-const downloadIcs = (event: VisitorEvent) =>
-  downloadFile(calendarFile([icsEvent(event)]), `${event.slug}.ics`, ICS_TYPE);
+const downloadIcs = (event: VisitorEvent, home: Venue | undefined) =>
+  downloadFile(calendarFile([icsEvent(event, home)]), `${event.slug}.ics`, ICS_TYPE);
 
 const AddToCalendar: FC<{ event: VisitorEvent }> = ({ event }) => {
+  const home = useClub().venue;
   const [done, setDone] = useState(false);
   const { start } = useTimeout(() => setDone(false), DONE_MS);
   const add = () => {
-    downloadIcs(event);
+    downloadIcs(event, home);
     setDone(true);
     start();
   };

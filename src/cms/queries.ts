@@ -6,6 +6,17 @@ export const localized = (...fields: string[]) => fields.map((field) => `"${fiel
 export const CONTENT_GROQ = `{
   "notice": *[_id == "siteSettings"][0].notice { visible, tone, ${localized('text')} },
   "socials": *[_id == "siteSettings"][0].socials[] { platform, url },
+  "club": *[_id == "siteSettings"][0].club { email, venue, orgNr, whistleblowingUrl },
+  "payment": *[_id == "siteSettings"][0].payment { vipps, accountNumber, ${localized('instructions')} },
+  "contactTopics": *[_id == "siteSettings"][0].contactTopics[] { id, ${localized('label')} },
+  "photos": *[_id == "sitePhotos"][0],
+  "groups": *[_type == "trainingGroup"] { key, coached, status, ${localized('name', 'who', 'statusNote')} },
+  "teams": *[_type == "volunteerTeam"] { key, ${localized('name', 'what')} },
+  "sponsors": *[_type == "sponsor"] | order(order asc) {
+    "id": _id, name, url, inStrip, ${localized('stripText')},
+    "logo": logo.asset-> { url, "width": metadata.dimensions.width, "height": metadata.dimensions.height },
+    "deal": deal { askForCode, ${localized('intro', 'howTo')}, "perks": perks[] { _key, icon, ${localized('value', 'label')} } }
+  },
   "news": *[_type == "newsPost"] | order(date desc) {
     "slug": slug.current, date, kind, ${localized('title', 'summary')},
     "links": links[] { _key, page, hash, url, ${localized('label')} },

@@ -10,48 +10,21 @@ export const DEAL_HASH = 'medlemsfordel';
 export const CLUB = {
   name: 'Bygdø Badmintonklubb',
   shortName: 'Bygdø BK',
-  venue: 'Bygdøhus',
-  address: 'Huk Aveny 45, 0287 Oslo',
-  email: 'styret@bygdobk.no',
-  orgNr: '993 621 358',
-  vipps: '84624',
-  whistleblowingUrl: 'https://www.idrettsforbundet.no/tema/varsling/jeg-vil-varsle/',
-  sportModernUrl: 'https://www.sportmodern.no',
   founded: 1936,
 } as const;
 
 export const Group = z.enum(['rekrutt', 'junior', 'senior', 'fritt']);
 export type Group = z.infer<typeof Group>;
 
-export const GROUPS: Record<
-  Group,
-  { name: MessageDescriptor; who: MessageDescriptor; coached: boolean; color: MantineColor }
-> = {
-  [Group.enum.rekrutt]: {
-    name: msg({ message: 'Beginners', comment: 'Training group for new players. Norwegian: Rekrutt' }),
-    who: msg`For new players, with a coach.`,
-    coached: true,
-    color: 'teal',
-  },
-  [Group.enum.junior]: {
-    name: msg({ message: 'Junior', comment: 'Training group for children and teens' }),
-    who: msg`Coached sessions for children and teens who have played a bit.`,
-    coached: true,
-    color: 'blue',
-  },
-  [Group.enum.senior]: {
-    name: msg({ message: 'Adults', comment: 'Training group for adults. Norwegian: Senior (voksne)' }),
-    who: msg`Play for adult players.`,
-    coached: false,
-    color: 'orange',
-  },
-  [Group.enum.fritt]: {
-    name: msg({ message: 'Open play', comment: 'Free play for all members. Norwegian: Fritt spill' }),
-    who: msg`Open play for all members.`,
-    coached: false,
-    color: 'grape',
-  },
+export const GROUP_COLORS: Record<Group, MantineColor> = {
+  [Group.enum.rekrutt]: 'teal',
+  [Group.enum.junior]: 'blue',
+  [Group.enum.senior]: 'orange',
+  [Group.enum.fritt]: 'grape',
 };
+
+export const GroupStatus = z.enum(['open', 'waitlist', 'full']);
+export type GroupStatus = z.infer<typeof GroupStatus>;
 
 export const GROUP_SLUGS = slugMap<Group>({
   [Group.enum.rekrutt]: 'rekrutt',

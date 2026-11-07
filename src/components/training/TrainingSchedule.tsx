@@ -8,7 +8,9 @@ import { memo, useCallback, useMemo } from 'react';
 
 import { affects, isTraining, occurrences, type CalendarEvent, type Occurrence, type Season } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
-import { GROUPS, type Group } from '~/data/club';
+import { useGroups } from '~/cms/siteData';
+import { AddressLink } from '~/components/ui';
+import { GROUP_COLORS, type Group } from '~/data/club';
 import { EVENT_KINDS } from '~/data/events';
 import {
   CLOCK,
@@ -107,7 +109,7 @@ const otherEvents = (events: readonly CalendarEvent[], season: Season, group: Gr
 type Props = { season: Season; group?: Group; height?: number };
 
 const DayList = memo<Omit<Props, 'height'>>(({ season, group }) => {
-  const { i18n } = useLingui();
+  const groups = useGroups();
   const { events } = useSiteContent();
   const days = useMemo(
     () =>
@@ -132,17 +134,24 @@ const DayList = memo<Omit<Props, 'height'>>(({ season, group }) => {
               {weekdayName(weekday)}
             </Title>
             {sessions.map((s) => (
-              <Row key={`${s.group}-${s.start}`} justify="space-between" wrap="nowrap" gap="sm">
-                <Row gap={8} wrap="nowrap">
-                  <Badge color={GROUPS[s.group].color} variant="light">
-                    {i18n._(GROUPS[s.group].name)}
-                  </Badge>
-                  {GROUPS[s.group].coached && (
+              <Row key={`${s.group}-${s.start}-${s.venue?.name}`} justify="space-between" wrap="nowrap" gap="sm">
+                <Stack gap={2}>
+                  <Row gap={8} wrap="nowrap">
+                    <Badge color={GROUP_COLORS[s.group]} variant="light">
+                      {groups[s.group].name}
+                    </Badge>
+                    {groups[s.group].coached && (
+                      <Text size="sm" c="dimmed">
+                        <Trans>With coach</Trans>
+                      </Text>
+                    )}
+                  </Row>
+                  {s.venue && (
                     <Text size="sm" c="dimmed">
-                      <Trans>With coach</Trans>
+                      <AddressLink place={s.venue} />
                     </Text>
                   )}
-                </Row>
+                </Stack>
                 <Text fw={600} className="tabular">
                   {s.start}–{s.end}
                 </Text>
@@ -156,23 +165,24 @@ const DayList = memo<Omit<Props, 'height'>>(({ season, group }) => {
 });
 
 const WeekSchedule = memo<Props>(({ season, group, height = 460 }) => {
-  const { i18n, t } = useLingui();
+  const { t } = useLingui();
   const { events } = useSiteContent();
+  const groups = useGroups();
 
   const scheduleEvents = useMemo<ScheduleEventData<Payload>[]>(
     () => [
       ...plannedSessions(events, season.start, season.end, group).map((s): ScheduleEventData<Payload> => ({
         id: `${s.event.id}-${s.day.format(ISO_DAY)}`,
-        title: i18n._(GROUPS[s.group].name),
+        title: [groups[s.group].name, s.event.venue?.name].filter(Boolean).join(' · '),
         start: scheduleTime(s.start),
         end: scheduleTime(s.end),
-        color: s.off ? 'gray' : GROUPS[s.group].color,
+        color: s.off ? 'gray' : GROUP_COLORS[s.group],
         variant: 'light',
         payload: { off: s.off?.title },
       })),
       ...otherEvents(events, season, group),
     ],
-    [i18n, events, season, group],
+    [groups, events, season, group],
   );
 
   const renderEventBody = useCallback(

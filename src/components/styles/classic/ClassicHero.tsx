@@ -1,22 +1,29 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { Container, Grid, Stack, Text, Title } from '@mantine/core';
 import type { FC } from 'react';
 
+import { useSitePhoto } from '~/cms/siteData';
 import { NextTraining } from '~/components/training/NextTraining';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 
 import { HeroActions } from '../HeroActions';
 
 import classes from './ClassicHero.module.css';
 
-const HERO_PHOTO = PHOTOS.playerServe;
-
 export const ClassicHero: FC = () => {
-  const { i18n } = useLingui();
+  const photo = useSitePhoto(PhotoSlot.enum.home);
   return (
     <section className={classes.hero}>
       <div className={classes.photo}>
-        <img src={HERO_PHOTO.src} alt={i18n._(HERO_PHOTO.alt)} className={classes.image} fetchPriority="high" />
+        <img
+          src={photo.src}
+          srcSet={photo.srcSet}
+          sizes="100vw"
+          alt={photo.alt}
+          className={classes.image}
+          style={{ objectPosition: photo.position }}
+          fetchPriority="high"
+        />
       </div>
       <Container className={classes.inner}>
         <Grid gap={{ base: 32, md: 48 }} align="center">

@@ -5,12 +5,13 @@ import { useMemo, type FC } from 'react';
 
 import { isPast } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
+import { useSitePhoto } from '~/cms/siteData';
 import { EVENT_ICONS, EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { CalendarBlank, Segmented, type SegmentedOption } from '~/components/ui';
 import { EventsShow } from '~/data/events';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { date, formatDate, LONG_DATE, today, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
@@ -36,6 +37,7 @@ const eventYear = (event: VisitorEvent) => date(event.startDate).year();
 export const EventsPage: FC = () => {
   const { t } = useLingui();
   usePageTitle(t`Events`);
+  const photo = useSitePhoto(PhotoSlot.enum.events);
   const { ar, vis } = route.useSearch();
   const navigate = route.useNavigate();
   const { events } = useSiteContent();
@@ -82,7 +84,7 @@ export const EventsPage: FC = () => {
   return (
     <>
       <PageIntro
-        photo={PHOTOS.hallSunset}
+        photo={photo}
         title={<Trans>Events</Trans>}
         lede={<Trans>Our tournaments at Bygdøhus run on volunteers. Grab a shift!</Trans>}
       />

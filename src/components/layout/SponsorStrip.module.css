@@ -16,12 +16,37 @@
   gap: 16px;
 
   @media (min-width: $mantine-breakpoint-md) {
-    flex-wrap: nowrap;
     gap: 24px;
   }
 }
 
+.partners {
+  display: flex;
+  flex: 1 1 360px;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .partner {
+  display: flex;
+  flex: 1 1 280px;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.partnerText {
+  flex: 1;
   min-width: 0;
 }
 
@@ -39,6 +64,10 @@
   @media (min-width: $mantine-breakpoint-md) {
     flex-basis: auto;
     margin-inline-start: auto;
+
+    &:only-child {
+      flex-grow: 1;
+    }
   }
 }
 
@@ -63,16 +92,13 @@
 .logo {
   flex: none;
   display: block;
+  max-width: 100%;
   transition: opacity 0.15s;
 
   & img {
     display: block;
-    width: 200px;
+    max-width: min(100%, 240px);
     height: auto;
-
-    @media (max-width: $mantine-breakpoint-sm) {
-      width: 100%;
-    }
   }
 
   &:hover {
@@ -93,21 +119,29 @@
     flex-direction: column;
     align-items: stretch;
     gap: 14px;
+  }
+
+  .partners {
+    flex-basis: auto;
+    align-items: center;
     text-align: center;
   }
 
-  .logo {
+  .list {
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    gap: 20px;
+  }
+
+  .partner {
+    flex-direction: column;
+    flex-basis: auto;
+    gap: 10px;
   }
 
   .sponsor {
     flex-wrap: wrap;
-    margin-inline-start: 0;
-    text-align: start;
-  }
-
-  .sponsorText {
-    flex: 1;
   }
 
   .sponsorButton {

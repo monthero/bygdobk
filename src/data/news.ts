@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 import { slugMap } from '~/utils/slugs';
 
-import { PHOTOS, type Photo } from './photos';
+import { PhotoSlot } from './photos';
 
 export const NewsKind = z.enum(['training', 'event', 'volunteer', 'club']);
 export type NewsKind = z.infer<typeof NewsKind>;
@@ -16,11 +16,11 @@ export const NEWS_KINDS: Record<NewsKind, MessageDescriptor> = {
   [NewsKind.enum.club]: msg({ message: 'Club', comment: 'News category' }),
 };
 
-export const NEWS_BANNERS: Record<NewsKind, Photo> = {
-  [NewsKind.enum.training]: PHOTOS.bygdohusCourts,
-  [NewsKind.enum.event]: PHOTOS.hallSunset,
-  [NewsKind.enum.volunteer]: PHOTOS.playersCourt,
-  [NewsKind.enum.club]: PHOTOS.bygdohusCoaching,
+export const NEWS_BANNERS: Record<NewsKind, PhotoSlot> = {
+  [NewsKind.enum.training]: PhotoSlot.enum.newsTraining,
+  [NewsKind.enum.event]: PhotoSlot.enum.newsEvent,
+  [NewsKind.enum.volunteer]: PhotoSlot.enum.newsVolunteer,
+  [NewsKind.enum.club]: PhotoSlot.enum.newsClub,
 };
 
 export const NEWS_CARD_ASPECT = 16 / 9;

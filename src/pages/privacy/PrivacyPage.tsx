@@ -4,11 +4,12 @@ import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
 import { usePrivacyPage } from '~/cms/content';
+import { useSitePhoto, type SitePhoto } from '~/cms/siteData';
 import { ArticleBody } from '~/components/news';
 import { PageIntro } from '~/components/styles';
 import { ArrowRight, ShieldCheck } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { date, formatDate, LONG_DATE } from '~/utils/dates';
 
@@ -28,9 +29,9 @@ const ContactButton: FC = () => (
   </Button>
 );
 
-const NotWritten: FC = () => (
+const NotWritten: FC<{ photo: SitePhoto }> = ({ photo }) => (
   <>
-    <PageIntro photo={PHOTOS.privacyPhone} title={<Trans>Privacy</Trans>} />
+    <PageIntro photo={photo} title={<Trans>Privacy</Trans>} />
     <Container py={{ base: 28, md: 40 }}>
       <Stack align="center" ta="center" gap="md" py={24}>
         <ThemeIcon size={64} radius="xl" variant="light">
@@ -52,16 +53,13 @@ export const PrivacyPage: FC = () => {
   const { t } = useLingui();
   const page = usePrivacyPage();
   usePageTitle(page?.title || t`Privacy`);
-  if (!page) return <NotWritten />;
+  const photo = useSitePhoto(PhotoSlot.enum.privacy);
+  if (!page) return <NotWritten photo={photo} />;
 
   const updated = page.updatedAt && formatDate(date(page.updatedAt), LONG_DATE);
   return (
     <>
-      <PageIntro
-        photo={PHOTOS.privacyPhone}
-        title={page.title}
-        lede={updated && <Trans>Last updated {updated}</Trans>}
-      />
+      <PageIntro photo={photo} title={page.title} lede={updated && <Trans>Last updated {updated}</Trans>} />
       <Container py={{ base: 28, md: 40 }}>
         <Stack gap={36} className={classes.column}>
           <article>

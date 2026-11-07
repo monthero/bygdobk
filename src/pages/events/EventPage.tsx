@@ -5,6 +5,7 @@ import type { FC } from 'react';
 
 import { isPast } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
+import { useSitePhoto } from '~/cms/siteData';
 import {
   EventActions,
   EventVenue,
@@ -18,7 +19,7 @@ import { PageIntro, useStyleKit } from '~/components/styles';
 import { ArrowLeft, CalendarBlank, ChatCircle, HandHeart, Info, MapPin } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { EVENT_KINDS } from '~/data/events';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { NotFoundPage } from '~/pages/NotFoundPage';
 import { today } from '~/utils/dates';
@@ -32,9 +33,10 @@ export const EventPage: FC = () => {
   const { dag } = route.useSearch();
   const navigate = route.useNavigate();
   const { ShiftBoard } = useStyleKit();
-  const { events } = useSiteContent();
+  const { events, club } = useSiteContent();
   const event = events.find((e): e is VisitorEvent => e.slug === slug && isVisitorEvent(e));
   usePageTitle(event?.title, t`Events`);
+  const photo = useSitePhoto(PhotoSlot.enum.events);
   if (!event) return <NotFoundPage />;
 
   const eventTitle = event.title;
@@ -51,7 +53,7 @@ export const EventPage: FC = () => {
   return (
     <>
       <PageIntro
-        photo={PHOTOS.hallSunset}
+        photo={photo}
         eyebrow={i18n._(EVENT_KINDS[event.kind].label)}
         title={event.title}
         lede={event.description}
@@ -63,7 +65,7 @@ export const EventPage: FC = () => {
               {eventWhen(event)}
             </Text>
           </Group>
-          {eventVenue(event) && (
+          {eventVenue(event, club.venue) && (
             <Group gap={6} wrap="nowrap">
               <MapPin />
               <Text>

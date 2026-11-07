@@ -4,10 +4,11 @@ import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 import { z } from 'zod';
 
+import { useSitePhoto } from '~/cms/siteData';
 import { PageIntro } from '~/components/styles';
 import { ArrowRight } from '~/components/ui';
 import { CLUB } from '~/data/club';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 
 import { BoardSection, PrivacySection, SafetySection, SponsorSection } from './sections';
@@ -19,10 +20,11 @@ const ClubSection = z.enum(['styret', 'varsling', 'personvern']);
 export const ClubPage: FC = () => {
   const { t } = useLingui();
   usePageTitle(t`The club`);
+  const photo = useSitePhoto(PhotoSlot.enum.club);
   return (
     <>
       <PageIntro
-        photo={PHOTOS.bygdohusCoaching}
+        photo={photo}
         eyebrow={<Trans>Since {CLUB.founded}</Trans>}
         title={<Trans>About the club</Trans>}
         lede={

@@ -31,6 +31,16 @@ msgstr "{0, plural, one {# inlägg} other {# inlägg}}"
 msgid "{0, plural, one {# request} other {# requests}}"
 msgstr "{0, plural, one {# ansökan} other {# ansökningar}}"
 
+#. placeholder {0}: deals.length
+#: src/pages/membership/MembershipPage.tsx
+msgid "{0, plural, one {Member deal} other {Member deals}}"
+msgstr "{0, plural, one {Medlemsförmån} other {Medlemsförmåner}}"
+
+#. placeholder {0}: partners.length
+#: src/components/layout/SponsorStrip.tsx
+msgid "{0, plural, one {Our partner} other {Our partners}}"
+msgstr "{0, plural, one {Vår partner} other {Våra partner}}"
+
 #. placeholder {0}: kr(plan.membership)
 #. placeholder {1}: kr(plan.perVisit)
 #: src/pages/join/JoinPage.tsx
@@ -199,6 +209,10 @@ msgstr "En fjäderboll som vilar på ett racket i en idrottshall"
 msgid "A tiny game: keep the shuttle in the air."
 msgstr "Ett litet spel: håll bollen i luften."
 
+#: src/pages/membership/MembershipPage.tsx
+msgid "a trial"
+msgstr "provmedlemskap"
+
 #: src/data/club.ts
 msgid "A water bottle"
 msgstr "En vattenflaska"
@@ -225,6 +239,11 @@ msgstr "Kontots e-post"
 #: src/components/auth/UserMenu.tsx
 msgid "Account menu for {name}"
 msgstr "Kontomeny för {name}"
+
+#. placeholder {0}: payment.accountNumber
+#: src/pages/membership/MembershipPage.tsx
+msgid "Account number: {0}"
+msgstr "Kontonummer: {0}"
 
 #: src/pages/board/MembershipList.tsx
 msgid "Actions"
@@ -263,11 +282,6 @@ msgstr "Lägg till i kalendern"
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Admin"
-
-#. Training group for adults. Norwegian: Senior (voksne)
-#: src/data/club.ts
-msgid "Adults"
-msgstr "Vuxna"
 
 #. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
@@ -343,6 +357,10 @@ msgstr "Godkänn"
 msgid "Archive"
 msgstr "Arkiv"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Ask about a spot"
+msgstr "Fråga om plats"
+
 #: src/pages/membership/MemberDeal.tsx
 msgid "Ask for the code"
 msgstr "Be om koden"
@@ -368,17 +386,11 @@ msgstr "Badminton för alla i Bygdøhus"
 msgid "Bank transfer"
 msgstr "Banköverföring"
 
-#. Training group for new players. Norwegian: Rekrutt
-#: src/data/club.ts
-msgid "Beginners"
-msgstr "Nybörjare"
-
 #: src/pages/home/components/StartCards.tsx
 msgid "Beginners play with a coach"
 msgstr "Nybörjare spelar med tränare"
 
 #: src/components/styles/flight/HowToJoin.tsx
-#: src/pages/membership/MembershipPage.tsx
 msgid "Beginners, Junior, Adults or a trial. Not sure? Start as a beginner."
 msgstr "Nybörjare, junior, vuxna eller provmedlemskap. Osäker? Börja som nybörjare."
 
@@ -578,10 +590,6 @@ msgstr "Klubbens färger"
 msgid "Coached"
 msgstr "Med tränare"
 
-#: src/data/club.ts
-msgid "Coached sessions for children and teens who have played a bit."
-msgstr "Träning med tränare för barn och tonåringar som har spelat lite."
-
 #: src/pages/home/components/StartCards.tsx
 msgid "Coached training for kids and teens"
 msgstr "Träning med tränare för barn och ungdomar"
@@ -610,6 +618,10 @@ msgstr "Kompakt"
 #: src/pages/contact/ContactPage.tsx
 msgid "Contact"
 msgstr "Kontakt"
+
+#: src/pages/contact/ContactSection.tsx
+msgid "Contact form message from {name}"
+msgstr "Meddelande från {name} via kontaktformuläret"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Contact form: {topic} (from {name})"
@@ -798,7 +810,12 @@ msgid "Drop-in {0} (+ {1} membership) · Season from {2}"
 msgstr "Drop-in {0} (+ {1} medlemskap) · Säsong från {2}"
 
 #. placeholder {0}: kr(dropin.perVisit)
-#. placeholder {1}: CLUB.vipps
+#: src/pages/home/components/StartCards.tsx
+msgid "Drop-in: {0} per visit"
+msgstr "Drop-in: {0} per gång"
+
+#. placeholder {0}: kr(dropin.perVisit)
+#. placeholder {1}: payment.vipps
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "Drop-in: Vipps {0} till {1}"
@@ -861,10 +878,6 @@ msgstr "Ange ett pris"
 msgid "Enter a valid email address"
 msgstr "Ange en giltig e-postadress"
 
-#: src/data/events.ts
-msgid "Enter results, call matches and share information."
-msgstr "Fyll i resultat, ropa upp matcher och dela information."
-
 #: src/pages/board/MembershipForm.tsx
 msgid "Enter the account's email"
 msgstr "Ange kontots e-post"
@@ -900,10 +913,6 @@ msgstr "Evenemang"
 #: src/pages/home/HomePage.tsx
 msgid "Events"
 msgstr "Evenemang"
-
-#: src/data/contact.ts
-msgid "Events and volunteering"
-msgstr "Evenemang och ideellt arbete"
 
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
@@ -971,18 +980,10 @@ msgstr "Sidfotsmeny"
 msgid "For"
 msgstr "Gäller"
 
-#: src/data/club.ts
-msgid "For new players, with a coach."
-msgstr "För nya spelare, med tränare."
-
 #. The shuttle hit the racket frame, not the strings
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Frame shot!"
 msgstr "Rakt i ramen!"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "Free shipping"
-msgstr "Fri frakt"
 
 #: src/components/auth/MyMemberships.tsx
 msgid "From {from}"
@@ -994,8 +995,10 @@ msgstr "Från {from}"
 msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
 msgstr "Från första svingen till full smash. Nybörjare, juniorer och vuxna, tre kvällar i veckan."
 
+#. A training group takes no new players
 #. Volunteer shift with no free spots
 #: src/components/events/ShiftBoard.tsx
+#: src/components/training/GroupStatusBadge.tsx
 msgid "Full"
 msgstr "Fullt"
 
@@ -1016,10 +1019,6 @@ msgstr "Hör av dig"
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Get under it and hit it as it drops. Swing on the move to steer."
 msgstr "Ställ dig under bollen och slå när den faller. Slå medan du rör dig för att styra."
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "Give the club code when you order. Forgot it? Ask the board."
-msgstr "Ange klubbkoden när du beställer. Har du glömt den? Fråga styrelsen."
 
 #. Color palette name, a soft blue-green
 #: src/components/layout/VariantMenu.tsx
@@ -1056,11 +1055,6 @@ msgstr "Grupper"
 msgid "Half price on Beginners your first season"
 msgstr "Halva priset på Nybörjare första säsongen"
 
-#. Volunteer team that sets up courts and equipment
-#: src/data/events.ts
-msgid "Hall"
-msgstr "Hall"
-
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
 msgstr "Resultattavlan i hallen"
@@ -1074,8 +1068,8 @@ msgid "Heading font"
 msgstr "Typsnitt för rubriker"
 
 #: src/pages/membership/MemberDeal.tsx
-msgid "Hi! Could you send me the Sport Modern member code?"
-msgstr "Hej! Kan du skicka mig medlemskoden till Sport Modern?"
+msgid "Hi! Could you send me the {name} member code?"
+msgstr "Hej! Kan du skicka mig medlemskoden till {name}?"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Hi! I have a question about paying for my membership."
@@ -1093,6 +1087,10 @@ msgstr "Hej! Jag vill gärna hjälpa till på {eventTitle}. Säg till var ni beh
 #: src/pages/membership/MembershipPage.tsx
 msgid "Hi! I'd like to join mid-season. What would the price be?"
 msgstr "Hej! Jag vill gå med mitt i säsongen. Vad kostar det?"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Hi! Let me know when a spot opens up in a group."
+msgstr "Hej! Hör av er när det blir en ledig plats i en grupp."
 
 #: src/data/contact.ts
 msgid "Hi! We'd like to hear more about sponsoring the club."
@@ -1151,14 +1149,13 @@ msgstr "Bli medlem i Bygdø Badmintonklubb"
 msgid "Join the club"
 msgstr "Bli medlem"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Join the waiting list"
+msgstr "Skriv upp dig på väntelistan"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Jump to"
 msgstr "Hoppa till"
-
-#. Training group for children and teens
-#: src/data/club.ts
-msgid "Junior"
-msgstr "Junior"
 
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Just a name"
@@ -1180,11 +1177,6 @@ msgstr "Spelet Håll bollen uppe. Flytta racketet med piltangenterna och tryck p
 #: src/components/styles/HeroActions.tsx
 msgid "Kids 7–12: try half a season for {0}"
 msgstr "Barn 7–12 år: prova en halv säsong för {0}"
-
-#. Volunteer team that runs the food stand
-#: src/data/events.ts
-msgid "Kiosk"
-msgstr "Kiosk"
 
 #: src/components/layout/LanguageSwitch.tsx
 msgid "Language"
@@ -1300,10 +1292,6 @@ msgstr "Möte"
 msgid "Member"
 msgstr "Medlem"
 
-#: src/pages/membership/MembershipPage.tsx
-msgid "Member deal"
-msgstr "Medlemsförmån"
-
 #. Payment method: paid on the external membership website
 #: src/pages/board/format.ts
 msgid "Member site"
@@ -1316,12 +1304,12 @@ msgid "Members"
 msgstr "Medlemmar"
 
 #: src/pages/membership/MembershipPage.tsx
-msgid "Members also get up to 20% off at Sport Modern. <0>See the member deal</0>"
-msgstr "Medlemmar får också upp till 20 % rabatt hos Sport Modern. <0>Se medlemsförmånen</0>"
+msgid "Members also get a deal at {onlyDealName}. <0>See the member deal</0>"
+msgstr "Medlemmar får också en förmån hos {onlyDealName}. <0>Se medlemsförmånen</0>"
 
-#: src/components/layout/SponsorStrip.tsx
-msgid "Members get up to 20% off at Sport Modern."
-msgstr "Medlemmar får upp till 20 % rabatt hos Sport Modern."
+#: src/pages/membership/MembershipPage.tsx
+msgid "Members also get deals from our partners. <0>See the member deals</0>"
+msgstr "Medlemmar får också förmåner hos våra partner. <0>Se medlemsförmånerna</0>"
 
 #. Main menu
 #: src/components/layout/nav.ts
@@ -1334,10 +1322,6 @@ msgstr "Medlemskap"
 #: src/pages/board/MembershipForm.tsx
 msgid "Membership added"
 msgstr "Medlemskap tillagt"
-
-#: src/data/contact.ts
-msgid "Membership and payment"
-msgstr "Medlemskap och betalning"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Membership and prices"
@@ -1581,6 +1565,10 @@ msgstr "Inte betalt"
 msgid "Not paid yet"
 msgstr "Inte betalt än"
 
+#: src/pages/membership/MembershipPage.tsx
+msgid "Not sure? Start as a beginner."
+msgstr "Osäker? Börja som nybörjare."
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
@@ -1610,14 +1598,6 @@ msgstr "Pågår nu"
 msgid "of {expected}"
 msgstr "av {expected}"
 
-#: src/pages/membership/MemberDeal.tsx
-msgid "off clothes and rackets"
-msgstr "rabatt på kläder och racketar"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "off shoes, accessories, bags and shuttles"
-msgstr "rabatt på skor, tillbehör, väskor och bollar"
-
 #: src/pages/news/components/PostPager.tsx
 msgid "Older and newer posts"
 msgstr "Äldre och nyare inlägg"
@@ -1645,10 +1625,6 @@ msgstr "På ett pass som inte finns längre"
 msgid "On now"
 msgstr "Pågår nu"
 
-#: src/pages/membership/MemberDeal.tsx
-msgid "on orders over {limit}"
-msgstr "vid köp över {limit}"
-
 #: src/pages/membership/MembershipPage.tsx
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "En säsong går från augusti till juni, som läsåret. Börjar du mitt i säsongen? <0>Fråga styrelsen</0> om priset."
@@ -1670,7 +1646,6 @@ msgstr "Hoppsan, ramträff!"
 msgid "Open in calendar app"
 msgstr "Öppna i kalenderappen"
 
-#: src/components/events/EventDetails.tsx
 #: src/components/ui/AddressLink.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Open in maps"
@@ -1679,15 +1654,6 @@ msgstr "Öppna i kartan"
 #: src/components/layout/SiteHeader.tsx
 msgid "Open menu"
 msgstr "Öppna menyn"
-
-#. Free play for all members. Norwegian: Fritt spill
-#: src/data/club.ts
-msgid "Open play"
-msgstr "Fritt spel"
-
-#: src/data/club.ts
-msgid "Open play for all members."
-msgstr "Fritt spel för alla medlemmar."
 
 #: src/components/auth/errors.ts
 msgid "Open the link in the same browser you asked for it in."
@@ -1713,7 +1679,7 @@ msgstr "Eller låna ett på passen med tränare"
 msgid "or get a link by email"
 msgstr "eller få en länk via e-post"
 
-#. placeholder {0}: CLUB.orgNr
+#. placeholder {0}: club.orgNr
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/contact/ContactSection.tsx
 msgid "Org. no. {0}"
@@ -1723,14 +1689,6 @@ msgstr "Org.nr {0}"
 #: src/pages/board/format.ts
 msgid "Other"
 msgstr "Annat"
-
-#: src/pages/membership/MemberDeal.tsx
-msgid "Our members get these discounts at Sport Modern."
-msgstr "Våra medlemmar får dessa rabatter hos Sport Modern."
-
-#: src/components/layout/SponsorStrip.tsx
-msgid "Our partner"
-msgstr "Vår partner"
 
 #: src/pages/events/EventsPage.tsx
 msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
@@ -1871,10 +1829,6 @@ msgstr "Typ"
 #: src/components/styles/court/CourtHero.tsx
 msgid "Play"
 msgstr "Fritt spel"
-
-#: src/data/club.ts
-msgid "Play for adult players."
-msgstr "Spel för vuxna spelare."
 
 #: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Play the replay again"
@@ -2041,10 +1995,6 @@ msgstr "Granskar…"
 msgid "Round"
 msgstr "Runda"
 
-#: src/data/events.ts
-msgid "Run the kiosk: waffles, toast and pizza baguettes."
-msgstr "Sköt kiosken: våfflor, toast och pizzabaguetter."
-
 #: src/pages/club/ClubPage.tsx
 msgid "Safe sport"
 msgstr "Trygg idrott"
@@ -2086,11 +2036,6 @@ msgstr "Säsong"
 #: src/pages/training/TrainingPage.tsx
 msgid "Season {0}"
 msgstr "Säsong {0}"
-
-#. Volunteer team that runs the match desk
-#: src/data/events.ts
-msgid "Secretariat"
-msgstr "Sekretariat"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "See groups and times"
@@ -2144,10 +2089,6 @@ msgstr "Serve · Slagväxling · Poäng"
 msgid "Service fault: page not found"
 msgstr "Servefel: sidan finns inte"
 
-#: src/data/events.ts
-msgid "Set up courts and equipment, count balls and tidy up afterwards."
-msgstr "Ställ i ordning banor och utrustning, räkna bollar och städa efteråt."
-
 #: src/components/events/ShiftBoard.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
@@ -2172,8 +2113,8 @@ msgid "Shifts come later"
 msgstr "Passen kommer senare"
 
 #: src/pages/membership/MemberDeal.tsx
-msgid "Shop at Sport Modern"
-msgstr "Handla hos Sport Modern"
+msgid "Shop at {name}"
+msgstr "Handla hos {name}"
 
 #: src/pages/events/EventsPage.tsx
 msgid "Show"
@@ -2263,13 +2204,13 @@ msgstr "Mjuka"
 msgid "Some of these details don't add up. Check them and try again."
 msgstr "Några av uppgifterna stämmer inte. Kolla dem och försök igen."
 
+#: src/pages/training/TrainingPage.tsx
+msgid "Some sessions this season are elsewhere:"
+msgstr "Några pass den här säsongen är på andra ställen:"
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Someone else"
 msgstr "Någon annan"
-
-#: src/data/contact.ts
-msgid "Something else"
-msgstr "Något annat"
 
 #: src/components/auth/errors.ts
 msgid "Something went wrong. Try again."
@@ -2278,10 +2219,6 @@ msgstr "Något gick fel. Försök igen."
 #: src/pages/club/sections.tsx
 msgid "Sponsor the club"
 msgstr "Sponsra klubben"
-
-#: src/data/contact.ts
-msgid "Sponsorship"
-msgstr "Sponsring"
 
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
@@ -2449,6 +2386,10 @@ msgstr "Tema: {0}"
 msgid "These people are on a shift that was removed in Sanity."
 msgstr "De här personerna är med på ett pass som togs bort i Sanity."
 
+#: src/pages/join/JoinPage.tsx
+msgid "This group has a waiting list. The board lets you know when there is a spot."
+msgstr "Den här gruppen har väntelista. Styrelsen hör av sig när det finns en plats."
+
 #: src/pages/training/TrainingPage.tsx
 msgid "This is an earlier season. Times may have changed since."
 msgstr "Det här är en tidigare säsong. Tiderna kan ha ändrats sedan dess."
@@ -2532,10 +2473,6 @@ msgstr "Turnering"
 msgid "Training"
 msgstr "Träning"
 
-#: src/data/contact.ts
-msgid "Training and groups"
-msgstr "Träning och grupper"
-
 #: src/pages/news/NewsPage.tsx
 msgid "Training changes, events, volunteering and club news, with dates."
 msgstr "Ändringar i träningen, evenemang, ideellt arbete och klubbnyheter, med datum."
@@ -2581,7 +2518,7 @@ msgstr "Testa en stil"
 msgid "Try again"
 msgstr "Försök igen"
 
-#. placeholder {0}: CLUB.email
+#. placeholder {0}: club.email
 #: src/pages/contact/ContactSection.tsx
 msgid "Try again, or email us at <0>{0}</0>."
 msgstr "Försök igen, eller mejla oss på <0>{0}</0>."
@@ -2635,10 +2572,9 @@ msgstr "Varianter"
 msgid "Vipps"
 msgstr "Vipps"
 
-#. placeholder {0}: CLUB.vipps
 #: src/pages/membership/MembershipPage.tsx
-msgid "Vipps number {0}"
-msgstr "Vipps-nummer {0}"
+msgid "Vipps number {vipps}"
+msgstr "Vipps-nummer {vipps}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx
@@ -2656,6 +2592,11 @@ msgstr "Ideellt arbete"
 #: src/components/auth/UserMenu.tsx
 msgid "Volunteers"
 msgstr "Frivilliga"
+
+#. A training group takes new players only from a waiting list
+#: src/components/training/GroupStatusBadge.tsx
+msgid "Waiting list"
+msgstr "Väntelista"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Want a shift?"
@@ -2799,10 +2740,6 @@ msgstr "Du hjälpte till"
 #: src/components/events/ShiftBoard.tsx
 msgid "You helped out"
 msgstr "Du ställde upp"
-
-#: src/pages/membership/MembershipPage.tsx
-msgid "You pay both fees together, by card or Vipps, when the season starts or right after you join."
-msgstr "Du betalar båda avgifterna tillsammans, med kort eller Vipps, när säsongen börjar eller direkt efter att du gått med."
 
 #: src/components/events/ShiftBoard.tsx
 msgid "You're in"

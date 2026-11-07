@@ -8,13 +8,16 @@ import {
 } from '@tanstack/react-query';
 import { z } from 'zod';
 
-import { Group, PlanAudience, PriceKind } from '~/data/club';
+import { Group, GroupStatus, PlanAudience, PriceKind } from '~/data/club';
+import { TOPIC_ID } from '~/data/contact';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { NoticeTone } from '~/data/notice';
+import { PhotoSlot } from '~/data/photos';
 import { SocialPlatform } from '~/data/socials';
+import { PerkIcon } from '~/data/sponsors';
 import { currentLocale } from '~/i18n/current';
-import { contentLocaleParams, type Locale } from '~/i18n/locales';
+import { contentLocaleParams, LOCALES, type Locale } from '~/i18n/locales';
 
 import { sanityQuery } from './client';
 import { CONTENT_GROQ, NEWS_BODIES_GROQ, NEWS_BODY_GROQ, PRIVACY_GROQ } from './queries';
@@ -163,11 +166,90 @@ const BoardMember = z.object({
   phone: opt(z.string().regex(/^\d{8}$/)),
 });
 
+const Club = z.object({
+  email: lenient(z.email()),
+  venue: lenient(Venue),
+  orgNr: lenient(z.string().min(1)),
+  whistleblowingUrl: lenient(WebUrl),
+});
+
+const NO_CLUB = Club.parse({});
+
+const Payment = z.object({
+  vipps: lenient(z.string().regex(/^\d{4,6}$/)),
+  accountNumber: lenient(z.string().min(1)),
+  instructions: lenient(LocaleString.min(1)),
+});
+
+const NO_PAYMENT = Payment.parse({});
+
+const ContactTopicItem = z.object({ id: z.string().regex(TOPIC_ID), label: LocaleString.min(1) });
+
+const LocaleAlt = z.partialRecord(z.enum(LOCALES), z.string());
+
+const SlotPhoto = Photo.extend({ alt: opt(LocaleAlt).catch(undefined) });
+export type SlotPhoto = z.output<typeof SlotPhoto>;
+
+const SitePhotos = z
+  .object(Object.fromEntries(PhotoSlot.options.map((slot) => [slot, lenient(SlotPhoto)])))
+  .nullish()
+  .transform((photos): Partial<Record<PhotoSlot, SlotPhoto>> => photos ?? {})
+  .catch({});
+
+const TrainingGroup = z.object({
+  key: Group,
+  name: LocaleString.min(1),
+  who: opt(LocaleString),
+  coached: flag,
+  status: GroupStatus.catch(GroupStatus.enum.open),
+  statusNote: opt(LocaleString),
+});
+
+const VolunteerTeam = z.object({ key: Team, name: LocaleString.min(1), what: opt(LocaleString) });
+
+const Perk = z.object({
+  _key: z.string(),
+  icon: PerkIcon.catch(PerkIcon.enum.tag),
+  value: LocaleString,
+  label: LocaleString,
+});
+
+const Sponsor = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  url: z.url({ protocol: /^https$/ }),
+  inStrip: z
+    .boolean()
+    .nullish()
+    .transform((v) => v ?? true),
+  stripText: opt(LocaleString),
+  logo: z.object({ url: z.url(), width: z.number().positive(), height: z.number().positive() }),
+  deal: lenient(
+    z.object({
+      intro: opt(LocaleString),
+      howTo: opt(LocaleString),
+      askForCode: flag,
+      perks: listOf('perk', Perk),
+    }),
+  ),
+});
+
 const RawContent = z.object({
   notice: Notice.nullish()
     .transform((n) => n ?? NO_NOTICE)
     .catch(NO_NOTICE),
   socials: listOf('social link', Social),
+  club: Club.nullish()
+    .transform((c) => c ?? NO_CLUB)
+    .catch(NO_CLUB),
+  payment: Payment.nullish()
+    .transform((p) => p ?? NO_PAYMENT)
+    .catch(NO_PAYMENT),
+  contactTopics: listOf('contact topic', ContactTopicItem),
+  photos: SitePhotos,
+  groups: listOf('training group', TrainingGroup),
+  teams: listOf('volunteer team', VolunteerTeam),
+  sponsors: listOf('sponsor', Sponsor),
   news: listOf('news post', NewsPost),
   events: listOf('event', Event),
   plans: listOf('membership plan', Plan),
@@ -180,6 +262,10 @@ export type CmsImageData = z.output<typeof Image>;
 export type ArticleBlocks = z.output<typeof Blocks>;
 export type BoardMember = SiteContent['board'][number];
 export type Plan = SiteContent['plans'][number];
+export type Club = SiteContent['club'];
+export type Sponsor = SiteContent['sponsors'][number];
+export type TrainingGroup = SiteContent['groups'][number];
+export type VolunteerTeam = SiteContent['teams'][number];
 
 const STALE_TIME = 5 * 60_000;
 

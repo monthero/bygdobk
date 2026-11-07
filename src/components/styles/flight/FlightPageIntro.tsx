@@ -1,4 +1,3 @@
-import { useLingui } from '@lingui/react/macro';
 import { Container, Text, Title } from '@mantine/core';
 import type { CSSProperties, FC } from 'react';
 
@@ -12,14 +11,13 @@ const WIDE_TRAIL = 'M101 1 C 42 1, 1 50, 1 104';
 const NARROW_TRAIL = 'M104 72 C 70 -22, 30 -22, -4 72';
 
 export const FlightPageIntro: FC<PageIntroProps> = ({ eyebrow, title, lede, photo, children }) => {
-  const { i18n } = useLingui();
-  const style = photo ? ({ '--intro-photo': `url(${photo.src})` } as CSSProperties) : undefined;
+  const style = photo ? ({ '--intro-photo': `url("${photo.src}")` } as CSSProperties) : undefined;
   return (
     <header className={classes.intro} style={style}>
       <div className={classes.sky}>
         <span
           role={photo ? 'img' : undefined}
-          aria-label={photo ? i18n._(photo.alt) : undefined}
+          aria-label={photo?.alt}
           className={classes.photo}
           style={{ backgroundPosition: photo?.position }}
         />

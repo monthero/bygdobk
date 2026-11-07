@@ -2,10 +2,11 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Container, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { memo, useCallback, useEffect, useMemo, useState, type FC } from 'react';
 
+import { useSitePhoto } from '~/cms/siteData';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { Segmented, type SegmentedOption } from '~/components/ui';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { loadVariantFonts } from '~/utils/variantFonts';
 
@@ -44,6 +45,7 @@ const IdeaFrame = memo<{ idea: Idea; index: number }>(({ idea, index }) => {
 export const NotFoundGallery: FC = () => {
   const { i18n, t } = useLingui();
   usePageTitle(t`404 ideas`);
+  const photo = useSitePhoto(PhotoSlot.enum.events);
   useEffect(loadVariantFonts, []);
   const [shown, setShown] = useState(ALL);
   const pick = useCallback((value: string) => setShown(value), []);
@@ -56,7 +58,7 @@ export const NotFoundGallery: FC = () => {
   return (
     <>
       <PageIntro
-        photo={PHOTOS.hallSunset}
+        photo={photo}
         eyebrow={<Trans>Study case</Trans>}
         title={<Trans>404 ideas</Trans>}
         lede={<Trans>Three ways to say “page not found” in badminton. Try them, then pick a favorite.</Trans>}

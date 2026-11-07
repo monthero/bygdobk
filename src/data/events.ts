@@ -7,21 +7,6 @@ import { EventKind } from './eventKinds';
 export const Team = z.enum(['hall', 'kiosk', 'secretariat']);
 export type Team = z.infer<typeof Team>;
 
-export const TEAMS: Record<Team, { name: MessageDescriptor; what: MessageDescriptor }> = {
-  [Team.enum.hall]: {
-    name: msg({ message: 'Hall', comment: 'Volunteer team that sets up courts and equipment' }),
-    what: msg`Set up courts and equipment, count balls and tidy up afterwards.`,
-  },
-  [Team.enum.kiosk]: {
-    name: msg({ message: 'Kiosk', comment: 'Volunteer team that runs the food stand' }),
-    what: msg`Run the kiosk: waffles, toast and pizza baguettes.`,
-  },
-  [Team.enum.secretariat]: {
-    name: msg({ message: 'Secretariat', comment: 'Volunteer team that runs the match desk' }),
-    what: msg`Enter results, call matches and share information.`,
-  },
-};
-
 export { EventKind, VISITOR_KINDS } from './eventKinds';
 
 const SHIFT_KINDS = new Set<string>([EventKind.enum.tournament, EventKind.enum.social]);

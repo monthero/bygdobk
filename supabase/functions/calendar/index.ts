@@ -9,9 +9,6 @@ const CALENDAR_NAME = 'Bygdø Badmintonklubb';
 const CACHE_SECONDS = 15 * 60;
 const TRIP_KIND = 'trip';
 
-// Keep in sync with CLUB in src/data/club.ts.
-const HOME_VENUE = { name: 'Bygdøhus', address: 'Huk Aveny 45, 0287 Oslo' };
-
 const Lang = z.enum(LOCALES).catch(DEFAULT_LOCALE);
 
 const localized = (field: string) => {
@@ -19,16 +16,22 @@ const localized = (field: string) => {
   return `coalesce(${own.join(', ')}, ${field}.nb)`;
 };
 
-const QUERY = `*[_type == "event" && !(kind in ["training", "break"]) && dateConfirmed != false
-  && defined(slug.current) && coalesce(endDate, startDate) >= $since] | order(startDate asc) {
-  "id": _id, kind, "slug": slug.current, startDate, endDate, startTime, endTime, venue,
-  "title": ${localized('title')},
-  "description": ${localized('description')}
+const QUERY = `{
+  "home": *[_id == "siteSettings"][0].club.venue { name, address },
+  "events": *[_type == "event" && !(kind in ["training", "break"]) && dateConfirmed != false
+    && defined(slug.current) && coalesce(endDate, startDate) >= $since] | order(startDate asc) {
+    "id": _id, kind, "slug": slug.current, startDate, endDate, startTime, endTime, venue,
+    "title": ${localized('title')},
+    "description": ${localized('description')}
+  }
 }`;
 
 const opt = <T extends z.ZodType>(schema: T) => schema.nullish().transform((v) => v ?? undefined);
 
 const Time = z.string().regex(/^\d{2}:\d{2}$/);
+
+const Venue = z.object({ name: z.string().min(1), address: opt(z.string()) });
+type Venue = z.infer<typeof Venue>;
 
 const FeedEvent = z.object({
   id: z.string().min(1),
@@ -40,18 +43,20 @@ const FeedEvent = z.object({
   startTime: opt(Time),
   endTime: opt(Time),
   description: opt(z.string()),
-  venue: opt(z.object({ name: z.string().min(1), address: opt(z.string()) })).catch(undefined),
+  venue: opt(Venue).catch(undefined),
 });
 type FeedEvent = z.infer<typeof FeedEvent>;
 
-const Feed = z.object({ result: z.array(z.unknown()) });
+const Feed = z.object({
+  result: z.object({ home: opt(Venue).catch(undefined), events: z.array(z.unknown()) }),
+});
 
 const eventUrl = (slug: string, lang: Locale) =>
   `${SITE_URL}${lang === DEFAULT_LOCALE ? '' : `/${lang}`}/arrangementer/${slug}`;
 
-const toIcs = ({ kind, slug, venue, ...event }: FeedEvent, lang: Locale): IcsEvent => ({
+const toIcs = ({ kind, slug, venue, ...event }: FeedEvent, lang: Locale, home: Venue | undefined): IcsEvent => ({
   ...event,
-  venue: venue ?? (kind === TRIP_KIND ? undefined : HOME_VENUE),
+  venue: venue ?? (kind === TRIP_KIND ? undefined : home),
   url: eventUrl(slug, lang),
 });
 
@@ -63,9 +68,10 @@ const fetchEvents = async (lang: Locale) => {
   url.searchParams.set('$since', JSON.stringify(dayjs().subtract(12, 'month').format('YYYY-MM-DD')));
   const res = await fetch(url);
   if (!res.ok) throw new Error(`Sanity responded ${res.status}: ${await res.text()}`);
-  return Feed.parse(await res.json()).result.flatMap((raw) => {
+  const { home, events } = Feed.parse(await res.json()).result;
+  return events.flatMap((raw) => {
     const parsed = FeedEvent.safeParse(raw);
-    if (parsed.success) return [toIcs(parsed.data, lang)];
+    if (parsed.success) return [toIcs(parsed.data, lang, home)];
     console.warn('Skipped an invalid event', z.prettifyError(parsed.error));
     return [];
   });

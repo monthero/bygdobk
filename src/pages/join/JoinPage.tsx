@@ -19,12 +19,14 @@ import { getRouteApi, Link } from '@tanstack/react-router';
 import { useMemo, useState, type FC, type FormEvent, type ReactNode } from 'react';
 
 import { useSiteContent, type Plan } from '~/cms/content';
+import { useGroups, useSitePhoto } from '~/cms/siteData';
 import { useAuthReady, useSessionUserId } from '~/components/auth/hooks';
 import { PageIntro } from '~/components/styles';
 import { groupTimes } from '~/components/styles/court/schedule';
+import { GroupStatusBadge } from '~/components/training';
 import { ArrowRight, CheckCircle, Clock, PaperPlaneTilt, SignIn, User, UsersThree, Warning } from '~/components/ui';
-import { GROUP_SLUGS, PriceKind } from '~/data/club';
-import { PHOTOS } from '~/data/photos';
+import { GROUP_SLUGS, GroupStatus, PriceKind } from '~/data/club';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { membershipSeason, MembershipStatus, NAME_MAX, seasonDates, type Membership } from '~/memberships/model';
@@ -120,9 +122,11 @@ const PriceAmount: FC<{ plan: Plan }> = ({ plan }) =>
 export const JoinPage: FC = () => {
   const { i18n, t } = useLingui();
   usePageTitle(t`Join the club`, t`Membership`);
+  const photo = useSitePhoto(PhotoSlot.enum.join);
   const search = route.useSearch();
   const navigate = route.useNavigate();
   const { plans, events } = useSiteContent();
+  const groups = useGroups();
   const { current } = useSeasons();
   const ready = useAuthReady();
   const userId = useSessionUserId();
@@ -136,7 +140,14 @@ export const JoinPage: FC = () => {
   const picked = plans.find((p) => p.id === search.pris) ?? planForGroup(plans, GROUP_SLUGS.fromSlug(search.gruppe));
   const joiner = search.for ?? joinerOfPlan(picked);
   const options = plans.filter((p) => fitsJoiner(p, joiner));
-  const plan = picked && fitsJoiner(picked, joiner) ? picked : undefined;
+  const groupInfoOf = (p: Plan) => {
+    const group = groupOfPlan(p);
+    return group && groups[group];
+  };
+  const isFull = (p: Plan) => groupInfoOf(p)?.status === GroupStatus.enum.full;
+  const plan = picked && fitsJoiner(picked, joiner) && !isFull(picked) ? picked : undefined;
+  const planGroup = plan && groupInfoOf(plan);
+  const waitlist = planGroup?.status === GroupStatus.enum.waitlist ? planGroup : undefined;
   const child = joiner === Joiner.enum.child;
   const playerName = child ? childName.trim() : null;
   const existing =
@@ -236,7 +247,7 @@ export const JoinPage: FC = () => {
   return (
     <>
       <PageIntro
-        photo={PHOTOS.playersCourt}
+        photo={photo}
         eyebrow={<Trans>Season {current.label}</Trans>}
         title={<Trans>Join Bygdø Badmintonklubb</Trans>}
         lede={<Trans>Find the plan that fits you and send a request. The board takes it from there.</Trans>}
@@ -282,8 +293,16 @@ export const JoinPage: FC = () => {
               <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md" mt="xs">
                 {options.map((p) => {
                   const group = groupOfPlan(p);
+                  const info = group && groups[group];
                   return (
-                    <Radio.Card key={p.id} value={p.id} radius="md" p="md" className={classes.option}>
+                    <Radio.Card
+                      key={p.id}
+                      value={p.id}
+                      radius="md"
+                      p="md"
+                      className={classes.option}
+                      disabled={info?.status === GroupStatus.enum.full}
+                    >
                       <Group wrap="nowrap" align="flex-start">
                         <Radio.Indicator />
                         <Stack gap={2}>
@@ -297,6 +316,16 @@ export const JoinPage: FC = () => {
                           <Text fw={600} mt={4} className="tabular">
                             <PriceAmount plan={p} />
                           </Text>
+                          {info && info.status !== GroupStatus.enum.open && (
+                            <Stack gap={4} align="flex-start" mt={4}>
+                              <GroupStatusBadge status={info.status} />
+                              {info.statusNote && (
+                                <Text size="sm" c="dimmed">
+                                  {info.statusNote}
+                                </Text>
+                              )}
+                            </Stack>
+                          )}
                         </Stack>
                       </Group>
                     </Radio.Card>
@@ -331,6 +360,18 @@ export const JoinPage: FC = () => {
                   <Text size="sm" c="dimmed">
                     <Trans>The board applies any discounts after you sign up.</Trans>
                   </Text>
+                  {waitlist && (
+                    <Alert color="yellow" variant="light" icon={<Clock />} mt="sm">
+                      <Text size="sm">
+                        <Trans>This group has a waiting list. The board lets you know when there is a spot.</Trans>
+                      </Text>
+                      {waitlist.statusNote && (
+                        <Text size="sm" c="dimmed" mt={4}>
+                          {waitlist.statusNote}
+                        </Text>
+                      )}
+                    </Alert>
+                  )}
                 </div>
               ) : (
                 <Text c="dimmed">

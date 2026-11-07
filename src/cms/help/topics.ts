@@ -15,6 +15,13 @@ export const TopicId = z.enum([
   'events',
   'shifts',
   'siteSettings',
+  'club',
+  'payment',
+  'contactForm',
+  'groups',
+  'teams',
+  'sponsors',
+  'photos',
   'plans',
   'board',
   'privacy',
@@ -75,7 +82,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Felt med rød feilmelding må fikses før du kan publisere.',
         'Det kan ta noen minutter før endringen vises på nettsiden. Last inn siden på nytt.',
-        '«Site settings» og «Privacy» finnes bare én av hver. De kan ikke slettes.',
+        '«Site settings», «Photos» og «Privacy» finnes bare én av hver. Det gjelder også treningsgruppene og dugnadsteamene. De kan ikke slettes.',
       ],
     },
     en: {
@@ -92,7 +99,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Fields with a red error must be fixed before you can publish.',
         'It can take a few minutes before the website shows your change. Reload the page.',
-        'There is only one “Site settings” and one “Privacy”. They can’t be deleted.',
+        'There is only one “Site settings”, “Photos” and “Privacy”. The same goes for the training groups and volunteer teams. They can’t be deleted.',
       ],
     },
   },
@@ -183,6 +190,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'En sesong går fra juli til juni. Treningen hører til sesongen der «First day» er. Nye sesonger dukker opp av seg selv.',
         'Ny sesong? Åpne fjorårets trening, velg «Duplicate» i menyen ved «Publish», og endre datoene.',
         'Trener samme gruppe på et annet klokkeslett, trenger det en egen oppføring.',
+        'Trener gruppen i en annen hall, fyll ut «Venue». Tomt betyr hjemmehallen.',
       ],
     },
     en: {
@@ -199,6 +207,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'A season runs from July to June. The training belongs to the season of its “First day”. New seasons show up on their own.',
         'New season? Open last season’s training, pick “Duplicate” in the menu next to “Publish”, then change the dates.',
         'If the same group trains at another time, that needs its own entry.',
+        'If the group trains in another hall, fill in the “Venue”. Empty means the home hall.',
       ],
     },
   },
@@ -250,7 +259,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Skriv «Title» og «Description», og trykk «Generate» ved «URL name».',
         'Sett «First day», og «Last day» hvis det varer flere dager. «Starts at» og «Ends at» er valgfrie.',
         'Er datoen ikke bestemt? Slå av «The date is set» og skriv omtrent når under «When, in words», for eksempel «Våren 2027». Datoen brukes da bare til sortering.',
-        'Fyll ut «Venue». Tomt betyr Bygdøhus. For en tur betyr tomt at det ikke vises noe sted. Uten «Map link» lenker siden til et kartsøk på adressen.',
+        'Fyll ut «Venue» hvis det ikke er i hjemmehallen. Tomt betyr hallen fra «Site settings». En tur må alltid ha en «Venue». Uten «Map link» åpner siden adressen i kartappen.',
         'Har arrangementet påmelding, fyll ut «Registration deadline» og «Registration link».',
         '«Tip box» viser en liten tipsboks på arrangementssiden.',
         'Trykk «Publish».',
@@ -269,7 +278,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Write the “Title” and “Description”, and click “Generate” next to “URL name”.',
         'Set “First day”, and “Last day” if it lasts more than one day. “Starts at” and “Ends at” are optional.',
         'Date not decided yet? Turn off “The date is set” and write roughly when under “When, in words”, for example “Spring 2027”. The date is then only used to sort.',
-        'Fill in the “Venue”. Empty means Bygdøhus. For a trip, empty means no place is shown. Without a “Map link”, the website links to a map search for the address.',
+        'Fill in the “Venue” if it is not in the home hall. Empty means the hall from “Site settings”. A trip always needs a “Venue”. Without a “Map link”, the site opens the address in the map app.',
         'If people must sign up, fill in “Registration deadline” and “Registration link”.',
         '“Tip box” shows a small tip on the event page.',
         'Click “Publish”.',
@@ -320,7 +329,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       title: 'Melding og sosiale medier',
       intro: 'I «Site settings» styrer du meldingen øverst på alle sider og lenkene til sosiale medier.',
       steps: [
-        'Åpne «Site settings» øverst i «Content».',
+        'Åpne «Site settings» øverst i «Content». Velg fanen «Notice» eller «Social links».',
         'Under «Notice at the top of every page» skriver du «Text» og slår på «Show the notice».',
         'Velg «Tone»: «info» for vanlige beskjeder, «warning» for viktige (gul).',
         'Under «Social links» legger du til én lenke per plattform. Velg «Platform» og lim inn «Link». Lenken må starte med https://.',
@@ -333,7 +342,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       title: 'Notice and social links',
       intro: 'In “Site settings” you control the notice at the top of every page and the links to social media.',
       steps: [
-        'Open “Site settings” at the top of “Content”.',
+        'Open “Site settings” at the top of “Content”. Pick the “Notice” or “Social links” tab.',
         'Under “Notice at the top of every page”, write the “Text” and turn on “Show the notice”.',
         'Pick the “Tone”: “info” for normal news, “warning” for important news (yellow).',
         'Under “Social links”, add one link per platform. Pick the “Platform” and paste the “Link”. It must start with https://.',
@@ -434,6 +443,217 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Click “Publish”.',
       ],
       tips: ['There is only one privacy page, so it can’t be deleted.'],
+    },
+  },
+  [TopicId.enum.club]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Klubbinfo',
+      intro:
+        'E-post, hallen, organisasjonsnummer og varslingslenke. Vises i bunnen av siden, i menyen, på kontaktsiden og på trening og arrangementer.',
+      steps: [
+        'Åpne «Site settings» og fanen «Club».',
+        '«Board email» er e-posten som vises på siden. Den får også meldinger fra kontaktskjemaet, hvis ikke et tema sier noe annet.',
+        'Under «Home hall» skriver du navn og adresse på hallen. Trening og arrangementer uten egen «Venue» holdes her.',
+        '«Map link» er valgfri. Uten den åpner siden adressen i kartappen til den som besøker.',
+        '«Whistleblowing link» vises på klubbsiden, der medlemmer kan varsle utenfor klubben.',
+        'Trykk «Publish».',
+      ],
+      tips: ['Tomme felt skjules på siden.'],
+    },
+    en: {
+      title: 'Club details',
+      intro:
+        'Email, the hall, organization number and whistleblowing link. Shown in the footer, the menu, on the contact page and on training and events.',
+      steps: [
+        'Open “Site settings” and the “Club” tab.',
+        '“Board email” is the email shown on the site. It also gets contact form messages, unless a topic says otherwise.',
+        'Under “Home hall”, write the hall’s name and address. Training and events without their own “Venue” are held here.',
+        '“Map link” is optional. Without it, the site opens the address in the visitor’s map app.',
+        '“Whistleblowing link” shows on the club page, where members can report problems outside the club.',
+        'Click “Publish”.',
+      ],
+      tips: ['Empty fields are hidden on the site.'],
+    },
+  },
+  [TopicId.enum.payment]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Betaling',
+      intro: 'Vipps-nummer, kontonummer og teksten om hvordan man betaler.',
+      steps: [
+        'Åpne «Site settings» og fanen «Payment».',
+        '«Vipps number» vises ved drop-in-prisen og på forsiden. La den stå tom for å skjule den.',
+        '«Bank account number» er valgfritt. Det vises i steget «Pay» på medlemskapssiden.',
+        '«How to pay» er teksten i steget «Pay». Skriv den på norsk og engelsk.',
+        'Trykk «Publish».',
+      ],
+      tips: [],
+    },
+    en: {
+      title: 'Payment',
+      intro: 'The Vipps number, the account number and the text on how to pay.',
+      steps: [
+        'Open “Site settings” and the “Payment” tab.',
+        '“Vipps number” shows next to the drop-in price and on the front page. Leave it empty to hide it.',
+        '“Bank account number” is optional. It shows in the “Pay” step on the membership page.',
+        '“How to pay” is the text in the “Pay” step. Write it in Norwegian and English.',
+        'Click “Publish”.',
+      ],
+      tips: [],
+    },
+  },
+  [TopicId.enum.contactForm]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Kontaktskjema',
+      intro: 'Temaene besøkende velger på kontaktsiden, og hvem som får meldingene.',
+      steps: [
+        'Åpne «Site settings» og fanen «Contact form».',
+        'Hvert tema har en «Label» (det besøkende ser), en «ID» og «Send to».',
+        'Under «Send to» legger du til én eller flere e-poster. Tomt betyr styrets e-post.',
+        'Dra temaene i den rekkefølgen du vil ha. Det første er valgt fra start.',
+        'Trykk «Publish».',
+      ],
+      tips: [
+        'Knapper på siden åpner skjemaet med et tema valgt: training, membership, tournaments, sponsor og other. Behold disse ID-ene. Mangler en, åpner knappen det første temaet.',
+        'Nye temaer får en egen ID med små bokstaver, for eksempel «kiosk».',
+      ],
+    },
+    en: {
+      title: 'Contact form',
+      intro: 'The topics visitors pick on the contact page, and who gets the messages.',
+      steps: [
+        'Open “Site settings” and the “Contact form” tab.',
+        'Each topic has a “Label” (what visitors see), an “ID” and “Send to”.',
+        'Under “Send to”, add one or more emails. Empty means the board email.',
+        'Drag the topics into the order you want. The first one is picked at the start.',
+        'Click “Publish”.',
+      ],
+      tips: [
+        'Buttons on the site open the form with a topic picked: training, membership, tournaments, sponsor and other. Keep these IDs. If one is missing, the button opens the first topic.',
+        'New topics get their own lowercase ID, for example “kiosk”.',
+      ],
+    },
+  },
+  [TopicId.enum.groups]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Treningsgrupper',
+      intro: 'Navn, tekst og om gruppen tar inn nye spillere. De fire gruppene er faste.',
+      steps: [
+        'Åpne «Training groups» i «Content» og velg en gruppe.',
+        'Endre «Name» og «Who it is for». Teksten vises på treningssiden.',
+        'Slå på «With a coach» hvis gruppen har trener.',
+        'Under «New members» velger du «Open for new members», «Waiting list» eller «Full, no new members».',
+        'Med venteliste eller full kan du skrive en «Note about new members», for eksempel «Vi tar inn nye i januar.»',
+        'Trykk «Publish».',
+      ],
+      tips: [
+        'Er gruppen full, kan ingen velge den på innmeldingssiden. Treningssiden viser «Spør om plass» i stedet.',
+        'Med venteliste kan folk fortsatt sende forespørsel. De får vite at gruppen har venteliste.',
+      ],
+    },
+    en: {
+      title: 'Training groups',
+      intro: 'The name, the text and whether the group takes new players. The four groups are fixed.',
+      steps: [
+        'Open “Training groups” in “Content” and pick a group.',
+        'Change “Name” and “Who it is for”. The text shows on the training page.',
+        'Turn on “With a coach” if the group has a coach.',
+        'Under “New members”, pick “Open for new members”, “Waiting list” or “Full, no new members”.',
+        'With a waiting list or full, you can write a “Note about new members”, for example “We take new players in January.”',
+        'Click “Publish”.',
+      ],
+      tips: [
+        'When a group is full, nobody can pick it on the join page. The training page shows “Ask about a spot” instead.',
+        'With a waiting list, people can still send a request. They are told the group has a waiting list.',
+      ],
+    },
+  },
+  [TopicId.enum.teams]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Dugnadsteam',
+      intro: 'Navn og tekst for teamene Hall, Kiosk og Sekretariat. Vises når medlemmer melder seg på vakter.',
+      steps: [
+        'Åpne «Volunteer teams» i «Content» og velg et team.',
+        'Endre «Name» og «What the team does».',
+        'Trykk «Publish».',
+      ],
+      tips: ['Teamene er faste. Selve vaktene lager du på arrangementet. Se «Dugnadsvakter».'],
+    },
+    en: {
+      title: 'Volunteer teams',
+      intro: 'The name and text of the Hall, Kiosk and Secretariat teams. Shown when members sign up for shifts.',
+      steps: [
+        'Open “Volunteer teams” in “Content” and pick a team.',
+        'Change “Name” and “What the team does”.',
+        'Click “Publish”.',
+      ],
+      tips: ['The teams are fixed. You make the shifts on the event. See “Volunteer shifts”.'],
+    },
+  },
+  [TopicId.enum.sponsors]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Sponsorer og medlemsfordeler',
+      intro: 'Sponsorer vises i stripen over bunnen av siden. En medlemsfordel vises på medlemskapssiden.',
+      steps: [
+        'Åpne «Sponsor» i «Content». Trykk på blyanten for en ny, eller velg en som finnes.',
+        'Fyll ut «Name», «Logo» og «Website». En bred logo med gjennomsiktig bakgrunn ser best ut.',
+        'Slå på «Show in the partner strip» og skriv «Text in the partner strip».',
+        'Har sponsoren en medlemsfordel, fyll ut «Member deal»: «Intro», opptil fire «Perks» med ikon, stor og liten tekst, og «How to use it».',
+        'Slå på «Show an "Ask for the code" button» hvis medlemmer trenger en kode fra styret.',
+        'Sett «Order» for rekkefølgen. Lavere kommer først. Trykk «Publish».',
+      ],
+      tips: ['Uten medlemsfordeler skjules hele delen på medlemskapssiden.'],
+    },
+    en: {
+      title: 'Sponsors and member deals',
+      intro: 'Sponsors show in the strip above the footer. A member deal shows on the membership page.',
+      steps: [
+        'Open “Sponsor” in “Content”. Click the pencil for a new one, or pick one that exists.',
+        'Fill in “Name”, “Logo” and “Website”. A wide logo with a see-through background looks best.',
+        'Turn on “Show in the partner strip” and write the “Text in the partner strip”.',
+        'If the sponsor has a member deal, fill in “Member deal”: the “Intro”, up to four “Perks” with an icon, big and small text, and “How to use it”.',
+        'Turn on “Show an "Ask for the code" button” if members need a code from the board.',
+        'Set “Order” for the order. Lower comes first. Click “Publish”.',
+      ],
+      tips: ['Without member deals, that whole part of the membership page is hidden.'],
+    },
+  },
+  [TopicId.enum.photos]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Sidebilder',
+      intro: 'Bildene øverst på hver side, på forsidekortene og på nyheter uten toppbilde.',
+      steps: [
+        'Åpne «Photos» i «Content».',
+        'Velg fanen «Pages», «Front page» eller «News without a banner».',
+        'Last opp et bilde i feltet og fyll ut «Describe the image».',
+        'Sett hotspot på det viktigste i bildet. Se «Bilder».',
+        'Trykk «Publish».',
+      ],
+      tips: [
+        'Et tomt felt bruker bildet som vises i den lille forhåndsvisningen under feltet.',
+        'Fjern bildet for å gå tilbake til standardbildet.',
+      ],
+    },
+    en: {
+      title: 'Page photos',
+      intro: 'The photos at the top of each page, on the front page cards and on news without a banner.',
+      steps: [
+        'Open “Photos” in “Content”.',
+        'Pick the “Pages”, “Front page” or “News without a banner” tab.',
+        'Upload a photo in the field and fill in “Describe the image”.',
+        'Put the hotspot on the most important part. See “Images”.',
+        'Click “Publish”.',
+      ],
+      tips: [
+        'An empty field uses the photo in the small preview under it.',
+        'Remove the photo to go back to the default one.',
+      ],
     },
   },
   [TopicId.enum.images]: {

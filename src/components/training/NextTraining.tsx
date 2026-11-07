@@ -1,11 +1,12 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { Alert, Badge, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
 import { useSiteContent } from '~/cms/content';
+import { useGroups } from '~/cms/siteData';
 import { AddressLink, ArrowRight, MapPin, Warning } from '~/components/ui';
-import { GROUP_SLUGS, GROUPS, type Group as TrainingGroup } from '~/data/club';
+import { GROUP_COLORS, GROUP_SLUGS, type Group as TrainingGroup } from '~/data/club';
 import { useSeasons } from '~/hooks/useSeasons';
 import { listFormat } from '~/i18n/current';
 import { formatDate, today } from '~/utils/dates';
@@ -18,7 +19,7 @@ type Props = { group?: TrainingGroup; frosted?: boolean };
 const DAY_FORMAT: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' };
 
 export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
-  const { i18n } = useLingui();
+  const groups = useGroups();
   const { events } = useSiteContent();
   const { current } = useSeasons();
   const next = useMemo(() => nextTrainingDay(events, group), [events, group]);
@@ -27,6 +28,7 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
   const isToday = next.day.isSame(today(), 'day');
   const dayLabel = formatDate(next.day, DAY_FORMAT);
   const allOff = next.sessions.every((s) => s.off);
+  const atHome = next.sessions.some((s) => !s.off && !s.event.venue);
 
   return (
     <Paper withBorder radius="lg" p="lg" shadow="sm" className={classes.card} data-frosted={frosted || undefined}>
@@ -58,8 +60,8 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
                 >
                   <Stack gap={2}>
                     <Group gap={8} wrap="nowrap">
-                      <Badge color={s.off ? 'gray' : GROUPS[s.group].color} variant="light" size="lg">
-                        {i18n._(GROUPS[s.group].name)}
+                      <Badge color={s.off ? 'gray' : GROUP_COLORS[s.group]} variant="light" size="lg">
+                        {groups[s.group].name}
                       </Badge>
                       {isLive(s) && (
                         <Badge color="green" variant="dot" size="sm">
@@ -72,6 +74,11 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
                         <Trans>No training: {reason}</Trans>
                       </Text>
                     )}
+                    {!reason && s.event.venue && (
+                      <Text size="sm" c="dimmed">
+                        <AddressLink place={s.event.venue} />
+                      </Text>
+                    )}
                   </Stack>
                   <Text fw={600} className={`${classes.time} tabular`}>
                     {s.event.startTime}–{s.event.endTime}
@@ -82,12 +89,14 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
           </Stack>
         )}
 
-        <Group gap={6} c="dimmed">
-          <MapPin />
-          <Text size="sm">
-            <AddressLink />
-          </Text>
-        </Group>
+        {atHome && (
+          <Group gap={6} c="dimmed">
+            <MapPin />
+            <Text size="sm">
+              <AddressLink />
+            </Text>
+          </Group>
+        )}
         <Text
           size="sm"
           fw={600}

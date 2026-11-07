@@ -5,8 +5,9 @@ import { Link } from '@tanstack/react-router';
 import { memo, useMemo, type CSSProperties, type FC } from 'react';
 
 import { useSiteContent } from '~/cms/content';
+import { useGroups } from '~/cms/siteData';
 import { ArrowRight } from '~/components/ui';
-import { GROUP_SLUGS, GROUPS, Group as TrainingGroup } from '~/data/club';
+import { GROUP_COLORS, GROUP_SLUGS, Group as TrainingGroup } from '~/data/club';
 import { useSeasons } from '~/hooks/useSeasons';
 import { numberFormat } from '~/i18n/current';
 import { wallNow } from '~/utils/dates';
@@ -47,7 +48,7 @@ const ZONE_W = FRONT - LONG_SERVICE;
 const ZONE_H = MIDDLE - SINGLES;
 
 const zone = (group: TrainingGroup, x: number, y: number) => {
-  const { color } = GROUPS[group];
+  const color = GROUP_COLORS[group];
   return {
     group,
     style: {
@@ -103,6 +104,7 @@ const meters = (value: number) => `${numberFormat({ minimumFractionDigits: 2 }).
 
 export const CourtHero: FC = () => {
   const { i18n, t } = useLingui();
+  const groups = useGroups();
   const { events } = useSiteContent();
   const { current } = useSeasons();
   const now = wallNow();
@@ -149,7 +151,7 @@ export const CourtHero: FC = () => {
                 ))}
                 <ul className={classes.zones} aria-label={t`Training groups`}>
                   {ZONES.map(({ group, style }) => {
-                    const { name, color } = GROUPS[group];
+                    const { name, color } = groups[group];
                     const slots = slotsOf(group, sessions);
                     const today = todays.filter((s) => s.group === group);
                     const live = today.some((s) => isLive(s, now));
@@ -161,13 +163,14 @@ export const CourtHero: FC = () => {
                           search={{ gruppe: GROUP_SLUGS.toSlug(group) }}
                           className={classes.zone}
                         >
-                          <span className={classes.zoneName}>{i18n._(name)}</span>
+                          <span className={classes.zoneName}>{name}</span>
                           {slots.map((slot) => (
-                            <span key={slot.start + slot.end} className={classes.zoneTime}>
+                            <span key={`${slot.start}-${slot.end}-${slot.venue?.name}`} className={classes.zoneTime}>
                               <span>{slotDays(slot)}</span>{' '}
                               <span className="tabular">
                                 {slot.start}–{slot.end}
                               </span>
+                              {slot.venue && <span> · {slot.venue.name}</span>}
                             </span>
                           ))}
                           {today.length > 0 && (

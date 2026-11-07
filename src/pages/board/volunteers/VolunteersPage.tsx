@@ -20,12 +20,13 @@ import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { isPast, type CalendarEvent, type Shift } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
+import { useTeams } from '~/cms/siteData';
 import { useProfile, useSignedOut } from '~/components/auth/hooks';
 import { isVisitorEvent, shiftDays, shiftTime, TeamBadge, type VisitorEvent } from '~/components/events';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { HandHeart, PencilSimple, Trash, Trophy, UserPlus, Warning } from '~/components/ui';
-import { Team, TEAMS } from '~/data/events';
+import { Team } from '~/data/events';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { LoadError } from '~/pages/board/LoadError';
 import { date, formatDate, todayIso } from '~/utils/dates';
@@ -153,7 +154,7 @@ const ShiftPanel = memo<{ shift: Shift; volunteers: readonly AdminShiftVolunteer
 type Gap = { team: Team; open: number };
 
 const WhoToFind: FC<{ days: readonly string[]; gaps: ReadonlyMap<string, Gap[]> }> = ({ days, gaps }) => {
-  const { i18n } = useLingui();
+  const teams = useTeams();
   const openDays = days.filter((d) => (gaps.get(d)?.length ?? 0) > 0);
   return (
     <Alert
@@ -176,8 +177,7 @@ const WhoToFind: FC<{ days: readonly string[]; gaps: ReadonlyMap<string, Gap[]> 
               </Text>
               {gaps.get(d)?.map(({ team, open }) => (
                 <Badge key={team} variant="outline" color="yellow" className="tabular">
-                  {i18n._(TEAMS[team].name)} ·{' '}
-                  <Trans comment="Open spots on a volunteer team, e.g. 2 open">{open} open</Trans>
+                  {teams[team].name} · <Trans comment="Open spots on a volunteer team, e.g. 2 open">{open} open</Trans>
                 </Badge>
               ))}
             </Group>

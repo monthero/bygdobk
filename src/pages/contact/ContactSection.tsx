@@ -24,6 +24,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 import { z } from 'zod';
 
+import { useSiteContent } from '~/cms/content';
+import { useClub } from '~/cms/siteData';
 import { AVATAR_IMAGE_PROPS, useUser } from '~/components/auth';
 import {
   AddressLink,
@@ -35,14 +37,7 @@ import {
   Warning,
 } from '~/components/ui';
 import { CLUB } from '~/data/club';
-import {
-  CONTACT_EMAIL_MAX,
-  CONTACT_MESSAGE_MAX,
-  CONTACT_MESSAGE_MIN,
-  CONTACT_NAME_MAX,
-  CONTACT_TOPIC_LABELS,
-  ContactTopic,
-} from '~/data/contact';
+import { CONTACT_EMAIL_MAX, CONTACT_MESSAGE_MAX, CONTACT_MESSAGE_MIN, CONTACT_NAME_MAX } from '~/data/contact';
 import type { Translate } from '~/i18n/current';
 import type { User } from '~/stores/auth';
 import { getSupabase } from '~/supabase/client';
@@ -51,7 +46,7 @@ const SUBMIT_WIDTH = { base: '100%', sm: 'auto' };
 
 const contactSchemas = (t: Translate) => {
   const message = z.object({
-    topic: ContactTopic,
+    topic: z.string(),
     message: z
       .string()
       .trim()
@@ -67,11 +62,12 @@ const contactSchemas = (t: Translate) => {
   return { message, withSender };
 };
 
-type ContactValues = { topic: ContactTopic; name: string; email: string; message: string; website: string };
+type ContactValues = { topic: string; name: string; email: string; message: string; website: string };
 
 type ContactEmail = Omit<ContactValues, 'topic'> & {
   subject: string;
-  topic: string;
+  topicId?: string;
+  topic?: string;
   labels: { topic: string; name: string; email: string };
 };
 
@@ -135,22 +131,21 @@ const Sent: FC<{ name: string; onAgain: () => void }> = ({ name, onAgain }) => (
   </Stack>
 );
 
-export const ContactSection: FC<{ initialTopic?: ContactTopic; draft?: string }> = ({ initialTopic, draft }) => {
+export const ContactSection: FC<{ initialTopic?: string; draft?: string }> = ({ initialTopic, draft }) => {
   const { t } = useLingui();
   const { user, loading } = useUser();
+  const { contactTopics } = useSiteContent();
+  const club = useClub();
   const [otherDetails, setOtherDetails] = useState(false);
   const sendingAs = otherDetails ? null : user;
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
-  const topics = useMemo(
-    () => ContactTopic.options.map((value) => ({ value, label: t(CONTACT_TOPIC_LABELS[value]) })),
-    [t],
-  );
+  const topics = useMemo(() => contactTopics.map(({ id, label }) => ({ value: id, label })), [contactTopics]);
   const schemas = useMemo(() => contactSchemas(t), [t]);
 
   const form = useForm<ContactValues>({
     initialValues: {
-      topic: initialTopic ?? ContactTopic.enum.training,
+      topic: (contactTopics.find(({ id }) => id === initialTopic) ?? contactTopics.at(0))?.id ?? '',
       name: '',
       email: '',
       message: draft ?? '',
@@ -170,14 +165,16 @@ export const ContactSection: FC<{ initialTopic?: ContactTopic; draft?: string }>
   const submit = form.onSubmit((values) => {
     if (loading) return;
     const { name, email } = sendingAs ?? values;
-    const topic = t(CONTACT_TOPIC_LABELS[values.topic]);
+    const picked = contactTopics.find(({ id }) => id === values.topic);
+    const topic = picked?.label;
     send.mutate({
       name,
       email,
       message: values.message,
       website: values.website,
+      topicId: picked?.id,
       topic,
-      subject: t`Contact form: ${topic} (from ${name})`,
+      subject: topic ? t`Contact form: ${topic} (from ${name})` : t`Contact form message from ${name}`,
       labels: { topic: t`Topic`, name: t`Name`, email: t`Email` },
     });
   });
@@ -225,12 +222,14 @@ export const ContactSection: FC<{ initialTopic?: ContactTopic; draft?: string }>
           ) : (
             <form onSubmit={submit} noValidate>
               <Stack gap="md">
-                <Select
-                  label={t`What is it about?`}
-                  data={topics}
-                  allowDeselect={false}
-                  {...form.getInputProps('topic')}
-                />
+                {topics.length > 0 && (
+                  <Select
+                    label={t`What is it about?`}
+                    data={topics}
+                    allowDeselect={false}
+                    {...form.getInputProps('topic')}
+                  />
+                )}
                 {sender}
                 <Textarea
                   ref={messageRef}
@@ -253,11 +252,13 @@ export const ContactSection: FC<{ initialTopic?: ContactTopic; draft?: string }>
                 {send.isError && (
                   <Alert color="red" variant="light" icon={<Warning />} title={t`That didn't go through`}>
                     <Stack gap="xs" align="flex-start">
-                      <Text size="sm">
-                        <Trans>
-                          Try again, or email us at <Anchor href={`mailto:${CLUB.email}`}>{CLUB.email}</Anchor>.
-                        </Trans>
-                      </Text>
+                      {club.email && (
+                        <Text size="sm">
+                          <Trans>
+                            Try again, or email us at <Anchor href={`mailto:${club.email}`}>{club.email}</Anchor>.
+                          </Trans>
+                        </Text>
+                      )}
                       <Button
                         size="xs"
                         variant="light"
@@ -294,10 +295,12 @@ export const ContactSection: FC<{ initialTopic?: ContactTopic; draft?: string }>
             <Text>
               <AddressLink />
             </Text>
-            <Anchor href={`mailto:${CLUB.email}`}>{CLUB.email}</Anchor>
-            <Text size="sm" c="dimmed">
-              <Trans>Org. no. {CLUB.orgNr}</Trans>
-            </Text>
+            {club.email && <Anchor href={`mailto:${club.email}`}>{club.email}</Anchor>}
+            {club.orgNr && (
+              <Text size="sm" c="dimmed">
+                <Trans>Org. no. {club.orgNr}</Trans>
+              </Text>
+            )}
             <SocialLinks />
           </Stack>
         </Card>

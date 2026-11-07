@@ -1,17 +1,24 @@
-import { useLingui } from '@lingui/react/macro';
 import type { FC } from 'react';
 
-import { PHOTOS } from '~/data/photos';
+import { useSitePhoto } from '~/cms/siteData';
+import { PhotoSlot } from '~/data/photos';
 
 import classes from './VenuePhoto.module.css';
 
-const PHOTO = PHOTOS.bygdohusOutside;
-
 export const VenuePhoto: FC<{ fill?: boolean }> = ({ fill }) => {
-  const { i18n } = useLingui();
+  const photo = useSitePhoto(PhotoSlot.enum.venue);
   return (
     <div className={classes.photo} data-fill={fill || undefined}>
-      <img src={PHOTO.src} alt={i18n._(PHOTO.alt)} loading="lazy" decoding="async" className={classes.image} />
+      <img
+        src={photo.src}
+        srcSet={photo.srcSet}
+        sizes="(min-width: 48em) 50vw, 100vw"
+        alt={photo.alt}
+        loading="lazy"
+        decoding="async"
+        className={classes.image}
+        style={{ objectPosition: photo.position }}
+      />
     </div>
   );
 };

@@ -2,12 +2,13 @@ import { buildTheme } from '@sanity/ui/theme';
 import { defineConfig } from 'sanity';
 import { structureTool, type StructureResolver } from 'sanity/structure';
 
-import { CLUB } from '~/data/club';
+import { CLUB, Group } from '~/data/club';
+import { Team } from '~/data/events';
 import { ENV } from '~/env';
 import { ADMIN_PATH } from '~/i18n/locales';
 
 import { HELP_TOOL } from './help';
-import { PRIVACY_PAGE_ID, SCHEMA_TYPES, SITE_SETTINGS_ID } from './schema';
+import { fixedDocId, PRIVACY_PAGE_ID, SCHEMA_TYPES, SITE_PHOTOS_ID, SITE_SETTINGS_ID } from './schema';
 
 const THEME = buildTheme({
   color: {
@@ -16,14 +17,20 @@ const THEME = buildTheme({
   },
 });
 
-const LISTS = ['event', 'newsPost', 'membershipPlan', 'discount', 'boardMember'];
+const LISTS = ['event', 'newsPost', 'membershipPlan', 'discount', 'boardMember', 'sponsor'];
 
 const SINGLETONS = [
   { type: 'siteSettings', id: SITE_SETTINGS_ID, title: 'Site settings' },
+  { type: 'sitePhotos', id: SITE_PHOTOS_ID, title: 'Photos' },
   { type: 'privacyPage', id: PRIVACY_PAGE_ID, title: 'Privacy' },
 ];
 
-const SINGLETON_TYPES = new Set(SINGLETONS.map(({ type }) => type));
+const FIXED_SETS = [
+  { type: 'trainingGroup', title: 'Training groups', keys: Group.options },
+  { type: 'volunteerTeam', title: 'Volunteer teams', keys: Team.options },
+];
+
+const LOCKED_TYPES = new Set([...SINGLETONS, ...FIXED_SETS].map(({ type }) => type));
 
 const LOCKED_ACTIONS = new Set(['delete', 'duplicate', 'unpublish']);
 
@@ -33,6 +40,16 @@ const structure: StructureResolver = (S) =>
     .items([
       ...SINGLETONS.map(({ type, id, title }) =>
         S.listItem().title(title).id(id).child(S.document().schemaType(type).documentId(id)),
+      ),
+      ...FIXED_SETS.map(({ type, title, keys }) =>
+        S.listItem()
+          .title(title)
+          .id(type)
+          .child(
+            S.list()
+              .title(title)
+              .items(keys.map((key) => S.documentListItem().schemaType(type).id(fixedDocId(type, key)))),
+          ),
       ),
       S.divider(),
       ...LISTS.map((type) => S.documentTypeListItem(type)),
@@ -49,12 +66,10 @@ export const STUDIO_CONFIG = defineConfig({
   tools: (tools) => [...tools, HELP_TOOL],
   schema: {
     types: SCHEMA_TYPES,
-    templates: (templates) => templates.filter(({ schemaType }) => !SINGLETON_TYPES.has(schemaType)),
+    templates: (templates) => templates.filter(({ schemaType }) => !LOCKED_TYPES.has(schemaType)),
   },
   document: {
     actions: (actions, { schemaType }) =>
-      SINGLETON_TYPES.has(schemaType)
-        ? actions.filter(({ action }) => !action || !LOCKED_ACTIONS.has(action))
-        : actions,
+      LOCKED_TYPES.has(schemaType) ? actions.filter(({ action }) => !action || !LOCKED_ACTIONS.has(action)) : actions,
   },
 });

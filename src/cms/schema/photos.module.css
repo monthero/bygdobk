@@ -1,0 +1,10 @@
+.fallback {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  & img {
+    border-radius: 3px;
+    object-fit: cover;
+  }
+}

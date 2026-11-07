@@ -17,9 +17,10 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import { memo, useMemo, type FC } from 'react';
 
 import type { Shift } from '~/cms/calendar';
+import { useTeams } from '~/cms/siteData';
 import { useSessionUserId } from '~/components/auth/hooks';
 import { ArrowCounterClockwise, ArrowUpRight, CheckCircle, HandHeart, Warning } from '~/components/ui';
-import { Team, TEAMS } from '~/data/events';
+import { Team } from '~/data/events';
 import { useUi } from '~/stores/ui';
 import { date, formatDate } from '~/utils/dates';
 import { percent } from '~/utils/numbers';
@@ -304,7 +305,7 @@ export const ShiftBoard: FC<ShiftBoardProps> = ({
   onDayChange,
   readOnly = false,
 }) => {
-  const { i18n } = useLingui();
+  const teams = useTeams();
   const signedIn = Boolean(useSessionUserId());
   const counts = useShiftCounts(eventId);
   const mine = useMyShifts(eventId);
@@ -340,10 +341,10 @@ export const ShiftBoard: FC<ShiftBoardProps> = ({
         {Team.options.map((team) => (
           <Card key={team} withBorder radius="md" padding="md">
             <Badge color={TEAM_COLORS[team]} variant="light" mb={6}>
-              {i18n._(TEAMS[team].name)}
+              {teams[team].name}
             </Badge>
             <Text size="sm" c="dimmed">
-              {i18n._(TEAMS[team].what)}
+              {teams[team].what}
             </Text>
           </Card>
         ))}

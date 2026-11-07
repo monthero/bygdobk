@@ -66,3 +66,44 @@ export const PHOTOS = {
     position: 'center 22%',
   },
 } satisfies Record<PhotoName, Photo>;
+
+export const PhotoSlot = z.enum([
+  'home',
+  'startTraining',
+  'startJoin',
+  'startMembers',
+  'training',
+  'events',
+  'news',
+  'club',
+  'contact',
+  'venue',
+  'membership',
+  'join',
+  'privacy',
+  'newsTraining',
+  'newsEvent',
+  'newsVolunteer',
+  'newsClub',
+]);
+export type PhotoSlot = z.infer<typeof PhotoSlot>;
+
+export const SLOT_DEFAULTS: Record<PhotoSlot, Photo> = {
+  [PhotoSlot.enum.home]: PHOTOS.playerServe,
+  [PhotoSlot.enum.startTraining]: PHOTOS.bygdohusCourts,
+  [PhotoSlot.enum.startJoin]: PHOTOS.bygdohusCoaching,
+  [PhotoSlot.enum.startMembers]: PHOTOS.bygdohusOutside,
+  [PhotoSlot.enum.training]: PHOTOS.bygdohusCourts,
+  [PhotoSlot.enum.events]: PHOTOS.hallSunset,
+  [PhotoSlot.enum.news]: PHOTOS.racketCourt,
+  [PhotoSlot.enum.club]: PHOTOS.bygdohusCoaching,
+  [PhotoSlot.enum.contact]: PHOTOS.bygdohusCourts,
+  [PhotoSlot.enum.venue]: PHOTOS.bygdohusOutside,
+  [PhotoSlot.enum.membership]: PHOTOS.shuttleRacket,
+  [PhotoSlot.enum.join]: PHOTOS.playersCourt,
+  [PhotoSlot.enum.privacy]: PHOTOS.privacyPhone,
+  [PhotoSlot.enum.newsTraining]: PHOTOS.bygdohusCourts,
+  [PhotoSlot.enum.newsEvent]: PHOTOS.hallSunset,
+  [PhotoSlot.enum.newsVolunteer]: PHOTOS.playersCourt,
+  [PhotoSlot.enum.newsClub]: PHOTOS.bygdohusCoaching,
+};

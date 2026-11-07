@@ -7,8 +7,8 @@ import type { FC, ReactNode } from 'react';
 
 import { imageBuilder } from '~/cms/client';
 import { useSiteContent, type BoardMember } from '~/cms/content';
+import { useClub } from '~/cms/siteData';
 import { ArrowRight, ArrowUpRight, Check, EnvelopeSimple, Handshake, Info, Phone, ShieldCheck } from '~/components/ui';
-import { CLUB } from '~/data/club';
 import { contactLink, ContactTopic, SPONSOR_DRAFT } from '~/data/contact';
 
 import classes from './sections.module.css';
@@ -120,37 +120,42 @@ export const BoardSection: FC = () => {
   );
 };
 
-export const SafetySection: FC = () => (
-  <Card withBorder radius="lg" padding="lg">
-    <Group wrap="nowrap" align="flex-start">
-      <ThemeIcon variant="light" color="teal" size={40} radius="md">
-        <ShieldCheck width={22} height={22} />
-      </ThemeIcon>
-      <Stack gap="sm" align="flex-start" maw={620}>
-        <Text>
-          <Trans>
-            Has something happened in the club that isn’t okay? You can report it to the Norwegian sports federation,
-            outside the club.
-          </Trans>
-        </Text>
-        <Button
-          component="a"
-          href={CLUB.whistleblowingUrl}
-          target="_blank"
-          rel="noreferrer"
-          variant="light"
-          color="teal"
-          rightSection={<ArrowUpRight />}
-        >
-          <Trans>Report to the sports federation</Trans>
-        </Button>
-        <Text size="sm" c="dimmed">
-          <Trans>You can also talk to a board member you trust.</Trans>
-        </Text>
-      </Stack>
-    </Group>
-  </Card>
-);
+export const SafetySection: FC = () => {
+  const { whistleblowingUrl } = useClub();
+  return (
+    <Card withBorder radius="lg" padding="lg">
+      <Group wrap="nowrap" align="flex-start">
+        <ThemeIcon variant="light" color="teal" size={40} radius="md">
+          <ShieldCheck width={22} height={22} />
+        </ThemeIcon>
+        <Stack gap="sm" align="flex-start" maw={620}>
+          <Text>
+            <Trans>
+              Has something happened in the club that isn’t okay? You can report it to the Norwegian sports federation,
+              outside the club.
+            </Trans>
+          </Text>
+          {whistleblowingUrl && (
+            <Button
+              component="a"
+              href={whistleblowingUrl}
+              target="_blank"
+              rel="noreferrer"
+              variant="light"
+              color="teal"
+              rightSection={<ArrowUpRight />}
+            >
+              <Trans>Report to the sports federation</Trans>
+            </Button>
+          )}
+          <Text size="sm" c="dimmed">
+            <Trans>You can also talk to a board member you trust.</Trans>
+          </Text>
+        </Stack>
+      </Group>
+    </Card>
+  );
+};
 
 export const SponsorSection: FC = () => {
   const { t } = useLingui();

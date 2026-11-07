@@ -26,6 +26,7 @@ import {
 } from 'react';
 
 import { useNewsBodies, useSiteContent, type NewsPost } from '~/cms/content';
+import { useSitePhoto } from '~/cms/siteData';
 import { PageToolbar } from '~/components/layout';
 import { NewsCard } from '~/components/news';
 import { PageIntro, useStyleKit } from '~/components/styles';
@@ -38,7 +39,7 @@ import {
   type SegmentedOption,
 } from '~/components/ui';
 import { NEWS_KIND_SLUGS, NEWS_KINDS, NewsKind } from '~/data/news';
-import { PHOTOS } from '~/data/photos';
+import { PhotoSlot } from '~/data/photos';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { Style, useSettings } from '~/stores/settings';
@@ -96,6 +97,7 @@ const EmptyState: FC<{ icon: ComponentType<SVGProps<SVGSVGElement>>; title: Reac
 export const NewsPage: FC = () => {
   const { i18n, t } = useLingui();
   usePageTitle(t`News`);
+  const photo = useSitePhoto(PhotoSlot.enum.news);
   const { kategori, sok, ar } = route.useSearch();
   const navigate = route.useNavigate();
   const { NewsList } = useStyleKit();
@@ -195,7 +197,7 @@ export const NewsPage: FC = () => {
   return (
     <>
       <PageIntro
-        photo={PHOTOS.racketCourt}
+        photo={photo}
         eyebrow={<Trans>Bygdø Badmintonklubb</Trans>}
         title={<Trans>News</Trans>}
         lede={<Trans>Training changes, events, volunteering and club news, with dates.</Trans>}

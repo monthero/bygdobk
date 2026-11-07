@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { eventDays, isPast, type CalendarEvent } from '~/cms/calendar';
 import { SITE_URL, type IcsEvent } from '~/cms/ics';
 import { ClipboardText, MapPin, PauseCircle, Racket, Trophy, UsersThree } from '~/components/ui';
-import { CLUB } from '~/data/club';
 import { EventKind, VISITOR_KINDS } from '~/data/events';
 import { currentLocale } from '~/i18n/current';
 import { withLocale } from '~/i18n/locales';
@@ -33,18 +32,16 @@ export const eventWhen = (event: CalendarEvent) => {
 
 export type Venue = NonNullable<CalendarEvent['venue']>;
 
-const HOME_VENUE: Venue = { name: CLUB.venue, address: CLUB.address, mapUrl: undefined };
-
-export const eventVenue = (event: CalendarEvent) =>
-  event.venue ?? (event.kind === EventKind.enum.trip ? undefined : HOME_VENUE);
-
-export const isHomeVenue = (venue: Venue) => venue.name === CLUB.venue;
+export const eventVenue = (event: CalendarEvent, home: Venue | undefined) => {
+  if (event.kind === EventKind.enum.break) return undefined;
+  return event.venue ?? (event.kind === EventKind.enum.trip ? undefined : home);
+};
 
 export const canAddToCalendar = (event: CalendarEvent) => event.dateConfirmed && !isPast(event, today());
 
-export const icsEvent = (event: VisitorEvent): IcsEvent => ({
+export const icsEvent = (event: VisitorEvent, home: Venue | undefined): IcsEvent => ({
   ...event,
-  venue: eventVenue(event),
+  venue: eventVenue(event, home),
   url: `${SITE_URL}${withLocale(`/arrangementer/${event.slug}`, currentLocale())}`,
 });
 

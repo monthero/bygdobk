@@ -5,8 +5,9 @@ import { memo, useMemo, type CSSProperties, type FC } from 'react';
 
 import { isTraining, occurrences, type CalendarEvent } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
+import { useGroups } from '~/cms/siteData';
 import { ArrowRight } from '~/components/ui';
-import { GROUP_SLUGS, GROUPS } from '~/data/club';
+import { GROUP_COLORS, GROUP_SLUGS } from '~/data/club';
 import { useSeasons } from '~/hooks/useSeasons';
 import { listFormat } from '~/i18n/current';
 import { date, formatDate, ISO_DAY, wallNow, type Dayjs } from '~/utils/dates';
@@ -42,7 +43,7 @@ const placeInLanes = (sessions: readonly PlannedSession[]) => {
 };
 
 const barStyle = ({ session, lane }: Placed, lanes: number, { first, span }: Axis) => {
-  const color = session.off ? 'gray' : GROUPS[session.group].color;
+  const color = session.off ? 'gray' : GROUP_COLORS[session.group];
   return {
     '--start': (minuteOfDay(session.start) - first) / span,
     '--end': (minuteOfDay(session.end) - first) / span,
@@ -85,7 +86,8 @@ const HourLines = memo<{ hours: { label: string; style: CSSProperties }[] }>(({ 
 );
 
 export const CourtWeek: FC = () => {
-  const { i18n, t } = useLingui();
+  const { t } = useLingui();
+  const groups = useGroups();
   const { events } = useSiteContent();
   const { current } = useSeasons();
   const now = wallNow();
@@ -164,11 +166,14 @@ export const CourtWeek: FC = () => {
                             data-live={live || undefined}
                             data-off={reason ? true : undefined}
                           >
-                            <span className={classes.barName}>{i18n._(GROUPS[session.group].name)}</span>
+                            <span className={classes.barName}>{groups[session.group].name}</span>
                             <span className={`${classes.barTime} tabular`}>
                               <span>{session.event.startTime}</span>
                               <span>–{session.event.endTime}</span>
                             </span>
+                            {!reason && session.event.venue && (
+                              <span className={classes.place}>{session.event.venue.name}</span>
+                            )}
                             {reason && <span className={classes.offNote}>{t`No training: ${reason}`}</span>}
                             {live && (
                               <Badge size="xs" color="green" variant="filled" className={classes.liveBadge}>

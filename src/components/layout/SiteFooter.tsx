@@ -3,6 +3,7 @@ import { Anchor, Container, Stack, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo, type FC } from 'react';
 
+import { useClub } from '~/cms/siteData';
 import { AddressLink, SocialLinks, ClubLogo } from '~/components/ui';
 import { CLUB } from '~/data/club';
 import { FooterMark, useSettings } from '~/stores/settings';
@@ -15,7 +16,6 @@ import { VariantMenu } from './VariantMenu';
 import classes from './SiteFooter.module.css';
 
 const WORDMARK = CLUB.name.split(' ').at(0);
-const { email } = CLUB;
 
 const Decor: FC<{ mark: FooterMark }> = ({ mark }) => {
   switch (mark) {
@@ -37,6 +37,8 @@ const Decor: FC<{ mark: FooterMark }> = ({ mark }) => {
 export const SiteFooter = memo(() => {
   const { i18n, t } = useLingui();
   const footerMark = useSettings((s) => s.footerMark);
+  const club = useClub();
+  const { email } = club;
 
   return (
     <footer className={classes.footer} {...DARK_SCOPE}>
@@ -46,20 +48,26 @@ export const SiteFooter = memo(() => {
         <Stack gap={8} className={classes.brand}>
           <ClubLogo height={120} className={classes.logo} />
           <Text fw={700}>{CLUB.name}</Text>
-          <Text size="sm" c="dimmed">
-            <AddressLink />
-          </Text>
-          <Text size="sm" c="dimmed">
-            <Trans>
-              Contact:{' '}
-              <Anchor href={`mailto:${email}`} size="sm">
-                {email}
-              </Anchor>
-            </Trans>
-          </Text>
-          <Text size="sm" c="dimmed">
-            <Trans>Org. no. {CLUB.orgNr}</Trans>
-          </Text>
+          {club.venue && (
+            <Text size="sm" c="dimmed">
+              <AddressLink />
+            </Text>
+          )}
+          {email && (
+            <Text size="sm" c="dimmed">
+              <Trans>
+                Contact:{' '}
+                <Anchor href={`mailto:${email}`} size="sm">
+                  {email}
+                </Anchor>
+              </Trans>
+            </Text>
+          )}
+          {club.orgNr && (
+            <Text size="sm" c="dimmed">
+              <Trans>Org. no. {club.orgNr}</Trans>
+            </Text>
+          )}
           <SocialLinks className={classes.social} />
         </Stack>
 

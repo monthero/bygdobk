@@ -3,6 +3,13 @@
     border-color: var(--mantine-primary-color-filled);
     background: var(--bk-accent-soft);
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    border-style: dashed;
+    background: var(--bk-surface-2);
+    opacity: 0.7;
+  }
 }
 
 .question {
