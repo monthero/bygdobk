@@ -12,7 +12,7 @@ const SANITY_DATASET = Deno.env.get('SANITY_DATASET');
 
 const SANITY_TIMEOUT_MS = 5000;
 const RECIPIENTS_MAX = 10;
-const RECIPIENTS_QUERY = `*[_id == "siteSettings"][0]{ "email": club.email, "topic": contactTopics[id == $topicId][0].recipients }`;
+const RECIPIENTS_QUERY = `{ "email": *[_id == "clubDetails"][0].email, "topic": *[_id == "contactForm"][0].topics[id == $topicId][0].recipients }`;
 
 // Keep in sync with src/data/contact.ts.
 const NAME_MAX = 100;

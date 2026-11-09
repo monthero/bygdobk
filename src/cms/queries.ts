@@ -4,11 +4,11 @@ const pick = (field: string) =>
 export const localized = (...fields: string[]) => fields.map((field) => `"${field}": ${pick(field)}`).join(', ');
 
 export const CONTENT_GROQ = `{
-  "notice": *[_id == "siteSettings"][0].notice { visible, tone, ${localized('text')} },
-  "socials": *[_id == "siteSettings"][0].socials[] { platform, url },
-  "club": *[_id == "siteSettings"][0].club { email, venue, orgNr, whistleblowingUrl },
-  "payment": *[_id == "siteSettings"][0].payment { vipps, accountNumber, ${localized('instructions')} },
-  "contactTopics": *[_id == "siteSettings"][0].contactTopics[] { id, ${localized('label')} },
+  "notice": *[_id == "notice"][0] { visible, tone, ${localized('text')} },
+  "socials": *[_id == "socialLinks"][0].links[] { platform, url },
+  "club": *[_id == "clubDetails"][0] { email, venue, orgNr, whistleblowingUrl },
+  "payment": *[_id == "payment"][0] { vipps, accountNumber, ${localized('instructions')} },
+  "contactTopics": *[_id == "contactForm"][0].topics[] { id, ${localized('label')} },
   "photos": *[_id == "sitePhotos"][0],
   "groups": *[_type == "trainingGroup"] { key, coached, status, ${localized('name', 'who', 'statusNote')} },
   "teams": *[_type == "volunteerTeam"] { key, ${localized('name', 'what')} },

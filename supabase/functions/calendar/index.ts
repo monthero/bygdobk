@@ -17,7 +17,7 @@ const localized = (field: string) => {
 };
 
 const QUERY = `{
-  "home": *[_id == "siteSettings"][0].club.venue { name, address },
+  "home": *[_id == "clubDetails"][0].venue { name, address },
   "events": *[_type == "event" && !(kind in ["training", "break"]) && dateConfirmed != false
     && defined(slug.current) && coalesce(endDate, startDate) >= $since] | order(startDate asc) {
     "id": _id, kind, "slug": slug.current, startDate, endDate, startTime, endTime, venue,

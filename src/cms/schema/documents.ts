@@ -1,16 +1,34 @@
 import { defineArrayMember, defineField, defineType, type CustomValidator } from 'sanity';
 import { z } from 'zod';
 
+import {
+  CalendarBlank,
+  Coins,
+  Handshake,
+  IdentificationBadge,
+  Newspaper,
+  ShieldCheck,
+  Tag,
+  UsersThree,
+  HandHeart,
+} from '~/components/ui/icons';
 import { Group, GroupStatus, PlanAudience, PriceKind } from '~/data/club';
-import { ContactTopic, TOPIC_ID } from '~/data/contact';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
-import { NoticeTone } from '~/data/notice';
-import { SOCIAL_NAMES, SocialPlatform } from '~/data/socials';
 import { PERK_ICON_NAMES, PerkIcon } from '~/data/sponsors';
-import { weekdayName } from '~/utils/dates';
 
 import { BannerInput } from './BannerInput';
+import {
+  AUDIENCE_TITLES,
+  EVENT_KIND_TITLES,
+  GROUP_TITLES,
+  NEWS_KIND_TITLES,
+  PRICE_KIND_TITLES,
+  TEAM_TITLES,
+  titledList,
+  titleOf,
+} from './labels';
+import { VisitorKindInput } from './VisitorKindInput';
 
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
 
@@ -38,211 +56,11 @@ const hasAsset = (image: unknown) =>
 
 const order = defineField({ name: 'order', title: 'Order', type: 'number', description: 'Lower comes first' });
 
-const SettingsTab = z.enum(['club', 'notice', 'socials', 'payment', 'contact']);
-
-type ContactTopicItem = { id?: string };
-
-const topicIds: CustomValidator<ContactTopicItem[] | undefined> = (topics) => {
-  const ids = (topics ?? []).map((topic) => topic.id);
-  return new Set(ids).size === ids.length ? true : 'Each topic needs its own ID';
-};
-
-const builtInTopics: CustomValidator<ContactTopicItem[] | undefined> = (topics) => {
-  const ids = new Set((topics ?? []).map((topic) => topic.id));
-  const missing = ContactTopic.options.filter((id) => !ids.has(id));
-  return missing.length === 0
-    ? true
-    : `Buttons on the site open these topics: ${missing.join(', ')}. Without them, they open the first topic.`;
-};
-
-export const siteSettings = defineType({
-  name: 'siteSettings',
-  title: 'Site settings',
-  type: 'document',
-  groups: [
-    { name: SettingsTab.enum.club, title: 'Club', default: true },
-    { name: SettingsTab.enum.notice, title: 'Notice' },
-    { name: SettingsTab.enum.socials, title: 'Social links' },
-    { name: SettingsTab.enum.payment, title: 'Payment' },
-    { name: SettingsTab.enum.contact, title: 'Contact form' },
-  ],
-  fields: [
-    defineField({
-      name: 'club',
-      title: 'Club details',
-      description: 'Shown in the footer, the menu, on the contact page and on training and events.',
-      type: 'object',
-      group: SettingsTab.enum.club,
-      options: { collapsible: false },
-      fields: [
-        defineField({
-          name: 'email',
-          title: 'Board email',
-          type: 'email',
-          description: 'Shown on the site, and gets contact form messages unless a topic says otherwise.',
-          validation: required,
-        }),
-        defineField({
-          name: 'venue',
-          title: 'Home hall',
-          description: 'Where training happens. Events without their own venue are held here too.',
-          type: 'object',
-          fields: [
-            defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
-            defineField({ name: 'address', title: 'Address', type: 'string', validation: required }),
-            defineField({
-              name: 'mapUrl',
-              title: 'Map link',
-              type: 'url',
-              description: 'Optional. Without it, the site opens the address in the visitor’s map app.',
-            }),
-          ],
-        }),
-        defineField({
-          name: 'orgNr',
-          title: 'Organization number',
-          type: 'string',
-          description: 'From the Brønnøysund Register Centre, for example 993 621 358.',
-          validation: (rule) => rule.regex(/^\d{3} ?\d{3} ?\d{3}$/, { name: 'organization number' }),
-        }),
-        defineField({
-          name: 'whistleblowingUrl',
-          title: 'Whistleblowing link',
-          type: 'url',
-          description: 'Where members can report problems outside the club. Shown on the club page.',
-          validation: (rule) => rule.uri({ scheme: ['https'] }),
-        }),
-      ],
-    }),
-    defineField({
-      name: 'payment',
-      title: 'Payment',
-      description: 'Shown on the membership pages and on the front page.',
-      type: 'object',
-      group: SettingsTab.enum.payment,
-      options: { collapsible: false },
-      fields: [
-        defineField({
-          name: 'vipps',
-          title: 'Vipps number',
-          type: 'string',
-          description: 'Shown next to drop-in prices. Leave empty to hide it.',
-          validation: (rule) => rule.regex(/^\d{4,6}$/, { name: 'Vipps number' }),
-        }),
-        defineField({
-          name: 'accountNumber',
-          title: 'Bank account number',
-          type: 'string',
-          description: 'Optional, for example 1234 56 78901.',
-          validation: (rule) => rule.regex(/^\d{4} ?\d{2} ?\d{5}$/, { name: 'account number' }),
-        }),
-        defineField({
-          name: 'instructions',
-          title: 'How to pay',
-          type: 'localeText',
-          description: 'The "Pay" step on the membership page.',
-          validation: required,
-        }),
-      ],
-    }),
-    defineField({
-      name: 'contactTopics',
-      title: 'Contact form topics',
-      description: 'The list visitors pick from on the contact page, in this order.',
-      type: 'array',
-      group: SettingsTab.enum.contact,
-      validation: (rule) => [rule.required().min(1).custom(topicIds), rule.custom(builtInTopics).warning()],
-      of: [
-        defineArrayMember({
-          name: 'contactTopic',
-          type: 'object',
-          fields: [
-            defineField({ name: 'label', title: 'Label', type: 'localeString', validation: required }),
-            defineField({
-              name: 'id',
-              title: 'ID',
-              type: 'string',
-              description: `Short and lowercase. Buttons on the site use these: ${ContactTopic.options.join(', ')}.`,
-              validation: (rule) => rule.required().regex(TOPIC_ID, { name: 'ID' }),
-            }),
-            defineField({
-              name: 'recipients',
-              title: 'Send to',
-              type: 'array',
-              of: [defineArrayMember({ type: 'email' })],
-              description: 'Leave empty to send to the board email.',
-            }),
-          ],
-          preview: {
-            select: { title: 'label.nb', id: 'id', recipients: 'recipients' },
-            prepare: ({ title, id, recipients }: { title?: string; id?: string; recipients?: string[] }) => ({
-              title,
-              subtitle: [id, recipients?.length ? recipients.join(', ') : 'Board email'].join(' · '),
-            }),
-          },
-        }),
-      ],
-    }),
-    defineField({
-      name: 'notice',
-      title: 'Notice at the top of every page',
-      type: 'object',
-      group: SettingsTab.enum.notice,
-      fields: [
-        defineField({ name: 'visible', title: 'Show the notice', type: 'boolean', initialValue: false }),
-        defineField({
-          name: 'tone',
-          title: 'Tone',
-          type: 'string',
-          options: { ...options(NoticeTone.options), layout: 'radio', direction: 'horizontal' },
-          initialValue: NoticeTone.enum.info,
-        }),
-        defineField({ name: 'text', title: 'Text', type: 'localeText' }),
-      ],
-    }),
-    defineField({
-      name: 'socials',
-      title: 'Social links',
-      description: 'Shown in the footer, the menu and on the contact page, in this order.',
-      type: 'array',
-      group: SettingsTab.enum.socials,
-      of: [
-        defineArrayMember({
-          name: 'social',
-          type: 'object',
-          fields: [
-            defineField({
-              name: 'platform',
-              title: 'Platform',
-              type: 'string',
-              options: { list: SocialPlatform.options.map((value) => ({ title: SOCIAL_NAMES[value], value })) },
-              validation: required,
-            }),
-            defineField({
-              name: 'url',
-              title: 'Link',
-              type: 'url',
-              validation: (rule) => rule.required().uri({ scheme: ['https'] }),
-            }),
-          ],
-          preview: {
-            select: { platform: 'platform', url: 'url' },
-            prepare: ({ platform, url }: Record<string, string | undefined>) => {
-              const known = SocialPlatform.safeParse(platform);
-              return { title: known.success ? SOCIAL_NAMES[known.data] : platform, subtitle: url };
-            },
-          },
-        }),
-      ],
-    }),
-  ],
-  preview: { prepare: () => ({ title: 'Site settings' }) },
-});
-
 export const privacyPage = defineType({
   name: 'privacyPage',
   title: 'Privacy',
   type: 'document',
+  icon: ShieldCheck,
   fields: [
     defineField({ name: 'title', title: 'Title', type: 'localeString', validation: required }),
     defineField({ name: 'body', title: 'Text', type: 'localeBody', validation: required }),
@@ -255,6 +73,7 @@ export const newsPost = defineType({
   name: 'newsPost',
   title: 'News',
   type: 'document',
+  icon: Newspaper,
   fields: [
     defineField({ name: 'title', title: 'Title', type: 'localeString', validation: required }),
     slug('title.nb'),
@@ -263,7 +82,7 @@ export const newsPost = defineType({
       name: 'kind',
       title: 'Category',
       type: 'string',
-      options: options(NewsKind.options),
+      options: { list: titledList(NEWS_KIND_TITLES, NewsKind.options), layout: 'radio', direction: 'horizontal' },
       validation: required,
     }),
     defineField({ name: 'summary', title: 'Summary', type: 'localeText', validation: required }),
@@ -351,23 +170,89 @@ const requiredFor =
 const forTraining = (doc: EventDoc) => doc.kind === EventKind.enum.training;
 const notTraining = (doc: EventDoc) => doc.kind !== EventKind.enum.training;
 
+const EventTab = z.enum(['about', 'when', 'where', 'signup', 'volunteers']);
+
+const plainTab = ({ document }: { document?: unknown }) => isPlain({ document });
+
+const SHORT_DATE = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+const SHORT_WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'short', timeZone: 'UTC' });
+const LONG_WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'long', timeZone: 'UTC' });
+
+const shortDate = (iso: string | undefined) => (iso ? SHORT_DATE.format(new Date(`${iso}T12:00:00Z`)) : '');
+
+const weekdayShort = (isoWeekday: number) => SHORT_WEEKDAY.format(new Date(Date.UTC(2024, 0, isoWeekday)));
+
+const weekdayLong = (isoWeekday: number) => LONG_WEEKDAY.format(new Date(Date.UTC(2024, 0, isoWeekday)));
+
+const dateRange = (start: string | undefined, end: string | undefined) =>
+  end && end !== start ? `${shortDate(start)} – ${shortDate(end)}` : shortDate(start);
+
+const timeRange = (start: string | undefined, end: string | undefined) => [start, end].filter(Boolean).join('–');
+
+type EventPreview = {
+  kind?: string;
+  title?: string;
+  group?: string;
+  groups?: string[];
+  start?: string;
+  end?: string;
+  startTime?: string;
+  endTime?: string;
+  weekdays?: number[];
+  until?: string;
+  venue?: string;
+};
+
+const trainingPreview = ({ group, start, startTime, endTime, weekdays, until, venue }: EventPreview) => ({
+  title: titleOf(GROUP_TITLES, group) ?? 'Training time',
+  subtitle: [
+    [(weekdays ?? []).map(weekdayShort).join(', '), timeRange(startTime, endTime)].filter(Boolean).join(' '),
+    dateRange(start, until),
+    venue,
+  ]
+    .filter(Boolean)
+    .join(' · '),
+});
+
+const breakPreview = ({ title, groups, start, end, startTime, endTime }: EventPreview) => ({
+  title,
+  subtitle: [
+    dateRange(start, end),
+    timeRange(startTime, endTime),
+    groups?.length ? groups.map((g) => titleOf(GROUP_TITLES, g)).join(', ') : 'All groups',
+  ]
+    .filter(Boolean)
+    .join(' · '),
+});
+
 export const event = defineType({
   name: 'event',
   title: 'Calendar event',
   type: 'document',
+  icon: CalendarBlank,
+  groups: [
+    { name: EventTab.enum.about, title: 'About', hidden: plainTab },
+    { name: EventTab.enum.when, title: 'Date and time', hidden: plainTab },
+    { name: EventTab.enum.where, title: 'Place', hidden: plainTab },
+    { name: EventTab.enum.signup, title: 'Sign-up', hidden: plainTab },
+    { name: EventTab.enum.volunteers, title: 'Volunteers', hidden: (ctx) => plainTab(ctx) || noShifts(ctx) },
+  ],
   fields: [
     defineField({
       name: 'kind',
       title: 'Type',
       type: 'string',
-      options: { ...options(EventKind.options), layout: 'radio', direction: 'horizontal' },
+      group: EventTab.enum.about,
+      options: { list: titledList(EVENT_KIND_TITLES, EventKind.options), layout: 'radio', direction: 'horizontal' },
+      components: { input: VisitorKindInput },
+      hidden: isPlain,
       validation: required,
     }),
     defineField({
       name: 'group',
       title: 'Training group',
       type: 'string',
-      options: options(Group.options),
+      options: { list: titledList(GROUP_TITLES, Group.options), layout: 'radio' },
       hidden: (ctx) => !isTraining(ctx),
       validation: (rule) => rule.custom(requiredFor(forTraining)),
     }),
@@ -375,6 +260,8 @@ export const event = defineType({
       name: 'title',
       title: 'Title',
       type: 'localeString',
+      group: EventTab.enum.about,
+      description: 'For a break, the reason, for example "Fall break". It shows on the training page.',
       hidden: isTraining,
       validation: (rule) => rule.custom(requiredFor(notTraining)),
     }),
@@ -382,17 +269,58 @@ export const event = defineType({
       name: 'slug',
       title: 'URL name',
       type: 'slug',
+      group: EventTab.enum.about,
+      description: 'The end of the page address. Click "Generate" to make it from the title.',
       options: { source: 'title.nb' },
       hidden: isPlain,
       validation: (rule) =>
         rule.custom(requiredFor((doc) => doc.kind !== EventKind.enum.training && doc.kind !== EventKind.enum.break)),
     }),
-    defineField({ name: 'startDate', title: 'First day', type: 'date', validation: required }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'localeText',
+      group: EventTab.enum.about,
+      hidden: isTraining,
+    }),
+    defineField({
+      name: 'ownEvent',
+      title: 'Organized by the club',
+      type: 'boolean',
+      group: EventTab.enum.about,
+      description: 'Turn on for our own tournaments and parties. Members can then sign up for volunteer shifts.',
+      initialValue: false,
+      hidden: isPlain,
+    }),
+    defineField({
+      name: 'tip',
+      title: 'Tip box',
+      type: 'object',
+      group: EventTab.enum.about,
+      description: 'Optional. A highlighted box on the event page, for example about parking.',
+      options: { collapsible: true, collapsed: true },
+      hidden: isPlain,
+      fields: [
+        defineField({ name: 'title', title: 'Title', type: 'localeString' }),
+        defineField({ name: 'text', title: 'Text', type: 'localeText' }),
+      ],
+    }),
+    defineField({
+      name: 'startDate',
+      title: 'First day',
+      type: 'date',
+      group: EventTab.enum.when,
+      description: 'For a training time, the first training day of the season.',
+      options: { dateFormat: 'D MMM YYYY' },
+      validation: required,
+    }),
     defineField({
       name: 'endDate',
       title: 'Last day',
       type: 'date',
-      description: 'Leave empty for a one-day event.',
+      group: EventTab.enum.when,
+      description: 'Leave it empty for a single day.',
+      options: { dateFormat: 'D MMM YYYY' },
       hidden: isTraining,
       validation: (rule) =>
         rule.custom((end: string | undefined, { document }) => {
@@ -401,29 +329,12 @@ export const event = defineType({
         }),
     }),
     defineField({
-      name: 'dateConfirmed',
-      title: 'The date is set',
-      type: 'boolean',
-      initialValue: true,
-      description: 'Turn off while the date is not decided. The first day is then only used to sort.',
-      hidden: isPlain,
-    }),
-    defineField({
-      name: 'whenText',
-      title: 'When, in words',
-      type: 'localeString',
-      description: 'For example "Spring 2027, date to be announced".',
-      hidden: isPlain,
-      validation: (rule) =>
-        rule.custom(requiredFor((doc) => doc.dateConfirmed === false, 'Say roughly when, while the date is not set')),
-    }),
-    time('startTime', 'Starts at', false),
-    time('endTime', 'Ends at', false),
-    defineField({
       name: 'recurrence',
       title: 'Repeats every week',
       type: 'object',
       description: 'Training repeats on these days, from the first day until the last.',
+      options: { collapsible: false },
+      hidden: (ctx) => !isTraining(ctx),
       validation: (rule) => rule.custom(requiredFor(forTraining)),
       fields: [
         defineField({
@@ -431,27 +342,59 @@ export const event = defineType({
           title: 'On',
           type: 'array',
           of: [defineArrayMember({ type: 'number' })],
-          options: { list: ISO_WEEKDAYS.map((value) => ({ title: weekdayName(value), value })), layout: 'grid' },
+          options: { list: ISO_WEEKDAYS.map((value) => ({ title: weekdayLong(value), value })), layout: 'grid' },
           validation: (rule) => rule.required().min(1),
         }),
-        defineField({ name: 'until', title: 'Until', type: 'date', validation: required }),
+        defineField({
+          name: 'until',
+          title: 'Until',
+          type: 'date',
+          options: { dateFormat: 'D MMM YYYY' },
+          validation: required,
+        }),
       ],
+    }),
+    {
+      ...time('startTime', 'Starts at', false),
+      group: EventTab.enum.when,
+      description: 'HH:mm, for example 19:00. For a break, leave both times empty to cover whole days.',
+    },
+    { ...time('endTime', 'Ends at', false), group: EventTab.enum.when },
+    defineField({
+      name: 'dateConfirmed',
+      title: 'The date is set',
+      type: 'boolean',
+      group: EventTab.enum.when,
+      initialValue: true,
+      description: 'Turn it off while the date is not decided. The first day is then only used to sort.',
+      hidden: isPlain,
+    }),
+    defineField({
+      name: 'whenText',
+      title: 'When, in words',
+      type: 'localeString',
+      group: EventTab.enum.when,
+      description: 'For example "Spring 2027, date to be announced".',
+      hidden: (ctx) => isPlain(ctx) || (ctx.document as EventDoc | undefined)?.dateConfirmed !== false,
+      validation: (rule) =>
+        rule.custom(requiredFor((doc) => doc.dateConfirmed === false, 'Say roughly when, while the date is not set')),
     }),
     defineField({
       name: 'groups',
       title: 'Only for these groups',
       type: 'array',
+      group: EventTab.enum.about,
       of: [defineArrayMember({ type: 'string' })],
-      options: { list: options(Group.options).list, layout: 'grid' },
-      description: 'Leave empty if it is for everyone. Training of these groups is off while it happens.',
+      options: { list: titledList(GROUP_TITLES, Group.options), layout: 'grid' },
+      description: 'Leave it empty if it is for everyone. Training for these groups is off while it happens.',
       hidden: isTraining,
     }),
-    defineField({ name: 'description', title: 'Description', type: 'localeText', hidden: isTraining }),
     defineField({
       name: 'venue',
       title: 'Venue',
       type: 'object',
-      description: 'Leave empty if it is in the home hall from Site settings. A trip always needs a venue.',
+      group: EventTab.enum.where,
+      description: 'Leave it empty if it is in the home hall from Club details. A trip always needs a venue.',
       hidden: ({ document }) => kindOf(document) === EventKind.enum.break,
       validation: (rule) =>
         rule.custom(requiredFor((doc) => doc.kind === EventKind.enum.trip, 'Say where the trip goes')),
@@ -467,47 +410,27 @@ export const event = defineType({
       ],
     }),
     defineField({
-      name: 'registrationDeadline',
-      title: 'Registration deadline',
-      type: 'datetime',
-      hidden: isPlain,
-    }),
-    defineField({
       name: 'registrationUrl',
       title: 'Registration link',
       type: 'url',
-      description: "Where people sign up, for example the organizer's tournament system.",
+      group: EventTab.enum.signup,
+      description: 'Where people sign up, for example the organizer’s tournament system.',
       hidden: isPlain,
     }),
     defineField({
-      name: 'ownEvent',
-      title: 'Organized by the club',
-      type: 'boolean',
-      initialValue: false,
+      name: 'registrationDeadline',
+      title: 'Registration deadline',
+      type: 'datetime',
+      group: EventTab.enum.signup,
+      options: { dateFormat: 'D MMM YYYY', timeFormat: 'HH:mm' },
       hidden: isPlain,
-    }),
-    defineField({
-      name: 'tip',
-      title: 'Tip box',
-      type: 'object',
-      hidden: isPlain,
-      fields: [
-        defineField({ name: 'title', title: 'Title', type: 'localeString' }),
-        defineField({ name: 'text', title: 'Text', type: 'localeText' }),
-      ],
-    }),
-    defineField({
-      name: 'signupUrl',
-      title: 'Sign-up link',
-      type: 'url',
-      description:
-        'Optional. An outside sign-up sheet, for example a Google Sheet, shown as an extra button. Members can always sign up for shifts on the website.',
-      hidden: noShifts,
     }),
     defineField({
       name: 'shifts',
       title: 'Volunteer shifts',
       type: 'array',
+      group: EventTab.enum.volunteers,
+      description: 'Members sign up for these on the event page.',
       hidden: noShifts,
       of: [
         defineArrayMember({
@@ -518,10 +441,16 @@ export const event = defineType({
               name: 'team',
               title: 'Team',
               type: 'string',
-              options: options(Team.options),
+              options: { list: titledList(TEAM_TITLES, Team.options), layout: 'radio', direction: 'horizontal' },
               validation: required,
             }),
-            defineField({ name: 'day', title: 'Day', type: 'date', validation: required }),
+            defineField({
+              name: 'day',
+              title: 'Day',
+              type: 'date',
+              options: { dateFormat: 'D MMM YYYY' },
+              validation: required,
+            }),
             time('start', 'Start'),
             time('end', 'End', false),
             defineField({
@@ -533,14 +462,23 @@ export const event = defineType({
             defineField({ name: 'setup', title: 'Setup or teardown', type: 'boolean', initialValue: false }),
           ],
           preview: {
-            select: { team: 'team', day: 'day', start: 'start', end: 'end' },
-            prepare: ({ team, day, start, end }: Record<string, string | undefined>) => ({
-              title: `${team ?? ''} ${start ?? ''}${end ? `–${end}` : ''}`,
-              subtitle: day,
+            select: { team: 'team', day: 'day', start: 'start', end: 'end', spots: 'spots' },
+            prepare: ({ team, day, start, end, spots }: Record<string, string | undefined>) => ({
+              title: [titleOf(TEAM_TITLES, team), timeRange(start, end)].filter(Boolean).join(' · '),
+              subtitle: [shortDate(day), spots && `${spots} people`].filter(Boolean).join(' · '),
             }),
           },
         }),
       ],
+    }),
+    defineField({
+      name: 'signupUrl',
+      title: 'Extra sign-up link',
+      type: 'url',
+      group: EventTab.enum.volunteers,
+      description:
+        'Optional. An outside sign-up sheet, for example a Google Sheet, shown as an extra button. Members can always sign up on the website.',
+      hidden: noShifts,
     }),
   ],
   validation: (rule) =>
@@ -549,20 +487,34 @@ export const event = defineType({
       if (doc?.kind !== EventKind.enum.training) return true;
       return doc.startTime && doc.endTime ? true : 'Training needs a start and end time';
     }),
-  orderings: [{ title: 'Newest first', name: 'startDesc', by: [{ field: 'startDate', direction: 'desc' }] }],
+  orderings: [
+    { title: 'Newest first', name: 'startDesc', by: [{ field: 'startDate', direction: 'desc' }] },
+    { title: 'Oldest first', name: 'startAsc', by: [{ field: 'startDate', direction: 'asc' }] },
+  ],
   preview: {
     select: {
       kind: 'kind',
       title: 'title.nb',
       group: 'group',
+      groups: 'groups',
       start: 'startDate',
+      end: 'endDate',
       startTime: 'startTime',
       endTime: 'endTime',
+      weekdays: 'recurrence.weekdays',
+      until: 'recurrence.until',
+      venue: 'venue.name',
     },
-    prepare: ({ kind, title, group, start, startTime, endTime }: Record<string, string | undefined>) => ({
-      title: kind === EventKind.enum.training ? `${group ?? ''} ${startTime ?? ''}–${endTime ?? ''}` : (title ?? ''),
-      subtitle: [kind, start].filter(Boolean).join(' · '),
-    }),
+    prepare: (value: EventPreview) => {
+      if (value.kind === EventKind.enum.training) return trainingPreview(value);
+      if (value.kind === EventKind.enum.break) return breakPreview(value);
+      return {
+        title: value.title,
+        subtitle: [titleOf(EVENT_KIND_TITLES, value.kind), dateRange(value.start, value.end), value.venue]
+          .filter(Boolean)
+          .join(' · '),
+      };
+    },
   },
 });
 
@@ -570,6 +522,7 @@ export const membershipPlan = defineType({
   name: 'membershipPlan',
   title: 'Membership plan',
   type: 'document',
+  icon: Coins,
   fields: [
     defineField({ name: 'name', title: 'Name', type: 'localeString', validation: required }),
     slug('name.nb'),
@@ -577,7 +530,7 @@ export const membershipPlan = defineType({
       name: 'kind',
       title: 'Type',
       type: 'string',
-      options: options(PriceKind.options),
+      options: { list: titledList(PRICE_KIND_TITLES, PriceKind.options), layout: 'radio' },
       validation: required,
     }),
     defineField({
@@ -585,11 +538,7 @@ export const membershipPlan = defineType({
       title: 'Who can pick it',
       type: 'string',
       options: {
-        list: [
-          { title: 'Adults', value: PlanAudience.enum.adult },
-          { title: 'Children', value: PlanAudience.enum.child },
-          { title: 'Everyone', value: PlanAudience.enum.all },
-        ],
+        list: titledList(AUDIENCE_TITLES, PlanAudience.options),
         layout: 'radio',
         direction: 'horizontal',
       },
@@ -600,7 +549,7 @@ export const membershipPlan = defineType({
       name: 'group',
       title: 'Training group',
       type: 'string',
-      options: options(Group.options),
+      options: { list: titledList(GROUP_TITLES, Group.options) },
       hidden: ({ parent }: { parent?: { kind?: string } }) => parent?.kind !== PriceKind.enum.season,
     }),
     defineField({ name: 'note', title: 'Who it is for', type: 'localeString', validation: required }),
@@ -626,13 +575,26 @@ export const membershipPlan = defineType({
     order,
   ],
   orderings: [{ title: 'Order', name: 'order', by: [{ field: 'order', direction: 'asc' }] }],
-  preview: { select: { title: 'name.nb', subtitle: 'kind' } },
+  preview: {
+    select: { title: 'name.nb', kind: 'kind', membership: 'membership', training: 'training', perVisit: 'perVisit' },
+    prepare: ({ title, kind, membership, training, perVisit }: Record<string, string | number | undefined>) => ({
+      title: String(title ?? ''),
+      subtitle: [
+        titleOf(PRICE_KIND_TITLES, typeof kind === 'string' ? kind : undefined),
+        `kr ${Number(membership ?? 0) + Number(training ?? 0)}`,
+        perVisit === undefined ? undefined : `+ kr ${perVisit} per visit`,
+      ]
+        .filter(Boolean)
+        .join(' · '),
+    }),
+  },
 });
 
 export const discount = defineType({
   name: 'discount',
   title: 'Discount',
   type: 'document',
+  icon: Tag,
   fields: [
     defineField({ name: 'title', title: 'Title', type: 'localeString', validation: required }),
     defineField({ name: 'body', title: 'Text', type: 'localeText', validation: required }),
@@ -646,6 +608,7 @@ export const boardMember = defineType({
   name: 'boardMember',
   title: 'Board member',
   type: 'document',
+  icon: IdentificationBadge,
   fields: [
     defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
     defineField({ name: 'role', title: 'Role on the board', type: 'localeString', validation: required }),
@@ -677,6 +640,7 @@ export const trainingGroup = defineType({
   name: 'trainingGroup',
   title: 'Training group',
   type: 'document',
+  icon: UsersThree,
   fields: [
     fixedKey(Group.options),
     defineField({ name: 'name', title: 'Name', type: 'localeString', validation: required }),
@@ -720,6 +684,7 @@ export const volunteerTeam = defineType({
   name: 'volunteerTeam',
   title: 'Volunteer team',
   type: 'document',
+  icon: HandHeart,
   fields: [
     fixedKey(Team.options),
     defineField({ name: 'name', title: 'Name', type: 'localeString', validation: required }),
@@ -734,14 +699,23 @@ export const volunteerTeam = defineType({
   preview: { select: { title: 'name.nb', subtitle: 'what.nb' } },
 });
 
+const SponsorTab = z.enum(['basics', 'strip', 'deal']);
+
 export const sponsor = defineType({
   name: 'sponsor',
   title: 'Sponsor',
   type: 'document',
+  icon: Handshake,
+  groups: [
+    { name: SponsorTab.enum.basics, title: 'Basics', default: true },
+    { name: SponsorTab.enum.strip, title: 'Partner strip' },
+    { name: SponsorTab.enum.deal, title: 'Member deal' },
+  ],
   fields: [
-    defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
+    defineField({ name: 'name', title: 'Name', type: 'string', group: SponsorTab.enum.basics, validation: required }),
     defineField({
       name: 'logo',
+      group: SponsorTab.enum.basics,
       title: 'Logo',
       type: 'image',
       description: 'A wide logo works best. SVG or PNG with a see-through background.',
@@ -749,12 +723,14 @@ export const sponsor = defineType({
     }),
     defineField({
       name: 'url',
+      group: SponsorTab.enum.basics,
       title: 'Website',
       type: 'url',
       validation: (rule) => rule.required().uri({ scheme: ['https'] }),
     }),
     defineField({
       name: 'inStrip',
+      group: SponsorTab.enum.strip,
       title: 'Show in the partner strip',
       type: 'boolean',
       description: 'The strip above the footer on every page.',
@@ -762,6 +738,7 @@ export const sponsor = defineType({
     }),
     defineField({
       name: 'stripText',
+      group: SponsorTab.enum.strip,
       title: 'Text in the partner strip',
       type: 'localeString',
       description: 'For example "Members get up to 20% off at Sport Modern."',
@@ -771,6 +748,7 @@ export const sponsor = defineType({
     }),
     defineField({
       name: 'deal',
+      group: SponsorTab.enum.deal,
       title: 'Member deal',
       type: 'object',
       description: 'Optional. Shown on the membership page.',
@@ -833,7 +811,7 @@ export const sponsor = defineType({
         }),
       ],
     }),
-    order,
+    { ...order, group: SponsorTab.enum.basics },
   ],
   orderings: [{ title: 'Order', name: 'order', by: [{ field: 'order', direction: 'asc' }] }],
   preview: { select: { title: 'name', subtitle: 'url', media: 'logo' } },

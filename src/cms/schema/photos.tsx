@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity';
 import { z } from 'zod';
 
+import { Images } from '~/components/ui/icons';
 import { PhotoSlot, SLOT_DEFAULTS } from '~/data/photos';
 
 import classes from './photos.module.css';
@@ -57,6 +58,7 @@ export const sitePhotos = defineType({
   name: 'sitePhotos',
   title: 'Photos',
   type: 'document',
+  icon: Images,
   groups: [
     { name: PhotoTab.enum.pages, title: 'Pages', default: true },
     { name: PhotoTab.enum.front, title: 'Front page' },

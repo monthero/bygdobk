@@ -1,14 +1,17 @@
 import { buildTheme } from '@sanity/ui/theme';
-import { defineConfig } from 'sanity';
-import { structureTool, type StructureResolver } from 'sanity/structure';
+import { defineConfig, type Template } from 'sanity';
+import { structureTool } from 'sanity/structure';
 
-import { CLUB, Group } from '~/data/club';
-import { Team } from '~/data/events';
+import { CLUB } from '~/data/club';
+import { EventKind } from '~/data/events';
 import { ENV } from '~/env';
 import { ADMIN_PATH } from '~/i18n/locales';
 
 import { HELP_TOOL } from './help';
-import { fixedDocId, PRIVACY_PAGE_ID, SCHEMA_TYPES, SITE_PHOTOS_ID, SITE_SETTINGS_ID } from './schema';
+import { SCHEMA_TYPES } from './schema';
+import { EVENT_KIND_TITLES } from './schema/labels';
+import { START_TOOL } from './start';
+import { eventTemplateId, FIXED_SETS, SINGLETONS, structure } from './structure';
 
 const THEME = buildTheme({
   color: {
@@ -17,43 +20,19 @@ const THEME = buildTheme({
   },
 });
 
-const LISTS = ['event', 'newsPost', 'membershipPlan', 'discount', 'boardMember', 'sponsor'];
-
-const SINGLETONS = [
-  { type: 'siteSettings', id: SITE_SETTINGS_ID, title: 'Site settings' },
-  { type: 'sitePhotos', id: SITE_PHOTOS_ID, title: 'Photos' },
-  { type: 'privacyPage', id: PRIVACY_PAGE_ID, title: 'Privacy' },
-];
-
-const FIXED_SETS = [
-  { type: 'trainingGroup', title: 'Training groups', keys: Group.options },
-  { type: 'volunteerTeam', title: 'Volunteer teams', keys: Team.options },
-];
-
-const LOCKED_TYPES = new Set([...SINGLETONS, ...FIXED_SETS].map(({ type }) => type));
+const LOCKED_TYPES = new Set<string>([
+  ...Object.values(SINGLETONS).map(({ type }) => type),
+  ...FIXED_SETS.map(({ type }) => type),
+]);
 
 const LOCKED_ACTIONS = new Set(['delete', 'duplicate', 'unpublish']);
 
-const structure: StructureResolver = (S) =>
-  S.list()
-    .title('Content')
-    .items([
-      ...SINGLETONS.map(({ type, id, title }) =>
-        S.listItem().title(title).id(id).child(S.document().schemaType(type).documentId(id)),
-      ),
-      ...FIXED_SETS.map(({ type, title, keys }) =>
-        S.listItem()
-          .title(title)
-          .id(type)
-          .child(
-            S.list()
-              .title(title)
-              .items(keys.map((key) => S.documentListItem().schemaType(type).id(fixedDocId(type, key)))),
-          ),
-      ),
-      S.divider(),
-      ...LISTS.map((type) => S.documentTypeListItem(type)),
-    ]);
+const EVENT_TEMPLATES: Template[] = EventKind.options.map((kind) => ({
+  id: eventTemplateId(kind),
+  title: EVENT_KIND_TITLES[kind],
+  schemaType: 'event',
+  value: { kind },
+}));
 
 export const STUDIO_CONFIG = defineConfig({
   name: 'bygdo',
@@ -62,11 +41,18 @@ export const STUDIO_CONFIG = defineConfig({
   dataset: ENV.VITE_SANITY_DATASET,
   basePath: ADMIN_PATH,
   theme: THEME,
-  plugins: [structureTool({ structure })],
-  tools: (tools) => [...tools, HELP_TOOL],
+  plugins: [structureTool({ title: 'Content', structure })],
+  tools: (tools) => [START_TOOL, ...tools, HELP_TOOL],
+  releases: { enabled: false },
+  tasks: { enabled: false },
+  scheduledDrafts: { enabled: false },
+  scheduledPublishing: { enabled: false },
   schema: {
     types: SCHEMA_TYPES,
-    templates: (templates) => templates.filter(({ schemaType }) => !LOCKED_TYPES.has(schemaType)),
+    templates: (templates) => [
+      ...templates.filter(({ schemaType }) => !LOCKED_TYPES.has(schemaType) && schemaType !== 'event'),
+      ...EVENT_TEMPLATES,
+    ],
   },
   document: {
     actions: (actions, { schemaType }) =>

@@ -5,13 +5,13 @@ import {
   membershipPlan,
   newsPost,
   privacyPage,
-  siteSettings,
   sponsor,
   trainingGroup,
   volunteerTeam,
 } from './documents';
 import { articleBody, callout, localeBody, localeString, localeText, quote, table } from './localized';
 import { sitePhotos } from './photos';
+import { SETTINGS_TYPES } from './settings';
 
 export const SCHEMA_TYPES = [
   localeString,
@@ -21,7 +21,7 @@ export const SCHEMA_TYPES = [
   table,
   articleBody,
   localeBody,
-  siteSettings,
+  ...SETTINGS_TYPES,
   sitePhotos,
   privacyPage,
   newsPost,
@@ -34,7 +34,6 @@ export const SCHEMA_TYPES = [
   volunteerTeam,
 ];
 
-export const SITE_SETTINGS_ID = 'siteSettings';
 export const SITE_PHOTOS_ID = 'sitePhotos';
 export const PRIVACY_PAGE_ID = 'privacyPage';
 
