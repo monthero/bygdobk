@@ -10,8 +10,10 @@ import { PROFILE_REF_COLUMNS } from '~/supabase/profile';
 
 import {
   AdminMembership,
+  BoardProfile,
   Membership,
   MembershipStatus,
+  seasonRange,
   type MembershipInput,
   type MembershipPatch,
   type RequestInput,
@@ -96,9 +98,15 @@ const MembershipList = z.array(Membership);
 const AdminMembershipList = z.array(AdminMembership);
 
 type MineKey = readonly [typeof MEMBERSHIPS_KEY, 'mine', string | undefined];
-type AllKey = readonly [typeof MEMBERSHIPS_KEY, 'all', string | undefined];
+type SeasonKey = readonly [typeof MEMBERSHIPS_KEY, 'season', string | undefined, string | null];
+type RequestsKey = readonly [typeof MEMBERSHIPS_KEY, 'requests', string | undefined, boolean];
+type CountKey = readonly [typeof MEMBERSHIPS_KEY, 'openCount', string | undefined];
+type ProfilesKey = readonly ['boardProfiles', string | undefined];
 type MineOptions<T> = Omit<UseQueryOptions<Membership[], Error, T, MineKey>, 'queryKey' | 'queryFn'>;
-type AllOptions<T> = Omit<UseQueryOptions<AdminMembership[], Error, T, AllKey>, 'queryKey' | 'queryFn'>;
+type SeasonOptions<T> = Omit<UseQueryOptions<AdminMembership[], Error, T, SeasonKey>, 'queryKey' | 'queryFn'>;
+type RequestsOptions<T> = Omit<UseQueryOptions<AdminMembership[], Error, T, RequestsKey>, 'queryKey' | 'queryFn'>;
+type CountOptions = Omit<UseQueryOptions<number, Error, number, CountKey>, 'queryKey' | 'queryFn'>;
+type ProfilesOptions<T> = Omit<UseQueryOptions<BoardProfile[], Error, T, ProfilesKey>, 'queryKey' | 'queryFn'>;
 type MutationOptions<TData, TVariables> = Omit<UseMutationOptions<TData, Error, TVariables>, 'mutationFn'>;
 
 const fetchMine = async (userId: string) => {
@@ -112,15 +120,51 @@ const fetchMine = async (userId: string) => {
   return MembershipList.parse(data);
 };
 
-const fetchAll = async () => {
+const SEASON_STATUSES = [MembershipStatus.enum.active, MembershipStatus.enum.requested];
+
+const fetchSeason = async (seasonId: string | null) => {
   const supabase = await getSupabase();
+  let query = supabase.from('memberships').select(ADMIN_COLUMNS).in('status', SEASON_STATUSES);
+  if (seasonId) {
+    const { from, to } = seasonRange(seasonId);
+    query = query.gte('start_date', from).lte('start_date', to);
+  }
+  const { data, error } = await query.order('start_date', { ascending: false });
+  if (error) throw toError(error);
+  return AdminMembershipList.parse(data);
+};
+
+const fetchRequests = async (withDeclined: boolean) => {
+  const supabase = await getSupabase();
+  const statuses = withDeclined
+    ? [MembershipStatus.enum.requested, MembershipStatus.enum.declined]
+    : [MembershipStatus.enum.requested];
   const { data, error } = await supabase
     .from('memberships')
     .select(ADMIN_COLUMNS)
-    .order('start_date', { ascending: false })
+    .in('status', statuses)
     .order('created_at', { ascending: false });
   if (error) throw toError(error);
   return AdminMembershipList.parse(data);
+};
+
+const fetchOpenRequestCount = async () => {
+  const supabase = await getSupabase();
+  const { count, error } = await supabase
+    .from('memberships')
+    .select('id', { count: 'exact', head: true })
+    .eq('status', MembershipStatus.enum.requested);
+  if (error) throw toError(error);
+  return count ?? 0;
+};
+
+const BoardProfileList = z.array(BoardProfile);
+
+const fetchProfiles = async () => {
+  const supabase = await getSupabase();
+  const { data, error } = await supabase.from('profiles').select('id, name, email, avatarUrl:avatar_url');
+  if (error) throw toError(error);
+  return BoardProfileList.parse(data);
 };
 
 const createMembership = async (input: MembershipInput) => {
@@ -186,12 +230,42 @@ export const useMyMemberships = <T = Membership[]>(options?: MineOptions<T>) => 
   });
 };
 
-export const useAllMemberships = <T = AdminMembership[]>(options?: AllOptions<T>) => {
+export const useSeasonMemberships = <T = AdminMembership[]>(seasonId: string | null, options?: SeasonOptions<T>) => {
   const userId = useSessionUserId();
   const isAdmin = useIsAdmin();
   return useQuery({
-    queryKey: [MEMBERSHIPS_KEY, 'all', userId] as const,
-    queryFn: isAdmin ? fetchAll : skipToken,
+    queryKey: [MEMBERSHIPS_KEY, 'season', userId, seasonId] as const,
+    queryFn: isAdmin ? () => fetchSeason(seasonId) : skipToken,
+    ...options,
+  });
+};
+
+export const useMembershipRequests = <T = AdminMembership[]>(withDeclined: boolean, options?: RequestsOptions<T>) => {
+  const userId = useSessionUserId();
+  const isAdmin = useIsAdmin();
+  return useQuery({
+    queryKey: [MEMBERSHIPS_KEY, 'requests', userId, withDeclined] as const,
+    queryFn: isAdmin ? () => fetchRequests(withDeclined) : skipToken,
+    ...options,
+  });
+};
+
+export const useOpenRequestCount = (options?: CountOptions) => {
+  const userId = useSessionUserId();
+  const isAdmin = useIsAdmin();
+  return useQuery({
+    queryKey: [MEMBERSHIPS_KEY, 'openCount', userId] as const,
+    queryFn: isAdmin ? fetchOpenRequestCount : skipToken,
+    ...options,
+  });
+};
+
+export const useBoardProfiles = <T = BoardProfile[]>(options?: ProfilesOptions<T>) => {
+  const userId = useSessionUserId();
+  const isAdmin = useIsAdmin();
+  return useQuery({
+    queryKey: ['boardProfiles', userId] as const,
+    queryFn: isAdmin ? fetchProfiles : skipToken,
     ...options,
   });
 };

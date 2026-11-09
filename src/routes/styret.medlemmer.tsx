@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { requireAdmin } from '~/components/auth/guards';
 import { ALL_SEASONS, MembersTab, SEASON_ID } from '~/pages/board/format';
 import { MembersPage } from '~/pages/board/MembersPage';
+import { PeopleFilter } from '~/pages/board/people';
 
 export const Route = createFileRoute('/styret/medlemmer')({
   validateSearch: z.object({
@@ -11,7 +12,7 @@ export const Route = createFileRoute('/styret/medlemmer')({
       .union([z.literal(ALL_SEASONS), z.string().regex(SEASON_ID)])
       .optional()
       .catch(undefined),
-    ubetalt: z.boolean().optional().catch(undefined),
+    vis: PeopleFilter.optional().catch(undefined),
     fane: MembersTab.optional().catch(undefined),
     avslatt: z.boolean().optional().catch(undefined),
   }),

@@ -60,6 +60,19 @@ export const seasonDates = (season: Season) => {
 
 export const membershipSeason = (m: Pick<Membership, 'startDate'>) => seasonOf(date(m.startDate));
 
+export const seasonRange = (seasonId: string) => {
+  const year = Number(seasonId.slice(0, 4));
+  return { from: `${year}-07-01`, to: `${year + 1}-06-30` };
+};
+
+export const BoardProfile = z.object({
+  id: z.uuid(),
+  name: z.string(),
+  email: z.string(),
+  avatarUrl: z.url().nullable().catch(null),
+});
+export type BoardProfile = z.infer<typeof BoardProfile>;
+
 export const isActiveOn = (m: Pick<Membership, 'startDate' | 'endDate'>, day: Dayjs = today()) =>
   !day.isBefore(date(m.startDate), 'day') && !day.isAfter(date(m.endDate), 'day');
 

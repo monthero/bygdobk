@@ -187,20 +187,21 @@ const LookupResult: FC<{ email: string }> = ({ email }) => {
 
 type FormProps = {
   membership: AdminMembership | undefined;
+  email?: string;
   season: Season;
   plans: ReadonlyMap<string, Plan>;
   onDone: () => void;
 };
 
-const MembershipFormBody: FC<FormProps> = ({ membership, season, plans, onDone }) => {
+const MembershipFormBody: FC<FormProps> = ({ membership, email: forEmail, season, plans, onDone }) => {
   const { i18n, t } = useLingui();
   const queryClient = useQueryClient();
   const schema = useMemo(() => formSchema(t), [t]);
   const form = useForm<FormValues>({
-    initialValues: initialValues(membership, season),
+    initialValues: { ...initialValues(membership, season), ...(forEmail && !membership && { email: forEmail }) },
     validate: schemaResolver(schema, { sync: true }),
   });
-  const [lookupEmail, setLookupEmail] = useState(() => normalizeEmail(membership?.profile?.email ?? ''));
+  const [lookupEmail, setLookupEmail] = useState(() => normalizeEmail(membership?.profile?.email ?? forEmail ?? ''));
   const create = useCreateMembership();
   const update = useUpdateMembership();
   const saving = create.isPending || update.isPending;
@@ -396,7 +397,12 @@ export const MembershipFormModal: FC<Props> = ({ opened, onClose, membership, ..
       fullScreen={isMobile}
       centered
     >
-      <MembershipFormBody key={membership?.id ?? 'new'} membership={membership} onDone={onClose} {...rest} />
+      <MembershipFormBody
+        key={membership?.id ?? rest.email ?? 'new'}
+        membership={membership}
+        onDone={onClose}
+        {...rest}
+      />
     </Modal>
   );
 };

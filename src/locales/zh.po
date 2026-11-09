@@ -11,11 +11,6 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "“我们希望让更多人享受打羽毛球的乐趣！”"
 
-#. placeholder {0}: shown.length
-#: src/pages/board/MembersPage.tsx
-msgid "{0, plural, one {# membership} other {# memberships}}"
-msgstr "{0, plural, other {#个会员}}"
-
 #. placeholder {0}: hits.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post matches} other {# posts match}}"
@@ -26,7 +21,7 @@ msgstr "{0, plural, other {找到#篇文章}}"
 msgid "{0, plural, one {# post} other {# posts}}"
 msgstr "{0, plural, one {#篇文章} other {#篇文章}}"
 
-#. placeholder {0}: shown.length
+#. placeholder {0}: requests.length
 #: src/pages/board/MembersPage.tsx
 msgid "{0, plural, one {# request} other {# requests}}"
 msgstr "{0, plural, other {#份申请}}"
@@ -46,6 +41,12 @@ msgstr "{0, plural, other {我们的合作伙伴}}"
 #: src/pages/join/JoinPage.tsx
 msgid "{0} + {1} per visit"
 msgstr "{0}+每次{1}"
+
+#. Badge: amount this person still owes
+#. placeholder {0}: kr(unpaidNok)
+#: src/pages/board/PeopleList.tsx
+msgid "{0} not paid"
+msgstr "{0}未付"
 
 #. placeholder {0}: kr(p.perVisit)
 #: src/pages/membership/MembershipPage.tsx
@@ -102,6 +103,11 @@ msgstr "超{over}人"
 msgid "{requestCount} open"
 msgstr "{requestCount}份待处理"
 
+#. Badge: membership requests from this person, waiting for the board
+#: src/pages/board/PeopleList.tsx
+msgid "{requested} requested"
+msgstr "{requested}个待处理"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown}已加入班次"
@@ -127,7 +133,6 @@ msgid "{taken} of {spots} spots taken"
 msgstr "名额已占{taken}/{spots}"
 
 #: src/pages/board/MembersOverview.tsx
-#: src/pages/board/MembersPage.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount}个未付款"
 
@@ -246,12 +251,19 @@ msgid "Account number: {0}"
 msgstr "账号：{0}"
 
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Actions"
 msgstr "操作"
 
+#. Button: add a membership for this person
+#: src/pages/board/PeopleList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add"
 msgstr "添加"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Add a membership for {name}"
+msgstr "为{name}添加会员"
 
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add a volunteer"
@@ -294,6 +306,8 @@ msgid "Ages 7–12 try half a season for {0}"
 msgstr "7–12岁可用{0}体验半个赛季"
 
 #. Events filter option that shows upcoming and past events
+#. People filter: everyone
+#: src/pages/board/MembersPage.tsx
 #: src/pages/events/EventsPage.tsx
 #: src/pages/news/NewsPage.tsx
 #: src/pages/study/notfound/NotFoundGallery.tsx
@@ -1096,6 +1110,10 @@ msgstr "你好！哪个组有空位了请告诉我。"
 msgid "Hi! We'd like to hear more about sponsoring the club."
 msgstr "你好！我们想多了解一下赞助俱乐部的事。"
 
+#: src/pages/board/PeopleList.tsx
+msgid "Hide memberships for {name}"
+msgstr "隐藏{name}的会员"
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Hits"
 msgstr "击球数"
@@ -1297,7 +1315,7 @@ msgstr "会员"
 msgid "Member site"
 msgstr "会员网站"
 
-#. Tab: memberships the board has confirmed
+#. Tab: everyone with an account or a membership
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Members"
@@ -1336,10 +1354,12 @@ msgid "Membership saved"
 msgstr "会员已保存"
 
 #. Sticky title of the board page that lists memberships
+#. Table column: the person's memberships this season
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Memberships"
 msgstr "会员名单"
 
@@ -1450,6 +1470,7 @@ msgid "Next up: <0>{0}</0>, date coming soon"
 msgstr "接下来：<0>{0}</0>，日期即将公布"
 
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "No account"
 msgstr "无账户"
 
@@ -1457,6 +1478,10 @@ msgstr "无账户"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "No account with that email"
 msgstr "没有用这个邮箱的账户"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No accounts or memberships yet"
+msgstr "还没有账户或会员"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "No breaks this season."
@@ -1478,13 +1503,16 @@ msgstr "没有符合筛选条件的活动"
 msgid "No events with shifts yet"
 msgstr "还没有设了班次的活动"
 
+#. Badge: this person has no membership in the chosen season
+#. People filter: account without a membership
+#: src/pages/board/MembersPage.tsx
+#: src/pages/board/PeopleList.tsx
+msgid "No membership"
+msgstr "无会员"
+
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "No membership yet. Pick a plan and send a request!"
 msgstr "你还不是会员。选个会员类型，发送申请吧！"
-
-#: src/pages/board/MembersPage.tsx
-msgid "No memberships match"
-msgstr "没有符合条件的会员"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships this season yet"
@@ -1493,6 +1521,10 @@ msgstr "本赛季还没有会员"
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships yet"
 msgstr "还没有会员"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No one matches"
+msgstr "没有匹配的人"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No open requests. All caught up!"
@@ -1720,6 +1752,8 @@ msgstr "页面未找到"
 msgid "Page not found, but the rally isn't over"
 msgstr "页面找不到了，但这一回合还没结束"
 
+#. Badge: all of this person's memberships are paid
+#. People filter: everyone has paid
 #. Switch: the membership is paid
 #. Table column: whether and when the membership was paid
 #: src/components/auth/MyMemberships.tsx
@@ -1727,6 +1761,8 @@ msgstr "页面找不到了，但这一回合还没结束"
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/MembersOverview.tsx
+#: src/pages/board/MembersPage.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Paid"
 msgstr "已付款"
 
@@ -1767,6 +1803,11 @@ msgstr "付款"
 #: src/pages/board/MembershipList.tsx
 msgid "Period"
 msgstr "有效期"
+
+#. Table column: a person, with their account email
+#: src/pages/board/PeopleList.tsx
+msgid "Person"
+msgstr "人员"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
@@ -1976,8 +2017,10 @@ msgstr "申请已发送！"
 
 #. Badge: membership request waiting for the board
 #. Badge: membership request waiting for the board
+#. People filter: has a membership request
 #: src/components/auth/MyMemberships.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersPage.tsx
 msgid "Requested"
 msgstr "待审核"
 
@@ -2116,6 +2159,7 @@ msgstr "班次稍后公布"
 msgid "Shop at {name}"
 msgstr "去{name}购物"
 
+#: src/pages/board/MembersPage.tsx
 #: src/pages/events/EventsPage.tsx
 msgid "Show"
 msgstr "显示"
@@ -2132,6 +2176,14 @@ msgstr "显示全部新闻"
 #: src/pages/board/MembersPage.tsx
 msgid "Show declined"
 msgstr "显示已拒绝"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Show memberships"
+msgstr "显示会员"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Show memberships for {name}"
+msgstr "显示{name}的会员"
 
 #. Button: list the members who have not paid yet
 #: src/pages/board/MembersOverview.tsx
@@ -2226,8 +2278,10 @@ msgid "Start"
 msgstr "开始"
 
 #. Table column: where a membership request stands, and who sent it
+#. Table column: whether the person has paid
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Status"
 msgstr "状态"
 
@@ -2540,9 +2594,10 @@ msgstr "裁判"
 msgid "Undo decline"
 msgstr "撤销拒绝"
 
+#. People filter: still owes money
 #: src/pages/board/MembersPage.tsx
-msgid "Unpaid only"
-msgstr "只看未付款"
+msgid "Unpaid"
+msgstr "未付"
 
 #: src/components/auth/MyMemberships.tsx
 msgid "Until {until}"

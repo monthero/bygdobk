@@ -11,11 +11,6 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "»Vi vil have, at så mange som muligt får glæde af badminton!«"
 
-#. placeholder {0}: shown.length
-#: src/pages/board/MembersPage.tsx
-msgid "{0, plural, one {# membership} other {# memberships}}"
-msgstr "{0, plural, one {# medlemskab} other {# medlemskaber}}"
-
 #. placeholder {0}: hits.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post matches} other {# posts match}}"
@@ -26,7 +21,7 @@ msgstr "{0, plural, one {# opslag passer} other {# opslag passer}}"
 msgid "{0, plural, one {# post} other {# posts}}"
 msgstr "{0, plural, one {# opslag} other {# opslag}}"
 
-#. placeholder {0}: shown.length
+#. placeholder {0}: requests.length
 #: src/pages/board/MembersPage.tsx
 msgid "{0, plural, one {# request} other {# requests}}"
 msgstr "{0, plural, one {# anmodning} other {# anmodninger}}"
@@ -46,6 +41,12 @@ msgstr "{0, plural, one {Vores partner} other {Vores partnere}}"
 #: src/pages/join/JoinPage.tsx
 msgid "{0} + {1} per visit"
 msgstr "{0} + {1} pr. gang"
+
+#. Badge: amount this person still owes
+#. placeholder {0}: kr(unpaidNok)
+#: src/pages/board/PeopleList.tsx
+msgid "{0} not paid"
+msgstr "{0} ikke betalt"
 
 #. placeholder {0}: kr(p.perVisit)
 #: src/pages/membership/MembershipPage.tsx
@@ -102,6 +103,11 @@ msgstr "{over} for mange"
 msgid "{requestCount} open"
 msgstr "{requestCount} venter"
 
+#. Badge: membership requests from this person, waiting for the board
+#: src/pages/board/PeopleList.tsx
+msgid "{requested} requested"
+msgstr "{requested} venter"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown} er med på vagten"
@@ -127,7 +133,6 @@ msgid "{taken} of {spots} spots taken"
 msgstr "{taken} af {spots} pladser taget"
 
 #: src/pages/board/MembersOverview.tsx
-#: src/pages/board/MembersPage.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} ikke betalt"
 
@@ -246,12 +251,19 @@ msgid "Account number: {0}"
 msgstr "Kontonummer: {0}"
 
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Actions"
 msgstr "Handlinger"
 
+#. Button: add a membership for this person
+#: src/pages/board/PeopleList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add"
 msgstr "Tilføj"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Add a membership for {name}"
+msgstr "Tilføj medlemskab for {name}"
 
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add a volunteer"
@@ -294,6 +306,8 @@ msgid "Ages 7–12 try half a season for {0}"
 msgstr "7–12 år prøver en halv sæson for {0}"
 
 #. Events filter option that shows upcoming and past events
+#. People filter: everyone
+#: src/pages/board/MembersPage.tsx
 #: src/pages/events/EventsPage.tsx
 #: src/pages/news/NewsPage.tsx
 #: src/pages/study/notfound/NotFoundGallery.tsx
@@ -1096,6 +1110,10 @@ msgstr "Hej! Giv mig besked, når der bliver en ledig plads på et hold."
 msgid "Hi! We'd like to hear more about sponsoring the club."
 msgstr "Hej! Vi vil gerne høre mere om at sponsorere klubben."
 
+#: src/pages/board/PeopleList.tsx
+msgid "Hide memberships for {name}"
+msgstr "Skjul medlemskaberne for {name}"
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Hits"
 msgstr "Slag"
@@ -1297,7 +1315,7 @@ msgstr "Medlem"
 msgid "Member site"
 msgstr "Medlemssiden"
 
-#. Tab: memberships the board has confirmed
+#. Tab: everyone with an account or a membership
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 msgid "Members"
@@ -1336,10 +1354,12 @@ msgid "Membership saved"
 msgstr "Medlemskab gemt"
 
 #. Sticky title of the board page that lists memberships
+#. Table column: the person's memberships this season
 #: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Memberships"
 msgstr "Medlemskaber"
 
@@ -1450,6 +1470,7 @@ msgid "Next up: <0>{0}</0>, date coming soon"
 msgstr "Næste: <0>{0}</0>, dato følger snart"
 
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "No account"
 msgstr "Ingen konto"
 
@@ -1457,6 +1478,10 @@ msgstr "Ingen konto"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "No account with that email"
 msgstr "Ingen konto med den e-mail"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No accounts or memberships yet"
+msgstr "Ingen konti eller medlemskaber endnu"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "No breaks this season."
@@ -1478,13 +1503,16 @@ msgstr "Ingen arrangementer passer til filteret"
 msgid "No events with shifts yet"
 msgstr "Ingen arrangementer med vagter endnu"
 
+#. Badge: this person has no membership in the chosen season
+#. People filter: account without a membership
+#: src/pages/board/MembersPage.tsx
+#: src/pages/board/PeopleList.tsx
+msgid "No membership"
+msgstr "Uden medlemskab"
+
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "No membership yet. Pick a plan and send a request!"
 msgstr "Intet medlemskab endnu. Vælg en type, og send en anmodning!"
-
-#: src/pages/board/MembersPage.tsx
-msgid "No memberships match"
-msgstr "Ingen medlemskaber passer"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships this season yet"
@@ -1493,6 +1521,10 @@ msgstr "Ingen medlemskaber i denne sæson endnu"
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships yet"
 msgstr "Ingen medlemskaber endnu"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No one matches"
+msgstr "Ingen resultater"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No open requests. All caught up!"
@@ -1720,6 +1752,8 @@ msgstr "Siden blev ikke fundet"
 msgid "Page not found, but the rally isn't over"
 msgstr "Siden findes ikke, men duellen er ikke slut"
 
+#. Badge: all of this person's memberships are paid
+#. People filter: everyone has paid
 #. Switch: the membership is paid
 #. Table column: whether and when the membership was paid
 #: src/components/auth/MyMemberships.tsx
@@ -1727,6 +1761,8 @@ msgstr "Siden findes ikke, men duellen er ikke slut"
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/MembersOverview.tsx
+#: src/pages/board/MembersPage.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Paid"
 msgstr "Betalt"
 
@@ -1767,6 +1803,11 @@ msgstr "Betal"
 #: src/pages/board/MembershipList.tsx
 msgid "Period"
 msgstr "Periode"
+
+#. Table column: a person, with their account email
+#: src/pages/board/PeopleList.tsx
+msgid "Person"
+msgstr "Person"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
@@ -1976,8 +2017,10 @@ msgstr "Anmodning sendt!"
 
 #. Badge: membership request waiting for the board
 #. Badge: membership request waiting for the board
+#. People filter: has a membership request
 #: src/components/auth/MyMemberships.tsx
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/MembersPage.tsx
 msgid "Requested"
 msgstr "Afventer"
 
@@ -2116,6 +2159,7 @@ msgstr "Vagterne kommer senere"
 msgid "Shop at {name}"
 msgstr "Køb hos {name}"
 
+#: src/pages/board/MembersPage.tsx
 #: src/pages/events/EventsPage.tsx
 msgid "Show"
 msgstr "Vis"
@@ -2132,6 +2176,14 @@ msgstr "Vis alle nyheder"
 #: src/pages/board/MembersPage.tsx
 msgid "Show declined"
 msgstr "Vis afviste"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Show memberships"
+msgstr "Vis medlemskaber"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Show memberships for {name}"
+msgstr "Vis medlemskaberne for {name}"
 
 #. Button: list the members who have not paid yet
 #: src/pages/board/MembersOverview.tsx
@@ -2226,8 +2278,10 @@ msgid "Start"
 msgstr "Start"
 
 #. Table column: where a membership request stands, and who sent it
+#. Table column: whether the person has paid
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/PeopleList.tsx
 msgid "Status"
 msgstr "Status"
 
@@ -2540,9 +2594,10 @@ msgstr "Dommer"
 msgid "Undo decline"
 msgstr "Fortryd afvisning"
 
+#. People filter: still owes money
 #: src/pages/board/MembersPage.tsx
-msgid "Unpaid only"
-msgstr "Kun ubetalte"
+msgid "Unpaid"
+msgstr "Ubetalt"
 
 #: src/components/auth/MyMemberships.tsx
 msgid "Until {until}"
