@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as PersonvernRouteImport } from './routes/personvern'
+import { Route as StyretRouteImport } from './routes/styret'
 import { Route as AdminSplatRouteImport } from './routes/admin.$'
 import { Route as ArrangementerIndexRouteImport } from './routes/arrangementer.index'
 import { Route as ArrangementerSlugRouteImport } from './routes/arrangementer.$slug'
@@ -22,8 +23,10 @@ import { Route as MedlemskapMineRouteImport } from './routes/medlemskap.mine'
 import { Route as NyheterIndexRouteImport } from './routes/nyheter.index'
 import { Route as NyheterSlugRouteImport } from './routes/nyheter.$slug'
 import { Route as Studie404RouteImport } from './routes/studie_.404'
+import { Route as StyretIndexRouteImport } from './routes/styret.index'
 import { Route as StyretDugnadRouteImport } from './routes/styret.dugnad'
 import { Route as StyretMedlemmerRouteImport } from './routes/styret.medlemmer'
+import { Route as StyretTilgangRouteImport } from './routes/styret.tilgang'
 import { Route as TreningIndexRouteImport } from './routes/trening.index'
 import { Route as TreningSesongRouteImport } from './routes/trening.$sesong'
 
@@ -40,6 +43,11 @@ const KontaktRoute = KontaktRouteImport.update({
 const PersonvernRoute = PersonvernRouteImport.update({
   id: '/personvern',
   path: '/personvern',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StyretRoute = StyretRouteImport.update({
+  id: '/styret',
+  path: '/styret',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSplatRoute = AdminSplatRouteImport.update({
@@ -92,15 +100,25 @@ const Studie404Route = Studie404RouteImport.update({
   path: '/studie/404',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StyretIndexRoute = StyretIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StyretRoute,
+} as any)
 const StyretDugnadRoute = StyretDugnadRouteImport.update({
-  id: '/styret/dugnad',
-  path: '/styret/dugnad',
-  getParentRoute: () => rootRouteImport,
+  id: '/dugnad',
+  path: '/dugnad',
+  getParentRoute: () => StyretRoute,
 } as any)
 const StyretMedlemmerRoute = StyretMedlemmerRouteImport.update({
-  id: '/styret/medlemmer',
-  path: '/styret/medlemmer',
-  getParentRoute: () => rootRouteImport,
+  id: '/medlemmer',
+  path: '/medlemmer',
+  getParentRoute: () => StyretRoute,
+} as any)
+const StyretTilgangRoute = StyretTilgangRouteImport.update({
+  id: '/tilgang',
+  path: '/tilgang',
+  getParentRoute: () => StyretRoute,
 } as any)
 const TreningIndexRoute = TreningIndexRouteImport.update({
   id: '/trening/',
@@ -117,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
   '/personvern': typeof PersonvernRoute
+  '/styret': typeof StyretRouteWithChildren
   '/admin/$': typeof AdminSplatRoute
   '/arrangementer/$slug': typeof ArrangementerSlugRoute
   '/medlemskap/bli-medlem': typeof MedlemskapBliMedlemRoute
@@ -125,11 +144,13 @@ export interface FileRoutesByFullPath {
   '/studie/404': typeof Studie404Route
   '/styret/dugnad': typeof StyretDugnadRoute
   '/styret/medlemmer': typeof StyretMedlemmerRoute
+  '/styret/tilgang': typeof StyretTilgangRoute
   '/trening/$sesong': typeof TreningSesongRoute
   '/arrangementer/': typeof ArrangementerIndexRoute
   '/klubben/': typeof KlubbenIndexRoute
   '/medlemskap/': typeof MedlemskapIndexRoute
   '/nyheter/': typeof NyheterIndexRoute
+  '/styret/': typeof StyretIndexRoute
   '/trening/': typeof TreningIndexRoute
 }
 export interface FileRoutesByTo {
@@ -144,11 +165,13 @@ export interface FileRoutesByTo {
   '/studie/404': typeof Studie404Route
   '/styret/dugnad': typeof StyretDugnadRoute
   '/styret/medlemmer': typeof StyretMedlemmerRoute
+  '/styret/tilgang': typeof StyretTilgangRoute
   '/trening/$sesong': typeof TreningSesongRoute
   '/arrangementer': typeof ArrangementerIndexRoute
   '/klubben': typeof KlubbenIndexRoute
   '/medlemskap': typeof MedlemskapIndexRoute
   '/nyheter': typeof NyheterIndexRoute
+  '/styret': typeof StyretIndexRoute
   '/trening': typeof TreningIndexRoute
 }
 export interface FileRoutesById {
@@ -156,6 +179,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
   '/personvern': typeof PersonvernRoute
+  '/styret': typeof StyretRouteWithChildren
   '/admin/$': typeof AdminSplatRoute
   '/arrangementer/$slug': typeof ArrangementerSlugRoute
   '/medlemskap/bli-medlem': typeof MedlemskapBliMedlemRoute
@@ -164,11 +188,13 @@ export interface FileRoutesById {
   '/studie_/404': typeof Studie404Route
   '/styret/dugnad': typeof StyretDugnadRoute
   '/styret/medlemmer': typeof StyretMedlemmerRoute
+  '/styret/tilgang': typeof StyretTilgangRoute
   '/trening/$sesong': typeof TreningSesongRoute
   '/arrangementer/': typeof ArrangementerIndexRoute
   '/klubben/': typeof KlubbenIndexRoute
   '/medlemskap/': typeof MedlemskapIndexRoute
   '/nyheter/': typeof NyheterIndexRoute
+  '/styret/': typeof StyretIndexRoute
   '/trening/': typeof TreningIndexRoute
 }
 export interface FileRouteTypes {
@@ -177,6 +203,7 @@ export interface FileRouteTypes {
     | '/'
     | '/kontakt'
     | '/personvern'
+    | '/styret'
     | '/admin/$'
     | '/arrangementer/$slug'
     | '/medlemskap/bli-medlem'
@@ -185,11 +212,13 @@ export interface FileRouteTypes {
     | '/studie/404'
     | '/styret/dugnad'
     | '/styret/medlemmer'
+    | '/styret/tilgang'
     | '/trening/$sesong'
     | '/arrangementer/'
     | '/klubben/'
     | '/medlemskap/'
     | '/nyheter/'
+    | '/styret/'
     | '/trening/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -204,17 +233,20 @@ export interface FileRouteTypes {
     | '/studie/404'
     | '/styret/dugnad'
     | '/styret/medlemmer'
+    | '/styret/tilgang'
     | '/trening/$sesong'
     | '/arrangementer'
     | '/klubben'
     | '/medlemskap'
     | '/nyheter'
+    | '/styret'
     | '/trening'
   id:
     | '__root__'
     | '/'
     | '/kontakt'
     | '/personvern'
+    | '/styret'
     | '/admin/$'
     | '/arrangementer/$slug'
     | '/medlemskap/bli-medlem'
@@ -223,11 +255,13 @@ export interface FileRouteTypes {
     | '/studie_/404'
     | '/styret/dugnad'
     | '/styret/medlemmer'
+    | '/styret/tilgang'
     | '/trening/$sesong'
     | '/arrangementer/'
     | '/klubben/'
     | '/medlemskap/'
     | '/nyheter/'
+    | '/styret/'
     | '/trening/'
   fileRoutesById: FileRoutesById
 }
@@ -235,14 +269,13 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KontaktRoute: typeof KontaktRoute
   PersonvernRoute: typeof PersonvernRoute
+  StyretRoute: typeof StyretRouteWithChildren
   AdminSplatRoute: typeof AdminSplatRoute
   ArrangementerSlugRoute: typeof ArrangementerSlugRoute
   MedlemskapBliMedlemRoute: typeof MedlemskapBliMedlemRoute
   MedlemskapMineRoute: typeof MedlemskapMineRoute
   NyheterSlugRoute: typeof NyheterSlugRoute
   Studie404Route: typeof Studie404Route
-  StyretDugnadRoute: typeof StyretDugnadRoute
-  StyretMedlemmerRoute: typeof StyretMedlemmerRoute
   TreningSesongRoute: typeof TreningSesongRoute
   ArrangementerIndexRoute: typeof ArrangementerIndexRoute
   KlubbenIndexRoute: typeof KlubbenIndexRoute
@@ -272,6 +305,13 @@ declare module '@tanstack/react-router' {
       path: '/personvern'
       fullPath: '/personvern'
       preLoaderRoute: typeof PersonvernRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/styret': {
+      id: '/styret'
+      path: '/styret'
+      fullPath: '/styret'
+      preLoaderRoute: typeof StyretRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/$': {
@@ -344,19 +384,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Studie404RouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/styret/': {
+      id: '/styret/'
+      path: '/'
+      fullPath: '/styret/'
+      preLoaderRoute: typeof StyretIndexRouteImport
+      parentRoute: typeof StyretRoute
+    }
     '/styret/dugnad': {
       id: '/styret/dugnad'
-      path: '/styret/dugnad'
+      path: '/dugnad'
       fullPath: '/styret/dugnad'
       preLoaderRoute: typeof StyretDugnadRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StyretRoute
     }
     '/styret/medlemmer': {
       id: '/styret/medlemmer'
-      path: '/styret/medlemmer'
+      path: '/medlemmer'
       fullPath: '/styret/medlemmer'
       preLoaderRoute: typeof StyretMedlemmerRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof StyretRoute
+    }
+    '/styret/tilgang': {
+      id: '/styret/tilgang'
+      path: '/tilgang'
+      fullPath: '/styret/tilgang'
+      preLoaderRoute: typeof StyretTilgangRouteImport
+      parentRoute: typeof StyretRoute
     }
     '/trening/': {
       id: '/trening/'
@@ -375,18 +429,34 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface StyretRouteChildren {
+  StyretDugnadRoute: typeof StyretDugnadRoute
+  StyretMedlemmerRoute: typeof StyretMedlemmerRoute
+  StyretTilgangRoute: typeof StyretTilgangRoute
+  StyretIndexRoute: typeof StyretIndexRoute
+}
+
+const StyretRouteChildren: StyretRouteChildren = {
+  StyretDugnadRoute: StyretDugnadRoute,
+  StyretMedlemmerRoute: StyretMedlemmerRoute,
+  StyretTilgangRoute: StyretTilgangRoute,
+  StyretIndexRoute: StyretIndexRoute,
+}
+
+const StyretRouteWithChildren =
+  StyretRoute._addFileChildren(StyretRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KontaktRoute: KontaktRoute,
   PersonvernRoute: PersonvernRoute,
+  StyretRoute: StyretRouteWithChildren,
   AdminSplatRoute: AdminSplatRoute,
   ArrangementerSlugRoute: ArrangementerSlugRoute,
   MedlemskapBliMedlemRoute: MedlemskapBliMedlemRoute,
   MedlemskapMineRoute: MedlemskapMineRoute,
   NyheterSlugRoute: NyheterSlugRoute,
   Studie404Route: Studie404Route,
-  StyretDugnadRoute: StyretDugnadRoute,
-  StyretMedlemmerRoute: StyretMedlemmerRoute,
   TreningSesongRoute: TreningSesongRoute,
   ArrangementerIndexRoute: ArrangementerIndexRoute,
   KlubbenIndexRoute: KlubbenIndexRoute,

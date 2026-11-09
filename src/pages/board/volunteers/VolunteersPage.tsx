@@ -20,13 +20,14 @@ import { memo, useCallback, useMemo, useState, type FC } from 'react';
 
 import { isPast, type CalendarEvent, type Shift } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
-import { useTeams } from '~/cms/siteData';
+import { useSitePhoto, useTeams } from '~/cms/siteData';
 import { useProfile, useSignedOut } from '~/components/auth/hooks';
-import { isVisitorEvent, shiftDays, shiftTime, TeamBadge, type VisitorEvent } from '~/components/events';
+import { isVisitorEvent, shiftTime, TeamBadge, type VisitorEvent } from '~/components/events';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { HandHeart, PencilSimple, Trash, Trophy, UserPlus, Warning } from '~/components/ui';
 import { Team } from '~/data/events';
+import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { LoadError } from '~/pages/board/LoadError';
 import { date, formatDate, todayIso } from '~/utils/dates';
@@ -36,15 +37,14 @@ import { volunteerName, type AdminShiftVolunteer } from '~/volunteers/model';
 import { useEventVolunteers } from '~/volunteers/queries';
 
 import { DialogKind, type Dialog } from './dialog';
+import { PrintShiftPlan } from './PrintShiftPlan';
+import { DAY_TITLE, NO_VOLUNTEERS, useShiftPlan, type VolunteersByShift } from './shiftPlan';
 import { VolunteerDialog } from './VolunteerDialogs';
 
 import classes from './VolunteersPage.module.css';
 
 const route = getRouteApi('/styret/dugnad');
 
-const NO_VOLUNTEERS: AdminShiftVolunteer[] = [];
-const NO_SHIFTS: Shift[] = [];
-const DAY_TITLE: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' };
 const EMPTY_ICON_SIZE = 40;
 
 const hasShifts = (e: CalendarEvent): e is VisitorEvent => isVisitorEvent(e) && e.shifts.length > 0;
@@ -152,10 +152,13 @@ const ShiftPanel = memo<{ shift: Shift; volunteers: readonly AdminShiftVolunteer
 );
 
 type Gap = { team: Team; open: number };
+type DayGaps = { day: string; gaps: Gap[] };
 
-const WhoToFind: FC<{ days: readonly string[]; gaps: ReadonlyMap<string, Gap[]> }> = ({ days, gaps }) => {
+const openSpots = (shifts: readonly Shift[], byShift: VolunteersByShift) =>
+  shifts.reduce((sum, s) => sum + Math.max(s.spots - (byShift.get(s._key)?.length ?? 0), 0), 0);
+
+const WhoToFind: FC<{ openDays: readonly DayGaps[] }> = ({ openDays }) => {
   const teams = useTeams();
-  const openDays = days.filter((d) => (gaps.get(d)?.length ?? 0) > 0);
   return (
     <Alert
       variant="light"
@@ -170,13 +173,13 @@ const WhoToFind: FC<{ days: readonly string[]; gaps: ReadonlyMap<string, Gap[]> 
         </Text>
       ) : (
         <Stack gap="xs">
-          {openDays.map((d) => (
-            <Group key={d} gap="xs">
-              <Text size="sm" fw={600} tt="capitalize" miw={140}>
-                {formatDate(date(d), DAY_TITLE)}
+          {openDays.map(({ day, gaps }) => (
+            <Group key={day} gap="xs">
+              <Text size="sm" fw={600} miw={140} className="capitalize-first">
+                {formatDate(date(day), DAY_TITLE)}
               </Text>
-              {gaps.get(d)?.map(({ team, open }) => (
-                <Badge key={team} variant="outline" color="yellow" className="tabular">
+              {gaps.map(({ team, open }) => (
+                <Badge key={team} variant="default" className="tabular">
                   {teams[team].name} · <Trans comment="Open spots on a volunteer team, e.g. 2 open">{open} open</Trans>
                 </Badge>
               ))}
@@ -207,31 +210,21 @@ const EventVolunteers: FC<{ event: VisitorEvent }> = ({ event }) => {
   const [dialog, setDialog] = useState<Dialog>();
   const [opened, setOpened] = useState(false);
 
-  const days = useMemo(() => shiftDays(event.shifts), [event.shifts]);
-  const shiftsByDay = useMemo(() => Map.groupBy(event.shifts, (s) => s.day), [event.shifts]);
-  const byShift = useMemo(() => Map.groupBy(volunteers, (v) => v.shiftKey), [volunteers]);
+  const { days, byShift } = useShiftPlan(event.shifts, volunteers);
   const orphans = useMemo(() => {
     const keys = new Set(event.shifts.map((s) => s._key));
     return volunteers.filter((v) => !keys.has(v.shiftKey));
   }, [event.shifts, volunteers]);
-  const gaps = useMemo(() => {
-    const result = new Map<string, Gap[]>();
-    for (const [day, shifts] of shiftsByDay) {
-      const open = new Map<Team, number>();
-      for (const s of shifts) {
-        const left = s.spots - (byShift.get(s._key)?.length ?? 0);
-        if (left > 0) open.set(s.team, (open.get(s.team) ?? 0) + left);
-      }
-      result.set(
-        day,
-        Team.options.flatMap((team) => {
-          const count = open.get(team);
-          return count ? [{ team, open: count }] : [];
-        }),
-      );
-    }
-    return result;
-  }, [shiftsByDay, byShift]);
+  const openDays = useMemo(
+    () =>
+      days.flatMap(({ day, teams }) => {
+        const gaps = teams
+          .map(({ team, shifts }) => ({ team, open: openSpots(shifts, byShift) }))
+          .filter((g) => g.open > 0);
+        return gaps.length > 0 ? [{ day, gaps }] : [];
+      }),
+    [days, byShift],
+  );
 
   const openDialog = useCallback((next: Dialog) => {
     setDialog(next);
@@ -251,6 +244,7 @@ const EventVolunteers: FC<{ event: VisitorEvent }> = ({ event }) => {
     return (
       <LoadError
         title={t`Couldn't load the volunteers`}
+        error={failed.error}
         retrying={failed.isRefetching}
         onRetry={() => void failed.refetch()}
       />
@@ -261,36 +255,29 @@ const EventVolunteers: FC<{ event: VisitorEvent }> = ({ event }) => {
 
   return (
     <Stack gap="xl">
-      <WhoToFind days={days} gaps={gaps} />
-      {days.map((d) => {
-        const dayShifts = shiftsByDay.get(d) ?? NO_SHIFTS;
-        return (
-          <Stack key={d} gap="md">
-            <Title order={2} size="h3" tt="capitalize">
-              {formatDate(date(d), DAY_TITLE)}
-            </Title>
-            {Team.options.map((team) => {
-              const teamShifts = dayShifts.filter((s) => s.team === team);
-              if (teamShifts.length === 0) return null;
-              return (
-                <Stack key={team} gap="xs">
-                  <TeamBadge team={team} />
-                  <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
-                    {teamShifts.map((shift) => (
-                      <ShiftPanel
-                        key={shift._key}
-                        shift={shift}
-                        volunteers={byShift.get(shift._key) ?? NO_VOLUNTEERS}
-                        {...handlers}
-                      />
-                    ))}
-                  </SimpleGrid>
-                </Stack>
-              );
-            })}
-          </Stack>
-        );
-      })}
+      <WhoToFind openDays={openDays} />
+      {days.map(({ day, teams }) => (
+        <Stack key={day} gap="md">
+          <Title order={2} size="h3" className="capitalize-first">
+            {formatDate(date(day), DAY_TITLE)}
+          </Title>
+          {teams.map(({ team, shifts }) => (
+            <Stack key={team} gap="xs">
+              <TeamBadge team={team} />
+              <SimpleGrid cols={{ base: 1, md: 2 }} spacing="md">
+                {shifts.map((shift) => (
+                  <ShiftPanel
+                    key={shift._key}
+                    shift={shift}
+                    volunteers={byShift.get(shift._key) ?? NO_VOLUNTEERS}
+                    {...handlers}
+                  />
+                ))}
+              </SimpleGrid>
+            </Stack>
+          ))}
+        </Stack>
+      ))}
       {orphans.length > 0 && (
         <Alert color="orange" variant="light" icon={<Warning />} title={<Trans>On a shift that's gone</Trans>}>
           <Stack gap="xs">
@@ -313,6 +300,7 @@ const EventVolunteers: FC<{ event: VisitorEvent }> = ({ event }) => {
 export const VolunteersPage: FC = () => {
   const { t } = useLingui();
   usePageTitle(t`Volunteer shifts`, t`The board`);
+  const photo = useSitePhoto(PhotoSlot.enum.boardVolunteers);
   const { arrangement } = route.useSearch();
   const navigate = route.useNavigate();
   const { events } = useSiteContent();
@@ -351,6 +339,7 @@ export const VolunteersPage: FC = () => {
     <>
       <PageIntro
         eyebrow={<Trans comment="Eyebrow above the page title: the club board">The board</Trans>}
+        photo={photo}
         title={<Trans>Volunteer shifts</Trans>}
         lede={<Trans>See who's on each shift, and who we still need.</Trans>}
       />
@@ -364,9 +353,12 @@ export const VolunteersPage: FC = () => {
             onChange={pickEvent}
             allowDeselect={false}
             radius="xl"
-            w={{ base: '100%', sm: 320 }}
+            flex={1}
+            miw={0}
+            maw={320}
             leftSection={<Trophy />}
           />
+          <PrintShiftPlan event={event} />
         </PageToolbar>
       )}
 

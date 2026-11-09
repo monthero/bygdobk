@@ -1,14 +1,13 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Alert, Badge, Button, Divider, Group, Modal, Stack, Text, TextInput, ThemeIcon } from '@mantine/core';
+import { Alert, Badge, Button, Divider, Group, Stack, Text, TextInput, ThemeIcon } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useMutation } from '@tanstack/react-query';
 import { memo, useEffect, useMemo, useState, type FC } from 'react';
 import { z } from 'zod';
 
-import { BottomSheet, Check, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, Warning } from '~/components/ui';
-import { useIsMobile } from '~/hooks/useIsMobile';
+import { Check, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, ResponsiveModal, Warning } from '~/components/ui';
 import type { Translate } from '~/i18n/current';
 import { startAuth, useAuth } from '~/stores/auth';
 import { useUi } from '~/stores/ui';
@@ -180,25 +179,11 @@ export const LoginModal = memo(() => {
   const { t } = useLingui();
   useEffect(() => void startAuth(), []);
   const opened = useUi((s) => s.loginOpened);
-  const mobile = useIsMobile();
-
-  if (mobile) {
-    return (
-      <BottomSheet opened={opened} onClose={close} handle>
-        <Stack gap="md" p="lg" pt="sm" pb="calc(20px + env(safe-area-inset-bottom))">
-          <Text fw={600} size="lg">
-            {t`Log in`}
-          </Text>
-          <LoginForm />
-        </Stack>
-      </BottomSheet>
-    );
-  }
 
   return (
-    <Modal opened={opened} onClose={close} title={t`Log in`} centered>
+    <ResponsiveModal opened={opened} onClose={close} title={t`Log in`}>
       <LoginForm />
-    </Modal>
+    </ResponsiveModal>
   );
 });
 

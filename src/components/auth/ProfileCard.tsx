@@ -1,3 +1,4 @@
+import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import {
@@ -13,12 +14,19 @@ import {
   Text,
   UnstyledButton,
 } from '@mantine/core';
-import { useRef, type FC } from 'react';
+import { useRef, useState, type FC } from 'react';
 
 import { Camera, Trash } from '~/components/ui';
 import type { User } from '~/stores/auth';
 
-import { AVATAR_ACCEPT, AVATAR_IMAGE_PROPS, avatarErrorMessage, useChangeAvatar, useRemoveAvatar } from './avatar';
+import {
+  AVATAR_ACCEPT,
+  AVATAR_IMAGE_PROPS,
+  avatarErrorMessage,
+  avatarFileError,
+  loadAvatarCropper,
+  useRemoveAvatar,
+} from './avatar';
 
 const ADMIN_LABEL = msg({ message: 'Admin', comment: 'User role: can edit the site' });
 const MEMBER_LABEL = msg({ message: 'Member', comment: 'Badge: has a club membership this season' });
@@ -26,19 +34,22 @@ const MEMBER_LABEL = msg({ message: 'Member', comment: 'Badge: has a club member
 const CAMERA_BADGE = <Camera width={14} height={14} />;
 const OVERLAY_LOADER = { size: 'sm' } as const;
 const OVERLAY_PROPS = { radius: 'xl' } as const;
+type Props = { user: User; isMember: boolean; onPickPhoto: (file: File) => void };
 
-export const ProfileCard: FC<{ user: User; isMember: boolean }> = ({ user, isMember }) => {
+export const ProfileCard: FC<Props> = ({ user, isMember, onPickPhoto }) => {
   const { i18n, t } = useLingui();
   const resetRef = useRef<() => void>(null);
-  const change = useChangeAvatar({ onSettled: () => resetRef.current?.() });
+  const [fileError, setFileError] = useState<MessageDescriptor>();
   const remove = useRemoveAvatar();
-  const busy = change.isPending || remove.isPending;
-  const error = change.error ?? remove.error;
+  const busy = remove.isPending;
 
   const pick = (file: File | null) => {
+    resetRef.current?.();
     if (!file) return;
     remove.reset();
-    change.mutate(file);
+    const problem = avatarFileError(file);
+    setFileError(problem);
+    if (!problem) onPickPhoto(file);
   };
 
   return (
@@ -46,17 +57,26 @@ export const ProfileCard: FC<{ user: User; isMember: boolean }> = ({ user, isMem
       {({ onClick }) => (
         <Stack gap="xs">
           <Group gap="sm" wrap="nowrap" miw={0}>
-            <UnstyledButton onClick={onClick} disabled={busy} aria-label={t`Change your photo`} bdrs="50%">
-              <Indicator
-                label={CAMERA_BADGE}
-                size={22}
-                offset={6}
-                position="bottom-end"
-                withBorder
-                color="gray"
+            <Box pos="relative">
+              <UnstyledButton
+                onClick={() => {
+                  void loadAvatarCropper();
+                  onClick();
+                }}
                 disabled={busy}
+                aria-label={t`Change your photo`}
+                bdrs="50%"
+                display="block"
               >
-                <Box pos="relative">
+                <Indicator
+                  label={CAMERA_BADGE}
+                  size={22}
+                  offset={6}
+                  position="bottom-end"
+                  withBorder
+                  color="gray"
+                  disabled={busy}
+                >
                   <Avatar
                     src={user.avatarUrl}
                     name={user.name}
@@ -64,10 +84,10 @@ export const ProfileCard: FC<{ user: User; isMember: boolean }> = ({ user, isMem
                     size="lg"
                     imageProps={AVATAR_IMAGE_PROPS}
                   />
-                  <LoadingOverlay visible={busy} overlayProps={OVERLAY_PROPS} loaderProps={OVERLAY_LOADER} />
-                </Box>
-              </Indicator>
-            </UnstyledButton>
+                </Indicator>
+              </UnstyledButton>
+              <LoadingOverlay visible={busy} overlayProps={OVERLAY_PROPS} loaderProps={OVERLAY_LOADER} />
+            </Box>
             <Stack gap={4} miw={0}>
               <Stack gap={0} miw={0}>
                 <Text fw={600} truncate>
@@ -101,18 +121,17 @@ export const ProfileCard: FC<{ user: User; isMember: boolean }> = ({ user, isMem
               w="fit-content"
               leftSection={<Trash />}
               loading={remove.isPending}
-              disabled={change.isPending}
               onClick={() => {
-                change.reset();
+                setFileError(undefined);
                 remove.mutate();
               }}
             >
               <Trans>Remove photo</Trans>
             </Button>
           )}
-          {error && (
+          {(fileError || remove.isError) && (
             <Text size="sm" c="red" role="alert">
-              {i18n._(avatarErrorMessage(error))}
+              {i18n._(fileError ?? avatarErrorMessage(remove.error))}
             </Text>
           )}
         </Stack>

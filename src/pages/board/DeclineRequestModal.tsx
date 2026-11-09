@@ -1,8 +1,8 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Alert, Button, Group, Modal, Stack, Text } from '@mantine/core';
+import { Modal, Stack, Text } from '@mantine/core';
 import type { FC } from 'react';
 
-import { Warning, X } from '~/components/ui';
+import { ConfirmActions, X } from '~/components/ui';
 import { MembershipStatus, type AdminMembership } from '~/memberships/model';
 import { membershipErrorMessage, useUpdateMembership } from '~/memberships/queries';
 
@@ -32,19 +32,14 @@ const DeclineConfirm: FC<{ membership: AdminMembership; onDone: () => void }> = 
           undo it.
         </Trans>
       </Text>
-      {update.isError && (
-        <Alert color="red" variant="light" icon={<Warning />}>
-          {i18n._(membershipErrorMessage(update.error))}
-        </Alert>
-      )}
-      <Group justify="flex-end">
-        <Button variant="default" onClick={onDone} data-autofocus>
-          <Trans>Cancel</Trans>
-        </Button>
-        <Button color="red" leftSection={<X />} loading={update.isPending} onClick={confirm}>
-          <Trans comment="Button: say no to a membership request">Decline</Trans>
-        </Button>
-      </Group>
+      <ConfirmActions
+        confirmLabel={<Trans comment="Button: say no to a membership request">Decline</Trans>}
+        icon={<X />}
+        pending={update.isPending}
+        error={update.isError ? i18n._(membershipErrorMessage(update.error)) : null}
+        onCancel={onDone}
+        onConfirm={confirm}
+      />
     </Stack>
   );
 };

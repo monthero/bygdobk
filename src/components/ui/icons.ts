@@ -39,6 +39,8 @@ export { default as LinkedinLogo } from '~icons/ph/linkedin-logo';
 export { default as LinkSimple } from '~icons/ph/link-simple';
 export { default as List } from '~icons/ph/list';
 export { default as LockSimple } from '~icons/ph/lock-simple';
+export { default as FolderSimpleLock } from '~icons/ph/folder-simple-lock';
+export { default as Printer } from '~icons/ph/printer';
 export { default as MagnifyingGlass } from '~icons/ph/magnifying-glass';
 export { default as MapPin } from '~icons/ph/map-pin';
 export { default as Megaphone } from '~icons/ph/megaphone';

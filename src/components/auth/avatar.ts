@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
+import { clamp } from '@mantine/hooks';
 import { useMutation, type UseMutationOptions } from '@tanstack/react-query';
 import { z } from 'zod';
 
@@ -26,6 +27,8 @@ const EXTENSIONS: Record<AvatarType, string> = {
   [AvatarType.enum['image/jpeg']]: 'jpg',
 };
 
+export type CropArea = { x: number; y: number; width: number; height: number };
+
 const AvatarProblem = z.enum(['notImage', 'tooLarge', 'unreadable', 'saveFailed', 'removeFailed']);
 type AvatarProblem = z.infer<typeof AvatarProblem>;
 
@@ -49,6 +52,19 @@ class AvatarError extends Error {
 export const avatarErrorMessage = (error: unknown) =>
   MESSAGES[error instanceof AvatarError ? error.problem : AvatarProblem.enum.saveFailed];
 
+const fileProblem = (file: File) => {
+  if (!file.type.startsWith('image/')) return AvatarProblem.enum.notImage;
+  if (file.size > MAX_FILE_BYTES) return AvatarProblem.enum.tooLarge;
+  return undefined;
+};
+
+export const avatarFileError = (file: File) => {
+  const problem = fileProblem(file);
+  return problem && MESSAGES[problem];
+};
+
+export const UNREADABLE_PHOTO = MESSAGES[AvatarProblem.enum.unreadable];
+
 const createSquare = () => {
   if (typeof OffscreenCanvas !== 'undefined') {
     const canvas = new OffscreenCanvas(SIZE, SIZE);
@@ -66,22 +82,49 @@ const createSquare = () => {
   };
 };
 
-const readBitmap = async (file: File) => {
+const halve = (bitmap: ImageBitmap) =>
+  createImageBitmap(bitmap, {
+    resizeWidth: Math.round(bitmap.width * 0.5),
+    resizeHeight: Math.round(bitmap.height * 0.5),
+    resizeQuality: 'high',
+  });
+
+// One big drawImage step aliases badly in some browsers, so shrink in halves first.
+const shrink = async (bitmap: ImageBitmap) => {
+  let current = bitmap;
+  while (current.width > SIZE * 2) {
+    const next = await halve(current);
+    const stuck = next.width >= current.width;
+    current.close();
+    current = next;
+    if (stuck) break;
+  }
+  return current;
+};
+
+const readCrop = async (file: File, area: CropArea) => {
+  let bitmap: ImageBitmap | undefined;
   try {
-    return await createImageBitmap(file);
+    bitmap = await createImageBitmap(file);
+    const x = clamp(area.x, 0, bitmap.width - 1);
+    const y = clamp(area.y, 0, bitmap.height - 1);
+    const width = clamp(area.width, 1, bitmap.width - x);
+    const height = clamp(area.height, 1, bitmap.height - y);
+    return await shrink(await createImageBitmap(bitmap, x, y, width, height));
   } catch {
     throw new AvatarError(AvatarProblem.enum.unreadable);
+  } finally {
+    bitmap?.close();
   }
 };
 
-const squareImage = async (file: File) => {
-  const bitmap = await readBitmap(file);
+const cropImage = async (file: File, area: CropArea) => {
+  const crop = await readCrop(file, area);
   const { context, toBlob } = createSquare();
   if (!context) throw new AvatarError(AvatarProblem.enum.unreadable);
-  const side = Math.min(bitmap.width, bitmap.height);
   context.imageSmoothingQuality = 'high';
-  context.drawImage(bitmap, (bitmap.width - side) * 0.5, (bitmap.height - side) * 0.5, side, side, 0, 0, SIZE, SIZE);
-  bitmap.close();
+  context.drawImage(crop, 0, 0, SIZE, SIZE);
+  crop.close();
   const webp = await toBlob(AvatarType.enum['image/webp']);
   if (webp?.type === AvatarType.enum['image/webp']) return { blob: webp, type: AvatarType.enum['image/webp'] };
   // Safari can't encode webp and hands back a png instead.
@@ -113,11 +156,13 @@ const currentUser = () => {
 const patchAvatar = (userId: string, avatarUrl: string | null) =>
   queryClient.setQueryData<User>(profileKey(userId), (old) => old && { ...old, avatarUrl });
 
-const changeAvatar = async (file: File) => {
-  if (!file.type.startsWith('image/')) throw new AvatarError(AvatarProblem.enum.notImage);
-  if (file.size > MAX_FILE_BYTES) throw new AvatarError(AvatarProblem.enum.tooLarge);
+type ChangeAvatar = { file: File; area: CropArea };
+
+const changeAvatar = async ({ file, area }: ChangeAvatar) => {
+  const problem = fileProblem(file);
+  if (problem) throw new AvatarError(problem);
   const { userId, avatarUrl: previous } = currentUser();
-  const { blob, type } = await squareImage(file);
+  const { blob, type } = await cropImage(file, area);
   const path = `${userId}/${crypto.randomUUID()}.${EXTENSIONS[type]}`;
   const supabase = await getSupabase();
   const bucket = supabase.storage.from(BUCKET);
@@ -145,6 +190,9 @@ const removeAvatar = async () => {
 
 type Options<TVariables> = Omit<UseMutationOptions<void, Error, TVariables>, 'mutationFn'>;
 
-export const useChangeAvatar = (options?: Options<File>) => useMutation({ mutationFn: changeAvatar, ...options });
+export const useChangeAvatar = (options?: Options<ChangeAvatar>) =>
+  useMutation({ mutationFn: changeAvatar, ...options });
 
 export const useRemoveAvatar = (options?: Options<void>) => useMutation({ mutationFn: removeAvatar, ...options });
+
+export const loadAvatarCropper = () => import('./AvatarCropper');

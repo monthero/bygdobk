@@ -1,6 +1,8 @@
 {
   "imports": {
     "dayjs": "npm:dayjs@1.11.23",
-    "dayjs/plugin/utc": "npm:dayjs@1.11.23/plugin/utc.js"
+    "dayjs/plugin/isoWeek": "npm:dayjs@1.11.23/plugin/isoWeek.js",
+    "dayjs/plugin/utc": "npm:dayjs@1.11.23/plugin/utc.js",
+    "zod": "npm:zod@4"
   }
 }

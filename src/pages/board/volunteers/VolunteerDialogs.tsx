@@ -8,7 +8,7 @@ import { z } from 'zod';
 
 import type { Shift } from '~/cms/calendar';
 import { shiftTime, TeamBadge } from '~/components/events';
-import { FloppyDisk, Trash, UserPlus, Warning } from '~/components/ui';
+import { ConfirmActions, FloppyDisk, UserPlus, Warning } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
 import type { Translate } from '~/i18n/current';
 import { findProfileByEmail } from '~/memberships/queries';
@@ -229,15 +229,13 @@ const RemoveConfirm: FC<RemoveProps> = ({ volunteer, onDone }) => {
           Take <strong>{name}</strong> off this shift?
         </Trans>
       </Text>
-      {remove.isError && <ErrorAlert message={i18n._(volunteerErrorMessage(remove.error))} />}
-      <Group justify="flex-end">
-        <Button variant="default" onClick={onDone} data-autofocus>
-          <Trans>Cancel</Trans>
-        </Button>
-        <Button color="red" leftSection={<Trash />} loading={remove.isPending} onClick={confirm}>
-          <Trans>Remove</Trans>
-        </Button>
-      </Group>
+      <ConfirmActions
+        confirmLabel={<Trans>Remove</Trans>}
+        pending={remove.isPending}
+        error={remove.isError ? i18n._(volunteerErrorMessage(remove.error)) : null}
+        onCancel={onDone}
+        onConfirm={confirm}
+      />
     </Stack>
   );
 };

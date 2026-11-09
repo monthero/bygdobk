@@ -15,6 +15,7 @@ import {
   shiftDays,
   type VisitorEvent,
 } from '~/components/events';
+import { eventJsonLd, JsonLd } from '~/components/seo';
 import { PageIntro, useStyleKit } from '~/components/styles';
 import { ArrowLeft, CalendarBlank, ChatCircle, HandHeart, Info, MapPin } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
@@ -52,6 +53,7 @@ export const EventPage: FC = () => {
 
   return (
     <>
+      <JsonLd data={eventJsonLd(event, club.venue, photo.src)} />
       <PageIntro
         photo={photo}
         eyebrow={i18n._(EVENT_KINDS[event.kind].label)}

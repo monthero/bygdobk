@@ -1,3 +1,4 @@
+import { plural } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
 import {
   ActionIcon,
@@ -6,6 +7,7 @@ import {
   Button,
   Divider,
   Group,
+  Indicator,
   Skeleton,
   Stack,
   Text,
@@ -13,13 +15,12 @@ import {
 } from '@mantine/core';
 import { useMutation } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
-import type { FC } from 'react';
+import { lazy, Suspense, useState, type FC } from 'react';
 
 import {
   ArrowCounterClockwise,
   ArrowUpRight,
-  HandHeart,
-  IdentificationCard,
+  FolderSimpleLock,
   PencilSimple,
   ResponsivePanel,
   SignIn,
@@ -29,17 +30,24 @@ import {
   Warning,
 } from '~/components/ui';
 import { isCurrent, isOwn, type Membership } from '~/memberships/model';
-import { useMyMemberships } from '~/memberships/queries';
+import { useMyMemberships, useOpenRequestCount } from '~/memberships/queries';
+import { MembersTab } from '~/pages/board/format';
 import { useUi } from '~/stores/ui';
 import { getSupabase } from '~/supabase/client';
 
-import { AVATAR_IMAGE_PROPS } from './avatar';
+import { AVATAR_IMAGE_PROPS, loadAvatarCropper } from './avatar';
 import { authErrorMessage } from './errors';
 import { useAuthReady, useIsAdmin, useProfile, useSessionEmail, useSessionUserId } from './hooks';
 import { MyMemberships } from './MyMemberships';
 import { ProfileCard } from './ProfileCard';
+import { RequestCountBadge } from './RequestCountBadge';
+
+import classes from './UserMenu.module.css';
+
+const AvatarCropper = lazy(loadAvatarCropper);
 
 const EDITOR_PARAMS = { _splat: '' };
+const REQUESTS_SEARCH = { fane: MembersTab.enum.foresporsler };
 const EMPTY_MEMBERSHIPS: Membership[] = [];
 const PANEL_WIDTH = 340;
 
@@ -72,7 +80,7 @@ const LoggedOut: FC<{ close: () => void }> = ({ close }) => {
   );
 };
 
-const LoggedIn: FC<{ close: () => void }> = ({ close }) => {
+const LoggedIn: FC<{ close: () => void; onPickPhoto: (file: File) => void }> = ({ close, onPickPhoto }) => {
   const { i18n } = useLingui();
   const email = useSessionEmail();
   const profile = useProfile();
@@ -81,11 +89,21 @@ const LoggedIn: FC<{ close: () => void }> = ({ close }) => {
   const { data: memberships = EMPTY_MEMBERSHIPS } = useMyMemberships();
   const isMember = memberships.some((m) => isOwn(m, userId) && isCurrent(m));
   const logout = useMutation({ mutationFn: signOut, onSuccess: close });
+  const requestCount = useOpenRequestCount().data ?? 0;
   const user = profile.data;
 
   return (
     <Stack gap="sm">
-      {user && <ProfileCard user={user} isMember={isMember} />}
+      {user && (
+        <ProfileCard
+          user={user}
+          isMember={isMember}
+          onPickPhoto={(file) => {
+            close();
+            onPickPhoto(file);
+          }}
+        />
+      )}
       <MyMemberships memberships={memberships} />
       {profile.isPending && (
         <Group gap="sm" wrap="nowrap" aria-busy>
@@ -123,31 +141,22 @@ const LoggedIn: FC<{ close: () => void }> = ({ close }) => {
               <Link {...props} to="/admin/$" params={EDITOR_PARAMS} target="_blank" rel="noopener" />
             )}
           >
-            <Trans>Edit the site</Trans>
+            <Trans>Edit site content</Trans>
           </Button>
           <Text size="xs" c="dimmed">
             <Trans>The editor has its own login.</Trans>
           </Text>
-          <Group gap="xs" grow>
-            <Button
-              variant="default"
-              size="xs"
-              leftSection={<IdentificationCard />}
-              onClick={close}
-              renderRoot={(props) => <Link {...props} to="/styret/medlemmer" />}
-            >
-              <Trans>Memberships</Trans>
-            </Button>
-            <Button
-              variant="default"
-              size="xs"
-              leftSection={<HandHeart />}
-              onClick={close}
-              renderRoot={(props) => <Link {...props} to="/styret/dugnad" />}
-            >
-              <Trans comment="Board screen for volunteer shifts">Volunteers</Trans>
-            </Button>
-          </Group>
+          <Button
+            variant="default"
+            leftSection={<FolderSimpleLock />}
+            rightSection={<RequestCountBadge />}
+            onClick={close}
+            renderRoot={(props) => (
+              <Link {...props} to="/styret/medlemmer" search={requestCount > 0 ? REQUESTS_SEARCH : undefined} />
+            )}
+          >
+            <Trans>Board pages</Trans>
+          </Button>
         </>
       )}
       <Divider />
@@ -175,34 +184,63 @@ export const AccountButton: FC<{ position?: FloatingPosition }> = ({ position })
   const userId = useSessionUserId();
   const email = useSessionEmail();
   const profile = useProfile();
+  const requestCount = useOpenRequestCount().data ?? 0;
   const name = profile.data?.name;
-  const label = name ? t`Account menu for ${name}` : t`Account`;
+  const account = name ? t`Account menu for ${name}` : t`Account`;
+  const requests = t`${plural(requestCount, { one: '# open membership request', other: '# open membership requests' })}`;
+  const label = requestCount > 0 ? `${account}, ${requests}` : account;
+  const [photo, setPhoto] = useState<File | null>(null);
 
   return (
-    <ResponsivePanel
-      width={PANEL_WIDTH}
-      title={userId ? <Trans>Your account</Trans> : <Trans>Account</Trans>}
-      closeLabel={t`Close account menu`}
-      position={position}
-      renderTarget={(props) =>
-        userId ? (
-          <ActionIcon variant="subtle" size="lg" radius="xl" aria-label={label} loading={profile.isLoading} {...props}>
-            <Avatar
-              src={profile.data?.avatarUrl}
-              name={name ?? email}
-              color="initials"
-              size={34}
-              imageProps={AVATAR_IMAGE_PROPS}
-            />
-          </ActionIcon>
-        ) : (
-          <ActionIcon variant="default" size="lg" radius="md" aria-label={label} loading={!ready} {...props}>
-            <UserIcon />
-          </ActionIcon>
-        )
-      }
-    >
-      {({ close }) => (userId ? <LoggedIn close={close} /> : <LoggedOut close={close} />)}
-    </ResponsivePanel>
+    <>
+      <ResponsivePanel
+        width={PANEL_WIDTH}
+        title={userId ? <Trans>Your account</Trans> : <Trans>Account</Trans>}
+        closeLabel={t`Close account menu`}
+        position={position}
+        renderTarget={(props) =>
+          userId ? (
+            <ActionIcon
+              variant="subtle"
+              size="lg"
+              radius="xl"
+              aria-label={label}
+              loading={profile.isLoading}
+              className={classes.account}
+              {...props}
+            >
+              <Indicator
+                label={requestCount}
+                disabled={requestCount === 0}
+                size={18}
+                offset={2}
+                color="blue"
+                withBorder
+                aria-hidden
+              >
+                <Avatar
+                  src={profile.data?.avatarUrl}
+                  name={name ?? email}
+                  color="initials"
+                  size={34}
+                  imageProps={AVATAR_IMAGE_PROPS}
+                />
+              </Indicator>
+            </ActionIcon>
+          ) : (
+            <ActionIcon variant="default" size="lg" radius="md" aria-label={label} loading={!ready} {...props}>
+              <UserIcon />
+            </ActionIcon>
+          )
+        }
+      >
+        {({ close }) => (userId ? <LoggedIn close={close} onPickPhoto={setPhoto} /> : <LoggedOut close={close} />)}
+      </ResponsivePanel>
+      {photo && (
+        <Suspense fallback={null}>
+          <AvatarCropper file={photo} onClose={() => setPhoto(null)} />
+        </Suspense>
+      )}
+    </>
   );
 };

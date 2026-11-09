@@ -1,0 +1,38 @@
+.frame {
+  position: relative;
+  width: min(100%, 52dvh);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--mantine-radius-md);
+  background: var(--mantine-color-dark-8);
+
+  & .container {
+    cursor: grab;
+  }
+
+  &[data-dragging] .container {
+    cursor: grabbing;
+  }
+
+  &[data-saving] {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  & .cropArea {
+    color: rgb(0 0 0 / 0.55);
+    border: 2px solid rgb(255 255 255 / 0.85);
+
+    &:focus-visible {
+      outline: 3px solid var(--mantine-primary-color-filled);
+      outline-offset: 2px;
+    }
+  }
+}
+
+.loader {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  translate: -50% -50%;
+}

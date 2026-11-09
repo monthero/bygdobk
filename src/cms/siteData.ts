@@ -92,6 +92,6 @@ export const useSitePhoto = (slot: PhotoSlot): SitePhoto => {
   return useMemo(() => {
     if (photo) return cmsPhoto(photo);
     const fallback = SLOT_DEFAULTS[slot];
-    return { src: fallback.src, alt: i18n._(fallback.alt), position: fallback.position };
+    return { ...fallback, alt: i18n._(fallback.alt) };
   }, [photo, slot, i18n]);
 };

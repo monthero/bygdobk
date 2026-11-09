@@ -3,14 +3,13 @@ import {
   eventDays,
   isTraining,
   occurrences,
-  replacedBy,
   seasonOf,
   seasonOn,
   trainingSeasons,
   type CalendarEvent,
-  type Occurrence,
   type Season,
 } from '~/cms/calendar';
+import { seasonAround, trainingSessions, type PlannedSession as SchedulePlannedSession } from '~/cms/schedule';
 import { Group } from '~/data/club';
 import { EventKind } from '~/data/events';
 
@@ -20,7 +19,7 @@ type Venue = NonNullable<CalendarEvent['venue']>;
 
 export type Session = { weekday: number; group: Group; start: string; end: string; venue?: Venue };
 
-export type PlannedSession = Occurrence & { group: Group; off?: CalendarEvent };
+export type PlannedSession = SchedulePlannedSession<CalendarEvent>;
 
 type TrainingDay = { day: Dayjs; sessions: PlannedSession[] };
 
@@ -28,12 +27,6 @@ const NEXT_TRAINING_DAYS = 14;
 const RESUME_SEARCH_DAYS = 28;
 
 const groupOrder = (a: Group, b: Group) => Group.options.indexOf(a) - Group.options.indexOf(b);
-
-const seasonAround = (day: Dayjs): Season => {
-  const { id, label } = seasonOf(day);
-  const start = date(`${id.slice(0, 4)}-07-01`);
-  return { id, label, start, end: start.add(1, 'year').subtract(1, 'day') };
-};
 
 export const seasonList = (events: readonly CalendarEvent[], day = today()) => {
   const seasons = trainingSeasons(events);
@@ -70,16 +63,10 @@ export const plannedSessions = (
   from: Dayjs,
   to: Dayjs,
   group?: Group,
-): PlannedSession[] => {
-  const planned: PlannedSession[] = [];
-  for (const event of events) {
-    if (!isTraining(event) || !event.group || (group && event.group !== group)) continue;
-    for (const occurrence of occurrences(event, from.startOf('day'), to)) {
-      planned.push({ ...occurrence, group: event.group, off: replacedBy(occurrence, events) });
-    }
-  }
-  return planned.sort((a, b) => a.start.valueOf() - b.start.valueOf() || groupOrder(a.group, b.group));
-};
+): PlannedSession[] =>
+  [...trainingSessions(events, from, to, group)].sort(
+    (a, b) => a.start.valueOf() - b.start.valueOf() || groupOrder(a.group, b.group),
+  );
 
 export const nextTrainingDay = (
   events: readonly CalendarEvent[],

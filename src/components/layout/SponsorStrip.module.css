@@ -112,6 +112,8 @@
 
 .more {
   color: color-mix(in srgb, var(--mantine-color-anchor) 80%, var(--mantine-color-text));
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 @media (max-width: $mantine-breakpoint-sm) {

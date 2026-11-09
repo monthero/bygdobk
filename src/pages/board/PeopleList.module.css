@@ -6,6 +6,11 @@
   &[data-opened] {
     background: var(--bk-surface-2);
   }
+
+  &[data-selected],
+  &[data-selected]:hover {
+    background: var(--bk-accent-soft);
+  }
 }
 
 .details {

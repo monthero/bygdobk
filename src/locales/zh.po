@@ -11,6 +11,11 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "“我们希望让更多人享受打羽毛球的乐趣！”"
 
+#. placeholder {0}: admins.data.length
+#: src/pages/board/access/AccessPage.tsx
+msgid "{0, plural, one {# admin} other {# admins}}"
+msgstr "{0, plural, other {#名管理员}}"
+
 #. placeholder {0}: hits.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post matches} other {# posts match}}"
@@ -53,6 +58,27 @@ msgstr "{0}未付"
 msgid "{0} per visit"
 msgstr "每次{0}"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{added, plural, one {Copy # membership} other {Copy # memberships}}"
+msgstr "{added, plural, other {复制#条会员记录}}"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
+msgstr "{count, plural, other {#条会员记录}}，共计<0>{total}</0>。"
+
+#: src/components/auth/RequestCountBadge.tsx
+msgid "{count, plural, one {# open request} other {# open requests}}"
+msgstr "{count, plural, other {#份待处理的申请}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{count, plural, one {Copy # email} other {Copy # emails}}"
+msgstr "{count, plural, other {复制#个邮箱}}"
+
+#. How many memberships are picked, and what they cost together
+#: src/pages/board/BulkActions.tsx
+msgid "{count} selected · {total}"
+msgstr "已选{count}条 · {total}"
+
 #: src/components/events/EventCard.tsx
 msgid "{filled} of {needed} spots filled"
 msgstr "已报名{filled}/{needed}人"
@@ -69,6 +95,14 @@ msgstr "{firstName}的电话号码已复制到剪贴板"
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "击球{hits, plural, one {#次} other {#次}}：{callout}"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "{name} in your calendar"
+msgstr "把{name}添加到你的日历"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is already an admin."
+msgstr "{name}已经是管理员了。"
+
 #: src/pages/board/MembershipList.tsx
 msgid "{name} is in!"
 msgstr "{name}入会啦！"
@@ -77,17 +111,33 @@ msgstr "{name}入会啦！"
 msgid "{name} is marked as paid"
 msgstr "{name}已标记为已付款"
 
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "{name} is no longer an admin"
+msgstr "{name}不再是管理员"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is now an admin"
+msgstr "{name}现在是管理员了"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{name} is off the shift"
 msgstr "{name}已移出班次"
 
 #: src/pages/board/MarkPaidModal.tsx
-msgid "{name} paid <0>{price}</0>."
-msgstr "{name}付了<0>{price}</0>。"
+msgid "{name} paid <0>{total}</0>."
+msgstr "{name}付了<0>{total}</0>。"
 
 #: src/components/events/EventCard.tsx
 msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
 msgstr "{needed, plural, other {需要#名志愿者}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{noAccount, plural, one {# person without an account is not included.} other {# people without an account are not included.}}"
+msgstr "{noAccount, plural, other {#人没有账户，未包含在内。}}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{oneOff, plural, one {# drop-in or trial is not copied.} other {# drop-ins and trials are not copied.}}"
+msgstr "{oneOff, plural, other {#条单次参加或体验会员记录不会复制。}}"
 
 #. Open spots on a volunteer team, e.g. 2 open
 #: src/pages/board/volunteers/VolunteersPage.tsx
@@ -98,6 +148,10 @@ msgstr "缺{open}人"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "{over} over"
 msgstr "超{over}人"
+
+#: src/components/auth/UserMenu.tsx
+msgid "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
+msgstr "{requestCount, plural, other {#份待处理的入会申请}}"
 
 #: src/pages/board/MembersPage.tsx
 msgid "{requestCount} open"
@@ -111,6 +165,10 @@ msgstr "{requested}个待处理"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown}已加入班次"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{skipped, plural, one {# already has the same plan this season and is skipped.} other {# already have the same plan this season and are skipped.}}"
+msgstr "{skipped, plural, other {#人本赛季已有相同的会员类型，已跳过。}}"
 
 #. How many spots of a volunteer shift are taken, e.g. 2 of 3
 #. placeholder {0}: shift.spots
@@ -135,6 +193,10 @@ msgstr "名额已占{taken}/{spots}"
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount}个未付款"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "<0>{name}</0> can no longer open the board pages or edit the website. Their account and memberships stay."
+msgstr "<0>{name}</0>将无法再打开理事会页面或编辑网站。账户和会员记录会保留。"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "<0>Ask the board</0> about discounts and support."
@@ -199,6 +261,10 @@ msgid "A racket"
 msgstr "一支球拍"
 
 #: src/data/photos.ts
+msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
+msgstr "日落时分，羽毛球馆的长凳上放着一支球拍、一个羽毛球和一部手机"
+
+#: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
 msgstr "球拍上放着一个羽毛球，后面是在绿色球场上打球的球员"
 
@@ -256,6 +322,8 @@ msgid "Actions"
 msgstr "操作"
 
 #. Button: add a membership for this person
+#. Short button label on phones: add a membership
+#: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add"
@@ -269,9 +337,21 @@ msgstr "为{name}添加会员"
 msgid "Add a volunteer"
 msgstr "添加志愿者"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add admin"
+msgstr "添加管理员"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add an admin"
+msgstr "新增管理员"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add anyway"
 msgstr "仍然添加"
+
+#: src/components/layout/InstallApp.tsx
+msgid "Add Bygdø BK to your Home Screen"
+msgstr "把Bygdø BK添加到主屏幕"
 
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembersPage.tsx
@@ -287,13 +367,27 @@ msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "在Sanity里给活动添加班次，它们就会显示在这里。"
 
 #: src/components/events/EventDetails.tsx
+#: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "添加到日历"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
+msgstr "已向{toLabel}添加{count, plural, other {#条会员记录}}"
 
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "管理员"
+
+#. Heading: the people with admin access
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins"
+msgstr "管理员"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins can open the board pages and edit the website."
+msgstr "管理员可以打开理事会页面并编辑网站。"
 
 #. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
@@ -359,10 +453,6 @@ msgstr "已经申请过了，理事会会回复你。"
 msgid "An account holder"
 msgstr "有账户的人"
 
-#: src/data/photos.ts
-msgid "An empty badminton hall at sunset"
-msgstr "日落时空荡荡的羽毛球馆"
-
 #: src/pages/board/MembershipList.tsx
 msgid "Approve"
 msgstr "批准"
@@ -370,6 +460,11 @@ msgstr "批准"
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "存档"
+
+#. When the printed list of volunteers was last loaded, e.g. As of Mon 9 Nov, 14:32
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "As of {asOf}"
+msgstr "截至{asOf}"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Ask about a spot"
@@ -417,10 +512,24 @@ msgstr "最高纪录"
 msgid "Big name"
 msgstr "大字名称"
 
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board access"
+msgstr "后台权限"
+
+#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board pages"
+msgstr "理事会页面"
+
 #. Event type: no training, e.g. holidays
 #: src/data/events.ts
 msgid "Break"
 msgstr "停训"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks and canceled sessions update by themselves."
+msgstr "停训和取消的训练会自动更新。"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
@@ -467,7 +576,7 @@ msgstr "Bygdø BK的{name}"
 msgid "Bygdøhus seen from the car park"
 msgstr "从停车场看Bygdøhus"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Calendar link"
 msgstr "日历链接"
 
@@ -479,19 +588,22 @@ msgstr "判罚维持：还是没找到"
 msgid "Can I try before I join?"
 msgstr "入会前可以先试试吗？"
 
+#: src/access/queries.ts
 #: src/components/auth/errors.ts
 #: src/memberships/queries.ts
+#: src/pages/board/LoadError.tsx
 #: src/volunteers/queries.ts
 msgid "Can't reach the server. Check your connection."
 msgstr "连不上服务器，请检查网络。"
 
 #. Button that drops your own volunteer shift
 #. Button that drops your own volunteer shift
+#: src/components/auth/AvatarCropper.tsx
 #: src/components/events/ShiftBoard.tsx
-#: src/pages/board/DeclineRequestModal.tsx
-#: src/pages/board/DeleteMembershipModal.tsx
+#: src/components/ui/ConfirmActions.tsx
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipForm.tsx
+#: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Cancel"
 msgstr "取消"
@@ -530,10 +642,6 @@ msgstr "挑战。正在查看回放…"
 msgid "Change your photo"
 msgstr "更换你的照片"
 
-#: src/pages/board/LoadError.tsx
-msgid "Check your connection and try again."
-msgstr "请检查网络后再试一次。"
-
 #: src/components/auth/LoginModal.tsx
 msgid "Check your email"
 msgstr "查看你的邮箱"
@@ -552,6 +660,11 @@ msgstr "选择会员类型"
 msgid "Classic"
 msgstr "经典"
 
+#. Button: unselect all picked memberships
+#: src/pages/board/BulkActions.tsx
+msgid "Clear"
+msgstr "清除选择"
+
 #: src/pages/board/MembersPage.tsx
 msgid "Clear filters"
 msgstr "清除筛选"
@@ -561,7 +674,10 @@ msgstr "清除筛选"
 msgid "Clear search"
 msgstr "清除搜索"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
+#: src/components/ui/ResponsiveModal.tsx
+#: src/pages/board/NewSeasonModal.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Close"
 msgstr "关闭"
 
@@ -659,6 +775,10 @@ msgstr "居中"
 msgid "Continue with Google"
 msgstr "使用Google继续"
 
+#: src/pages/board/BulkActions.tsx
+msgid "Copied! Paste them into Bcc"
+msgstr "已复制！粘贴到密送栏"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy email address for {0}"
@@ -668,14 +788,37 @@ msgstr "复制{0}的邮箱地址"
 msgid "Copy link"
 msgstr "复制链接"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy members from {0}"
+msgstr "从{0}复制会员"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy phone number for {0}"
 msgstr "复制{0}的电话号码"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy the members from {0} to get the new season going."
+msgstr "从{0}复制会员，开启新赛季。"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Copy the members from {fromLabel} to {toLabel}?"
+msgstr "要把{fromLabel}的会员复制到{toLabel}吗？"
+
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/board/BulkActions.tsx
 msgid "Could not copy"
 msgstr "无法复制"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Couldn't load season {fromLabel}"
+msgstr "{fromLabel}赛季加载失败"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Couldn't load the admins"
+msgstr "管理员名单加载失败"
 
 #: src/pages/board/MembersPage.tsx
 msgid "Couldn't load the memberships"
@@ -721,6 +864,10 @@ msgstr "没能保存到你的个人资料，但在这台设备上仍然有效。
 msgid "Couldn't save your photo. Try again."
 msgstr "照片保存失败，请再试一次。"
 
+#: src/access/queries.ts
+msgid "Couldn't save. Try again."
+msgstr "保存失败，请再试一次。"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Court 1"
 msgstr "1号场地"
@@ -729,6 +876,14 @@ msgstr "1号场地"
 #: src/components/layout/VariantMenu.tsx
 msgid "Court lines"
 msgstr "场地线"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop area"
+msgstr "裁剪区域"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop your photo"
+msgstr "裁剪照片"
 
 #. Footer decoration: a large faded club logo cut off at the edge
 #: src/components/layout/VariantMenu.tsx
@@ -811,6 +966,14 @@ msgstr "下载表格"
 msgid "Downloaded"
 msgstr "已下载"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag or use the arrow keys to move. Scroll or pinch to zoom."
+msgstr "拖动或用方向键移动，滚动或双指缩放。"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag to move. Pinch to zoom."
+msgstr "拖动来移动，双指缩放。"
+
 #. placeholder {0}: kr(dropin.perVisit)
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop in for {0} a visit"
@@ -834,6 +997,10 @@ msgstr "单次参加：每次{0}"
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "单次参加：用Vipps付{0}到{1}"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Each day starts on a new page."
+msgstr "每天从新的一页开始。"
+
 #: src/pages/board/MembershipList.tsx
 msgid "Edit"
 msgstr "编辑"
@@ -855,10 +1022,11 @@ msgid "Edit note for {name}"
 msgstr "编辑{name}的备注"
 
 #: src/components/auth/UserMenu.tsx
-msgid "Edit the site"
-msgstr "编辑网站"
+msgid "Edit site content"
+msgstr "编辑网站内容"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
@@ -867,6 +1035,10 @@ msgstr "邮箱"
 #: src/components/auth/errors.ts
 msgid "Email login isn't switched on yet."
 msgstr "邮箱登录还没开通。"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Empty line? Write your name on it."
+msgstr "有空行？写上你的名字。"
 
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
@@ -886,6 +1058,7 @@ msgid "Enter a price"
 msgstr "请输入价格"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -931,6 +1104,10 @@ msgstr "活动"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
 msgstr "名额全满了，干得漂亮！"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Everyone from {fromLabel} is already in {toLabel}."
+msgstr "{fromLabel}的所有人都已在{toLabel}中。"
 
 #: src/pages/board/MembersOverview.tsx
 msgid "Everyone has paid!"
@@ -1147,6 +1324,11 @@ msgstr "已包含"
 msgid "Indoor shoes"
 msgstr "室内运动鞋"
 
+#. Button that installs the website as an app on the phone or computer
+#: src/components/layout/InstallApp.tsx
+msgid "Install app"
+msgstr "安装应用"
+
 #: src/components/layout/SiteHeader.tsx
 msgid "Join"
 msgstr "入会"
@@ -1282,6 +1464,10 @@ msgstr "已用{email}登录，但个人资料没加载出来。"
 msgid "Login was canceled."
 msgstr "登录已取消。"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Looking at season {fromLabel}…"
+msgstr "正在查看{fromLabel}赛季…"
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "正在查找账户…"
@@ -1291,10 +1477,19 @@ msgstr "正在查找账户…"
 msgid "Main menu"
 msgstr "主菜单"
 
+#: src/pages/board/BulkActions.tsx
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Mark {count} as paid"
+msgstr "将{count}条标记为已付款"
+
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipList.tsx
 msgid "Mark as paid"
 msgstr "标记为已付款"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
+msgstr "已将{done, plural, other {#条会员记录}}标记为已付款"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -1355,8 +1550,8 @@ msgstr "会员已保存"
 
 #. Sticky title of the board page that lists memberships
 #. Table column: the person's memberships this season
-#: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/BoardNav.tsx
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
@@ -1392,6 +1587,10 @@ msgstr "月"
 msgid "More news"
 msgstr "更多新闻"
 
+#: src/pages/board/MembersPage.tsx
+msgid "More ways to add"
+msgstr "更多添加方式"
+
 #: src/pages/join/JoinPage.tsx
 msgid "My child"
 msgstr "我的孩子"
@@ -1415,6 +1614,10 @@ msgstr "姓名"
 msgid "Name or email"
 msgstr "姓名或邮箱"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "name@example.com"
+msgstr "name@example.com"
+
 #: src/components/auth/errors.ts
 msgid "New accounts are closed right now."
 msgstr "目前暂停注册新账户。"
@@ -1423,7 +1626,7 @@ msgstr "目前暂停注册新账户。"
 msgid "New best: {best}"
 msgstr "新纪录：{best}"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "新活动会自动出现在你的日历里。"
 
@@ -1479,6 +1682,10 @@ msgstr "无账户"
 msgid "No account with that email"
 msgstr "没有用这个邮箱的账户"
 
+#: src/access/queries.ts
+msgid "No account with this email yet. Ask them to log in once first."
+msgstr "这个邮箱还没有账户。请对方先登录一次。"
+
 #: src/pages/board/MembersPage.tsx
 msgid "No accounts or memberships yet"
 msgstr "还没有账户或会员"
@@ -1513,6 +1720,10 @@ msgstr "无会员"
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "No membership yet. Pick a plan and send a request!"
 msgstr "你还不是会员。选个会员类型，发送申请吧！"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships in {seasonLabel} yet"
+msgstr "{seasonLabel}还没有会员记录"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships this season yet"
@@ -1588,6 +1799,10 @@ msgstr "还没有人。"
 msgid "None"
 msgstr "无"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Not marked as paid: {missedNames}"
+msgstr "未标记为已付款：{missedNames}"
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
@@ -1661,6 +1876,10 @@ msgstr "进行中"
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "一个赛季从8月到次年6月，和学年一样。赛季中途加入？价格请<0>问问理事会</0>。"
 
+#: src/access/queries.ts
+msgid "Only admins can change board access."
+msgstr "只有管理员可以修改后台权限。"
+
 #: src/memberships/queries.ts
 msgid "Only admins can change memberships."
 msgstr "只有管理员可以修改会员。"
@@ -1674,7 +1893,7 @@ msgstr "只有理事会能看到。"
 msgid "Oops, rim shot!"
 msgstr "哎呀，打框了！"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Open in calendar app"
 msgstr "在日历应用中打开"
 
@@ -1686,6 +1905,10 @@ msgstr "在地图中打开"
 #: src/components/layout/SiteHeader.tsx
 msgid "Open menu"
 msgstr "打开菜单"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Open spot"
+msgstr "空位"
 
 #: src/components/auth/errors.ts
 msgid "Open the link in the same browser you asked for it in."
@@ -1809,6 +2032,11 @@ msgstr "有效期"
 msgid "Person"
 msgstr "人员"
 
+#. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
+#: src/components/layout/InstallApp.tsx
+msgid "Pick “Add to Home Screen”."
+msgstr "选择“添加到主屏幕”。"
+
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
 msgstr "在下面选一个空班次，点“报名”。"
@@ -1824,6 +2052,10 @@ msgstr "请选择会员类型"
 #: src/pages/join/JoinPage.tsx
 msgid "Pick a plan above to see the price."
 msgstr "在上面选一个会员类型，就能看到价格。"
+
+#: src/pages/board/MembersPage.tsx
+msgid "Pick a season to copy last season's members"
+msgstr "先选一个赛季，才能复制上赛季的会员"
 
 #: src/pages/news/NewsPostPage.tsx
 msgid "Pick a shift"
@@ -1919,6 +2151,18 @@ msgstr "价格和入会"
 msgid "Prices per season"
 msgstr "每赛季价格"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print"
+msgstr "打印"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print preview"
+msgstr "打印预览"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print shift plan"
+msgstr "打印班次表"
+
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/privacy/PrivacyPage.tsx
@@ -1971,6 +2215,10 @@ msgstr "标准"
 msgid "Related event"
 msgstr "相关活动"
 
+#. Button: take away someone's admin access
+#. Button: take away someone's admin access
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/access/RemoveAdminModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Remove"
 msgstr "移除"
@@ -1978,6 +2226,14 @@ msgstr "移除"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Remove {name}"
 msgstr "移除{name}"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Remove {name} as admin"
+msgstr "移除管理员{name}"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "Remove admin?"
+msgstr "移除管理员？"
 
 #: src/components/auth/ProfileCard.tsx
 msgid "Remove photo"
@@ -2029,6 +2285,10 @@ msgstr "待审核"
 msgid "Requests"
 msgstr "申请"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Reset"
+msgstr "重置"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
 msgstr "审核中…"
@@ -2042,10 +2302,18 @@ msgstr "圆角"
 msgid "Safe sport"
 msgstr "安全运动"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Same people and plans, at today's prices. They start as not paid. Period: {period}."
+msgstr "同样的人和会员类型，按现在的价格。初始状态为未付款。有效期：{period}。"
+
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Save"
 msgstr "保存"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Save photo"
+msgstr "保存照片"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
@@ -2096,6 +2364,27 @@ msgstr "查看活动"
 msgid "See who's on each shift, and who we still need."
 msgstr "看看每个班次有谁，还缺谁。"
 
+#. Table column with checkboxes to pick memberships
+#: src/pages/board/MembershipList.tsx
+msgid "Select"
+msgstr "选择"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Select {name}"
+msgstr "选择{name}"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select all {count} unpaid"
+msgstr "选择全部{count}条未付款"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select unpaid memberships for {name}"
+msgstr "选择{name}未付款的会员记录"
+
+#: src/pages/board/BulkActions.tsx
+msgid "Selected memberships"
+msgstr "已选会员记录"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "再发一次"
@@ -2133,6 +2422,7 @@ msgid "Service fault: page not found"
 msgstr "发球失误：找不到页面"
 
 #: src/components/events/ShiftBoard.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
 msgstr "布置或收场"
@@ -2264,7 +2554,12 @@ msgstr "本赛季部分训练在其他场馆："
 msgid "Someone else"
 msgstr "其他人"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Someone else may already have marked them as paid or deleted them."
+msgstr "可能已有其他人将它们标记为已付款或删除了它们。"
+
 #: src/components/auth/errors.ts
+#: src/pages/board/LoadError.tsx
 msgid "Something went wrong. Try again."
 msgstr "出了点问题，请再试一次。"
 
@@ -2276,6 +2571,10 @@ msgstr "赞助俱乐部"
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "开始"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Start season {label}"
+msgstr "开始{label}赛季"
 
 #. Table column: where a membership request stands, and who sent it
 #. Table column: whether the person has paid
@@ -2294,11 +2593,11 @@ msgid "Style"
 msgstr "风格"
 
 #. Button that opens the calendar feed options
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe"
 msgstr "订阅"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe to events"
 msgstr "订阅活动"
 
@@ -2314,6 +2613,11 @@ msgstr "跟随系统"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "把<0>{name}</0>从这个班次移除吗？"
+
+#. iPhone and iPad: first step to add the site to the Home Screen. The icon is the iOS Share icon
+#: src/components/layout/InstallApp.tsx
+msgid "Tap Share <0/> in the browser."
+msgstr "在浏览器中轻点“共享”<0/>。"
 
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
@@ -2374,7 +2678,9 @@ msgstr "这不是照片，请选一个图片文件。"
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
+#: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
@@ -2435,6 +2741,10 @@ msgstr "主题"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Theme: {0}"
 msgstr "主题：{0}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "There's no one in {fromLabel} to copy."
+msgstr "{fromLabel}没有可复制的人。"
 
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "These people are on a shift that was removed in Sanity."
@@ -2618,6 +2928,10 @@ msgstr "换个邮箱"
 msgid "Use other details"
 msgstr "用其他信息"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Use the email they log in with."
+msgstr "请使用对方登录用的邮箱。"
+
 #: src/components/layout/VariantMenu.tsx
 msgid "Variants"
 msgstr "设计方案"
@@ -2633,6 +2947,7 @@ msgstr "Vipps号码{vipps}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventPage.tsx
 msgid "Volunteer shifts"
@@ -2644,7 +2959,7 @@ msgid "Volunteering"
 msgstr "志愿服务"
 
 #. Board screen for volunteer shifts
-#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
 msgid "Volunteers"
 msgstr "志愿者"
 
@@ -2772,6 +3087,11 @@ msgstr "年"
 msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 msgstr "可以。孩子可以先办体验会员，成人可以单次参加。价格见上方。"
 
+#. Badge next to your own name in the admin list
+#: src/pages/board/access/AccessPage.tsx
+msgid "You"
+msgstr "你"
+
 #: src/memberships/queries.ts
 msgid "You already asked for this one. The board will get back to you."
 msgstr "你已经申请过这个了，理事会会回复你。"
@@ -2788,6 +3108,10 @@ msgstr "你也可以找一位你信任的理事聊聊。"
 msgid "You can't change that shift."
 msgstr "你不能修改这个班次。"
 
+#: src/access/queries.ts
+msgid "You can't remove yourself. Ask another admin to do it."
+msgstr "你不能移除自己。请让另一位管理员来操作。"
+
 #: src/components/events/ShiftBoard.tsx
 msgid "You helped"
 msgstr "你参与了"
@@ -2803,6 +3127,10 @@ msgstr "已报名"
 #: src/components/events/ShiftBoard.tsx
 msgid "You're on"
 msgstr "你的班次"
+
+#: src/access/queries.ts
+msgid "You're the only admin. Add another admin first."
+msgstr "你是唯一的管理员。请先添加另一位管理员。"
 
 #: src/components/auth/UserMenu.tsx
 msgid "Your account"
@@ -2831,3 +3159,7 @@ msgstr "你的消息正在发给理事会。"
 #: src/pages/join/JoinPage.tsx
 msgid "Your pick"
 msgstr "你的选择"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Zoom"
+msgstr "缩放"

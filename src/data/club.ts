@@ -3,7 +3,7 @@ import { msg } from '@lingui/core/macro';
 import type { MantineColor } from '@mantine/core';
 import { z } from 'zod';
 
-import { slugMap } from '~/utils/slugs';
+import { Group } from './groupKeys';
 
 export const DEAL_HASH = 'medlemsfordel';
 
@@ -13,8 +13,7 @@ export const CLUB = {
   founded: 1936,
 } as const;
 
-export const Group = z.enum(['rekrutt', 'junior', 'senior', 'fritt']);
-export type Group = z.infer<typeof Group>;
+export { Group, GROUP_SLUGS } from './groupKeys';
 
 export const GROUP_COLORS: Record<Group, MantineColor> = {
   [Group.enum.rekrutt]: 'teal',
@@ -25,13 +24,6 @@ export const GROUP_COLORS: Record<Group, MantineColor> = {
 
 export const GroupStatus = z.enum(['open', 'waitlist', 'full']);
 export type GroupStatus = z.infer<typeof GroupStatus>;
-
-export const GROUP_SLUGS = slugMap<Group>({
-  [Group.enum.rekrutt]: 'rekrutt',
-  [Group.enum.junior]: 'junior',
-  [Group.enum.senior]: 'senior',
-  [Group.enum.fritt]: 'fritt-spill',
-});
 
 export const PriceKind = z.enum(['season', 'membership', 'dropin', 'trial']);
 export type PriceKind = z.infer<typeof PriceKind>;

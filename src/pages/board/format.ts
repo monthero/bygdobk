@@ -38,6 +38,8 @@ export const SEASON_ID = /^\d{4}-\d{2}$/;
 
 export const seasonById = (id: string) => seasonOf(date(`${id.slice(0, 4)}-08-01`));
 
+export const previousSeason = (id: string) => seasonById(String(Number(id.slice(0, 4)) - 1));
+
 export const planName = (plans: ReadonlyMap<string, Plan>, id: string) => plans.get(id)?.name ?? id;
 
 export const formatDay = (iso: string) => formatDate(date(iso), SHORT_DATE);

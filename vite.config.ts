@@ -3,11 +3,24 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import { FileSystemIconLoader } from 'unplugin-icons/loaders';
 import Icons from 'unplugin-icons/vite';
+import { imagetools } from 'vite-imagetools';
 import { defineConfig, type Plugin } from 'vite-plus';
 
 import { CONTENT_GROQ } from './src/cms/queries.ts';
 import { sanityQueryUrl } from './src/cms/sanityApi.ts';
 import { ADMIN_PATH, CONTENT_FALLBACK } from './src/i18n/locales.ts';
+
+const RESPONSIVE_PHOTO = new URLSearchParams({
+  w: '640;960;1400;2048',
+  format: 'webp',
+  // Close to the source photos, so the full-width copy is no bigger than the original.
+  quality: '75',
+  as: 'img',
+});
+const NO_DIRECTIVES = new URLSearchParams();
+
+const responsivePhotos = () =>
+  imagetools({ defaultDirectives: (url) => (url.searchParams.has('responsive') ? RESPONSIVE_PHOTO : NO_DIRECTIVES) });
 
 const contentPreload = (): Plugin => {
   let script = '';
@@ -17,7 +30,7 @@ const contentPreload = (): Plugin => {
       const project = { projectId: env.VITE_SANITY_PROJECT_ID, dataset: env.VITE_SANITY_DATASET };
       const template = sanityQueryUrl(project, CONTENT_GROQ, { locale: '__LOCALE__', fallback: '__FALLBACK__' });
       script = `(() => {
-  if (\`\${location.pathname}/\`.startsWith('${ADMIN_PATH}/')) return;
+  if (\`\${location.pathname}/\`.startsWith('${ADMIN_PATH}/') || window.self !== window.top) return;
   const lang = document.documentElement.lang;
   const locale = lang.startsWith('zh') ? 'zh' : lang;
   const fallback = ${JSON.stringify(CONTENT_FALLBACK)}[locale];
@@ -79,6 +92,7 @@ export default defineConfig({
       scale: 1,
       customCollections: { bk: FileSystemIconLoader(`${import.meta.dirname}/src/assets/icons`) },
     }),
+    responsivePhotos(),
     contentPreload(),
   ],
   resolve: { tsconfigPaths: true },

@@ -6,7 +6,7 @@ import { PhotoSlot, SLOT_DEFAULTS } from '~/data/photos';
 
 import classes from './photos.module.css';
 
-const PhotoTab = z.enum(['pages', 'front', 'news']);
+const PhotoTab = z.enum(['pages', 'front', 'news', 'board']);
 
 const SLOTS: Record<PhotoSlot, { title: string; tab: z.infer<typeof PhotoTab> }> = {
   [PhotoSlot.enum.home]: { title: 'Front page, top', tab: PhotoTab.enum.front },
@@ -26,6 +26,9 @@ const SLOTS: Record<PhotoSlot, { title: string; tab: z.infer<typeof PhotoTab> }>
   [PhotoSlot.enum.newsEvent]: { title: 'Event news', tab: PhotoTab.enum.news },
   [PhotoSlot.enum.newsVolunteer]: { title: 'Volunteering news', tab: PhotoTab.enum.news },
   [PhotoSlot.enum.newsClub]: { title: 'Club news', tab: PhotoTab.enum.news },
+  [PhotoSlot.enum.boardMembers]: { title: 'Memberships', tab: PhotoTab.enum.board },
+  [PhotoSlot.enum.boardVolunteers]: { title: 'Volunteers', tab: PhotoTab.enum.board },
+  [PhotoSlot.enum.boardAccess]: { title: 'Board access', tab: PhotoTab.enum.board },
 };
 
 const hasAsset = (image: unknown) =>
@@ -63,6 +66,7 @@ export const sitePhotos = defineType({
     { name: PhotoTab.enum.pages, title: 'Pages', default: true },
     { name: PhotoTab.enum.front, title: 'Front page' },
     { name: PhotoTab.enum.news, title: 'News without a banner' },
+    { name: PhotoTab.enum.board, title: 'Board pages' },
   ],
   fields: PhotoSlot.options.map(slotField),
   preview: { prepare: () => ({ title: 'Photos' }) },

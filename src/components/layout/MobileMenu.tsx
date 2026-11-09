@@ -7,6 +7,7 @@ import { useClub } from '~/cms/siteData';
 import { AddressLink, ClubLogo, Shuttle, SocialLinks, UserPlus } from '~/components/ui';
 import { useOffers } from '~/pages/join/offers';
 
+import { InstallApp, InstallLook } from './InstallApp';
 import { NAV } from './nav';
 
 import classes from './MobileMenu.module.css';
@@ -68,6 +69,7 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
         >
           <Trans>Try a session</Trans>
         </Button>
+        <InstallApp look={InstallLook.enum.button} />
       </div>
 
       <section className={classes.findUs} aria-labelledby="menu-find-us">

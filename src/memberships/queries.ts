@@ -15,6 +15,7 @@ import {
   MembershipStatus,
   seasonRange,
   type MembershipInput,
+  type PaymentMethod,
   type MembershipPatch,
   type RequestInput,
 } from './model';
@@ -188,6 +189,54 @@ const updateMembership = async ({ id, patch }: Update) => {
   return Membership.parse(data);
 };
 
+export type CopySeason = {
+  fromSeasonId: string;
+  toSeasonId: string;
+  build: (previous: AdminMembership[], target: AdminMembership[]) => MembershipInput[];
+};
+
+// Reads both seasons fresh so a second click can't add the same people twice.
+const copySeason = async ({ fromSeasonId, toSeasonId, build }: CopySeason) => {
+  const [previous, target] = await Promise.all([fetchSeason(fromSeasonId), fetchSeason(toSeasonId)]);
+  const rows = build(previous, target);
+  if (rows.length === 0) return 0;
+  const supabase = await getSupabase();
+  const { data, error } = await supabase
+    .from('memberships')
+    .insert(rows.map((row) => toColumns({ ...row, status: MembershipStatus.enum.active })))
+    .select('id');
+  if (error) throw toError(error);
+  return data.length;
+};
+
+const PAY_CHUNK = 100;
+
+export type MarkPaid = { ids: readonly string[]; paidAt: string; paymentMethod: PaymentMethod };
+export type MarkPaidResult = { paid: string[]; missed: string[]; error: Error | undefined };
+
+const markPaid = async ({ ids, paidAt, paymentMethod }: MarkPaid): Promise<MarkPaidResult> => {
+  const supabase = await getSupabase();
+  const chunks = Array.from({ length: Math.ceil(ids.length / PAY_CHUNK) }, (_, i) =>
+    ids.slice(i * PAY_CHUNK, (i + 1) * PAY_CHUNK),
+  );
+  const results = await Promise.all(
+    chunks.map((chunk) =>
+      supabase
+        .from('memberships')
+        .update(toColumns({ paidAt, paymentMethod }))
+        .in('id', chunk)
+        .eq('status', MembershipStatus.enum.active)
+        .is('paid_at', null)
+        .select('id'),
+    ),
+  );
+  const paid = new Set(results.flatMap(({ data }) => data ?? []).map((row) => row.id));
+  const failed = results.find((r) => r.error)?.error;
+  const error = failed ? toError(failed) : undefined;
+  if (error && paid.size === 0) throw error;
+  return { paid: Array.from(paid), missed: ids.filter((id) => !paid.has(id)), error };
+};
+
 const requestMembership = async (userId: string | undefined, input: RequestInput) => {
   const supabase = await getSupabase();
   if (!userId) throw new MembershipError(MembershipProblem.enum.notAllowed);
@@ -275,6 +324,12 @@ export const useCreateMembership = (options?: MutationOptions<Membership, Member
 
 export const useUpdateMembership = (options?: MutationOptions<Membership, Update>) =>
   useMutation({ mutationFn: updateMembership, onSuccess: invalidateMemberships, ...options });
+
+export const useCopySeason = (options?: MutationOptions<number, CopySeason>) =>
+  useMutation({ mutationFn: copySeason, onSuccess: invalidateMemberships, ...options });
+
+export const useMarkPaid = (options?: MutationOptions<MarkPaidResult, MarkPaid>) =>
+  useMutation({ mutationFn: markPaid, onSettled: invalidateMemberships, ...options });
 
 export const useDeleteMembership = (options?: MutationOptions<void, string>) =>
   useMutation({ mutationFn: deleteMembership, onSuccess: invalidateMemberships, ...options });

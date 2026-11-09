@@ -8,7 +8,9 @@ export type HelpArea = z.infer<typeof HelpArea>;
 
 export const TopicId = z.enum([
   'access',
+  'preview',
   'languages',
+  'translations',
   'news',
   'training',
   'cancelTraining',
@@ -27,7 +29,12 @@ export const TopicId = z.enum([
   'privacy',
   'images',
   'memberships',
+  'newSeason',
+  'markPaid',
+  'reminders',
   'volunteers',
+  'printShifts',
+  'boardAccess',
 ]);
 export type TopicId = z.infer<typeof TopicId>;
 
@@ -73,8 +80,8 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       intro: 'Bare administratorer kan redigere nettsiden. Det du endrer, blir et utkast til du publiserer.',
       steps: [
         'Logg inn på nettsiden med kontoen din.',
-        'Du må være administrator. Den som styrer Supabase, slår på «is_admin» på profilen din.',
-        'Åpne kontomenyen og trykk «Rediger nettsiden». Studio åpner seg i en ny fane.',
+        'Du må være administrator. Be en annen administrator legge deg til på «Styretilgang» under «Styresider».',
+        'Åpne kontomenyen og trykk «Rediger innholdet på nettsiden». Studio åpner seg i en ny fane.',
         'Studio har sin egen innlogging. Den som styrer Sanity, må invitere deg først.',
         'Studio åpner på «Start». Trykk på jobben du vil gjøre, for eksempel «Post news» eller «Cancel training».',
         'Finner du ikke jobben der, åpne «Content» øverst. Velg det du vil endre i listen til venstre. Listen er delt inn i grupper, som «Training», «Events» og «The club».',
@@ -92,8 +99,8 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       intro: 'Only admins can edit the website. What you change stays a draft until you publish it.',
       steps: [
         'Log in on the website with your account.',
-        'You need to be an admin. The person who manages Supabase turns on “is_admin” on your profile.',
-        'Open the account menu and click “Edit the site”. The Studio opens in a new tab.',
+        'You need to be an admin. Ask another admin to add you on “Board access” under “Board pages”.',
+        'Open the account menu and click “Edit site content”. The Studio opens in a new tab.',
         'The Studio has its own login. The person who manages Sanity must invite you first.',
         'The Studio opens on “Start”. Click the job you want to do, for example “Post news” or “Cancel training”.',
         'If the job is not there, open “Content” at the top. Pick what you want to change in the list on the left. The list is split into groups, like “Training”, “Events” and “The club”.',
@@ -104,6 +111,41 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'It can take a few minutes before the website shows your change. Reload the page.',
         'Some things exist only once, for example “Notice banner”, “Club details”, “Payment”, “Photos” and “Privacy page”. The same goes for the training groups and volunteer teams. They can’t be deleted.',
         '“Help” at the top opens this guide.',
+      ],
+    },
+  },
+  [TopicId.enum.preview]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Forhåndsvisning',
+      intro: 'Se endringene dine på de ekte sidene før du publiserer. Bare du ser utkastet.',
+      steps: [
+        'Trykk «Preview» øverst i Studio, eller «Preview the site» på «Start».',
+        'Nettsiden vises til venstre. Klikk deg rundt, eller skriv en adresse i feltet øverst.',
+        'Endre en tekst i skjemaet til høyre. Siden oppdateres med en gang.',
+        'Hold musen over en tekst på siden og klikk for å åpne feltet den kommer fra.',
+        'Ser alt riktig ut? Trykk «Publish». Først da ser besøkende endringen.',
+      ],
+      tips: [
+        'I et dokument viser «Used on … pages» hvilke sider teksten brukes på.',
+        'Slå av «Edit» øverst hvis du vil klikke på lenker på siden.',
+        'Bytt språk på nettsiden for å se de andre språkene.',
+      ],
+    },
+    en: {
+      title: 'Preview',
+      intro: 'See your changes on the real pages before you publish. Only you see the draft.',
+      steps: [
+        'Click “Preview” at the top of the Studio, or “Preview the site” on “Start”.',
+        'The website shows on the left. Click around, or type an address in the field at the top.',
+        'Change a text in the form on the right. The page updates right away.',
+        'Hold the mouse over a text on the page and click to open the field it comes from.',
+        'Does it all look right? Click “Publish”. Only then do visitors see the change.',
+      ],
+      tips: [
+        'In a document, “Used on … pages” shows which pages use the text.',
+        'Turn off “Edit” at the top if you want to click links on the page.',
+        'Switch the language on the website to see the other languages.',
       ],
     },
   },
@@ -121,6 +163,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Menyer og knapper på nettsiden er oversatt i koden. Dem endrer du ikke her.',
         'Listene i Studio viser den norske tittelen.',
+        '«Translations» øverst i Studio viser hvilke tekster som mangler et språk. Se «Manglende oversettelser».',
       ],
     },
     en: {
@@ -135,6 +178,40 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Menus and buttons on the website are translated in the code. You don’t change them here.',
         'The lists in the Studio show the Norwegian title.',
+        '“Translations” at the top of the Studio shows which texts are missing a language. See “Missing translations”.',
+      ],
+    },
+  },
+  [TopicId.enum.translations]: {
+    area: HelpArea.enum.studio,
+    nb: {
+      title: 'Manglende oversettelser',
+      intro: 'Se hvilke tekster som mangler et språk. Norsk og engelsk må være med. De andre kan stå tomme.',
+      steps: [
+        'Trykk «Translations» øverst i Studio, eller «Check translations» på «Start».',
+        '«Must fix» viser tekster som mangler norsk eller engelsk. Rett disse først.',
+        '«Optional» viser tekster som mangler svensk, dansk, finsk, islandsk eller kinesisk. Besøkende ser da norsk i stedet. På kinesisk ser de engelsk.',
+        'Trykk på en tekst for å åpne den, og fyll inn språket som mangler.',
+        'Trykk «Publish». Gå tilbake og trykk «Check again» for å oppdatere listen.',
+      ],
+      tips: [
+        'Listen sjekker også utkast. En tekst du har rettet, forsvinner fra listen før du har publisert.',
+        '«Translations» inne i et tekstfelt er noe annet. Der skriver du de valgfrie språkene. Se «Språk».',
+      ],
+    },
+    en: {
+      title: 'Missing translations',
+      intro: 'See which texts are missing a language. Norwegian and English are required. The others can stay empty.',
+      steps: [
+        'Click “Translations” at the top of the Studio, or “Check translations” on “Start”.',
+        '“Must fix” shows texts that are missing Norwegian or English. Fix these first.',
+        '“Optional” shows texts that are missing Swedish, Danish, Finnish, Icelandic or Chinese. Visitors then see Norwegian instead. In Chinese they see English.',
+        'Click a text to open it, and fill in the missing language.',
+        'Click “Publish”. Go back and click “Check again” to update the list.',
+      ],
+      tips: [
+        'The list checks drafts too. A text you fixed leaves the list before you publish it.',
+        '“Translations” inside a text field is something else. That is where you write the optional languages. See “Languages”.',
       ],
     },
   },
@@ -276,7 +353,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Når arrangementet er over, flytter det seg av seg selv fra «Upcoming events» til «Past events».',
         'De siste tre dagene før fristen viser siden «Stenger snart». Etter fristen er påmeldingen stengt.',
-        'Arrangementer med fast dato kommer med i kalenderen folk abonnerer på med «Abonner» på Arrangementer-siden. Trening og pauser er ikke med.',
+        'Arrangementer med fast dato kommer med i kalenderen folk abonnerer på med «Abonner» på Arrangementer-siden. Treningene har egne kalendere per gruppe: «Legg til i kalenderen» på Trening-siden. Avlyste treninger blir markert der av seg selv.',
         'Et arrangement på samme tid som trening avlyser treningen. Se «Avlys trening».',
       ],
     },
@@ -298,7 +375,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'When the event is over, it moves from “Upcoming events” to “Past events” on its own.',
         'In the last three days before the deadline, the website shows “Closing soon”. After the deadline, sign-up is closed.',
-        'Events with a set date are in the calendar feed people get with “Subscribe” on the Events page. Training and breaks are not.',
+        'Events with a set date are in the calendar feed people get with “Subscribe” on the Events page. Training has its own calendar per group: “Add to calendar” on the Training page. Canceled sessions are marked there by themselves.',
         'An event at the same time as a training cancels that training. See “Cancel a training”.',
       ],
     },
@@ -660,10 +737,10 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     area: HelpArea.enum.studio,
     nb: {
       title: 'Sidebilder',
-      intro: 'Bildene øverst på hver side, på forsidekortene og på nyheter uten toppbilde.',
+      intro: 'Bildene øverst på hver side, på forsidekortene, på nyheter uten toppbilde og på styresidene.',
       steps: [
         'Trykk «Photos» på «Start», eller åpne «Photos» under «Every page» i «Content».',
-        'Velg fanen «Pages», «Front page» eller «News without a banner».',
+        'Velg fanen «Pages», «Front page», «News without a banner» eller «Board pages».',
         'Last opp et bilde i feltet og fyll ut «Describe the image».',
         'Sett hotspot på det viktigste i bildet. Se «Bilder».',
         'Trykk «Publish».',
@@ -675,10 +752,11 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     },
     en: {
       title: 'Page photos',
-      intro: 'The photos at the top of each page, on the front page cards and on news without a banner.',
+      intro:
+        'The photos at the top of each page, on the front page cards, on news without a banner and on the board pages.',
       steps: [
         'Click “Photos” on “Start”, or open “Photos” under “Every page” in “Content”.',
-        'Pick the “Pages”, “Front page” or “News without a banner” tab.',
+        'Pick the “Pages”, “Front page”, “News without a banner” or “Board pages” tab.',
         'Upload a photo in the field and fill in “Describe the image”.',
         'Put the hotspot on the most important part. See “Images”.',
         'Click “Publish”.',
@@ -724,41 +802,146 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     area: HelpArea.enum.site,
     nb: {
       title: 'Medlemskap og betaling',
-      intro: 'Medlemmer og betaling styrer du på nettsiden, ikke i Studio. Åpne kontomenyen og trykk «Medlemskap».',
+      intro:
+        'Medlemmer og betaling styrer du på nettsiden, ikke i Studio. Åpne kontomenyen og trykk «Styresider». Da kommer du rett til «Medlemskap».',
       steps: [
         'Når noen melder seg inn på «Bli medlem», havner forespørselen under «Forespørsler».',
         'Trykk «Godkjenn» for å gjøre personen til medlem, eller «Avslå». Avslåtte finner du med «Vis avslåtte». Der kan du trykke «Angre avslag».',
         'Under «Medlemmer» ser du alle med konto, og alle som har et medlemskap. Velg sesong øverst. Med «Alle», «Betalt», «Ubetalt», «Venter» og «Uten medlemskap» ser du bare dem du trenger.',
         'Trykk på en person for å se medlemskapene deres, også barnas. Har noen konto, men ikke medlemskap, trykker du «Legg til». E-posten er allerede fylt ut.',
-        'Når noen har betalt, trykk «Marker som betalt». Velg «Betalt dato» og «Betalt med», for eksempel Vipps eller bankoverføring.',
+        'Når noen har betalt, trykk «Marker som betalt». Velg «Betalt dato» og «Betalt med», for eksempel Vipps eller bankoverføring. Har mange betalt? Se «Marker mange som betalt».',
         'Med «Legg til medlemskap» legger du inn noen selv, for eksempel et barn uten konto. Blyanten endrer, søppelbøtta sletter.',
         '«Oversikt» viser antall medlemmer, hvor mange som har betalt, og hvor mye som er innbetalt per type. «Vis hvem» viser dem som ikke har betalt.',
         '«Last ned regneark» lagrer medlemmene i sesongen som en fil du kan åpne i Excel.',
       ],
-      tips: ['Søk på navn eller e-post for å finne noen raskt.'],
+      tips: [
+        'Et blått tall på profilbildet ditt viser hvor mange forespørsler som venter. Samme tall står på «Styresider» og på «Medlemskap».',
+        'Linjen øverst på alle styresidene bytter mellom «Medlemskap», «Frivillige» og «Styretilgang».',
+        'Søk på navn eller e-post for å finne noen raskt.',
+      ],
     },
     en: {
       title: 'Members and payments',
       intro:
-        'You handle members and payments on the website, not in the Studio. Open the account menu and click “Memberships”.',
+        'You handle members and payments on the website, not in the Studio. Open the account menu and click “Board pages”. It opens “Memberships”.',
       steps: [
         'When someone joins on “Join the club”, the request shows under “Requests”.',
         'Click “Approve” to make them a member, or “Decline”. Find declined ones with “Show declined”. There you can click “Undo decline”.',
         'Under “Members” you see everyone with an account, and everyone with a membership. Pick the season at the top. Use “All”, “Paid”, “Unpaid”, “Requested” and “No membership” to show only the people you need.',
         'Click a person to see their memberships, including their children’s. If someone has an account but no membership, click “Add”. Their email is already filled in.',
-        'When someone has paid, click “Mark as paid”. Pick “Paid on” and “Paid with”, for example Vipps or bank transfer.',
+        'When someone has paid, click “Mark as paid”. Pick “Paid on” and “Paid with”, for example Vipps or bank transfer. Many people paid? See “Mark many as paid”.',
         'With “Add membership” you add someone yourself, for example a child without an account. The pencil edits, the trash can deletes.',
         '“Overview” shows how many members there are, how many have paid, and how much came in per plan. “Show who” lists the ones who have not paid.',
         '“Download spreadsheet” saves the season’s members as a file you can open in Excel.',
       ],
-      tips: ['Search by name or email to find someone fast.'],
+      tips: [
+        'A blue number on your profile picture shows how many requests are waiting. The same number shows on “Board pages” and on “Memberships”.',
+        'The bar at the top of every board page switches between “Memberships”, “Volunteers” and “Board access”.',
+        'Search by name or email to find someone fast.',
+      ],
+    },
+  },
+  [TopicId.enum.newSeason]: {
+    area: HelpArea.enum.site,
+    nb: {
+      title: 'Start en ny sesong',
+      intro: 'Kopier medlemmene fra forrige sesong, så slipper du å legge inn alle på nytt.',
+      steps: [
+        'Gå til «Medlemskap» og velg den nye sesongen i «Sesong» øverst.',
+        'Trykk pilen ved «Legg til medlemskap» og velg «Kopier medlemmer fra …». Er sesongen tom, finner du samme knapp under fanene.',
+        'Sjekk tallene: hvor mange som blir lagt til, og hvem som allerede er med.',
+        'Trykk «Kopier … medlemskap».',
+      ],
+      tips: [
+        'Alle starter som ikke betalt, til dagens priser.',
+        'Drop-in og prøvemedlemskap blir ikke kopiert.',
+        'Har noen allerede samme medlemskap i den nye sesongen, hoppes de over.',
+      ],
+    },
+    en: {
+      title: 'Start a new season',
+      intro: 'Copy the members from last season, so you don’t have to add everyone again.',
+      steps: [
+        'Go to “Memberships” and pick the new season in “Season” at the top.',
+        'Click the arrow next to “Add membership” and pick “Copy members from …”. If the season is empty, the same button is under the tabs.',
+        'Check the numbers: how many will be added, and who is already in.',
+        'Click “Copy … memberships”.',
+      ],
+      tips: [
+        'Everyone starts as not paid, at today’s prices.',
+        'Drop-ins and trials are not copied.',
+        'If someone already has the same plan in the new season, they are skipped.',
+      ],
+    },
+  },
+  [TopicId.enum.markPaid]: {
+    area: HelpArea.enum.site,
+    nb: {
+      title: 'Marker mange som betalt',
+      intro: 'Har mange betalt, kan du markere dem på én gang.',
+      steps: [
+        'Gå til fanen «Medlemmer» på «Medlemskap». Velg «Ubetalt» for å se bare dem som ikke har betalt.',
+        'Kryss av ved dem som har betalt, eller kryss av «Velg alle … ubetalte» øverst.',
+        'Trykk «Marker … som betalt» i linjen nederst.',
+        'Velg «Betalt dato» og «Betalt med». Trykk «Marker … som betalt» for å lagre.',
+      ],
+      tips: [
+        'Bare ubetalte medlemskap kan krysses av.',
+        '«Fjern valg» i linjen nederst fjerner alle kryssene.',
+        'Ble noen ikke lagret, står navnene deres under «Ikke markert som betalt». Kanskje noen andre har gjort det allerede.',
+      ],
+    },
+    en: {
+      title: 'Mark many as paid',
+      intro: 'If many people have paid, you can mark them all at once.',
+      steps: [
+        'Open the “Members” tab on “Memberships”. Pick “Unpaid” to see only the people who have not paid.',
+        'Tick the people who paid, or tick “Select all … unpaid” at the top.',
+        'Click “Mark … as paid” in the bar at the bottom.',
+        'Pick “Paid on” and “Paid with”. Click “Mark … as paid” to save.',
+      ],
+      tips: [
+        'You can only tick memberships that are not paid.',
+        '“Clear” in the bar at the bottom removes all the ticks.',
+        'If some didn’t save, their names show under “Not marked as paid”. Someone else may have done it already.',
+      ],
+    },
+  },
+  [TopicId.enum.reminders]: {
+    area: HelpArea.enum.site,
+    nb: {
+      title: 'Purr på betaling',
+      intro: 'Send én e-post til alle som ikke har betalt.',
+      steps: [
+        'Gå til fanen «Medlemmer» på «Medlemskap» og velg «Ubetalt».',
+        'Trykk «Kopier … e-postadresser».',
+        'Lim dem inn i Bcc-feltet i e-posten din. Da ser ikke mottakerne hverandres adresser.',
+      ],
+      tips: [
+        'De uten konto er ikke med. Under knappen står det hvor mange det gjelder. Kontakt dem på en annen måte.',
+        'Fra «Oversikt» kommer du rett hit med «Vis hvem».',
+      ],
+    },
+    en: {
+      title: 'Remind unpaid members',
+      intro: 'Send one email to everyone who has not paid.',
+      steps: [
+        'Open the “Members” tab on “Memberships” and pick “Unpaid”.',
+        'Click “Copy … emails”.',
+        'Paste them into the Bcc field of your email. Then people don’t see each other’s addresses.',
+      ],
+      tips: [
+        'People without an account are not included. Under the button it says how many. Reach them another way.',
+        'From “Overview”, “Show who” takes you straight here.',
+      ],
     },
   },
   [TopicId.enum.volunteers]: {
     area: HelpArea.enum.site,
     nb: {
       title: 'Dugnadsoversikt',
-      intro: 'Her ser styret hvem som står på hver vakt. Åpne kontomenyen på nettsiden og trykk «Frivillige».',
+      intro:
+        'Her ser styret hvem som står på hver vakt. Åpne kontomenyen på nettsiden, trykk «Styresider» og velg «Frivillige» i linjen øverst.',
       steps: [
         'Velg arrangement øverst. Kommende kommer først, tidligere ligger under.',
         '«Hvem vi mangler» viser ledige plasser per dag og lag.',
@@ -773,7 +956,8 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     },
     en: {
       title: 'Volunteers screen',
-      intro: 'Here the board sees who is on each shift. Open the account menu on the website and click “Volunteers”.',
+      intro:
+        'Here the board sees who is on each shift. Open the account menu on the website, click “Board pages” and pick “Volunteers” in the bar at the top.',
       steps: [
         'Pick the event at the top. Upcoming events come first, past ones below.',
         '“Who to find” shows the open spots per day and team.',
@@ -784,6 +968,70 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'If a shift is full, you can still add one more with “Add anyway”.',
         'You make the shifts in the Studio. See “Volunteer shifts”.',
+      ],
+    },
+  },
+  [TopicId.enum.printShifts]: {
+    area: HelpArea.enum.site,
+    nb: {
+      title: 'Skriv ut vaktlisten',
+      intro: 'Heng vaktlisten på veggen i hallen, så kan folk skrive seg på med penn.',
+      steps: [
+        'Trykk «Styresider», velg «Frivillige» i linjen øverst, og velg arrangementet.',
+        'Trykk «Skriv ut vaktlisten». Du ser først hvordan arket blir.',
+        'Trykk «Skriv ut». Hver dag starter på en ny side.',
+        'Heng arket på veggen. Ledige plasser er tomme linjer, så folk kan skrive navnet sitt der.',
+      ],
+      tips: [
+        'På mobil er knappen et skriverikon.',
+        'Arket viser hvem som var påmeldt da du skrev det ut. Skriv ut på nytt hvis vaktene endrer seg.',
+      ],
+    },
+    en: {
+      title: 'Print the shift plan',
+      intro: 'Put the shift plan on the wall in the hall, so people can sign up with a pen.',
+      steps: [
+        'Click “Board pages”, pick “Volunteers” in the bar at the top, and pick the event.',
+        'Click “Print shift plan”. You see the sheet first.',
+        'Click “Print”. Each day starts on a new page.',
+        'Put the sheet on the wall. Open spots are empty lines, so people can write their name there.',
+      ],
+      tips: [
+        'On a phone, the button is a printer icon.',
+        'The sheet shows who was signed up when you printed it. Print again if the shifts change.',
+      ],
+    },
+  },
+  [TopicId.enum.boardAccess]: {
+    area: HelpArea.enum.site,
+    nb: {
+      title: 'Styretilgang',
+      intro: 'Administratorer kan åpne styresidene og redigere nettsiden. Her legger du dem til og fjerner dem.',
+      steps: [
+        'Åpne kontomenyen, trykk «Styresider» og velg «Styretilgang» i linjen øverst.',
+        'Skriv e-posten personen logger inn med, og trykk «Legg til administrator».',
+        'Står det at det ikke finnes noen konto, be personen logge inn på nettsiden én gang først.',
+        'For å fjerne en administrator trykker du «Fjern» ved navnet og bekrefter med «Fjern».',
+      ],
+      tips: [
+        'Du kan ikke fjerne deg selv. Be en annen administrator gjøre det. Det må alltid være minst én administrator.',
+        'Den som fjernes, beholder kontoen og medlemskapene sine.',
+        'Studio har sin egen innlogging. En ny administrator må også inviteres i Sanity for å redigere innholdet.',
+      ],
+    },
+    en: {
+      title: 'Board access',
+      intro: 'Admins can open the board pages and edit the website. Here you add and remove them.',
+      steps: [
+        'Open the account menu, click “Board pages” and pick “Board access” in the bar at the top.',
+        'Type the email they log in with, and click “Add admin”.',
+        'If it says there is no account yet, ask them to log in on the website once first.',
+        'To remove an admin, click “Remove” next to the name and confirm with “Remove”.',
+      ],
+      tips: [
+        'You can’t remove yourself. Ask another admin to do it. There must always be at least one admin.',
+        'People you remove keep their account and memberships.',
+        'The Studio has its own login. A new admin must also be invited in Sanity to edit the content.',
       ],
     },
   },

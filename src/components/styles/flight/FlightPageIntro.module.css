@@ -43,11 +43,21 @@
     clip-path: shape(from 104% 5%, curve to 4% 108% with 45% 5% / 4% 54%, line to 104% 108%, close);
   }
 
-  &[role='img'] {
-    background:
-      linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade)),
-      var(--intro-photo) center bottom / cover no-repeat;
+  &[data-photo]::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bk-photo-shade);
   }
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
 }
 
 .art {

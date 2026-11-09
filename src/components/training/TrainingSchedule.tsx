@@ -130,7 +130,7 @@ const DayList = memo<Omit<Props, 'height'>>(({ season, group }) => {
         )}
         {Array.from(days, ([weekday, sessions]) => (
           <Stack key={weekday} gap={8}>
-            <Title order={3} size="h4" tt="capitalize">
+            <Title order={3} size="h4" className="capitalize-first">
               {weekdayName(weekday)}
             </Title>
             {sessions.map((s) => (

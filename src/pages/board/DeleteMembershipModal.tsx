@@ -1,8 +1,8 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Alert, Button, Group, Modal, Stack, Text } from '@mantine/core';
+import { Modal, Stack, Text } from '@mantine/core';
 import type { FC } from 'react';
 
-import { Trash, Warning } from '~/components/ui';
+import { ConfirmActions } from '~/components/ui';
 import { membershipSeason, type AdminMembership } from '~/memberships/model';
 import { membershipErrorMessage, useDeleteMembership } from '~/memberships/queries';
 
@@ -29,19 +29,13 @@ const DeleteConfirm: FC<{ membership: AdminMembership; onDone: () => void }> = (
           Delete the membership for <strong>{name}</strong> in season {season}? You can't undo this.
         </Trans>
       </Text>
-      {remove.isError && (
-        <Alert color="red" variant="light" icon={<Warning />}>
-          {i18n._(membershipErrorMessage(remove.error))}
-        </Alert>
-      )}
-      <Group justify="flex-end">
-        <Button variant="default" onClick={onDone} data-autofocus>
-          <Trans>Cancel</Trans>
-        </Button>
-        <Button color="red" leftSection={<Trash />} loading={remove.isPending} onClick={confirm}>
-          <Trans>Delete</Trans>
-        </Button>
-      </Group>
+      <ConfirmActions
+        confirmLabel={<Trans>Delete</Trans>}
+        pending={remove.isPending}
+        error={remove.isError ? i18n._(membershipErrorMessage(remove.error)) : null}
+        onCancel={onDone}
+        onConfirm={confirm}
+      />
     </Stack>
   );
 };

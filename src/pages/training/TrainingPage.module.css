@@ -25,7 +25,7 @@
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: subgrid;
-  grid-template-areas: 'name who coach times join';
+  grid-template-areas: 'name who coach times actions';
   align-items: center;
   row-gap: 4px;
   padding-block: var(--mantine-spacing-sm);
@@ -39,7 +39,7 @@
       'name coach'
       'who who'
       'times times'
-      'join join';
+      'actions actions';
   }
 }
 
@@ -64,8 +64,26 @@
   font-variant-numeric: tabular-nums;
 }
 
-.join {
-  grid-area: join;
-  justify-self: start;
+.actions {
+  grid-area: actions;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    flex-flow: row wrap;
+    column-gap: var(--mantine-spacing-lg);
+  }
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   white-space: nowrap;
+
+  &[aria-expanded='true'] {
+    text-decoration: underline;
+  }
 }

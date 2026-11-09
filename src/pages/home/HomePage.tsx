@@ -7,6 +7,7 @@ import { useMemo, type FC } from 'react';
 import { isPast, type CalendarEvent } from '~/cms/calendar';
 import { useSiteContent, type NewsPost } from '~/cms/content';
 import { EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
+import { clubJsonLd, JsonLd } from '~/components/seo';
 import { useStyleKit } from '~/components/styles';
 import { ArrowRight, CalendarBlank, CourtTexture } from '~/components/ui';
 import { CLUB } from '~/data/club';
@@ -49,6 +50,7 @@ export const HomePage: FC = () => {
 
   return (
     <>
+      <JsonLd data={clubJsonLd(content)} />
       <HomeHero />
       <SectionDivider />
 

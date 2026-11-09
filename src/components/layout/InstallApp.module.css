@@ -1,0 +1,9 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.share {
+  vertical-align: -2px;
+}

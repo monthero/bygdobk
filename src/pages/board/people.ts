@@ -12,6 +12,7 @@ export type Person = {
   name: string;
   profile: BoardProfile | null;
   memberships: AdminMembership[];
+  unpaidIds: string[];
   unpaid: number;
   unpaidNok: number;
   requested: number;
@@ -19,7 +20,7 @@ export type Person = {
 };
 
 const isActive = (m: AdminMembership) => m.status === MembershipStatus.enum.active;
-const isUnpaid = (m: AdminMembership) => isActive(m) && m.paidAt === null;
+export const isUnpaid = (m: AdminMembership) => isActive(m) && m.paidAt === null;
 const isRequested = (m: AdminMembership) => m.status === MembershipStatus.enum.requested;
 
 const summarize = (key: string, name: string, profile: BoardProfile | null, memberships: AdminMembership[]) => {
@@ -29,6 +30,7 @@ const summarize = (key: string, name: string, profile: BoardProfile | null, memb
     name,
     profile,
     memberships,
+    unpaidIds: unpaid.map((m) => m.id),
     unpaid: unpaid.length,
     unpaidNok: unpaid.reduce((sum, m) => sum + m.priceNok, 0),
     requested: memberships.filter(isRequested).length,
@@ -67,3 +69,14 @@ export const matchesPerson = (person: Person, query: string) =>
   [person.name, person.profile?.email, ...person.memberships.map(memberName)].some((value) =>
     value?.toLowerCase().includes(query),
   );
+
+export const unpaidContacts = (people: readonly Person[]) => {
+  const emails = new Set<string>();
+  let noAccount = 0;
+  for (const person of people) {
+    if (person.unpaid === 0) continue;
+    if (person.profile) emails.add(person.profile.email.trim().toLowerCase());
+    else noAccount += 1;
+  }
+  return { emails: Array.from(emails), noAccount };
+};

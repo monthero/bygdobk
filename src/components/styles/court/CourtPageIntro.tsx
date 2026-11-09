@@ -1,7 +1,7 @@
-import { Container, Text, Title } from '@mantine/core';
+import { Container } from '@mantine/core';
 import { memo, type FC } from 'react';
 
-import type { PageIntroProps } from '~/components/ui';
+import { IntroText, type PageIntroProps } from '~/components/ui';
 
 import { LENGTH, LINES, lineKey, NET, WIDTH } from './geometry';
 
@@ -48,12 +48,9 @@ export const CourtPageIntro: FC<PageIntroProps> = ({ eyebrow, title, lede, photo
     </div>
     <Container className={classes.inner}>
       <div className={classes.copy}>
-        {eyebrow && <Text className={classes.eyebrow}>{eyebrow}</Text>}
-        <Title order={1} className={classes.title}>
-          {title}
-        </Title>
-        {lede && <Text className={classes.lede}>{lede}</Text>}
-        {children}
+        <IntroText eyebrow={eyebrow} title={title} lede={lede} classes={classes}>
+          {children}
+        </IntroText>
       </div>
     </Container>
     <span className={classes.ruler} aria-hidden />

@@ -1,0 +1,24 @@
+.row {
+  &[data-selected],
+  &[data-selected]:hover {
+    background: var(--bk-accent-soft);
+  }
+}
+
+.card {
+  &[data-selected] {
+    border-color: var(--bk-accent-line);
+    background: var(--bk-accent-soft);
+  }
+}
+
+.bar {
+  position: sticky;
+  bottom: var(--mantine-spacing-md);
+  z-index: 2;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm) var(--mantine-spacing-xs) var(--mantine-spacing-md);
+  border: 1px solid var(--bk-accent-line);
+  border-radius: var(--mantine-radius-xl);
+  background: var(--bk-surface);
+  box-shadow: var(--bk-shadow);
+}

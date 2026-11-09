@@ -11,6 +11,11 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "”Haluamme, että mahdollisimman moni nauttii sulkapallosta!”"
 
+#. placeholder {0}: admins.data.length
+#: src/pages/board/access/AccessPage.tsx
+msgid "{0, plural, one {# admin} other {# admins}}"
+msgstr "{0, plural, one {# ylläpitäjä} other {# ylläpitäjää}}"
+
 #. placeholder {0}: hits.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post matches} other {# posts match}}"
@@ -53,6 +58,27 @@ msgstr "{0} maksamatta"
 msgid "{0} per visit"
 msgstr "{0} / kerta"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{added, plural, one {Copy # membership} other {Copy # memberships}}"
+msgstr "{added, plural, one {Kopioi # jäsenyys} other {Kopioi # jäsenyyttä}}"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
+msgstr "{count, plural, one {# jäsenyys} other {# jäsenyyttä}}, yhteensä <0>{total}</0>."
+
+#: src/components/auth/RequestCountBadge.tsx
+msgid "{count, plural, one {# open request} other {# open requests}}"
+msgstr "{count, plural, one {# avoin hakemus} other {# avointa hakemusta}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{count, plural, one {Copy # email} other {Copy # emails}}"
+msgstr "{count, plural, one {Kopioi # sähköpostiosoite} other {Kopioi # sähköpostiosoitetta}}"
+
+#. How many memberships are picked, and what they cost together
+#: src/pages/board/BulkActions.tsx
+msgid "{count} selected · {total}"
+msgstr "{count} valittu · {total}"
+
 #: src/components/events/EventCard.tsx
 msgid "{filled} of {needed} spots filled"
 msgstr "{filled}/{needed} paikkaa täytetty"
@@ -69,6 +95,14 @@ msgstr "Puhelinnumero kopioitu leikepöydälle: {firstName}"
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "{hits, plural, one {# lyönti} other {# lyöntiä}}: {callout}"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "{name} in your calendar"
+msgstr "{name} kalenteriisi"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is already an admin."
+msgstr "{name} on jo ylläpitäjä."
+
 #: src/pages/board/MembershipList.tsx
 msgid "{name} is in!"
 msgstr "{name} on mukana!"
@@ -77,17 +111,33 @@ msgstr "{name} on mukana!"
 msgid "{name} is marked as paid"
 msgstr "{name} on merkitty maksaneeksi"
 
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "{name} is no longer an admin"
+msgstr "{name} ei ole enää ylläpitäjä"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is now an admin"
+msgstr "{name} on nyt ylläpitäjä"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{name} is off the shift"
 msgstr "{name} poistettiin vuorosta"
 
 #: src/pages/board/MarkPaidModal.tsx
-msgid "{name} paid <0>{price}</0>."
-msgstr "{name} maksoi <0>{price}</0>."
+msgid "{name} paid <0>{total}</0>."
+msgstr "{name} maksoi <0>{total}</0>."
 
 #: src/components/events/EventCard.tsx
 msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
 msgstr "{needed, plural, one {Tarvitaan # talkoolainen} other {Tarvitaan # talkoolaista}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{noAccount, plural, one {# person without an account is not included.} other {# people without an account are not included.}}"
+msgstr "{noAccount, plural, one {# henkilö ilman tiliä ei ole mukana.} other {# henkilöä ilman tiliä ei ole mukana.}}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{oneOff, plural, one {# drop-in or trial is not copied.} other {# drop-ins and trials are not copied.}}"
+msgstr "{oneOff, plural, one {# drop-in- tai kokeilujäsenyys jää kopioimatta.} other {# drop-in- ja kokeilujäsenyyttä jää kopioimatta.}}"
 
 #. Open spots on a volunteer team, e.g. 2 open
 #: src/pages/board/volunteers/VolunteersPage.tsx
@@ -98,6 +148,10 @@ msgstr "{open} vapaana"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "{over} over"
 msgstr "{over} liikaa"
+
+#: src/components/auth/UserMenu.tsx
+msgid "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
+msgstr "{requestCount, plural, one {# avoin jäsenyyshakemus} other {# avointa jäsenyyshakemusta}}"
 
 #: src/pages/board/MembersPage.tsx
 msgid "{requestCount} open"
@@ -111,6 +165,10 @@ msgstr "{requested} odottaa"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown} lisättiin vuoroon"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{skipped, plural, one {# already has the same plan this season and is skipped.} other {# already have the same plan this season and are skipped.}}"
+msgstr "{skipped, plural, one {# henkilöllä on jo sama jäsenyys tällä kaudella, joten hänet ohitetaan.} other {# henkilöllä on jo sama jäsenyys tällä kaudella, joten heidät ohitetaan.}}"
 
 #. How many spots of a volunteer shift are taken, e.g. 2 of 3
 #. placeholder {0}: shift.spots
@@ -135,6 +193,10 @@ msgstr "{taken}/{spots} paikkaa varattu"
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} maksamatta"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "<0>{name}</0> can no longer open the board pages or edit the website. Their account and memberships stay."
+msgstr "<0>{name}</0> ei voi enää avata hallituksen sivuja eikä muokata sivustoa. Tili ja jäsenyydet säilyvät."
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "<0>Ask the board</0> about discounts and support."
@@ -199,6 +261,10 @@ msgid "A racket"
 msgstr "Maila"
 
 #: src/data/photos.ts
+msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
+msgstr "Maila, sulkapallo ja puhelin penkillä sulkapallohallissa auringonlaskun aikaan"
+
+#: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
 msgstr "Sulkapallo mailan päällä, taustalla pelaajia vihreillä kentillä"
 
@@ -256,6 +322,8 @@ msgid "Actions"
 msgstr "Toiminnot"
 
 #. Button: add a membership for this person
+#. Short button label on phones: add a membership
+#: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add"
@@ -269,9 +337,21 @@ msgstr "Lisää jäsenyys: {name}"
 msgid "Add a volunteer"
 msgstr "Lisää talkoolainen"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add admin"
+msgstr "Lisää ylläpitäjä"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add an admin"
+msgstr "Uusi ylläpitäjä"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add anyway"
 msgstr "Lisää silti"
+
+#: src/components/layout/InstallApp.tsx
+msgid "Add Bygdø BK to your Home Screen"
+msgstr "Lisää Bygdø BK Koti-valikkoon"
 
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembersPage.tsx
@@ -287,13 +367,27 @@ msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "Lisää tapahtumalle vuoroja Sanityssa, niin ne näkyvät täällä."
 
 #: src/components/events/EventDetails.tsx
+#: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "Lisää kalenteriin"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
+msgstr "{count, plural, one {# jäsenyys lisätty} other {# jäsenyyttä lisätty}} kaudelle {toLabel}"
 
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Ylläpitäjä"
+
+#. Heading: the people with admin access
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins"
+msgstr "Ylläpitäjät"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins can open the board pages and edit the website."
+msgstr "Ylläpitäjät voivat avata hallituksen sivut ja muokata sivustoa."
 
 #. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
@@ -359,10 +453,6 @@ msgstr "Hakemus on jo lähetetty. Hallitus palaa asiaan."
 msgid "An account holder"
 msgstr "Tilin haltija"
 
-#: src/data/photos.ts
-msgid "An empty badminton hall at sunset"
-msgstr "Tyhjä sulkapallohalli auringonlaskun aikaan"
-
 #: src/pages/board/MembershipList.tsx
 msgid "Approve"
 msgstr "Hyväksy"
@@ -370,6 +460,11 @@ msgstr "Hyväksy"
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "Arkisto"
+
+#. When the printed list of volunteers was last loaded, e.g. As of Mon 9 Nov, 14:32
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "As of {asOf}"
+msgstr "Tilanne {asOf}"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Ask about a spot"
@@ -417,10 +512,24 @@ msgstr "Ennätys"
 msgid "Big name"
 msgstr "Iso nimi"
 
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board access"
+msgstr "Käyttöoikeudet"
+
+#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board pages"
+msgstr "Hallituksen sivut"
+
 #. Event type: no training, e.g. holidays
 #: src/data/events.ts
 msgid "Break"
 msgstr "Tauko"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks and canceled sessions update by themselves."
+msgstr "Tauot ja perutut harjoitukset päivittyvät itsestään."
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
@@ -467,7 +576,7 @@ msgstr "Bygdø BK: {name}"
 msgid "Bygdøhus seen from the car park"
 msgstr "Bygdøhus parkkipaikalta nähtynä"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Calendar link"
 msgstr "Kalenterilinkki"
 
@@ -479,19 +588,22 @@ msgstr "Päätös pysyy: sivua ei vieläkään löydy"
 msgid "Can I try before I join?"
 msgstr "Voiko kokeilla ennen liittymistä?"
 
+#: src/access/queries.ts
 #: src/components/auth/errors.ts
 #: src/memberships/queries.ts
+#: src/pages/board/LoadError.tsx
 #: src/volunteers/queries.ts
 msgid "Can't reach the server. Check your connection."
 msgstr "Palvelimeen ei saada yhteyttä. Tarkista verkkoyhteys."
 
 #. Button that drops your own volunteer shift
 #. Button that drops your own volunteer shift
+#: src/components/auth/AvatarCropper.tsx
 #: src/components/events/ShiftBoard.tsx
-#: src/pages/board/DeclineRequestModal.tsx
-#: src/pages/board/DeleteMembershipModal.tsx
+#: src/components/ui/ConfirmActions.tsx
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipForm.tsx
+#: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Cancel"
 msgstr "Peruuta"
@@ -530,10 +642,6 @@ msgstr "Haaste. Katsotaan uusinta…"
 msgid "Change your photo"
 msgstr "Vaihda kuvasi"
 
-#: src/pages/board/LoadError.tsx
-msgid "Check your connection and try again."
-msgstr "Tarkista verkkoyhteys ja yritä uudelleen."
-
 #: src/components/auth/LoginModal.tsx
 msgid "Check your email"
 msgstr "Katso sähköpostisi"
@@ -552,6 +660,11 @@ msgstr "Valitse jäsenyys"
 msgid "Classic"
 msgstr "Klassinen"
 
+#. Button: unselect all picked memberships
+#: src/pages/board/BulkActions.tsx
+msgid "Clear"
+msgstr "Poista valinnat"
+
 #: src/pages/board/MembersPage.tsx
 msgid "Clear filters"
 msgstr "Tyhjennä suodattimet"
@@ -561,7 +674,10 @@ msgstr "Tyhjennä suodattimet"
 msgid "Clear search"
 msgstr "Tyhjennä haku"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
+#: src/components/ui/ResponsiveModal.tsx
+#: src/pages/board/NewSeasonModal.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Close"
 msgstr "Sulje"
 
@@ -659,6 +775,10 @@ msgstr "Keskitetty"
 msgid "Continue with Google"
 msgstr "Jatka Googlella"
 
+#: src/pages/board/BulkActions.tsx
+msgid "Copied! Paste them into Bcc"
+msgstr "Kopioitu! Liitä ne Piilokopio-kenttään"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy email address for {0}"
@@ -668,14 +788,37 @@ msgstr "Kopioi sähköpostiosoite: {0}"
 msgid "Copy link"
 msgstr "Kopioi linkki"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy members from {0}"
+msgstr "Kopioi jäsenet kaudelta {0}"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy phone number for {0}"
 msgstr "Kopioi puhelinnumero: {0}"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy the members from {0} to get the new season going."
+msgstr "Kopioi jäsenet kaudelta {0}, niin uusi kausi pääsee alkuun."
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Copy the members from {fromLabel} to {toLabel}?"
+msgstr "Kopioidaanko jäsenet kaudelta {fromLabel} kaudelle {toLabel}?"
+
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/board/BulkActions.tsx
 msgid "Could not copy"
 msgstr "Kopiointi ei onnistunut"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Couldn't load season {fromLabel}"
+msgstr "Kautta {fromLabel} ei voitu ladata"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Couldn't load the admins"
+msgstr "Ylläpitäjiä ei voitu ladata"
 
 #: src/pages/board/MembersPage.tsx
 msgid "Couldn't load the memberships"
@@ -721,6 +864,10 @@ msgstr "Tätä ei voitu tallentaa profiiliisi. Se toimii silti tällä laitteell
 msgid "Couldn't save your photo. Try again."
 msgstr "Kuvan tallennus ei onnistunut. Yritä uudelleen."
 
+#: src/access/queries.ts
+msgid "Couldn't save. Try again."
+msgstr "Tallennus ei onnistunut. Yritä uudelleen."
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Court 1"
 msgstr "Kenttä 1"
@@ -729,6 +876,14 @@ msgstr "Kenttä 1"
 #: src/components/layout/VariantMenu.tsx
 msgid "Court lines"
 msgstr "Kenttäviivat"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop area"
+msgstr "Rajausalue"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop your photo"
+msgstr "Rajaa kuvasi"
 
 #. Footer decoration: a large faded club logo cut off at the edge
 #: src/components/layout/VariantMenu.tsx
@@ -811,6 +966,14 @@ msgstr "Lataa taulukko"
 msgid "Downloaded"
 msgstr "Ladattu"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag or use the arrow keys to move. Scroll or pinch to zoom."
+msgstr "Siirrä vetämällä tai nuolinäppäimillä. Zoomaa vierittämällä tai nipistämällä."
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag to move. Pinch to zoom."
+msgstr "Siirrä vetämällä. Zoomaa nipistämällä."
+
 #. placeholder {0}: kr(dropin.perVisit)
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop in for {0} a visit"
@@ -834,6 +997,10 @@ msgstr "Drop-in: {0} / kerta"
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "Drop-in: Vipps {0} numeroon {1}"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Each day starts on a new page."
+msgstr "Jokainen päivä alkaa uudelta sivulta."
+
 #: src/pages/board/MembershipList.tsx
 msgid "Edit"
 msgstr "Muokkaa"
@@ -855,10 +1022,11 @@ msgid "Edit note for {name}"
 msgstr "Muokkaa muistiinpanoa: {name}"
 
 #: src/components/auth/UserMenu.tsx
-msgid "Edit the site"
-msgstr "Muokkaa sivustoa"
+msgid "Edit site content"
+msgstr "Muokkaa sivuston sisältöä"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
@@ -867,6 +1035,10 @@ msgstr "Sähköposti"
 #: src/components/auth/errors.ts
 msgid "Email login isn't switched on yet."
 msgstr "Sähköpostikirjautuminen ei ole vielä käytössä."
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Empty line? Write your name on it."
+msgstr "Tyhjä rivi? Kirjoita nimesi siihen."
 
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
@@ -886,6 +1058,7 @@ msgid "Enter a price"
 msgstr "Anna hinta"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -931,6 +1104,10 @@ msgstr "Tapahtumat"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
 msgstr "Kaikki paikat on täytetty. Hienoa!"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Everyone from {fromLabel} is already in {toLabel}."
+msgstr "Kaikki kaudelta {fromLabel} ovat jo kaudella {toLabel}."
 
 #: src/pages/board/MembersOverview.tsx
 msgid "Everyone has paid!"
@@ -1147,6 +1324,11 @@ msgstr "Sisältyy"
 msgid "Indoor shoes"
 msgstr "Sisäkengät"
 
+#. Button that installs the website as an app on the phone or computer
+#: src/components/layout/InstallApp.tsx
+msgid "Install app"
+msgstr "Asenna sovellus"
+
 #: src/components/layout/SiteHeader.tsx
 msgid "Join"
 msgstr "Liity"
@@ -1282,6 +1464,10 @@ msgstr "Olet kirjautunut: {email}, mutta profiilisi ei latautunut."
 msgid "Login was canceled."
 msgstr "Kirjautuminen peruttiin."
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Looking at season {fromLabel}…"
+msgstr "Katsotaan kautta {fromLabel}…"
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "Etsitään tiliä…"
@@ -1291,10 +1477,19 @@ msgstr "Etsitään tiliä…"
 msgid "Main menu"
 msgstr "Päävalikko"
 
+#: src/pages/board/BulkActions.tsx
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Mark {count} as paid"
+msgstr "Merkitse {count} maksetuksi"
+
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipList.tsx
 msgid "Mark as paid"
 msgstr "Merkitse maksetuksi"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
+msgstr "{done, plural, one {# jäsenyys merkitty maksetuksi} other {# jäsenyyttä merkitty maksetuksi}}"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -1355,8 +1550,8 @@ msgstr "Jäsenyys tallennettu"
 
 #. Sticky title of the board page that lists memberships
 #. Table column: the person's memberships this season
-#: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/BoardNav.tsx
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
@@ -1392,6 +1587,10 @@ msgstr "Kuukausi"
 msgid "More news"
 msgstr "Lisää uutisia"
 
+#: src/pages/board/MembersPage.tsx
+msgid "More ways to add"
+msgstr "Muut lisäystavat"
+
 #: src/pages/join/JoinPage.tsx
 msgid "My child"
 msgstr "Lapseni"
@@ -1415,6 +1614,10 @@ msgstr "Nimi"
 msgid "Name or email"
 msgstr "Nimi tai sähköposti"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "name@example.com"
+msgstr "nimi@esimerkki.fi"
+
 #: src/components/auth/errors.ts
 msgid "New accounts are closed right now."
 msgstr "Uusia tilejä ei voi luoda juuri nyt."
@@ -1423,7 +1626,7 @@ msgstr "Uusia tilejä ei voi luoda juuri nyt."
 msgid "New best: {best}"
 msgstr "Uusi ennätys: {best}"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "Uudet tapahtumat ilmestyvät kalenteriisi itsestään."
 
@@ -1479,6 +1682,10 @@ msgstr "Ei tiliä"
 msgid "No account with that email"
 msgstr "Tällä sähköpostilla ei ole tiliä"
 
+#: src/access/queries.ts
+msgid "No account with this email yet. Ask them to log in once first."
+msgstr "Tällä sähköpostilla ei ole vielä tiliä. Pyydä häntä kirjautumaan ensin kerran sisään."
+
 #: src/pages/board/MembersPage.tsx
 msgid "No accounts or memberships yet"
 msgstr "Ei vielä tilejä tai jäsenyyksiä"
@@ -1513,6 +1720,10 @@ msgstr "Ei jäsenyyttä"
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "No membership yet. Pick a plan and send a request!"
 msgstr "Ei vielä jäsenyyttä. Valitse jäsenyystyyppi ja lähetä hakemus!"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships in {seasonLabel} yet"
+msgstr "Kaudella {seasonLabel} ei ole vielä jäsenyyksiä"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships this season yet"
@@ -1588,6 +1799,10 @@ msgstr "Ei vielä ketään."
 msgid "None"
 msgstr "Ei mitään"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Not marked as paid: {missedNames}"
+msgstr "Ei merkitty maksetuksi: {missedNames}"
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
@@ -1661,6 +1876,10 @@ msgstr "Nyt käynnissä"
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "Kausi kestää elokuusta kesäkuuhun, kuten kouluvuosi. Liitytkö kesken kauden? <0>Kysy hallitukselta</0> hintaa."
 
+#: src/access/queries.ts
+msgid "Only admins can change board access."
+msgstr "Vain ylläpitäjät voivat muuttaa käyttöoikeuksia."
+
 #: src/memberships/queries.ts
 msgid "Only admins can change memberships."
 msgstr "Vain ylläpitäjät voivat muuttaa jäsenyyksiä."
@@ -1674,7 +1893,7 @@ msgstr "Vain hallitus näkee tämän."
 msgid "Oops, rim shot!"
 msgstr "Hups, kehysosuma!"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Open in calendar app"
 msgstr "Avaa kalenterisovelluksessa"
 
@@ -1686,6 +1905,10 @@ msgstr "Avaa kartalla"
 #: src/components/layout/SiteHeader.tsx
 msgid "Open menu"
 msgstr "Avaa valikko"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Open spot"
+msgstr "Vapaa paikka"
 
 #: src/components/auth/errors.ts
 msgid "Open the link in the same browser you asked for it in."
@@ -1809,6 +2032,11 @@ msgstr "Jakso"
 msgid "Person"
 msgstr "Henkilö"
 
+#. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
+#: src/components/layout/InstallApp.tsx
+msgid "Pick “Add to Home Screen”."
+msgstr "Valitse ”Lisää Koti-valikkoon”."
+
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
 msgstr "Valitse vapaa vuoro alta ja napauta Ilmoittaudu."
@@ -1824,6 +2052,10 @@ msgstr "Valitse jäsenyystyyppi"
 #: src/pages/join/JoinPage.tsx
 msgid "Pick a plan above to see the price."
 msgstr "Valitse jäsenyys yltä, niin näet hinnan."
+
+#: src/pages/board/MembersPage.tsx
+msgid "Pick a season to copy last season's members"
+msgstr "Valitse kausi, niin voit kopioida edellisen kauden jäsenet"
 
 #: src/pages/news/NewsPostPage.tsx
 msgid "Pick a shift"
@@ -1919,6 +2151,18 @@ msgstr "Hinnat ja liittyminen"
 msgid "Prices per season"
 msgstr "Kauden hinnat"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print"
+msgstr "Tulosta"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print preview"
+msgstr "Tulostuksen esikatselu"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print shift plan"
+msgstr "Tulosta vuorolista"
+
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/privacy/PrivacyPage.tsx
@@ -1971,6 +2215,10 @@ msgstr "Normaali"
 msgid "Related event"
 msgstr "Tapahtuma"
 
+#. Button: take away someone's admin access
+#. Button: take away someone's admin access
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/access/RemoveAdminModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Remove"
 msgstr "Poista"
@@ -1978,6 +2226,14 @@ msgstr "Poista"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Remove {name}"
 msgstr "Poista {name}"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Remove {name} as admin"
+msgstr "Poista {name} ylläpitäjistä"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "Remove admin?"
+msgstr "Poistetaanko ylläpitäjä?"
 
 #: src/components/auth/ProfileCard.tsx
 msgid "Remove photo"
@@ -2029,6 +2285,10 @@ msgstr "Odottaa"
 msgid "Requests"
 msgstr "Hakemukset"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Reset"
+msgstr "Palauta"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
 msgstr "Tarkistetaan…"
@@ -2042,10 +2302,18 @@ msgstr "Pyöreä"
 msgid "Safe sport"
 msgstr "Turvallinen urheilu"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Same people and plans, at today's prices. They start as not paid. Period: {period}."
+msgstr "Samat henkilöt ja jäsenyydet tämän päivän hinnoin. Ne ovat aluksi maksamatta. Jakso: {period}."
+
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Save"
 msgstr "Tallenna"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Save photo"
+msgstr "Tallenna kuva"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
@@ -2096,6 +2364,27 @@ msgstr "Katso tapahtuma"
 msgid "See who's on each shift, and who we still need."
 msgstr "Katso, kuka on missäkin vuorossa ja ketä vielä tarvitaan."
 
+#. Table column with checkboxes to pick memberships
+#: src/pages/board/MembershipList.tsx
+msgid "Select"
+msgstr "Valitse"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Select {name}"
+msgstr "Valitse {name}"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select all {count} unpaid"
+msgstr "Valitse kaikki maksamattomat ({count})"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select unpaid memberships for {name}"
+msgstr "Valitse henkilön {name} maksamattomat jäsenyydet"
+
+#: src/pages/board/BulkActions.tsx
+msgid "Selected memberships"
+msgstr "Valitut jäsenyydet"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "Lähetä uudelleen"
@@ -2133,6 +2422,7 @@ msgid "Service fault: page not found"
 msgstr "Syöttövirhe: sivua ei löydy"
 
 #: src/components/events/ShiftBoard.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
 msgstr "pystytys tai purku"
@@ -2264,7 +2554,12 @@ msgstr "Osa tämän kauden harjoituksista pidetään muualla:"
 msgid "Someone else"
 msgstr "Joku muu"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Someone else may already have marked them as paid or deleted them."
+msgstr "Joku muu on ehkä jo merkinnyt ne maksetuiksi tai poistanut ne."
+
 #: src/components/auth/errors.ts
+#: src/pages/board/LoadError.tsx
 msgid "Something went wrong. Try again."
 msgstr "Jokin meni pieleen. Yritä uudelleen."
 
@@ -2276,6 +2571,10 @@ msgstr "Sponsoroi seuraa"
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "Alku"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Start season {label}"
+msgstr "Aloita kausi {label}"
 
 #. Table column: where a membership request stands, and who sent it
 #. Table column: whether the person has paid
@@ -2294,11 +2593,11 @@ msgid "Style"
 msgstr "Tyyli"
 
 #. Button that opens the calendar feed options
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe"
 msgstr "Tilaa"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe to events"
 msgstr "Tilaa tapahtumat"
 
@@ -2314,6 +2613,11 @@ msgstr "Järjestelmä"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "Poistetaanko <0>{name}</0> tästä vuorosta?"
+
+#. iPhone and iPad: first step to add the site to the Home Screen. The icon is the iOS Share icon
+#: src/components/layout/InstallApp.tsx
+msgid "Tap Share <0/> in the browser."
+msgstr "Napauta selaimessa Jaa <0/>."
 
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
@@ -2374,7 +2678,9 @@ msgstr "Tämä ei ole kuva. Valitse kuvatiedosto."
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
+#: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
@@ -2435,6 +2741,10 @@ msgstr "Teema"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Theme: {0}"
 msgstr "Teema: {0}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "There's no one in {fromLabel} to copy."
+msgstr "Kaudella {fromLabel} ei ole ketään kopioitavaa."
 
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "These people are on a shift that was removed in Sanity."
@@ -2618,6 +2928,10 @@ msgstr "Käytä toista sähköpostia"
 msgid "Use other details"
 msgstr "Käytä muita tietoja"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Use the email they log in with."
+msgstr "Käytä sähköpostia, jolla hän kirjautuu."
+
 #: src/components/layout/VariantMenu.tsx
 msgid "Variants"
 msgstr "Vaihtoehdot"
@@ -2633,6 +2947,7 @@ msgstr "Vipps-numero {vipps}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventPage.tsx
 msgid "Volunteer shifts"
@@ -2644,7 +2959,7 @@ msgid "Volunteering"
 msgstr "Talkoot"
 
 #. Board screen for volunteer shifts
-#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
 msgid "Volunteers"
 msgstr "Talkoolaiset"
 
@@ -2772,6 +3087,11 @@ msgstr "Vuosi"
 msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 msgstr "Kyllä. Lapset voivat aloittaa kokeilujäsenyydellä, ja aikuiset voivat tulla drop-in-vuoroille. Katso hinnat yllä."
 
+#. Badge next to your own name in the admin list
+#: src/pages/board/access/AccessPage.tsx
+msgid "You"
+msgstr "Sinä"
+
 #: src/memberships/queries.ts
 msgid "You already asked for this one. The board will get back to you."
 msgstr "Olet jo hakenut tätä. Hallitus palaa asiaan."
@@ -2788,6 +3108,10 @@ msgstr "Voit myös puhua luottamasi hallituksen jäsenen kanssa."
 msgid "You can't change that shift."
 msgstr "Et voi muuttaa tätä vuoroa."
 
+#: src/access/queries.ts
+msgid "You can't remove yourself. Ask another admin to do it."
+msgstr "Et voi poistaa itseäsi. Pyydä toista ylläpitäjää tekemään se."
+
 #: src/components/events/ShiftBoard.tsx
 msgid "You helped"
 msgstr "Autoit"
@@ -2803,6 +3127,10 @@ msgstr "Olet mukana"
 #: src/components/events/ShiftBoard.tsx
 msgid "You're on"
 msgstr "Vuorosi"
+
+#: src/access/queries.ts
+msgid "You're the only admin. Add another admin first."
+msgstr "Olet ainoa ylläpitäjä. Lisää ensin toinen ylläpitäjä."
 
 #: src/components/auth/UserMenu.tsx
 msgid "Your account"
@@ -2831,3 +3159,7 @@ msgstr "Viestisi on matkalla hallitukselle."
 #: src/pages/join/JoinPage.tsx
 msgid "Your pick"
 msgstr "Valintasi"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Zoom"
+msgstr "Zoomaus"

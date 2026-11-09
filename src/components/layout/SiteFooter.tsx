@@ -10,6 +10,7 @@ import { FooterMark, useSettings } from '~/stores/settings';
 
 import { DarkScopeStyles } from './DarkScope';
 import { DARK_SCOPE } from './darkScopeProps';
+import { InstallApp, InstallLook } from './InstallApp';
 import { NAV } from './nav';
 import { VariantMenu } from './VariantMenu';
 
@@ -94,6 +95,7 @@ export const SiteFooter = memo(() => {
           <Anchor component={Link} to="/personvern" size="sm" c="inherit">
             <Trans>Privacy</Trans>
           </Anchor>
+          <InstallApp look={InstallLook.enum.link} />
         </Stack>
 
         <Stack gap={8} className={classes.variants}>

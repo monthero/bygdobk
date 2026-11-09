@@ -14,7 +14,7 @@ import { routeTree } from './routeTree.gen';
 import { useSettings } from './stores/settings';
 import { buildTheme, cssVariablesResolver } from './theme';
 
-const router = createRouter({
+export const router = createRouter({
   routeTree,
   rewrite: localeRewrite,
   scrollRestoration: true,

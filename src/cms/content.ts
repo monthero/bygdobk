@@ -20,6 +20,7 @@ import { currentLocale } from '~/i18n/current';
 import { contentLocaleParams, LOCALES, type Locale } from '~/i18n/locales';
 
 import { sanityQuery } from './client';
+import { CONTENT_SCOPE } from './preview/mode';
 import { CONTENT_GROQ, NEWS_BODIES_GROQ, NEWS_BODY_GROQ, PRIVACY_GROQ } from './queries';
 import { queryClient } from './queryClient';
 
@@ -269,7 +270,7 @@ export type VolunteerTeam = SiteContent['teams'][number];
 
 const STALE_TIME = 5 * 60_000;
 
-const contentKey = (locale: Locale) => ['content', locale] as const;
+const contentKey = (locale: Locale) => [CONTENT_SCOPE, 'content', locale] as const;
 
 export const contentQuery = (locale: Locale) =>
   queryOptions({
@@ -294,7 +295,7 @@ export const useSiteContent = (options?: ContentOptions) => {
 const RawPrivacyPage = z.object({ title: LocaleString, body: Blocks, updatedAt: opt(IsoDay) }).nullable();
 export type PrivacyPage = z.output<typeof RawPrivacyPage>;
 
-const privacyKey = (locale: Locale) => ['privacyPage', locale] as const;
+const privacyKey = (locale: Locale) => [CONTENT_SCOPE, 'privacyPage', locale] as const;
 
 export const privacyPageQuery = (locale: Locale) =>
   queryOptions({
@@ -326,7 +327,7 @@ const NO_BLOCKS: ArticleBlocks = [];
 
 export const newsBodyQuery = (slug: string, locale: Locale) =>
   queryOptions({
-    queryKey: ['newsBody', slug, locale] as const,
+    queryKey: [CONTENT_SCOPE, 'newsBody', slug, locale] as const,
     queryFn: async ({ signal }) => {
       const result = await sanityQuery(NEWS_BODY_GROQ, { params: { ...contentLocaleParams(locale), slug }, signal });
       return NewsBody.parse(result)?.body ?? NO_BLOCKS;
@@ -342,7 +343,7 @@ export const useNewsBody = (slug: string) => {
 const NewsBodies = z.array(z.object({ slug: z.string(), body: Blocks.nullish().catch(null) }));
 export type NewsBodies = z.output<typeof NewsBodies>;
 
-const newsBodiesKey = (locale: Locale) => ['newsBodies', locale] as const;
+const newsBodiesKey = (locale: Locale) => [CONTENT_SCOPE, 'newsBodies', locale] as const;
 
 const newsBodiesQuery = (locale: Locale) =>
   queryOptions({

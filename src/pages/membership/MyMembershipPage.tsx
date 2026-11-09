@@ -57,6 +57,7 @@ const Mine: FC = () => {
     return (
       <LoadError
         title={t`Couldn't load your membership`}
+        error={mine.error}
         retrying={mine.isRefetching}
         onRetry={() => void mine.refetch()}
       />

@@ -206,7 +206,7 @@ const MyShiftRow: FC<{ shift: Shift; entry: ShiftVolunteer; readOnly: boolean }>
       <Group gap="sm" wrap="wrap" justify="space-between">
         <Group gap="sm" wrap="wrap">
           <TeamBadge team={shift.team} />
-          <Text size="sm" fw={600} className="tabular" tt="capitalize">
+          <Text size="sm" fw={600} className="tabular capitalize-first">
             {formatDate(date(shift.day), ROW_DATE)}, {shiftTime(shift)}
           </Text>
         </Group>
@@ -352,7 +352,7 @@ export const ShiftBoard: FC<ShiftBoardProps> = ({
       <Tabs value={day} onChange={(value) => value && onDayChange(value)} variant="pills" radius="xl">
         <Tabs.List mb="md">
           {days.map((d) => (
-            <Tabs.Tab key={d} value={d} tt="capitalize">
+            <Tabs.Tab key={d} value={d} className="capitalize-first">
               {formatDate(date(d), TAB_DATE)}
             </Tabs.Tab>
           ))}

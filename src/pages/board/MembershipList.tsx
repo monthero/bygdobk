@@ -4,6 +4,7 @@ import {
   Badge,
   Button,
   Card,
+  Checkbox,
   Divider,
   Group,
   Skeleton,
@@ -24,6 +25,9 @@ import { kr } from '~/pages/join/offers';
 import { personName } from '~/supabase/profile';
 
 import { formatDay, formatPeriod, memberName, notifyFailed, notifyDone, PAYMENT_LABELS, planName } from './format';
+import { isUnpaid } from './people';
+
+import classes from './selection.module.css';
 
 type Handlers = {
   onPay: (m: AdminMembership) => void;
@@ -32,7 +36,14 @@ type Handlers = {
   onDecline: (m: AdminMembership) => void;
 };
 
-type ItemProps = Handlers & { membership: AdminMembership; plans: ReadonlyMap<string, Plan> };
+export type OnSelect = (ids: readonly string[], selected: boolean) => void;
+
+type ItemProps = Handlers & {
+  membership: AdminMembership;
+  plans: ReadonlyMap<string, Plan>;
+  selected: boolean | undefined;
+  onSelect: OnSelect | undefined;
+};
 
 const SKELETON_ROWS = Array.from({ length: 5 }, (_, i) => i);
 const TABLE_MIN_WIDTH = 900;
@@ -109,6 +120,22 @@ const StatusButton: FC<{ membership: AdminMembership; to: MembershipStatus }> = 
   );
 };
 
+const SelectBox: FC<{ membership: AdminMembership; checked: boolean; onSelect: OnSelect }> = ({
+  membership,
+  checked,
+  onSelect,
+}) => {
+  const { t } = useLingui();
+  const name = memberName(membership);
+  return (
+    <Checkbox
+      aria-label={t`Select ${name}`}
+      checked={checked}
+      onChange={(event) => onSelect([membership.id], event.currentTarget.checked)}
+    />
+  );
+};
+
 const Account: FC<{ membership: AdminMembership }> = ({ membership: { profile, playerName } }) => {
   if (!profile) {
     return (
@@ -177,8 +204,13 @@ const Actions: FC<Handlers & { membership: AdminMembership }> = ({
   );
 };
 
-const MembershipRow = memo<ItemProps>(({ membership, plans, ...handlers }) => (
-  <Table.Tr>
+const MembershipRow = memo<ItemProps>(({ membership, plans, selected, onSelect, ...handlers }) => (
+  <Table.Tr className={classes.row} data-selected={selected || undefined}>
+    {onSelect && (
+      <Table.Td w={40}>
+        {selected !== undefined && <SelectBox membership={membership} checked={selected} onSelect={onSelect} />}
+      </Table.Td>
+    )}
     <Table.Td fw={600}>{memberName(membership)}</Table.Td>
     <Table.Td>
       <Account membership={membership} />
@@ -197,13 +229,18 @@ const MembershipRow = memo<ItemProps>(({ membership, plans, ...handlers }) => (
   </Table.Tr>
 ));
 
-const MembershipCard = memo<ItemProps>(({ membership, plans, ...handlers }) => (
-  <Card withBorder radius="lg" padding="md">
+const MembershipCard = memo<ItemProps>(({ membership, plans, selected, onSelect, ...handlers }) => (
+  <Card withBorder radius="lg" padding="md" className={classes.card} data-selected={selected || undefined}>
     <Group justify="space-between" align="flex-start" wrap="nowrap" gap="sm">
-      <Stack gap={2} miw={0}>
-        <Text fw={700}>{memberName(membership)}</Text>
-        <Account membership={membership} />
-      </Stack>
+      <Group gap="sm" align="flex-start" wrap="nowrap" miw={0}>
+        {onSelect && selected !== undefined && (
+          <SelectBox membership={membership} checked={selected} onSelect={onSelect} />
+        )}
+        <Stack gap={2} miw={0}>
+          <Text fw={700}>{memberName(membership)}</Text>
+          <Account membership={membership} />
+        </Stack>
+      </Group>
       <StatusCell membership={membership} />
     </Group>
     <Group justify="space-between" wrap="nowrap" mt="sm">
@@ -224,16 +261,19 @@ type Props = Handlers & {
   memberships: readonly AdminMembership[];
   plans: ReadonlyMap<string, Plan>;
   requests: boolean;
+  selection?: ReadonlySet<string>;
+  onSelect?: OnSelect;
 };
 
-export const MembershipList: FC<Props> = ({ memberships, requests, ...rest }) => {
+export const MembershipList: FC<Props> = ({ memberships, requests, selection, onSelect, ...rest }) => {
   const isMobile = useIsMobile();
+  const selectedOf = (m: AdminMembership) => (onSelect && isUnpaid(m) ? (selection?.has(m.id) ?? false) : undefined);
 
   if (isMobile) {
     return (
       <Stack gap="sm">
         {memberships.map((m) => (
-          <MembershipCard key={m.id} membership={m} {...rest} />
+          <MembershipCard key={m.id} membership={m} selected={selectedOf(m)} onSelect={onSelect} {...rest} />
         ))}
       </Stack>
     );
@@ -244,6 +284,13 @@ export const MembershipList: FC<Props> = ({ memberships, requests, ...rest }) =>
       <Table verticalSpacing="sm" highlightOnHover>
         <Table.Thead>
           <Table.Tr>
+            {onSelect && (
+              <Table.Th w={40}>
+                <VisuallyHidden>
+                  <Trans comment="Table column with checkboxes to pick memberships">Select</Trans>
+                </VisuallyHidden>
+              </Table.Th>
+            )}
             <Table.Th>
               <Trans>Name</Trans>
             </Table.Th>
@@ -275,7 +322,7 @@ export const MembershipList: FC<Props> = ({ memberships, requests, ...rest }) =>
         </Table.Thead>
         <Table.Tbody>
           {memberships.map((m) => (
-            <MembershipRow key={m.id} membership={m} {...rest} />
+            <MembershipRow key={m.id} membership={m} selected={selectedOf(m)} onSelect={onSelect} {...rest} />
           ))}
         </Table.Tbody>
       </Table>

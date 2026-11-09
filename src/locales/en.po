@@ -11,6 +11,11 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "“We want as many people as possible to enjoy playing badminton!”"
 
+#. placeholder {0}: admins.data.length
+#: src/pages/board/access/AccessPage.tsx
+msgid "{0, plural, one {# admin} other {# admins}}"
+msgstr "{0, plural, one {# admin} other {# admins}}"
+
 #. placeholder {0}: hits.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post matches} other {# posts match}}"
@@ -53,6 +58,27 @@ msgstr "{0} not paid"
 msgid "{0} per visit"
 msgstr "{0} per visit"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{added, plural, one {Copy # membership} other {Copy # memberships}}"
+msgstr "{added, plural, one {Copy # membership} other {Copy # memberships}}"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
+msgstr "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
+
+#: src/components/auth/RequestCountBadge.tsx
+msgid "{count, plural, one {# open request} other {# open requests}}"
+msgstr "{count, plural, one {# open request} other {# open requests}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{count, plural, one {Copy # email} other {Copy # emails}}"
+msgstr "{count, plural, one {Copy # email} other {Copy # emails}}"
+
+#. How many memberships are picked, and what they cost together
+#: src/pages/board/BulkActions.tsx
+msgid "{count} selected · {total}"
+msgstr "{count} selected · {total}"
+
 #: src/components/events/EventCard.tsx
 msgid "{filled} of {needed} spots filled"
 msgstr "{filled} of {needed} spots filled"
@@ -69,6 +95,14 @@ msgstr "{firstName}'s phone number was copied to the clipboard"
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "{hits, plural, one {# hit} other {# hits}}: {callout}"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "{name} in your calendar"
+msgstr "{name} in your calendar"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is already an admin."
+msgstr "{name} is already an admin."
+
 #: src/pages/board/MembershipList.tsx
 msgid "{name} is in!"
 msgstr "{name} is in!"
@@ -77,17 +111,33 @@ msgstr "{name} is in!"
 msgid "{name} is marked as paid"
 msgstr "{name} is marked as paid"
 
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "{name} is no longer an admin"
+msgstr "{name} is no longer an admin"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is now an admin"
+msgstr "{name} is now an admin"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{name} is off the shift"
 msgstr "{name} is off the shift"
 
 #: src/pages/board/MarkPaidModal.tsx
-msgid "{name} paid <0>{price}</0>."
-msgstr "{name} paid <0>{price}</0>."
+msgid "{name} paid <0>{total}</0>."
+msgstr "{name} paid <0>{total}</0>."
 
 #: src/components/events/EventCard.tsx
 msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
 msgstr "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{noAccount, plural, one {# person without an account is not included.} other {# people without an account are not included.}}"
+msgstr "{noAccount, plural, one {# person without an account is not included.} other {# people without an account are not included.}}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{oneOff, plural, one {# drop-in or trial is not copied.} other {# drop-ins and trials are not copied.}}"
+msgstr "{oneOff, plural, one {# drop-in or trial is not copied.} other {# drop-ins and trials are not copied.}}"
 
 #. Open spots on a volunteer team, e.g. 2 open
 #: src/pages/board/volunteers/VolunteersPage.tsx
@@ -98,6 +148,10 @@ msgstr "{open} open"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "{over} over"
 msgstr "{over} over"
+
+#: src/components/auth/UserMenu.tsx
+msgid "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
+msgstr "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
 
 #: src/pages/board/MembersPage.tsx
 msgid "{requestCount} open"
@@ -111,6 +165,10 @@ msgstr "{requested} requested"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown} is on the shift"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{skipped, plural, one {# already has the same plan this season and is skipped.} other {# already have the same plan this season and are skipped.}}"
+msgstr "{skipped, plural, one {# already has the same plan this season and is skipped.} other {# already have the same plan this season and are skipped.}}"
 
 #. How many spots of a volunteer shift are taken, e.g. 2 of 3
 #. placeholder {0}: shift.spots
@@ -135,6 +193,10 @@ msgstr "{taken} of {spots} spots taken"
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} not paid"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "<0>{name}</0> can no longer open the board pages or edit the website. Their account and memberships stay."
+msgstr "<0>{name}</0> can no longer open the board pages or edit the website. Their account and memberships stay."
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "<0>Ask the board</0> about discounts and support."
@@ -199,6 +261,10 @@ msgid "A racket"
 msgstr "A racket"
 
 #: src/data/photos.ts
+msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
+msgstr "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
+
+#: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
 msgstr "A shuttle on a racket, with players on green courts behind"
 
@@ -256,6 +322,8 @@ msgid "Actions"
 msgstr "Actions"
 
 #. Button: add a membership for this person
+#. Short button label on phones: add a membership
+#: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add"
@@ -269,9 +337,21 @@ msgstr "Add a membership for {name}"
 msgid "Add a volunteer"
 msgstr "Add a volunteer"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add admin"
+msgstr "Add admin"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add an admin"
+msgstr "Add an admin"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add anyway"
 msgstr "Add anyway"
+
+#: src/components/layout/InstallApp.tsx
+msgid "Add Bygdø BK to your Home Screen"
+msgstr "Add Bygdø BK to your Home Screen"
 
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembersPage.tsx
@@ -287,13 +367,27 @@ msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "Add shifts to an event in Sanity, and they show up here."
 
 #: src/components/events/EventDetails.tsx
+#: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "Add to calendar"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
+msgstr "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
 
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Admin"
+
+#. Heading: the people with admin access
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins"
+msgstr "Admins"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins can open the board pages and edit the website."
+msgstr "Admins can open the board pages and edit the website."
 
 #. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
@@ -359,10 +453,6 @@ msgstr "Already requested. The board will get back to you."
 msgid "An account holder"
 msgstr "An account holder"
 
-#: src/data/photos.ts
-msgid "An empty badminton hall at sunset"
-msgstr "An empty badminton hall at sunset"
-
 #: src/pages/board/MembershipList.tsx
 msgid "Approve"
 msgstr "Approve"
@@ -370,6 +460,11 @@ msgstr "Approve"
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "Archive"
+
+#. When the printed list of volunteers was last loaded, e.g. As of Mon 9 Nov, 14:32
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "As of {asOf}"
+msgstr "As of {asOf}"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Ask about a spot"
@@ -417,10 +512,24 @@ msgstr "Best"
 msgid "Big name"
 msgstr "Big name"
 
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board access"
+msgstr "Board access"
+
+#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board pages"
+msgstr "Board pages"
+
 #. Event type: no training, e.g. holidays
 #: src/data/events.ts
 msgid "Break"
 msgstr "Break"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks and canceled sessions update by themselves."
+msgstr "Breaks and canceled sessions update by themselves."
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
@@ -467,7 +576,7 @@ msgstr "Bygdø BK on {name}"
 msgid "Bygdøhus seen from the car park"
 msgstr "Bygdøhus seen from the car park"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Calendar link"
 msgstr "Calendar link"
 
@@ -479,19 +588,22 @@ msgstr "Call stands: still not found"
 msgid "Can I try before I join?"
 msgstr "Can I try before I join?"
 
+#: src/access/queries.ts
 #: src/components/auth/errors.ts
 #: src/memberships/queries.ts
+#: src/pages/board/LoadError.tsx
 #: src/volunteers/queries.ts
 msgid "Can't reach the server. Check your connection."
 msgstr "Can't reach the server. Check your connection."
 
 #. Button that drops your own volunteer shift
 #. Button that drops your own volunteer shift
+#: src/components/auth/AvatarCropper.tsx
 #: src/components/events/ShiftBoard.tsx
-#: src/pages/board/DeclineRequestModal.tsx
-#: src/pages/board/DeleteMembershipModal.tsx
+#: src/components/ui/ConfirmActions.tsx
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipForm.tsx
+#: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Cancel"
 msgstr "Cancel"
@@ -530,10 +642,6 @@ msgstr "Challenge. Checking the replay…"
 msgid "Change your photo"
 msgstr "Change your photo"
 
-#: src/pages/board/LoadError.tsx
-msgid "Check your connection and try again."
-msgstr "Check your connection and try again."
-
 #: src/components/auth/LoginModal.tsx
 msgid "Check your email"
 msgstr "Check your email"
@@ -552,6 +660,11 @@ msgstr "Choose a membership"
 msgid "Classic"
 msgstr "Classic"
 
+#. Button: unselect all picked memberships
+#: src/pages/board/BulkActions.tsx
+msgid "Clear"
+msgstr "Clear"
+
 #: src/pages/board/MembersPage.tsx
 msgid "Clear filters"
 msgstr "Clear filters"
@@ -561,7 +674,10 @@ msgstr "Clear filters"
 msgid "Clear search"
 msgstr "Clear search"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
+#: src/components/ui/ResponsiveModal.tsx
+#: src/pages/board/NewSeasonModal.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -659,6 +775,10 @@ msgstr "Contained"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
+#: src/pages/board/BulkActions.tsx
+msgid "Copied! Paste them into Bcc"
+msgstr "Copied! Paste them into Bcc"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy email address for {0}"
@@ -668,14 +788,37 @@ msgstr "Copy email address for {0}"
 msgid "Copy link"
 msgstr "Copy link"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy members from {0}"
+msgstr "Copy members from {0}"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy phone number for {0}"
 msgstr "Copy phone number for {0}"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy the members from {0} to get the new season going."
+msgstr "Copy the members from {0} to get the new season going."
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Copy the members from {fromLabel} to {toLabel}?"
+msgstr "Copy the members from {fromLabel} to {toLabel}?"
+
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/board/BulkActions.tsx
 msgid "Could not copy"
 msgstr "Could not copy"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Couldn't load season {fromLabel}"
+msgstr "Couldn't load season {fromLabel}"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Couldn't load the admins"
+msgstr "Couldn't load the admins"
 
 #: src/pages/board/MembersPage.tsx
 msgid "Couldn't load the memberships"
@@ -721,6 +864,10 @@ msgstr "Couldn’t save this to your profile. It still works on this device."
 msgid "Couldn't save your photo. Try again."
 msgstr "Couldn't save your photo. Try again."
 
+#: src/access/queries.ts
+msgid "Couldn't save. Try again."
+msgstr "Couldn't save. Try again."
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Court 1"
 msgstr "Court 1"
@@ -729,6 +876,14 @@ msgstr "Court 1"
 #: src/components/layout/VariantMenu.tsx
 msgid "Court lines"
 msgstr "Court lines"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop area"
+msgstr "Crop area"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop your photo"
+msgstr "Crop your photo"
 
 #. Footer decoration: a large faded club logo cut off at the edge
 #: src/components/layout/VariantMenu.tsx
@@ -811,6 +966,14 @@ msgstr "Download spreadsheet"
 msgid "Downloaded"
 msgstr "Downloaded"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag or use the arrow keys to move. Scroll or pinch to zoom."
+msgstr "Drag or use the arrow keys to move. Scroll or pinch to zoom."
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag to move. Pinch to zoom."
+msgstr "Drag to move. Pinch to zoom."
+
 #. placeholder {0}: kr(dropin.perVisit)
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop in for {0} a visit"
@@ -834,6 +997,10 @@ msgstr "Drop-in: {0} per visit"
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "Drop-in: Vipps {0} to {1}"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Each day starts on a new page."
+msgstr "Each day starts on a new page."
+
 #: src/pages/board/MembershipList.tsx
 msgid "Edit"
 msgstr "Edit"
@@ -855,10 +1022,11 @@ msgid "Edit note for {name}"
 msgstr "Edit note for {name}"
 
 #: src/components/auth/UserMenu.tsx
-msgid "Edit the site"
-msgstr "Edit the site"
+msgid "Edit site content"
+msgstr "Edit site content"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
@@ -867,6 +1035,10 @@ msgstr "Email"
 #: src/components/auth/errors.ts
 msgid "Email login isn't switched on yet."
 msgstr "Email login isn't switched on yet."
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Empty line? Write your name on it."
+msgstr "Empty line? Write your name on it."
 
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
@@ -886,6 +1058,7 @@ msgid "Enter a price"
 msgstr "Enter a price"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -931,6 +1104,10 @@ msgstr "Events"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
 msgstr "Every spot is filled. Nice work!"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Everyone from {fromLabel} is already in {toLabel}."
+msgstr "Everyone from {fromLabel} is already in {toLabel}."
 
 #: src/pages/board/MembersOverview.tsx
 msgid "Everyone has paid!"
@@ -1147,6 +1324,11 @@ msgstr "Included"
 msgid "Indoor shoes"
 msgstr "Indoor shoes"
 
+#. Button that installs the website as an app on the phone or computer
+#: src/components/layout/InstallApp.tsx
+msgid "Install app"
+msgstr "Install app"
+
 #: src/components/layout/SiteHeader.tsx
 msgid "Join"
 msgstr "Join"
@@ -1282,6 +1464,10 @@ msgstr "Logged in as {email}, but your profile didn't load."
 msgid "Login was canceled."
 msgstr "Login was canceled."
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Looking at season {fromLabel}…"
+msgstr "Looking at season {fromLabel}…"
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "Looking for the account…"
@@ -1291,10 +1477,19 @@ msgstr "Looking for the account…"
 msgid "Main menu"
 msgstr "Main menu"
 
+#: src/pages/board/BulkActions.tsx
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Mark {count} as paid"
+msgstr "Mark {count} as paid"
+
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipList.tsx
 msgid "Mark as paid"
 msgstr "Mark as paid"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
+msgstr "Marked {done, plural, one {# membership} other {# memberships}} as paid"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -1355,8 +1550,8 @@ msgstr "Membership saved"
 
 #. Sticky title of the board page that lists memberships
 #. Table column: the person's memberships this season
-#: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/BoardNav.tsx
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
@@ -1392,6 +1587,10 @@ msgstr "Month"
 msgid "More news"
 msgstr "More news"
 
+#: src/pages/board/MembersPage.tsx
+msgid "More ways to add"
+msgstr "More ways to add"
+
 #: src/pages/join/JoinPage.tsx
 msgid "My child"
 msgstr "My child"
@@ -1415,6 +1614,10 @@ msgstr "Name"
 msgid "Name or email"
 msgstr "Name or email"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "name@example.com"
+msgstr "name@example.com"
+
 #: src/components/auth/errors.ts
 msgid "New accounts are closed right now."
 msgstr "New accounts are closed right now."
@@ -1423,7 +1626,7 @@ msgstr "New accounts are closed right now."
 msgid "New best: {best}"
 msgstr "New best: {best}"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "New events show up in your calendar by themselves."
 
@@ -1479,6 +1682,10 @@ msgstr "No account"
 msgid "No account with that email"
 msgstr "No account with that email"
 
+#: src/access/queries.ts
+msgid "No account with this email yet. Ask them to log in once first."
+msgstr "No account with this email yet. Ask them to log in once first."
+
 #: src/pages/board/MembersPage.tsx
 msgid "No accounts or memberships yet"
 msgstr "No accounts or memberships yet"
@@ -1513,6 +1720,10 @@ msgstr "No membership"
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "No membership yet. Pick a plan and send a request!"
 msgstr "No membership yet. Pick a plan and send a request!"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships in {seasonLabel} yet"
+msgstr "No memberships in {seasonLabel} yet"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships this season yet"
@@ -1588,6 +1799,10 @@ msgstr "Nobody yet."
 msgid "None"
 msgstr "None"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Not marked as paid: {missedNames}"
+msgstr "Not marked as paid: {missedNames}"
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
@@ -1661,6 +1876,10 @@ msgstr "On now"
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 
+#: src/access/queries.ts
+msgid "Only admins can change board access."
+msgstr "Only admins can change board access."
+
 #: src/memberships/queries.ts
 msgid "Only admins can change memberships."
 msgstr "Only admins can change memberships."
@@ -1674,7 +1893,7 @@ msgstr "Only the board sees this."
 msgid "Oops, rim shot!"
 msgstr "Oops, rim shot!"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Open in calendar app"
 msgstr "Open in calendar app"
 
@@ -1686,6 +1905,10 @@ msgstr "Open in maps"
 #: src/components/layout/SiteHeader.tsx
 msgid "Open menu"
 msgstr "Open menu"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Open spot"
+msgstr "Open spot"
 
 #: src/components/auth/errors.ts
 msgid "Open the link in the same browser you asked for it in."
@@ -1809,6 +2032,11 @@ msgstr "Period"
 msgid "Person"
 msgstr "Person"
 
+#. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
+#: src/components/layout/InstallApp.tsx
+msgid "Pick “Add to Home Screen”."
+msgstr "Pick “Add to Home Screen”."
+
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
 msgstr "Pick a free shift below and tap Sign up."
@@ -1824,6 +2052,10 @@ msgstr "Pick a plan"
 #: src/pages/join/JoinPage.tsx
 msgid "Pick a plan above to see the price."
 msgstr "Pick a plan above to see the price."
+
+#: src/pages/board/MembersPage.tsx
+msgid "Pick a season to copy last season's members"
+msgstr "Pick a season to copy last season's members"
 
 #: src/pages/news/NewsPostPage.tsx
 msgid "Pick a shift"
@@ -1919,6 +2151,18 @@ msgstr "Prices and joining"
 msgid "Prices per season"
 msgstr "Prices per season"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print"
+msgstr "Print"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print preview"
+msgstr "Print preview"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print shift plan"
+msgstr "Print shift plan"
+
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/privacy/PrivacyPage.tsx
@@ -1971,6 +2215,10 @@ msgstr "Regular"
 msgid "Related event"
 msgstr "Related event"
 
+#. Button: take away someone's admin access
+#. Button: take away someone's admin access
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/access/RemoveAdminModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Remove"
 msgstr "Remove"
@@ -1978,6 +2226,14 @@ msgstr "Remove"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Remove {name}"
 msgstr "Remove {name}"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Remove {name} as admin"
+msgstr "Remove {name} as admin"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "Remove admin?"
+msgstr "Remove admin?"
 
 #: src/components/auth/ProfileCard.tsx
 msgid "Remove photo"
@@ -2029,6 +2285,10 @@ msgstr "Requested"
 msgid "Requests"
 msgstr "Requests"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Reset"
+msgstr "Reset"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
 msgstr "Reviewing…"
@@ -2042,10 +2302,18 @@ msgstr "Round"
 msgid "Safe sport"
 msgstr "Safe sport"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Same people and plans, at today's prices. They start as not paid. Period: {period}."
+msgstr "Same people and plans, at today's prices. They start as not paid. Period: {period}."
+
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Save"
 msgstr "Save"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Save photo"
+msgstr "Save photo"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
@@ -2096,6 +2364,27 @@ msgstr "See the event"
 msgid "See who's on each shift, and who we still need."
 msgstr "See who's on each shift, and who we still need."
 
+#. Table column with checkboxes to pick memberships
+#: src/pages/board/MembershipList.tsx
+msgid "Select"
+msgstr "Select"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Select {name}"
+msgstr "Select {name}"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select all {count} unpaid"
+msgstr "Select all {count} unpaid"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select unpaid memberships for {name}"
+msgstr "Select unpaid memberships for {name}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "Selected memberships"
+msgstr "Selected memberships"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "Send again"
@@ -2133,6 +2422,7 @@ msgid "Service fault: page not found"
 msgstr "Service fault: page not found"
 
 #: src/components/events/ShiftBoard.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
 msgstr "setup or teardown"
@@ -2264,7 +2554,12 @@ msgstr "Some sessions this season are elsewhere:"
 msgid "Someone else"
 msgstr "Someone else"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Someone else may already have marked them as paid or deleted them."
+msgstr "Someone else may already have marked them as paid or deleted them."
+
 #: src/components/auth/errors.ts
+#: src/pages/board/LoadError.tsx
 msgid "Something went wrong. Try again."
 msgstr "Something went wrong. Try again."
 
@@ -2276,6 +2571,10 @@ msgstr "Sponsor the club"
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "Start"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Start season {label}"
+msgstr "Start season {label}"
 
 #. Table column: where a membership request stands, and who sent it
 #. Table column: whether the person has paid
@@ -2294,11 +2593,11 @@ msgid "Style"
 msgstr "Style"
 
 #. Button that opens the calendar feed options
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe"
 msgstr "Subscribe"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe to events"
 msgstr "Subscribe to events"
 
@@ -2314,6 +2613,11 @@ msgstr "System"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "Take <0>{name}</0> off this shift?"
+
+#. iPhone and iPad: first step to add the site to the Home Screen. The icon is the iOS Share icon
+#: src/components/layout/InstallApp.tsx
+msgid "Tap Share <0/> in the browser."
+msgstr "Tap Share <0/> in the browser."
 
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
@@ -2374,7 +2678,9 @@ msgstr "That's not a photo. Pick an image file."
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
+#: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
@@ -2435,6 +2741,10 @@ msgstr "Theme"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Theme: {0}"
 msgstr "Theme: {0}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "There's no one in {fromLabel} to copy."
+msgstr "There's no one in {fromLabel} to copy."
 
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "These people are on a shift that was removed in Sanity."
@@ -2618,6 +2928,10 @@ msgstr "Use another email"
 msgid "Use other details"
 msgstr "Use other details"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Use the email they log in with."
+msgstr "Use the email they log in with."
+
 #: src/components/layout/VariantMenu.tsx
 msgid "Variants"
 msgstr "Variants"
@@ -2633,6 +2947,7 @@ msgstr "Vipps number {vipps}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventPage.tsx
 msgid "Volunteer shifts"
@@ -2644,7 +2959,7 @@ msgid "Volunteering"
 msgstr "Volunteering"
 
 #. Board screen for volunteer shifts
-#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
 msgid "Volunteers"
 msgstr "Volunteers"
 
@@ -2772,6 +3087,11 @@ msgstr "Year"
 msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 msgstr "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 
+#. Badge next to your own name in the admin list
+#: src/pages/board/access/AccessPage.tsx
+msgid "You"
+msgstr "You"
+
 #: src/memberships/queries.ts
 msgid "You already asked for this one. The board will get back to you."
 msgstr "You already asked for this one. The board will get back to you."
@@ -2788,6 +3108,10 @@ msgstr "You can also talk to a board member you trust."
 msgid "You can't change that shift."
 msgstr "You can't change that shift."
 
+#: src/access/queries.ts
+msgid "You can't remove yourself. Ask another admin to do it."
+msgstr "You can't remove yourself. Ask another admin to do it."
+
 #: src/components/events/ShiftBoard.tsx
 msgid "You helped"
 msgstr "You helped"
@@ -2803,6 +3127,10 @@ msgstr "You're in"
 #: src/components/events/ShiftBoard.tsx
 msgid "You're on"
 msgstr "You're on"
+
+#: src/access/queries.ts
+msgid "You're the only admin. Add another admin first."
+msgstr "You're the only admin. Add another admin first."
 
 #: src/components/auth/UserMenu.tsx
 msgid "Your account"
@@ -2831,3 +3159,7 @@ msgstr "Your message is on its way to the board."
 #: src/pages/join/JoinPage.tsx
 msgid "Your pick"
 msgstr "Your pick"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Zoom"
+msgstr "Zoom"

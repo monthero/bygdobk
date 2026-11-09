@@ -13,6 +13,25 @@ export type PageIntroProps = {
   children?: ReactNode;
 };
 
+type IntroClasses = { eyebrow?: string; title?: string; lede?: string };
+
+export const IntroText: FC<Omit<PageIntroProps, 'photo'> & { classes: IntroClasses }> = ({
+  eyebrow,
+  title,
+  lede,
+  children,
+  classes: names,
+}) => (
+  <>
+    {eyebrow && <Text className={names.eyebrow}>{eyebrow}</Text>}
+    <Title order={1} className={names.title}>
+      {title}
+    </Title>
+    {lede && <Text className={names.lede}>{lede}</Text>}
+    {children}
+  </>
+);
+
 export const PageIntroBase: FC<PageIntroProps> = ({ eyebrow, title, lede, photo, children }) => (
   <header className={classes.intro} data-photo={photo ? true : undefined}>
     {photo && (
@@ -29,12 +48,9 @@ export const PageIntroBase: FC<PageIntroProps> = ({ eyebrow, title, lede, photo,
       </div>
     )}
     <Container className={classes.inner}>
-      {eyebrow && <Text className={classes.eyebrow}>{eyebrow}</Text>}
-      <Title order={1} className={classes.title}>
-        {title}
-      </Title>
-      {lede && <Text className={classes.lede}>{lede}</Text>}
-      {children}
+      <IntroText eyebrow={eyebrow} title={title} lede={lede} classes={classes}>
+        {children}
+      </IntroText>
     </Container>
   </header>
 );

@@ -1,14 +1,12 @@
+import { isAppleMobile } from './device';
+
 export type Place = { name: string; address?: string; mapUrl?: string };
 
 const GOOGLE_MAPS_SEARCH = 'https://www.google.com/maps/search/?api=1&query=';
-const IOS = /iPad|iPhone|iPod/;
 
 const deviceMapHref = (query: string) => {
-  const { userAgent, maxTouchPoints } = navigator;
-  if (IOS.test(userAgent) || (userAgent.includes('Macintosh') && maxTouchPoints > 1)) {
-    return `https://maps.apple.com/?q=${query}`;
-  }
-  if (userAgent.includes('Android')) return `geo:0,0?q=${query}`;
+  if (isAppleMobile()) return `https://maps.apple.com/?q=${query}`;
+  if (navigator.userAgent.includes('Android')) return `geo:0,0?q=${query}`;
   return `${GOOGLE_MAPS_SEARCH}${query}`;
 };
 

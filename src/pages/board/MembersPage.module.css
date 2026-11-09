@@ -1,0 +1,3 @@
+.more {
+  border-inline-start-color: color-mix(in srgb, var(--button-color) 30%, transparent);
+}

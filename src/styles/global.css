@@ -34,3 +34,35 @@ body {
   background: var(--bk-page-wash), var(--mantine-color-body);
   background-attachment: fixed;
 }
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 14mm 12mm;
+  }
+
+  body,
+  body[data-scroll-locked] {
+    margin: 0 !important;
+    overflow: visible !important;
+    background: var(--mantine-color-white);
+    color: var(--mantine-color-black);
+  }
+
+  .mantine-AppShell-header,
+  .mantine-AppShell-navbar,
+  #main > aside,
+  #main > footer,
+  [data-bk='toolbar'],
+  button {
+    display: none !important;
+  }
+
+  body:has(> [data-print-sheet]) > :not([data-print-sheet]) {
+    display: none;
+  }
+}
+
+.capitalize-first::first-letter {
+  text-transform: uppercase;
+}

@@ -1,17 +1,21 @@
 import { buildTheme } from '@sanity/ui/theme';
 import { defineConfig, type Template } from 'sanity';
+import { presentationTool } from 'sanity/presentation';
 import { structureTool } from 'sanity/structure';
 
+import { Eye } from '~/components/ui/icons';
 import { CLUB } from '~/data/club';
 import { EventKind } from '~/data/events';
 import { ENV } from '~/env';
 import { ADMIN_PATH } from '~/i18n/locales';
 
 import { HELP_TOOL } from './help';
+import { LOCATIONS, MAIN_DOCUMENTS } from './presentation';
 import { SCHEMA_TYPES } from './schema';
 import { EVENT_KIND_TITLES } from './schema/labels';
 import { START_TOOL } from './start';
 import { eventTemplateId, FIXED_SETS, SINGLETONS, structure } from './structure';
+import { TRANSLATIONS_TOOL } from './translations';
 
 const THEME = buildTheme({
   color: {
@@ -41,8 +45,16 @@ export const STUDIO_CONFIG = defineConfig({
   dataset: ENV.VITE_SANITY_DATASET,
   basePath: ADMIN_PATH,
   theme: THEME,
-  plugins: [structureTool({ title: 'Content', structure })],
-  tools: (tools) => [START_TOOL, ...tools, HELP_TOOL],
+  plugins: [
+    structureTool({ title: 'Content', structure }),
+    presentationTool({
+      title: 'Preview',
+      icon: Eye,
+      previewUrl: { initial: '/' },
+      resolve: { locations: LOCATIONS, mainDocuments: MAIN_DOCUMENTS },
+    }),
+  ],
+  tools: (tools) => [START_TOOL, ...tools, TRANSLATIONS_TOOL, HELP_TOOL],
   releases: { enabled: false },
   tasks: { enabled: false },
   scheduledDrafts: { enabled: false },

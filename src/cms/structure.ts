@@ -8,7 +8,7 @@ import { EventKind, Team, VISITOR_KINDS } from '~/data/events';
 
 import { fixedDocId, PRIVACY_PAGE_ID, SITE_PHOTOS_ID } from './schema';
 
-const API_VERSION = '2026-11-01';
+export const API_VERSION = '2026-11-01';
 
 export const ListId = z.enum([
   'trainingTimes',

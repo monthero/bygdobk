@@ -11,6 +11,11 @@ msgstr ""
 msgid "“We want as many people as possible to enjoy playing badminton!”"
 msgstr "»Vi vil have, at så mange som muligt får glæde af badminton!«"
 
+#. placeholder {0}: admins.data.length
+#: src/pages/board/access/AccessPage.tsx
+msgid "{0, plural, one {# admin} other {# admins}}"
+msgstr "{0, plural, one {# administrator} other {# administratorer}}"
+
 #. placeholder {0}: hits.length
 #: src/pages/news/NewsPage.tsx
 msgid "{0, plural, one {# post matches} other {# posts match}}"
@@ -53,6 +58,27 @@ msgstr "{0} ikke betalt"
 msgid "{0} per visit"
 msgstr "{0} pr. gang"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{added, plural, one {Copy # membership} other {Copy # memberships}}"
+msgstr "{added, plural, one {Kopiér # medlemskab} other {Kopiér # medlemskaber}}"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
+msgstr "{count, plural, one {# medlemskab} other {# medlemskaber}}, <0>{total}</0> i alt."
+
+#: src/components/auth/RequestCountBadge.tsx
+msgid "{count, plural, one {# open request} other {# open requests}}"
+msgstr "{count, plural, one {# åben anmodning} other {# åbne anmodninger}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{count, plural, one {Copy # email} other {Copy # emails}}"
+msgstr "{count, plural, one {Kopiér # e-mailadresse} other {Kopiér # e-mailadresser}}"
+
+#. How many memberships are picked, and what they cost together
+#: src/pages/board/BulkActions.tsx
+msgid "{count} selected · {total}"
+msgstr "{count} valgt · {total}"
+
 #: src/components/events/EventCard.tsx
 msgid "{filled} of {needed} spots filled"
 msgstr "{filled} af {needed} pladser besat"
@@ -69,6 +95,14 @@ msgstr "{firstName}s telefonnummer er kopieret"
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "{hits, plural, one {# slag} other {# slag}}: {callout}"
 
+#: src/pages/training/TrainingPage.tsx
+msgid "{name} in your calendar"
+msgstr "{name} i din kalender"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is already an admin."
+msgstr "{name} er allerede administrator."
+
 #: src/pages/board/MembershipList.tsx
 msgid "{name} is in!"
 msgstr "{name} er med!"
@@ -77,17 +111,33 @@ msgstr "{name} er med!"
 msgid "{name} is marked as paid"
 msgstr "{name} er markeret som betalt"
 
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "{name} is no longer an admin"
+msgstr "{name} er ikke længere administrator"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "{name} is now an admin"
+msgstr "{name} er nu administrator"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{name} is off the shift"
 msgstr "{name} er taget af vagten"
 
 #: src/pages/board/MarkPaidModal.tsx
-msgid "{name} paid <0>{price}</0>."
-msgstr "{name} betalte <0>{price}</0>."
+msgid "{name} paid <0>{total}</0>."
+msgstr "{name} betalte <0>{total}</0>."
 
 #: src/components/events/EventCard.tsx
 msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
 msgstr "{needed, plural, one {# frivillig søges} other {# frivillige søges}}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "{noAccount, plural, one {# person without an account is not included.} other {# people without an account are not included.}}"
+msgstr "{noAccount, plural, one {# person uden konto er ikke med.} other {# personer uden konto er ikke med.}}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{oneOff, plural, one {# drop-in or trial is not copied.} other {# drop-ins and trials are not copied.}}"
+msgstr "{oneOff, plural, one {# drop-in eller prøvemedlemskab kopieres ikke.} other {# drop-ins og prøvemedlemskaber kopieres ikke.}}"
 
 #. Open spots on a volunteer team, e.g. 2 open
 #: src/pages/board/volunteers/VolunteersPage.tsx
@@ -98,6 +148,10 @@ msgstr "{open} ledige"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "{over} over"
 msgstr "{over} for mange"
+
+#: src/components/auth/UserMenu.tsx
+msgid "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
+msgstr "{requestCount, plural, one {# åben anmodning om medlemskab} other {# åbne anmodninger om medlemskab}}"
 
 #: src/pages/board/MembersPage.tsx
 msgid "{requestCount} open"
@@ -111,6 +165,10 @@ msgstr "{requested} venter"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown} er med på vagten"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "{skipped, plural, one {# already has the same plan this season and is skipped.} other {# already have the same plan this season and are skipped.}}"
+msgstr "{skipped, plural, one {# har allerede samme medlemskab i denne sæson og springes over.} other {# har allerede samme medlemskab i denne sæson og springes over.}}"
 
 #. How many spots of a volunteer shift are taken, e.g. 2 of 3
 #. placeholder {0}: shift.spots
@@ -135,6 +193,10 @@ msgstr "{taken} af {spots} pladser taget"
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} ikke betalt"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "<0>{name}</0> can no longer open the board pages or edit the website. Their account and memberships stay."
+msgstr "<0>{name}</0> kan ikke længere åbne bestyrelsessiderne eller redigere hjemmesiden. Kontoen og medlemskaberne beholdes."
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "<0>Ask the board</0> about discounts and support."
@@ -199,6 +261,10 @@ msgid "A racket"
 msgstr "En ketsjer"
 
 #: src/data/photos.ts
+msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
+msgstr "En ketsjer, en fjerbold og en telefon på en bænk i en badmintonhal i solnedgang"
+
+#: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
 msgstr "En fjerbold på en ketsjer med spillere på grønne baner bagved"
 
@@ -256,6 +322,8 @@ msgid "Actions"
 msgstr "Handlinger"
 
 #. Button: add a membership for this person
+#. Short button label on phones: add a membership
+#: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add"
@@ -269,9 +337,21 @@ msgstr "Tilføj medlemskab for {name}"
 msgid "Add a volunteer"
 msgstr "Tilføj en frivillig"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add admin"
+msgstr "Tilføj administrator"
+
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Add an admin"
+msgstr "Ny administrator"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Add anyway"
 msgstr "Tilføj alligevel"
+
+#: src/components/layout/InstallApp.tsx
+msgid "Add Bygdø BK to your Home Screen"
+msgstr "Føj Bygdø BK til din hjemmeskærm"
 
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/MembersPage.tsx
@@ -287,13 +367,27 @@ msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "Tilføj vagter til et arrangement i Sanity, så dukker de op her."
 
 #: src/components/events/EventDetails.tsx
+#: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "Føj til kalender"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
+msgstr "{count, plural, one {# medlemskab} other {# medlemskaber}} tilføjet til {toLabel}"
 
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Admin"
+
+#. Heading: the people with admin access
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins"
+msgstr "Administratorer"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admins can open the board pages and edit the website."
+msgstr "Administratorer kan åbne bestyrelsessiderne og redigere hjemmesiden."
 
 #. placeholder {0}: kr(dropin.membership)
 #: src/pages/home/components/StartCards.tsx
@@ -359,10 +453,6 @@ msgstr "Allerede sendt. Bestyrelsen vender tilbage til dig."
 msgid "An account holder"
 msgstr "En med konto"
 
-#: src/data/photos.ts
-msgid "An empty badminton hall at sunset"
-msgstr "En tom badmintonhal i solnedgang"
-
 #: src/pages/board/MembershipList.tsx
 msgid "Approve"
 msgstr "Godkend"
@@ -370,6 +460,11 @@ msgstr "Godkend"
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "Arkiv"
+
+#. When the printed list of volunteers was last loaded, e.g. As of Mon 9 Nov, 14:32
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "As of {asOf}"
+msgstr "Opdateret {asOf}"
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Ask about a spot"
@@ -417,10 +512,24 @@ msgstr "Rekord"
 msgid "Big name"
 msgstr "Stort navn"
 
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board access"
+msgstr "Adgangsrettigheder"
+
+#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
+msgid "Board pages"
+msgstr "Bestyrelsessider"
+
 #. Event type: no training, e.g. holidays
 #: src/data/events.ts
 msgid "Break"
 msgstr "Pause"
+
+#: src/pages/training/TrainingPage.tsx
+msgid "Breaks and canceled sessions update by themselves."
+msgstr "Pauser og aflyste træninger opdateres af sig selv."
 
 #: src/pages/training/TrainingPage.tsx
 msgid "Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond."
@@ -467,7 +576,7 @@ msgstr "Bygdø BK på {name}"
 msgid "Bygdøhus seen from the car park"
 msgstr "Bygdøhus set fra parkeringspladsen"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Calendar link"
 msgstr "Kalenderlink"
 
@@ -479,19 +588,22 @@ msgstr "Afgørelsen står ved magt: stadig ikke fundet"
 msgid "Can I try before I join?"
 msgstr "Kan jeg prøve, før jeg melder mig ind?"
 
+#: src/access/queries.ts
 #: src/components/auth/errors.ts
 #: src/memberships/queries.ts
+#: src/pages/board/LoadError.tsx
 #: src/volunteers/queries.ts
 msgid "Can't reach the server. Check your connection."
 msgstr "Kan ikke få forbindelse til serveren. Tjek din forbindelse."
 
 #. Button that drops your own volunteer shift
 #. Button that drops your own volunteer shift
+#: src/components/auth/AvatarCropper.tsx
 #: src/components/events/ShiftBoard.tsx
-#: src/pages/board/DeclineRequestModal.tsx
-#: src/pages/board/DeleteMembershipModal.tsx
+#: src/components/ui/ConfirmActions.tsx
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipForm.tsx
+#: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Cancel"
 msgstr "Annuller"
@@ -530,10 +642,6 @@ msgstr "Udfordring. Vi tjekker gentagelsen…"
 msgid "Change your photo"
 msgstr "Skift dit billede"
 
-#: src/pages/board/LoadError.tsx
-msgid "Check your connection and try again."
-msgstr "Tjek din forbindelse, og prøv igen."
-
 #: src/components/auth/LoginModal.tsx
 msgid "Check your email"
 msgstr "Tjek din e-mail"
@@ -552,6 +660,11 @@ msgstr "Vælg et medlemskab"
 msgid "Classic"
 msgstr "Klassisk"
 
+#. Button: unselect all picked memberships
+#: src/pages/board/BulkActions.tsx
+msgid "Clear"
+msgstr "Ryd valg"
+
 #: src/pages/board/MembersPage.tsx
 msgid "Clear filters"
 msgstr "Ryd filtre"
@@ -561,7 +674,10 @@ msgstr "Ryd filtre"
 msgid "Clear search"
 msgstr "Ryd søgning"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
+#: src/components/ui/ResponsiveModal.tsx
+#: src/pages/board/NewSeasonModal.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Close"
 msgstr "Luk"
 
@@ -659,6 +775,10 @@ msgstr "Centreret"
 msgid "Continue with Google"
 msgstr "Fortsæt med Google"
 
+#: src/pages/board/BulkActions.tsx
+msgid "Copied! Paste them into Bcc"
+msgstr "Kopieret! Sæt dem ind i Bcc"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy email address for {0}"
@@ -668,14 +788,37 @@ msgstr "Kopiér e-mailadressen til {0}"
 msgid "Copy link"
 msgstr "Kopiér link"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy members from {0}"
+msgstr "Kopiér medlemmer fra {0}"
+
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
 msgid "Copy phone number for {0}"
 msgstr "Kopiér telefonnummeret til {0}"
 
+#. placeholder {0}: lastSeason.label
+#: src/pages/board/MembersPage.tsx
+msgid "Copy the members from {0} to get the new season going."
+msgstr "Kopiér medlemmerne fra {0} for at komme i gang med den nye sæson."
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Copy the members from {fromLabel} to {toLabel}?"
+msgstr "Kopiér medlemmerne fra {fromLabel} til {toLabel}?"
+
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/board/BulkActions.tsx
 msgid "Could not copy"
 msgstr "Kunne ikke kopiere"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Couldn't load season {fromLabel}"
+msgstr "Kunne ikke hente sæsonen {fromLabel}"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Couldn't load the admins"
+msgstr "Kunne ikke hente administratorerne"
 
 #: src/pages/board/MembersPage.tsx
 msgid "Couldn't load the memberships"
@@ -721,6 +864,10 @@ msgstr "Kunne ikke gemme dette på din profil. Det virker stadig på denne enhed
 msgid "Couldn't save your photo. Try again."
 msgstr "Kunne ikke gemme dit billede. Prøv igen."
 
+#: src/access/queries.ts
+msgid "Couldn't save. Try again."
+msgstr "Kunne ikke gemme. Prøv igen."
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Court 1"
 msgstr "Bane 1"
@@ -729,6 +876,14 @@ msgstr "Bane 1"
 #: src/components/layout/VariantMenu.tsx
 msgid "Court lines"
 msgstr "Banelinjer"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop area"
+msgstr "Beskæringsområde"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Crop your photo"
+msgstr "Beskær dit billede"
 
 #. Footer decoration: a large faded club logo cut off at the edge
 #: src/components/layout/VariantMenu.tsx
@@ -811,6 +966,14 @@ msgstr "Download regneark"
 msgid "Downloaded"
 msgstr "Downloadet"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag or use the arrow keys to move. Scroll or pinch to zoom."
+msgstr "Træk eller brug piletasterne for at flytte. Scroll eller knib for at zoome."
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Drag to move. Pinch to zoom."
+msgstr "Træk for at flytte. Knib for at zoome."
+
 #. placeholder {0}: kr(dropin.perVisit)
 #: src/pages/home/components/StartCards.tsx
 msgid "Drop in for {0} a visit"
@@ -834,6 +997,10 @@ msgstr "Drop-in: {0} pr. gang"
 msgid "Drop-in: Vipps {0} to {1}"
 msgstr "Drop-in: Vipps {0} til {1}"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Each day starts on a new page."
+msgstr "Hver dag starter på en ny side."
+
 #: src/pages/board/MembershipList.tsx
 msgid "Edit"
 msgstr "Redigér"
@@ -855,10 +1022,11 @@ msgid "Edit note for {name}"
 msgstr "Redigér note for {name}"
 
 #: src/components/auth/UserMenu.tsx
-msgid "Edit the site"
-msgstr "Redigér hjemmesiden"
+msgid "Edit site content"
+msgstr "Redigér indholdet på hjemmesiden"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/membersCsv.ts
 #: src/pages/contact/ContactSection.tsx
 msgid "Email"
@@ -867,6 +1035,10 @@ msgstr "E-mail"
 #: src/components/auth/errors.ts
 msgid "Email login isn't switched on yet."
 msgstr "Login med e-mail er ikke slået til endnu."
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Empty line? Write your name on it."
+msgstr "Tom linje? Skriv dit navn på den."
 
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
@@ -886,6 +1058,7 @@ msgid "Enter a price"
 msgstr "Skriv en pris"
 
 #: src/components/auth/LoginModal.tsx
+#: src/pages/board/access/AddAdminForm.tsx
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -931,6 +1104,10 @@ msgstr "Arrangementer"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
 msgstr "Alle pladser er besat. Godt gået!"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Everyone from {fromLabel} is already in {toLabel}."
+msgstr "Alle fra {fromLabel} er allerede med i {toLabel}."
 
 #: src/pages/board/MembersOverview.tsx
 msgid "Everyone has paid!"
@@ -1147,6 +1324,11 @@ msgstr "Inkluderet"
 msgid "Indoor shoes"
 msgstr "Indendørssko"
 
+#. Button that installs the website as an app on the phone or computer
+#: src/components/layout/InstallApp.tsx
+msgid "Install app"
+msgstr "Installér appen"
+
 #: src/components/layout/SiteHeader.tsx
 msgid "Join"
 msgstr "Bliv medlem"
@@ -1282,6 +1464,10 @@ msgstr "Logget ind som {email}, men din profil blev ikke hentet."
 msgid "Login was canceled."
 msgstr "Login blev afbrudt."
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Looking at season {fromLabel}…"
+msgstr "Kigger på sæsonen {fromLabel} …"
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Looking for the account…"
 msgstr "Leder efter kontoen…"
@@ -1291,10 +1477,19 @@ msgstr "Leder efter kontoen…"
 msgid "Main menu"
 msgstr "Hovedmenu"
 
+#: src/pages/board/BulkActions.tsx
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Mark {count} as paid"
+msgstr "Markér {count} som betalt"
+
 #: src/pages/board/MarkPaidModal.tsx
 #: src/pages/board/MembershipList.tsx
 msgid "Mark as paid"
 msgstr "Markér som betalt"
+
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
+msgstr "{done, plural, one {# medlemskab markeret som betalt} other {# medlemskaber markeret som betalt}}"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -1355,8 +1550,8 @@ msgstr "Medlemskab gemt"
 
 #. Sticky title of the board page that lists memberships
 #. Table column: the person's memberships this season
-#: src/components/auth/UserMenu.tsx
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/BoardNav.tsx
 #: src/pages/board/MembersOverview.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/PeopleList.tsx
@@ -1392,6 +1587,10 @@ msgstr "Måned"
 msgid "More news"
 msgstr "Flere nyheder"
 
+#: src/pages/board/MembersPage.tsx
+msgid "More ways to add"
+msgstr "Flere måder at tilføje på"
+
 #: src/pages/join/JoinPage.tsx
 msgid "My child"
 msgstr "Mit barn"
@@ -1415,6 +1614,10 @@ msgstr "Navn"
 msgid "Name or email"
 msgstr "Navn eller e-mail"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "name@example.com"
+msgstr "navn@eksempel.dk"
+
 #: src/components/auth/errors.ts
 msgid "New accounts are closed right now."
 msgstr "Der kan ikke oprettes nye konti lige nu."
@@ -1423,7 +1626,7 @@ msgstr "Der kan ikke oprettes nye konti lige nu."
 msgid "New best: {best}"
 msgstr "Ny rekord: {best}"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "Nye arrangementer dukker selv op i din kalender."
 
@@ -1479,6 +1682,10 @@ msgstr "Ingen konto"
 msgid "No account with that email"
 msgstr "Ingen konto med den e-mail"
 
+#: src/access/queries.ts
+msgid "No account with this email yet. Ask them to log in once first."
+msgstr "Ingen konto med denne e-mail endnu. Bed personen logge ind én gang først."
+
 #: src/pages/board/MembersPage.tsx
 msgid "No accounts or memberships yet"
 msgstr "Ingen konti eller medlemskaber endnu"
@@ -1513,6 +1720,10 @@ msgstr "Uden medlemskab"
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "No membership yet. Pick a plan and send a request!"
 msgstr "Intet medlemskab endnu. Vælg en type, og send en anmodning!"
+
+#: src/pages/board/MembersPage.tsx
+msgid "No memberships in {seasonLabel} yet"
+msgstr "Ingen medlemskaber i {seasonLabel} endnu"
 
 #: src/pages/board/MembersPage.tsx
 msgid "No memberships this season yet"
@@ -1588,6 +1799,10 @@ msgstr "Ingen endnu."
 msgid "None"
 msgstr "Ingen"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Not marked as paid: {missedNames}"
+msgstr "Ikke markeret som betalt: {missedNames}"
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
@@ -1661,6 +1876,10 @@ msgstr "I gang nu"
 msgid "One season runs from August to June, like the school year. Joining mid-season? <0>Ask the board</0> about the price."
 msgstr "En sæson går fra august til juni, ligesom skoleåret. Starter du midt i sæsonen? <0>Spørg bestyrelsen</0> om prisen."
 
+#: src/access/queries.ts
+msgid "Only admins can change board access."
+msgstr "Kun administratorer kan ændre adgangsrettigheder."
+
 #: src/memberships/queries.ts
 msgid "Only admins can change memberships."
 msgstr "Kun administratorer kan ændre medlemskaber."
@@ -1674,7 +1893,7 @@ msgstr "Kun bestyrelsen kan se dette."
 msgid "Oops, rim shot!"
 msgstr "Ups, rammeslag!"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Open in calendar app"
 msgstr "Åbn i kalenderappen"
 
@@ -1686,6 +1905,10 @@ msgstr "Åbn i kort"
 #: src/components/layout/SiteHeader.tsx
 msgid "Open menu"
 msgstr "Åbn menuen"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Open spot"
+msgstr "Ledig plads"
 
 #: src/components/auth/errors.ts
 msgid "Open the link in the same browser you asked for it in."
@@ -1809,6 +2032,11 @@ msgstr "Periode"
 msgid "Person"
 msgstr "Person"
 
+#. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
+#: src/components/layout/InstallApp.tsx
+msgid "Pick “Add to Home Screen”."
+msgstr "Vælg »Føj til hjemmeskærm«."
+
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
 msgstr "Vælg en ledig vagt nedenfor, og tryk på Tilmeld dig."
@@ -1824,6 +2052,10 @@ msgstr "Vælg type"
 #: src/pages/join/JoinPage.tsx
 msgid "Pick a plan above to see the price."
 msgstr "Vælg et medlemskab ovenfor for at se prisen."
+
+#: src/pages/board/MembersPage.tsx
+msgid "Pick a season to copy last season's members"
+msgstr "Vælg en sæson for at kopiere sidste sæsons medlemmer"
 
 #: src/pages/news/NewsPostPage.tsx
 msgid "Pick a shift"
@@ -1919,6 +2151,18 @@ msgstr "Priser og indmelding"
 msgid "Prices per season"
 msgstr "Priser pr. sæson"
 
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print"
+msgstr "Udskriv"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print preview"
+msgstr "Udskriftsvisning"
+
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
+msgid "Print shift plan"
+msgstr "Udskriv vagtplan"
+
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/privacy/PrivacyPage.tsx
@@ -1971,6 +2215,10 @@ msgstr "Normal"
 msgid "Related event"
 msgstr "Arrangementet"
 
+#. Button: take away someone's admin access
+#. Button: take away someone's admin access
+#: src/pages/board/access/AccessPage.tsx
+#: src/pages/board/access/RemoveAdminModal.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Remove"
 msgstr "Fjern"
@@ -1978,6 +2226,14 @@ msgstr "Fjern"
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Remove {name}"
 msgstr "Fjern {name}"
+
+#: src/pages/board/access/AccessPage.tsx
+msgid "Remove {name} as admin"
+msgstr "Fjern {name} som administrator"
+
+#: src/pages/board/access/RemoveAdminModal.tsx
+msgid "Remove admin?"
+msgstr "Fjern administrator?"
 
 #: src/components/auth/ProfileCard.tsx
 msgid "Remove photo"
@@ -2029,6 +2285,10 @@ msgstr "Afventer"
 msgid "Requests"
 msgstr "Anmodninger"
 
+#: src/components/auth/AvatarCropper.tsx
+msgid "Reset"
+msgstr "Nulstil"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
 msgstr "Vurderer…"
@@ -2042,10 +2302,18 @@ msgstr "Runde"
 msgid "Safe sport"
 msgstr "Tryg idræt"
 
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Same people and plans, at today's prices. They start as not paid. Period: {period}."
+msgstr "Samme personer og medlemskaber, til dagens priser. De starter som ikke betalt. Periode: {period}."
+
 #: src/pages/board/MembershipForm.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Save"
 msgstr "Gem"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Save photo"
+msgstr "Gem billede"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Score: Bygdø {home}, 404 {away}"
@@ -2096,6 +2364,27 @@ msgstr "Se arrangementet"
 msgid "See who's on each shift, and who we still need."
 msgstr "Se, hvem der er på hver vagt, og hvem vi stadig mangler."
 
+#. Table column with checkboxes to pick memberships
+#: src/pages/board/MembershipList.tsx
+msgid "Select"
+msgstr "Vælg"
+
+#: src/pages/board/MembershipList.tsx
+msgid "Select {name}"
+msgstr "Vælg {name}"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select all {count} unpaid"
+msgstr "Vælg alle {count} ubetalte"
+
+#: src/pages/board/PeopleList.tsx
+msgid "Select unpaid memberships for {name}"
+msgstr "Vælg ubetalte medlemskaber for {name}"
+
+#: src/pages/board/BulkActions.tsx
+msgid "Selected memberships"
+msgstr "Valgte medlemskaber"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "Send igen"
@@ -2133,6 +2422,7 @@ msgid "Service fault: page not found"
 msgstr "Servefejl: siden findes ikke"
 
 #: src/components/events/ShiftBoard.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "setup or teardown"
 msgstr "opsætning eller nedtagning"
@@ -2264,7 +2554,12 @@ msgstr "Nogle træninger i denne sæson foregår et andet sted:"
 msgid "Someone else"
 msgstr "En anden"
 
+#: src/pages/board/MarkPaidModal.tsx
+msgid "Someone else may already have marked them as paid or deleted them."
+msgstr "Måske har en anden allerede markeret dem som betalt eller slettet dem."
+
 #: src/components/auth/errors.ts
+#: src/pages/board/LoadError.tsx
 msgid "Something went wrong. Try again."
 msgstr "Noget gik galt. Prøv igen."
 
@@ -2276,6 +2571,10 @@ msgstr "Sponsorér klubben"
 #: src/pages/board/MembershipForm.tsx
 msgid "Start"
 msgstr "Start"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "Start season {label}"
+msgstr "Start sæson {label}"
 
 #. Table column: where a membership request stands, and who sent it
 #. Table column: whether the person has paid
@@ -2294,11 +2593,11 @@ msgid "Style"
 msgstr "Stil"
 
 #. Button that opens the calendar feed options
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe"
 msgstr "Abonnér"
 
-#: src/pages/events/SubscribeButton.tsx
+#: src/components/calendar/CalendarFeed.tsx
 msgid "Subscribe to events"
 msgstr "Abonnér på arrangementer"
 
@@ -2314,6 +2613,11 @@ msgstr "System"
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "Tag <0>{name}</0> af denne vagt?"
+
+#. iPhone and iPad: first step to add the site to the Home Screen. The icon is the iOS Share icon
+#: src/components/layout/InstallApp.tsx
+msgid "Tap Share <0/> in the browser."
+msgstr "Tryk på Del <0/> i browseren."
 
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
@@ -2374,7 +2678,9 @@ msgstr "Det er ikke et billede. Vælg en billedfil."
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
+#: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/MembersPage.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
@@ -2435,6 +2741,10 @@ msgstr "Tema"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Theme: {0}"
 msgstr "Tema: {0}"
+
+#: src/pages/board/NewSeasonModal.tsx
+msgid "There's no one in {fromLabel} to copy."
+msgstr "Der er ingen i {fromLabel} at kopiere."
 
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "These people are on a shift that was removed in Sanity."
@@ -2618,6 +2928,10 @@ msgstr "Brug en anden e-mail"
 msgid "Use other details"
 msgstr "Brug andre oplysninger"
 
+#: src/pages/board/access/AddAdminForm.tsx
+msgid "Use the email they log in with."
+msgstr "Brug den e-mail, personen logger ind med."
+
 #: src/components/layout/VariantMenu.tsx
 msgid "Variants"
 msgstr "Varianter"
@@ -2633,6 +2947,7 @@ msgstr "Vipps-nummer {vipps}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx
+#: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/events/EventPage.tsx
 msgid "Volunteer shifts"
@@ -2644,7 +2959,7 @@ msgid "Volunteering"
 msgstr "Frivilligt arbejde"
 
 #. Board screen for volunteer shifts
-#: src/components/auth/UserMenu.tsx
+#: src/pages/board/BoardNav.tsx
 msgid "Volunteers"
 msgstr "Frivillige"
 
@@ -2772,6 +3087,11 @@ msgstr "År"
 msgid "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 msgstr "Ja. Børn kan starte med et prøvemedlemskab, og voksne kan komme til drop-in. Se priserne ovenfor."
 
+#. Badge next to your own name in the admin list
+#: src/pages/board/access/AccessPage.tsx
+msgid "You"
+msgstr "Dig"
+
 #: src/memberships/queries.ts
 msgid "You already asked for this one. The board will get back to you."
 msgstr "Du har allerede bedt om dette. Bestyrelsen vender tilbage til dig."
@@ -2788,6 +3108,10 @@ msgstr "Du kan også tale med et bestyrelsesmedlem, du har tillid til."
 msgid "You can't change that shift."
 msgstr "Du kan ikke ændre den vagt."
 
+#: src/access/queries.ts
+msgid "You can't remove yourself. Ask another admin to do it."
+msgstr "Du kan ikke fjerne dig selv. Bed en anden administrator om at gøre det."
+
 #: src/components/events/ShiftBoard.tsx
 msgid "You helped"
 msgstr "Du hjalp til"
@@ -2803,6 +3127,10 @@ msgstr "Du er med"
 #: src/components/events/ShiftBoard.tsx
 msgid "You're on"
 msgstr "Dine vagter"
+
+#: src/access/queries.ts
+msgid "You're the only admin. Add another admin first."
+msgstr "Du er den eneste administrator. Tilføj en anden administrator først."
 
 #: src/components/auth/UserMenu.tsx
 msgid "Your account"
@@ -2831,3 +3159,7 @@ msgstr "Din besked er på vej til bestyrelsen."
 #: src/pages/join/JoinPage.tsx
 msgid "Your pick"
 msgstr "Dit valg"
+
+#: src/components/auth/AvatarCropper.tsx
+msgid "Zoom"
+msgstr "Zoom"

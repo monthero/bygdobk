@@ -1,0 +1,41 @@
+.admins {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.admins__item {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  padding: var(--mantine-spacing-sm) var(--mantine-spacing-md);
+
+  & + & {
+    border-top: 1px solid var(--bk-border);
+  }
+}
+
+.admins__who {
+  flex: 1;
+  min-width: 0;
+}
+
+.admins__you {
+  flex: none;
+}
+
+.add {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-sm);
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.add__input {
+  flex: 1;
+}

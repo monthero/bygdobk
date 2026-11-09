@@ -13,7 +13,8 @@ import { I18nProvider } from '@lingui/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { App } from './App';
+import { App, router } from './App';
+import { IS_PREVIEW, startPreview } from './cms/preview/mode';
 import { activateLocale } from './i18n/activate';
 import { DEFAULT_LOCALE, localeInPath, withLocale } from './i18n/locales';
 import { readLocation, replaceLocation } from './i18n/url';
@@ -30,6 +31,7 @@ const boot = async () => {
   const { pathname, rest } = readLocation();
   const localized = withLocale(pathname, locale);
   if (localized !== pathname) replaceLocation(localized + rest);
+  if (IS_PREVIEW) void startPreview(router.history);
   await activateLocale(locale);
   const root = document.getElementById('root');
   if (!root) return;

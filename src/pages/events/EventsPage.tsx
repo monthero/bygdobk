@@ -6,6 +6,7 @@ import { useMemo, type FC } from 'react';
 import { isPast } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
 import { useSitePhoto } from '~/cms/siteData';
+import { SubscribeButton } from '~/components/calendar';
 import { EVENT_ICONS, EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
@@ -15,8 +16,6 @@ import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { date, formatDate, LONG_DATE, today, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
-
-import { SubscribeButton } from './SubscribeButton';
 
 import classes from './EventsPage.module.css';
 

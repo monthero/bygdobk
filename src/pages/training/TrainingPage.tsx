@@ -15,11 +15,12 @@ import {
   Title,
 } from '@mantine/core';
 import { getRouteApi, Link } from '@tanstack/react-router';
-import { memo, useMemo, type FC } from 'react';
+import { memo, useId, useMemo, type FC } from 'react';
 
 import type { Season } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
 import { useGroups, useSitePhoto, type GroupInfo } from '~/cms/siteData';
+import { CalendarFeed, calendarFeedUrl } from '~/components/calendar';
 import { PageToolbar } from '~/components/layout';
 import { PageIntro } from '~/components/styles';
 import { groupTimes } from '~/components/styles/court/schedule';
@@ -29,6 +30,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   CalendarBlank,
+  CalendarPlus,
   Info,
   MapPin,
   Segmented,
@@ -64,7 +66,7 @@ const JoinLink: FC<{ group: TrainingGroup; status: GroupStatus }> = ({ group, st
   if (status === GroupStatus.enum.full) {
     const groupLink = contactLink(ContactTopic.enum.training, t`Hi! Let me know when a spot opens up in a group.`);
     return (
-      <Anchor fw={600} size="sm" className={classes.join} renderRoot={(props) => <Link {...props} {...groupLink} />}>
+      <Anchor fw={600} size="sm" className={classes.link} renderRoot={(props) => <Link {...props} {...groupLink} />}>
         <Trans>Ask about a spot</Trans> <ArrowRight />
       </Anchor>
     );
@@ -73,7 +75,7 @@ const JoinLink: FC<{ group: TrainingGroup; status: GroupStatus }> = ({ group, st
     <Anchor
       fw={600}
       size="sm"
-      className={classes.join}
+      className={classes.link}
       renderRoot={(props) => (
         <Link {...props} to="/medlemskap/bli-medlem" search={{ gruppe: GROUP_SLUGS.toSlug(group) }} />
       )}
@@ -84,33 +86,61 @@ const JoinLink: FC<{ group: TrainingGroup; status: GroupStatus }> = ({ group, st
   );
 };
 
-const GroupLine = memo<{ group: TrainingGroup; info: GroupInfo; sessions: Session[] }>(({ group, info, sessions }) => (
-  <li className={classes.group}>
-    <Badge color={info.color} variant="light" size="lg" className={classes.name}>
-      {info.name}
-    </Badge>
-    <Stack gap={4} align="flex-start" className={classes.who}>
-      {info.who && <Text>{info.who}</Text>}
-      {info.status !== GroupStatus.enum.open && (
-        <Group gap="xs" wrap="nowrap" align="baseline">
-          <GroupStatusBadge status={info.status} />
-          {info.statusNote && (
-            <Text size="sm" c="dimmed">
-              {info.statusNote}
-            </Text>
-          )}
-        </Group>
-      )}
-    </Stack>
-    <Text size="sm" c="dimmed" className={classes.coach}>
-      {info.coached ? <Trans>With coach</Trans> : <Trans>No coach</Trans>}
-    </Text>
-    <Text fw={600} className={classes.times}>
-      {groupTimes(group, sessions).join(', ')}
-    </Text>
-    <JoinLink group={group} status={info.status} />
-  </li>
-));
+const GroupCalendar: FC<{ group: TrainingGroup; name: string; nameId: string }> = ({ group, name, nameId }) => (
+  <CalendarFeed
+    url={calendarFeedUrl(group)}
+    title={<Trans>{name} in your calendar</Trans>}
+    note={<Trans>Breaks and canceled sessions update by themselves.</Trans>}
+    renderTarget={(props) => (
+      <Anchor
+        component="button"
+        type="button"
+        fw={600}
+        size="sm"
+        className={classes.link}
+        aria-describedby={nameId}
+        {...props}
+      >
+        <CalendarPlus />
+        <Trans>Add to calendar</Trans>
+      </Anchor>
+    )}
+  />
+);
+
+const GroupLine = memo<{ group: TrainingGroup; info: GroupInfo; sessions: Session[] }>(({ group, info, sessions }) => {
+  const nameId = useId();
+  return (
+    <li className={classes.group}>
+      <Badge id={nameId} color={info.color} variant="light" size="lg" className={classes.name}>
+        {info.name}
+      </Badge>
+      <Stack gap={4} align="flex-start" className={classes.who}>
+        {info.who && <Text>{info.who}</Text>}
+        {info.status !== GroupStatus.enum.open && (
+          <Group gap="xs" wrap="nowrap" align="baseline">
+            <GroupStatusBadge status={info.status} />
+            {info.statusNote && (
+              <Text size="sm" c="dimmed">
+                {info.statusNote}
+              </Text>
+            )}
+          </Group>
+        )}
+      </Stack>
+      <Text size="sm" c="dimmed" className={classes.coach}>
+        {info.coached ? <Trans>With coach</Trans> : <Trans>No coach</Trans>}
+      </Text>
+      <Text fw={600} className={classes.times}>
+        {groupTimes(group, sessions).join(', ')}
+      </Text>
+      <div className={classes.actions}>
+        <JoinLink group={group} status={info.status} />
+        <GroupCalendar group={group} name={info.name} nameId={nameId} />
+      </div>
+    </li>
+  );
+});
 
 export const TrainingPage: FC = () => {
   const { t } = useLingui();

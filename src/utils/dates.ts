@@ -3,13 +3,12 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 
+import { CLUB_TIME_ZONE } from '~/cms/schedule';
 import { dateFormat } from '~/i18n/current';
 
 dayjs.extend(utc);
 dayjs.extend(isoWeek);
 dayjs.extend(timezone);
-
-const CLUB_TIME_ZONE = 'Europe/Oslo';
 
 export { dayjs, type Dayjs };
 
@@ -20,7 +19,7 @@ export const LONG_DATE: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'l
 export const CLOCK: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' };
 export const DAY_AND_TIME: Intl.DateTimeFormatOptions = { weekday: 'short', day: 'numeric', month: 'short', ...CLOCK };
 
-export const date = (iso: string) => dayjs.utc(iso);
+export { date, minutesOf } from '~/cms/schedule';
 
 const toWall = (d: Dayjs) => dayjs.utc(d.tz(CLUB_TIME_ZONE).format('YYYY-MM-DDTHH:mm:ss'));
 
@@ -43,8 +42,3 @@ export const formatDateRange = (start: Dayjs, end: Dayjs, options: Intl.DateTime
 
 export const weekdayName = (isoWeekday: number, style: 'long' | 'short' = 'long') =>
   formatDate(today().isoWeekday(isoWeekday), { weekday: style });
-
-export const minutesOf = (time: string) => {
-  const [h = 0, m = 0] = time.split(':').map(Number);
-  return h * 60 + m;
-};

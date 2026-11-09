@@ -5,6 +5,7 @@ import {
   Badge,
   Button,
   Card,
+  Checkbox,
   Collapse,
   Group,
   Stack,
@@ -14,7 +15,7 @@ import {
   VisuallyHidden,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { memo, type FC } from 'react';
+import { memo, useMemo, type FC } from 'react';
 
 import type { Plan } from '~/cms/content';
 import { AVATAR_IMAGE_PROPS } from '~/components/auth';
@@ -24,10 +25,11 @@ import type { AdminMembership } from '~/memberships/model';
 import { kr } from '~/pages/join/offers';
 
 import { memberName, planName } from './format';
-import { MembershipList } from './MembershipList';
+import { MembershipList, type OnSelect } from './MembershipList';
 import type { Person } from './people';
 
 import classes from './PeopleList.module.css';
+import selectionClasses from './selection.module.css';
 
 type Handlers = {
   onPay: (m: AdminMembership) => void;
@@ -37,9 +39,52 @@ type Handlers = {
   onAdd: (person: Person) => void;
 };
 
-type ItemProps = Handlers & { person: Person; plans: ReadonlyMap<string, Plan> };
+type Selectable = { selection: ReadonlySet<string>; onSelect: OnSelect };
+
+type ItemProps = Handlers &
+  Selectable & { person: Person; plans: ReadonlyMap<string, Plan>; selectedCount: number; selectable: boolean };
 
 const COLUMNS = 5;
+const NO_SELECTION: ReadonlySet<string> = new Set();
+
+const PersonCheckbox: FC<{ person: Person; selectedCount: number; onSelect: OnSelect }> = ({
+  person,
+  selectedCount,
+  onSelect,
+}) => {
+  const { t } = useLingui();
+  const name = person.name;
+  const all = selectedCount === person.unpaidIds.length;
+  return (
+    <Checkbox
+      aria-label={t`Select unpaid memberships for ${name}`}
+      checked={selectedCount > 0 && all}
+      indeterminate={selectedCount > 0 && !all}
+      onClick={(event) => event.stopPropagation()}
+      onChange={() => onSelect(person.unpaidIds, !all)}
+    />
+  );
+};
+
+const SelectAll: FC<{ ids: readonly string[]; selectedCount: number; onSelect: OnSelect; label?: boolean }> = ({
+  ids,
+  selectedCount,
+  onSelect,
+  label,
+}) => {
+  const { t } = useLingui();
+  const count = ids.length;
+  const all = selectedCount === count;
+  return (
+    <Checkbox
+      aria-label={label ? undefined : t`Select all ${count} unpaid`}
+      label={label ? t`Select all ${count} unpaid` : undefined}
+      checked={selectedCount > 0 && all}
+      indeterminate={selectedCount > 0 && !all}
+      onChange={() => onSelect(ids, !all)}
+    />
+  );
+};
 
 const PersonName: FC<{ person: Person }> = ({ person: { name, profile } }) => (
   <Group gap="sm" wrap="nowrap" miw={0}>
@@ -124,98 +169,154 @@ const ExpandIcon: FC<{ opened: boolean }> = ({ opened }) => (
   <CaretDown className={classes.caret} data-opened={opened || undefined} aria-hidden />
 );
 
-const PersonRow = memo<ItemProps>(({ person, plans, onAdd, ...handlers }) => {
-  const { t } = useLingui();
-  const [opened, { toggle }] = useDisclosure(false);
-  const hasMemberships = person.memberships.length > 0;
-  const name = person.name;
-  return (
-    <>
-      <Table.Tr
-        className={classes.row}
-        data-opened={opened || undefined}
-        data-clickable={hasMemberships || undefined}
-        onClick={hasMemberships ? toggle : undefined}
-      >
-        <Table.Td w={48}>
-          {hasMemberships && (
-            <ActionIcon
-              variant="subtle"
-              color="gray"
-              aria-expanded={opened}
-              aria-label={opened ? t`Hide memberships for ${name}` : t`Show memberships for ${name}`}
-              onClick={(event) => {
-                event.stopPropagation();
-                toggle();
-              }}
-            >
-              <ExpandIcon opened={opened} />
-            </ActionIcon>
+const PersonRow = memo<ItemProps>(
+  ({ person, plans, onAdd, selection, onSelect, selectedCount, selectable, ...handlers }) => {
+    const { t } = useLingui();
+    const [opened, { toggle }] = useDisclosure(false);
+    const hasMemberships = person.memberships.length > 0;
+    const name = person.name;
+    return (
+      <>
+        <Table.Tr
+          className={classes.row}
+          data-opened={opened || undefined}
+          data-selected={selectedCount > 0 || undefined}
+          data-clickable={hasMemberships || undefined}
+          onClick={hasMemberships ? toggle : undefined}
+        >
+          {selectable && (
+            <Table.Td w={40}>
+              {person.unpaid > 0 && (
+                <PersonCheckbox person={person} selectedCount={selectedCount} onSelect={onSelect} />
+              )}
+            </Table.Td>
           )}
-        </Table.Td>
-        <Table.Td maw={320}>
-          <PersonName person={person} />
-        </Table.Td>
-        <Table.Td>
-          <Text size="sm">{planSummary(person, plans)}</Text>
-        </Table.Td>
-        <Table.Td>
-          <PersonStatus person={person} />
-        </Table.Td>
-        <Table.Td ta="end">
-          <AddButton person={person} onAdd={onAdd} />
-        </Table.Td>
-      </Table.Tr>
-      {opened && (
-        <Table.Tr className={classes.details}>
-          <Table.Td colSpan={COLUMNS}>
-            <MembershipList memberships={person.memberships} plans={plans} requests={false} {...handlers} />
+          <Table.Td w={48}>
+            {hasMemberships && (
+              <ActionIcon
+                variant="subtle"
+                color="gray"
+                aria-expanded={opened}
+                aria-label={opened ? t`Hide memberships for ${name}` : t`Show memberships for ${name}`}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  toggle();
+                }}
+              >
+                <ExpandIcon opened={opened} />
+              </ActionIcon>
+            )}
+          </Table.Td>
+          <Table.Td maw={320}>
+            <PersonName person={person} />
+          </Table.Td>
+          <Table.Td>
+            <Text size="sm">{planSummary(person, plans)}</Text>
+          </Table.Td>
+          <Table.Td>
+            <PersonStatus person={person} />
+          </Table.Td>
+          <Table.Td ta="end">
+            <AddButton person={person} onAdd={onAdd} />
           </Table.Td>
         </Table.Tr>
-      )}
-    </>
-  );
-});
-
-const PersonCard = memo<ItemProps>(({ person, plans, onAdd, ...handlers }) => {
-  const [opened, { toggle }] = useDisclosure(false);
-  const hasMemberships = person.memberships.length > 0;
-  return (
-    <Card withBorder radius="lg" padding="md" data-opened={opened || undefined}>
-      <Stack gap="sm">
-        <Group justify="space-between" wrap="nowrap" gap="sm">
-          <PersonName person={person} />
-          <AddButton person={person} onAdd={onAdd} />
-        </Group>
-        <PersonStatus person={person} />
-        {hasMemberships && (
-          <>
-            <UnstyledButton onClick={toggle} aria-expanded={opened} className={classes.cardToggle}>
-              <Text size="sm" truncate>
-                {planSummary(person, plans)}
-              </Text>
-              <ExpandIcon opened={opened} />
-            </UnstyledButton>
-            <Collapse expanded={opened}>
-              <MembershipList memberships={person.memberships} plans={plans} requests={false} {...handlers} />
-            </Collapse>
-          </>
+        {opened && (
+          <Table.Tr className={classes.details}>
+            <Table.Td colSpan={selectable ? COLUMNS + 1 : COLUMNS}>
+              <MembershipList
+                memberships={person.memberships}
+                plans={plans}
+                requests={false}
+                selection={selection}
+                onSelect={person.unpaid > 0 ? onSelect : undefined}
+                {...handlers}
+              />
+            </Table.Td>
+          </Table.Tr>
         )}
-      </Stack>
-    </Card>
-  );
-});
+      </>
+    );
+  },
+);
 
-type Props = Handlers & { people: readonly Person[]; plans: ReadonlyMap<string, Plan> };
+const PersonCard = memo<ItemProps>(
+  ({ person, plans, onAdd, selection, onSelect, selectedCount, selectable, ...handlers }) => {
+    const [opened, { toggle }] = useDisclosure(false);
+    const hasMemberships = person.memberships.length > 0;
+    return (
+      <Card
+        withBorder
+        radius="lg"
+        padding="md"
+        className={selectionClasses.card}
+        data-opened={opened || undefined}
+        data-selected={selectedCount > 0 || undefined}
+      >
+        <Stack gap="sm">
+          <Group justify="space-between" wrap="nowrap" gap="sm">
+            <Group gap="sm" wrap="nowrap" miw={0}>
+              {selectable && person.unpaid > 0 && (
+                <PersonCheckbox person={person} selectedCount={selectedCount} onSelect={onSelect} />
+              )}
+              <PersonName person={person} />
+            </Group>
+            <AddButton person={person} onAdd={onAdd} />
+          </Group>
+          <PersonStatus person={person} />
+          {hasMemberships && (
+            <>
+              <UnstyledButton onClick={toggle} aria-expanded={opened} className={classes.cardToggle}>
+                <Text size="sm" truncate>
+                  {planSummary(person, plans)}
+                </Text>
+                <ExpandIcon opened={opened} />
+              </UnstyledButton>
+              <Collapse expanded={opened}>
+                <MembershipList
+                  memberships={person.memberships}
+                  plans={plans}
+                  requests={false}
+                  selection={selection}
+                  onSelect={person.unpaid > 0 ? onSelect : undefined}
+                  {...handlers}
+                />
+              </Collapse>
+            </>
+          )}
+        </Stack>
+      </Card>
+    );
+  },
+);
 
-export const PeopleList: FC<Props> = ({ people, ...rest }) => {
+type Props = Handlers & Selectable & { people: readonly Person[]; plans: ReadonlyMap<string, Plan> };
+
+const selectedCountOf = (ids: readonly string[], selection: ReadonlySet<string>) =>
+  ids.reduce((sum, id) => (selection.has(id) ? sum + 1 : sum), 0);
+
+export const PeopleList: FC<Props> = ({ people, selection, onSelect, ...rest }) => {
   const isMobile = useIsMobile();
+  const unpaidIds = useMemo(() => people.flatMap((p) => p.unpaidIds), [people]);
+  const selectable = unpaidIds.length > 0;
+  const allSelected = selectedCountOf(unpaidIds, selection);
+  const itemProps = (person: Person) => {
+    const selectedCount = selectedCountOf(person.unpaidIds, selection);
+    return {
+      person,
+      selectable,
+      selectedCount,
+      selection: selectedCount > 0 ? selection : NO_SELECTION,
+      onSelect,
+      ...rest,
+    };
+  };
 
   if (isMobile) {
     return (
       <Stack gap="sm">
+        {selectable && <SelectAll ids={unpaidIds} selectedCount={allSelected} onSelect={onSelect} label />}
         {people.map((person) => (
-          <PersonCard key={person.key} person={person} {...rest} />
+          <PersonCard key={person.key} {...itemProps(person)} />
         ))}
       </Stack>
     );
@@ -225,6 +326,11 @@ export const PeopleList: FC<Props> = ({ people, ...rest }) => {
     <Table verticalSpacing="sm" highlightOnHover>
       <Table.Thead>
         <Table.Tr>
+          {selectable && (
+            <Table.Th w={40}>
+              <SelectAll ids={unpaidIds} selectedCount={allSelected} onSelect={onSelect} />
+            </Table.Th>
+          )}
           <Table.Th>
             <VisuallyHidden>
               <Trans>Show memberships</Trans>
@@ -248,7 +354,7 @@ export const PeopleList: FC<Props> = ({ people, ...rest }) => {
       </Table.Thead>
       <Table.Tbody>
         {people.map((person) => (
-          <PersonRow key={person.key} person={person} {...rest} />
+          <PersonRow key={person.key} {...itemProps(person)} />
         ))}
       </Table.Tbody>
     </Table>
