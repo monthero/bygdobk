@@ -249,8 +249,12 @@ msgid "A court in perspective, the shuttle lands just out."
 msgstr "En bane i perspektiv, fjærballen lander så vidt ute."
 
 #: src/data/photos.ts
-msgid "A player getting ready to serve"
-msgstr "En spiller gjør seg klar til å serve"
+msgid "A hand holding a shuttle above a racket, ready to serve"
+msgstr "En hånd som holder en fjærball over en racket, klar til å serve"
+
+#: src/data/photos.ts
+msgid "A person on a bench reading a newspaper that hides their face"
+msgstr "En person som sitter på en benk og leser en avis som skjuler ansiktet"
 
 #: src/pages/contact/ContactPage.tsx
 msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
@@ -261,8 +265,16 @@ msgid "A racket"
 msgstr "En racket"
 
 #: src/data/photos.ts
+msgid "A racket leaning on a shuttle on a green court"
+msgstr "En racket som lener mot en fjærball på en grønn bane"
+
+#: src/data/photos.ts
 msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
 msgstr "En racket, en fjærball og en telefon på en benk i en badmintonhall i solnedgang"
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket on a green court, with players blurred behind"
+msgstr "En fjærball på en racket på en grønn bane, med uskarpe spillere bak"
 
 #: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
@@ -275,6 +287,10 @@ msgstr "En fjærball som ligger på en badmintonracket"
 #: src/data/photos.ts
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "En fjærball som ligger på en racket i en idrettshall"
+
+#: src/data/photos.ts
+msgid "A shuttle standing on a racket on a court floor"
+msgstr "En fjærball som står på en racket på banegulvet"
 
 #: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
@@ -2890,10 +2906,6 @@ msgstr "Prøv igjen, eller send oss en e-post på <0>{0}</0>."
 #: src/pages/news/NewsPage.tsx
 msgid "Try another category, or see all the news."
 msgstr "Prøv en annen kategori, eller se alle nyhetene."
-
-#: src/data/photos.ts
-msgid "Two rackets and a shuttle on a court line"
-msgstr "To racketer og en fjærball på en banelinje"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"

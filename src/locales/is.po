@@ -249,8 +249,12 @@ msgid "A court in perspective, the shuttle lands just out."
 msgstr "Völlur í fjarvídd, boltinn lendir rétt utan vallar."
 
 #: src/data/photos.ts
-msgid "A player getting ready to serve"
-msgstr "Leikmaður býr sig undir að gefa upp"
+msgid "A hand holding a shuttle above a racket, ready to serve"
+msgstr "Hönd heldur á fjaðrabolta yfir spaða, tilbúin að gefa upp"
+
+#: src/data/photos.ts
+msgid "A person on a bench reading a newspaper that hides their face"
+msgstr "Manneskja á bekk að lesa dagblað sem hylur andlitið"
 
 #: src/pages/contact/ContactPage.tsx
 msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
@@ -261,8 +265,16 @@ msgid "A racket"
 msgstr "Spaði"
 
 #: src/data/photos.ts
+msgid "A racket leaning on a shuttle on a green court"
+msgstr "Spaði sem hallar sér upp að fjaðrabolta á grænum velli"
+
+#: src/data/photos.ts
 msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
 msgstr "Spaði, fjaðrabolti og sími á bekk í badmintonsal við sólsetur"
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket on a green court, with players blurred behind"
+msgstr "Fjaðrabolti á spaða á grænum velli, með óskýra leikmenn fyrir aftan"
 
 #: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
@@ -275,6 +287,10 @@ msgstr "Fjaðrabolti liggur á badmintonspaða"
 #: src/data/photos.ts
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "Fjaðrabolti liggur á spaða í íþróttahúsi"
+
+#: src/data/photos.ts
+msgid "A shuttle standing on a racket on a court floor"
+msgstr "Fjaðrabolti sem stendur á spaða á vallargólfi"
 
 #: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
@@ -2890,10 +2906,6 @@ msgstr "Reyndu aftur, eða sendu okkur tölvupóst á <0>{0}</0>."
 #: src/pages/news/NewsPage.tsx
 msgid "Try another category, or see all the news."
 msgstr "Prófaðu annan flokk, eða sjáðu allar fréttirnar."
-
-#: src/data/photos.ts
-msgid "Two rackets and a shuttle on a court line"
-msgstr "Tveir spaðar og fjaðrabolti á vallarlínu"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"

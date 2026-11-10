@@ -249,8 +249,12 @@ msgid "A court in perspective, the shuttle lands just out."
 msgstr "透视视角的球场，羽毛球刚好落在界外。"
 
 #: src/data/photos.ts
-msgid "A player getting ready to serve"
-msgstr "一名球员准备发球"
+msgid "A hand holding a shuttle above a racket, ready to serve"
+msgstr "一只手在球拍上方拿着羽毛球，准备发球"
+
+#: src/data/photos.ts
+msgid "A person on a bench reading a newspaper that hides their face"
+msgstr "一个人坐在长椅上看报纸，报纸挡住了脸"
 
 #: src/pages/contact/ContactPage.tsx
 msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
@@ -261,8 +265,16 @@ msgid "A racket"
 msgstr "一支球拍"
 
 #: src/data/photos.ts
+msgid "A racket leaning on a shuttle on a green court"
+msgstr "绿色场地上，一支球拍斜靠在羽毛球上"
+
+#: src/data/photos.ts
 msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
 msgstr "日落时分，羽毛球馆的长凳上放着一支球拍、一个羽毛球和一部手机"
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket on a green court, with players blurred behind"
+msgstr "绿色场地上的球拍上放着一个羽毛球，背景是模糊的球员"
 
 #: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
@@ -275,6 +287,10 @@ msgstr "一个羽毛球放在羽毛球拍上"
 #: src/data/photos.ts
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "体育馆里，一个羽毛球放在球拍上"
+
+#: src/data/photos.ts
+msgid "A shuttle standing on a racket on a court floor"
+msgstr "一个羽毛球立在球场地板上的球拍上"
 
 #: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
@@ -2890,10 +2906,6 @@ msgstr "再试一次，或发邮件到<0>{0}</0>。"
 #: src/pages/news/NewsPage.tsx
 msgid "Try another category, or see all the news."
 msgstr "换个分类试试，或者查看全部新闻。"
-
-#: src/data/photos.ts
-msgid "Two rackets and a shuttle on a court line"
-msgstr "场地线上的两只球拍和一个羽毛球"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"

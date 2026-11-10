@@ -249,8 +249,12 @@ msgid "A court in perspective, the shuttle lands just out."
 msgstr "A court in perspective, the shuttle lands just out."
 
 #: src/data/photos.ts
-msgid "A player getting ready to serve"
-msgstr "A player getting ready to serve"
+msgid "A hand holding a shuttle above a racket, ready to serve"
+msgstr "A hand holding a shuttle above a racket, ready to serve"
+
+#: src/data/photos.ts
+msgid "A person on a bench reading a newspaper that hides their face"
+msgstr "A person on a bench reading a newspaper that hides their face"
 
 #: src/pages/contact/ContactPage.tsx
 msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
@@ -261,8 +265,16 @@ msgid "A racket"
 msgstr "A racket"
 
 #: src/data/photos.ts
+msgid "A racket leaning on a shuttle on a green court"
+msgstr "A racket leaning on a shuttle on a green court"
+
+#: src/data/photos.ts
 msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
 msgstr "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket on a green court, with players blurred behind"
+msgstr "A shuttle on a racket on a green court, with players blurred behind"
 
 #: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
@@ -275,6 +287,10 @@ msgstr "A shuttle resting on a badminton racket"
 #: src/data/photos.ts
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "A shuttle resting on a racket in a sports hall"
+
+#: src/data/photos.ts
+msgid "A shuttle standing on a racket on a court floor"
+msgstr "A shuttle standing on a racket on a court floor"
 
 #: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
@@ -2890,10 +2906,6 @@ msgstr "Try again, or email us at <0>{0}</0>."
 #: src/pages/news/NewsPage.tsx
 msgid "Try another category, or see all the news."
 msgstr "Try another category, or see all the news."
-
-#: src/data/photos.ts
-msgid "Two rackets and a shuttle on a court line"
-msgstr "Two rackets and a shuttle on a court line"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"

@@ -249,8 +249,12 @@ msgid "A court in perspective, the shuttle lands just out."
 msgstr "Kenttä perspektiivissä, sulkapallo putoaa juuri ulos."
 
 #: src/data/photos.ts
-msgid "A player getting ready to serve"
-msgstr "Pelaaja valmistautuu syöttämään"
+msgid "A hand holding a shuttle above a racket, ready to serve"
+msgstr "Käsi pitelee sulkapalloa mailan yllä valmiina syöttöön"
+
+#: src/data/photos.ts
+msgid "A person on a bench reading a newspaper that hides their face"
+msgstr "Henkilö penkillä lukemassa sanomalehteä, joka peittää kasvot"
 
 #: src/pages/contact/ContactPage.tsx
 msgid "A question about training, membership or something else? Pick a topic and your message goes to the board."
@@ -261,8 +265,16 @@ msgid "A racket"
 msgstr "Maila"
 
 #: src/data/photos.ts
+msgid "A racket leaning on a shuttle on a green court"
+msgstr "Maila nojaa sulkapalloon vihreällä kentällä"
+
+#: src/data/photos.ts
 msgid "A racket, a shuttle and a phone on a bench in a badminton hall at sunset"
 msgstr "Maila, sulkapallo ja puhelin penkillä sulkapallohallissa auringonlaskun aikaan"
+
+#: src/data/photos.ts
+msgid "A shuttle on a racket on a green court, with players blurred behind"
+msgstr "Sulkapallo mailan päällä vihreällä kentällä, taustalla sumeita pelaajia"
 
 #: src/data/photos.ts
 msgid "A shuttle on a racket, with players on green courts behind"
@@ -275,6 +287,10 @@ msgstr "Sulkapallo lepää mailan päällä"
 #: src/data/photos.ts
 msgid "A shuttle resting on a racket in a sports hall"
 msgstr "Sulkapallo mailan päällä urheiluhallissa"
+
+#: src/data/photos.ts
+msgid "A shuttle standing on a racket on a court floor"
+msgstr "Sulkapallo pystyssä mailan päällä kentän lattialla"
 
 #: src/pages/study/notfound/ideas/index.ts
 msgid "A tiny game: keep the shuttle in the air."
@@ -2890,10 +2906,6 @@ msgstr "Yritä uudelleen tai lähetä meille sähköpostia: <0>{0}</0>."
 #: src/pages/news/NewsPage.tsx
 msgid "Try another category, or see all the news."
 msgstr "Kokeile toista luokkaa tai katso kaikki uutiset."
-
-#: src/data/photos.ts
-msgid "Two rackets and a shuttle on a court line"
-msgstr "Kaksi mailaa ja sulkapallo kentän rajaviivalla"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"
