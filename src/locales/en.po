@@ -811,6 +811,10 @@ msgstr "Contained"
 msgid "Continue with Google"
 msgstr "Continue with Google"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Continue with Microsoft"
+msgstr "Continue with Microsoft"
+
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "Copied! Paste them into Bcc"
@@ -1617,6 +1621,10 @@ msgstr "Menu"
 msgid "Message"
 msgstr "Message"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Microsoft login isn't switched on yet."
+msgstr "Microsoft login isn't switched on yet."
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
@@ -1680,6 +1688,11 @@ msgstr "New best: {best}"
 #: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "New events show up in your calendar by themselves."
+
+#. Spond is the app the club uses for training. Groups and Enter code are the labels in the Spond app
+#: src/pages/training/TrainingPage.tsx
+msgid "New in Spond? In the app, go to Groups, tap Enter code and type <0>{code}</0>. The board then lets you in."
+msgstr "New in Spond? In the app, go to Groups, tap Enter code and type <0>{code}</0>. The board then lets you in."
 
 #: src/components/auth/LoginModal.tsx
 msgid "New link sent"

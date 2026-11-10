@@ -174,6 +174,7 @@ const Club = z.object({
   venue: lenient(Venue),
   orgNr: lenient(z.string().min(1)),
   whistleblowingUrl: lenient(WebUrl),
+  spondCode: lenient(z.string().regex(/^[A-Za-z0-9]{4,8}$/)),
 });
 
 const NO_CLUB = Club.parse({});

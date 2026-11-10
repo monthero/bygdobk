@@ -142,6 +142,18 @@ const GroupLine = memo<{ group: TrainingGroup; info: GroupInfo; sessions: Sessio
   );
 });
 
+const SpondCode: FC<{ code: string }> = ({ code }) => (
+  <Text inherit>
+    <Trans comment="Spond is the app the club uses for training. Groups and Enter code are the labels in the Spond app">
+      New in Spond? In the app, go to Groups, tap Enter code and type{' '}
+      <Text span inherit fw={700} className="tabular">
+        {code}
+      </Text>
+      . The board then lets you in.
+    </Trans>
+  </Text>
+);
+
 export const TrainingPage: FC = () => {
   const { t } = useLingui();
   usePageTitle(t`Training`);
@@ -263,9 +275,15 @@ export const TrainingPage: FC = () => {
             </Title>
             <TrainingSchedule season={season} group={group} />
             <Alert icon={<Info />} color="brand" variant="light">
-              <Trans>
-                Breaks and cancellations show up here as soon as the club posts them. Members also get them in Spond.
-              </Trans>
+              <Stack gap={6}>
+                <Text inherit>
+                  <Trans>
+                    Breaks and cancellations show up here as soon as the club posts them. Members also get them in
+                    Spond.
+                  </Trans>
+                </Text>
+                {club.spondCode && <SpondCode code={club.spondCode} />}
+              </Stack>
             </Alert>
           </Stack>
           <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">

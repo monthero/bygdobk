@@ -142,6 +142,14 @@ export const clubDetails = defineType({
       description: 'Where members can report problems outside the club. Shown on the club page.',
       validation: (rule) => rule.uri({ scheme: ['https'] }),
     }),
+    defineField({
+      name: 'spondCode',
+      title: 'Spond group code',
+      type: 'string',
+      description:
+        'The code people type in the Spond app (Groups, then Enter code) to ask to join the club group. Shown on the training page.',
+      validation: (rule) => rule.regex(/^[A-Za-z0-9]{4,8}$/, { name: 'group code' }),
+    }),
   ],
   preview: { prepare: () => ({ title: 'Club details' }) },
 });

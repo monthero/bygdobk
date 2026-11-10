@@ -811,6 +811,10 @@ msgstr "居中"
 msgid "Continue with Google"
 msgstr "使用Google继续"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Continue with Microsoft"
+msgstr "使用Microsoft继续"
+
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "已复制！粘贴到密送栏"
@@ -1617,6 +1621,10 @@ msgstr "菜单"
 msgid "Message"
 msgstr "消息"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Microsoft login isn't switched on yet."
+msgstr "Microsoft登录还没开通。"
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "击球{hits, plural, one {#次} other {#次}}后没接住。按空格键重新发球。"
@@ -1680,6 +1688,11 @@ msgstr "新纪录：{best}"
 #: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "新活动会自动出现在你的日历里。"
+
+#. Spond is the app the club uses for training. Groups and Enter code are the labels in the Spond app
+#: src/pages/training/TrainingPage.tsx
+msgid "New in Spond? In the app, go to Groups, tap Enter code and type <0>{code}</0>. The board then lets you in."
+msgstr "刚开始用 Spond？在应用里进入群组，选择输入代码，然后输入 <0>{code}</0>。理事会随后会让你加入。"
 
 #: src/components/auth/LoginModal.tsx
 msgid "New link sent"

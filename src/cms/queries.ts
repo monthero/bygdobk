@@ -6,7 +6,7 @@ export const localized = (...fields: string[]) => fields.map((field) => `"${fiel
 export const CONTENT_GROQ = `{
   "notice": *[_id == "notice"][0] { visible, tone, ${localized('text')} },
   "socials": *[_id == "socialLinks"][0].links[] { platform, url },
-  "club": *[_id == "clubDetails"][0] { email, venue, orgNr, whistleblowingUrl },
+  "club": *[_id == "clubDetails"][0] { email, venue, orgNr, whistleblowingUrl, spondCode },
   "payment": *[_id == "payment"][0] { vipps, accountNumber, ${localized('instructions')} },
   "contactTopics": *[_id == "contactForm"][0].topics[] { id, ${localized('label')} },
   "photos": *[_id == "sitePhotos"][0],

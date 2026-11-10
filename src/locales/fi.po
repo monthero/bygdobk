@@ -811,6 +811,10 @@ msgstr "Keskitetty"
 msgid "Continue with Google"
 msgstr "Jatka Googlella"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Continue with Microsoft"
+msgstr "Jatka Microsoftilla"
+
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "Kopioitu! Liitä ne Piilokopio-kenttään"
@@ -1617,6 +1621,10 @@ msgstr "Valikko"
 msgid "Message"
 msgstr "Viesti"
 
+#: src/components/auth/LoginModal.tsx
+msgid "Microsoft login isn't switched on yet."
+msgstr "Microsoft-kirjautuminen ei ole vielä käytössä."
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "Ohi {hits, plural, one {# lyönnin} other {# lyönnin}} jälkeen. Syötä uudelleen välilyönnillä."
@@ -1680,6 +1688,11 @@ msgstr "Uusi ennätys: {best}"
 #: src/components/calendar/CalendarFeed.tsx
 msgid "New events show up in your calendar by themselves."
 msgstr "Uudet tapahtumat ilmestyvät kalenteriisi itsestään."
+
+#. Spond is the app the club uses for training. Groups and Enter code are the labels in the Spond app
+#: src/pages/training/TrainingPage.tsx
+msgid "New in Spond? In the app, go to Groups, tap Enter code and type <0>{code}</0>. The board then lets you in."
+msgstr "Uusi Spondissa? Mene sovelluksessa ryhmiin, valitse koodin syöttäminen ja kirjoita <0>{code}</0>. Hallitus päästää sinut sitten mukaan."
 
 #: src/components/auth/LoginModal.tsx
 msgid "New link sent"
