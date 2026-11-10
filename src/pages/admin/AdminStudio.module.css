@@ -1,5 +1,19 @@
 .studio {
   height: 100dvh;
+
+  & :global([data-testid='studio-navbar'][data-scheme='dark']) {
+    & :global([data-ui='MenuButton'] [data-ui='Button'] [data-ui='Text']) {
+      color: #e4e5e9;
+    }
+
+    & :global([data-ui='ReleasesNav'] [data-ui='Text']) {
+      color: #979cb0;
+    }
+  }
+
+  & :global([data-testid='structure-tool-list-pane'][data-scheme='dark'] li:not(:has(a, button)) [data-ui='Text']) {
+    color: #979cb0;
+  }
 }
 
 :global([data-ui='Popover']:has(img[src*='cdn.sanity.io/images/pyrmmpch/'])) {

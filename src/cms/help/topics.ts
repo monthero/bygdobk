@@ -350,9 +350,9 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     nb: {
       title: 'Arrangementer',
       intro:
-        'Turneringer, sosiale kvelder, møter og turer ligger i «Upcoming events» og «Past events». Hvert arrangement får sin egen side.',
+        'Turneringer, sosiale kvelder, møter og turer ligger i «Events». Hvert arrangement får sin egen side.',
       steps: [
-        'Trykk «Add an event» på «Start». Eller åpne «Upcoming events» i «Content», trykk «+» og velg «Tournament», «Social», «Meeting» eller «Trip».',
+        'Trykk «Add an event» på «Start». Eller åpne «Events» i «Content», trykk «+» og velg «Tournament», «Social», «Meeting» eller «Trip».',
         'Skjemaet har faner: «About», «Date and time», «Place» og «Sign-up». «All fields» viser alt på én gang.',
         'I «About» sjekker du at «Type» stemmer. Skriv «Title» og «Description», og trykk «Generate» ved «URL name».',
         '«Tip box» i «About» viser en liten tipsboks på arrangementssiden.',
@@ -363,7 +363,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Trykk «Publish».',
       ],
       tips: [
-        'Når arrangementet er over, flytter det seg av seg selv fra «Upcoming events» til «Past events».',
+        'Listen viser de nyeste først. Når arrangementet er over, står det «Done» først i linjen under navnet.',
         'De siste tre dagene før fristen viser siden «Stenger snart». Etter fristen er påmeldingen stengt.',
         'Arrangementer med fast dato kommer med i kalenderen folk abonnerer på med «Abonner» på Arrangementer-siden. Treningene har egne kalendere per gruppe: «Legg til i kalenderen» på Trening-siden. Avlyste treninger blir markert der av seg selv.',
         'Et arrangement på samme tid som trening avlyser treningen. Se «Avlys trening».',
@@ -373,9 +373,9 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     en: {
       title: 'Events',
       intro:
-        'Tournaments, socials, meetings and trips are in “Upcoming events” and “Past events”. Each event gets its own page.',
+        'Tournaments, socials, meetings and trips are in “Events”. Each event gets its own page.',
       steps: [
-        'Click “Add an event” on “Start”. Or open “Upcoming events” in “Content”, click “+” and pick “Tournament”, “Social”, “Meeting” or “Trip”.',
+        'Click “Add an event” on “Start”. Or open “Events” in “Content”, click “+” and pick “Tournament”, “Social”, “Meeting” or “Trip”.',
         'The form has tabs: “About”, “Date and time”, “Place” and “Sign-up”. “All fields” shows everything at once.',
         'In “About”, check that the “Type” is right. Write the “Title” and “Description”, and click “Generate” next to “URL name”.',
         '“Tip box” in “About” shows a small tip on the event page.',
@@ -386,7 +386,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Click “Publish”.',
       ],
       tips: [
-        'When the event is over, it moves from “Upcoming events” to “Past events” on its own.',
+        'The list shows the newest first. When the event is over, “Done” shows first in the line under its name.',
         'In the last three days before the deadline, the website shows “Closing soon”. After the deadline, sign-up is closed.',
         'Events with a set date are in the calendar feed people get with “Subscribe” on the Events page. Training has its own calendar per group: “Add to calendar” on the Training page. Canceled sessions are marked there by themselves.',
         'An event at the same time as a training cancels that training. See “Cancel a training”.',
@@ -400,7 +400,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       title: 'Dugnadsvakter',
       intro: 'Klubbens egne turneringer og sosiale kvelder kan ha dugnadsvakter som medlemmene melder seg på.',
       steps: [
-        'Åpne arrangementet under «Upcoming events». «Type» må være «Tournament» eller «Social».',
+        'Åpne arrangementet under «Events». «Type» må være «Tournament» eller «Social».',
         'Slå på «Organized by the club» i fanen «About».',
         'Da dukker fanen «Volunteers» opp. Under «Volunteer shifts» legger du til én vakt per lag og tidsrom.',
         'Velg «Team» («Hall», «Kiosk» eller «Secretariat»), «Day», «Start», «End» og «People needed». Kryss av «Setup or teardown» for rigging og rydding.',
@@ -416,7 +416,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       title: 'Volunteer shifts',
       intro: 'The club’s own tournaments and socials can have volunteer shifts that members sign up for.',
       steps: [
-        'Open the event under “Upcoming events”. “Type” must be “Tournament” or “Social”.',
+        'Open the event under “Events”. “Type” must be “Tournament” or “Social”.',
         'Turn on “Organized by the club” in the “About” tab.',
         'The “Volunteers” tab then shows up. Under “Volunteer shifts”, add one shift per team and time slot.',
         'Pick the “Team” (“Hall”, “Kiosk” or “Secretariat”), “Day”, “Start”, “End” and “People needed”. Check “Setup or teardown” for setting up and tidying up.',

@@ -24,6 +24,7 @@ import { Group, GroupStatus, PlanAudience, PriceKind } from '~/data/club';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { PERK_ICON_NAMES, PerkIcon } from '~/data/sponsors';
+import { todayIso } from '~/utils/dates';
 import { normalizeEmail } from '~/utils/email';
 
 import { SANITY_API_VERSION } from '../sanityApi';
@@ -216,6 +217,11 @@ type EventPreview = {
   weekdays?: number[];
   until?: string;
   venue?: string;
+};
+
+const isDone = ({ start, end }: EventPreview) => {
+  const last = end ?? start;
+  return last !== undefined && last < todayIso();
 };
 
 const trainingPreview = ({ group, start, startTime, endTime, weekdays, until, venue }: EventPreview) => ({
@@ -529,7 +535,12 @@ export const event = defineType({
       if (value.kind === EventKind.enum.break) return breakPreview(value);
       return {
         title: value.title,
-        subtitle: [titleOf(EVENT_KIND_TITLES, value.kind), dateRange(value.start, value.end), value.venue]
+        subtitle: [
+          isDone(value) && 'Done',
+          titleOf(EVENT_KIND_TITLES, value.kind),
+          dateRange(value.start, value.end),
+          value.venue,
+        ]
           .filter(Boolean)
           .join(' · '),
       };

@@ -15,8 +15,7 @@ export const ListId = z.enum([
   'trainingTimes',
   'breaks',
   'trainingGroups',
-  'upcomingEvents',
-  'pastEvents',
+  'events',
   'volunteerTeams',
   'news',
   'membershipPlans',
@@ -45,7 +44,6 @@ export const FIXED_SETS = [
 
 export const eventTemplateId = (kind: EventKind) => `event-${kind}`;
 
-const today = () => new Date().toISOString().slice(0, 10);
 
 const VISITOR_FILTER = '_type == "event" && kind in $kinds';
 const VISITOR_TEMPLATES = VISITOR_KINDS.map(eventTemplateId);
@@ -134,21 +132,11 @@ export const structure: StructureResolver = (S) =>
 
       S.divider().title('Events'),
       list(S, {
-        id: ListId.enum.upcomingEvents,
-        title: 'Upcoming events',
+        id: ListId.enum.events,
+        title: 'Events',
         type: 'event',
-        filter: `${VISITOR_FILTER} && coalesce(endDate, startDate) >= $today`,
-        params: { kinds: VISITOR_KINDS, today: today() },
-        templates: VISITOR_TEMPLATES,
-        icon: Trophy,
-        orderBy: 'startDate',
-      }),
-      list(S, {
-        id: ListId.enum.pastEvents,
-        title: 'Past events',
-        type: 'event',
-        filter: `${VISITOR_FILTER} && coalesce(endDate, startDate) < $today`,
-        params: { kinds: VISITOR_KINDS, today: today() },
+        filter: VISITOR_FILTER,
+        params: { kinds: VISITOR_KINDS },
         templates: VISITOR_TEMPLATES,
         icon: Trophy,
         orderBy: 'startDate',
