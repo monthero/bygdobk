@@ -14,18 +14,27 @@ import {
   TabPanel,
   Text,
 } from '@sanity/ui';
-import { useQuery, type UseQueryOptions } from '@tanstack/react-query';
+import {
+  useMutation,
+  useMutationState,
+  useQuery,
+  type Mutation,
+  type UseMutationOptions,
+  type UseQueryOptions,
+} from '@tanstack/react-query';
 import { useMemo, useState, type FC } from 'react';
 import { getPublishedId, SanityDefaultPreview, useClient, useSchema } from 'sanity';
 import { useIntentLink } from 'sanity/router';
 import { z } from 'zod';
 
-import { ArrowCounterClockwise, CheckCircle } from '~/components/ui/icons';
+import { ArrowCounterClockwise, CheckCircle, Translate } from '~/components/ui/icons';
 import { LOCALE_META, REQUIRED_LOCALES, type Locale } from '~/i18n/locales';
 
 import { SCHEMA_TYPES } from '../schema';
 import { API_VERSION } from '../structure';
 import { gapsOf, missingTranslationsQuery, RawDoc, translatedTypes, type DocGaps } from './missing';
+import { translateDocument, type TranslateOutcome } from './translate';
+import { TranslateStatus, type TranslateState } from './TranslateStatus';
 
 const GapKind = z.enum(['required', 'optional']);
 type GapKind = z.infer<typeof GapKind>;
@@ -34,6 +43,7 @@ const DOCUMENT_TYPES = SCHEMA_TYPES.flatMap((type) => (type.type === 'document' 
 const RawDocs = z.array(RawDoc);
 const PANEL_ID = 'translations-panel';
 const PREVIEW_BOX = { minWidth: 220 } as const;
+const ROW_LINK = { minWidth: 260 } as const;
 const OK_ICON = { color: 'var(--card-badge-positive-icon-color)', flex: 'none' } as const;
 
 const LANGUAGE_LIST = new Intl.ListFormat('en', { type: 'conjunction' });
@@ -76,6 +86,23 @@ const useMissingTranslations = (options?: MissingOptions) => {
   });
 };
 
+type TranslateOptions = Omit<UseMutationOptions<TranslateOutcome>, 'mutationKey' | 'mutationFn'>;
+
+const translateKey = (id: string) => ['studio', 'translate', id] as const;
+
+const stateOf = (mutation: Mutation): TranslateState => mutation.state as TranslateState;
+
+const useTranslateDocument = (doc: DocGaps, options?: TranslateOptions) => {
+  const client = useClient({ apiVersion: API_VERSION });
+  const { mutate } = useMutation({
+    mutationKey: translateKey(doc.id),
+    mutationFn: () => translateDocument(client, doc.id, doc.nodes),
+    ...options,
+  });
+  const state = useMutationState({ filters: { mutationKey: translateKey(doc.id) }, select: stateOf }).at(-1);
+  return { state, translate: () => mutate() };
+};
+
 const languageName = (locale: Locale) => LOCALE_META[locale].name;
 
 const Gaps: FC<{ doc: DocGaps; kind: GapKind }> = ({ doc, kind }) => {
@@ -104,22 +131,39 @@ const Gaps: FC<{ doc: DocGaps; kind: GapKind }> = ({ doc, kind }) => {
 
 const DocRow: FC<{ doc: DocGaps; kind: GapKind }> = ({ doc, kind }) => {
   const link = useIntentLink({ intent: 'edit', params: { id: doc.id, type: doc.type.name } });
+  const { state, translate } = useTranslateDocument(doc);
   return (
-    <Card as="a" {...link} padding={2} radius={2} border>
-      <Flex align="center" gap={3} wrap="wrap">
-        <Box flex={1} style={PREVIEW_BOX}>
-          <SanityDefaultPreview
-            title={doc.preview.title}
-            subtitle={doc.preview.subtitle}
-            media={doc.preview.media}
-            icon={doc.type.icon}
-            layout="default"
+    <Card radius={2} border>
+      <Flex align="center" gap={1} wrap="wrap" padding={1}>
+        <Card as="a" {...link} flex={1} padding={2} radius={2} style={ROW_LINK}>
+          <Flex align="center" gap={3} wrap="wrap">
+            <Box flex={1} style={PREVIEW_BOX}>
+              <SanityDefaultPreview
+                title={doc.preview.title}
+                subtitle={doc.preview.subtitle}
+                media={doc.preview.media}
+                icon={doc.type.icon}
+                layout="default"
+              />
+            </Box>
+            {state?.status !== 'success' && (
+              <Box paddingX={2}>
+                <Gaps doc={doc} kind={kind} />
+              </Box>
+            )}
+          </Flex>
+        </Card>
+        <Box padding={1}>
+          <Button
+            mode="ghost"
+            icon={Translate}
+            text="Translate missing"
+            disabled={state?.status === 'pending'}
+            onClick={translate}
           />
         </Box>
-        <Box paddingX={2}>
-          <Gaps doc={doc} kind={kind} />
-        </Box>
       </Flex>
+      <TranslateStatus state={state} />
     </Card>
   );
 };

@@ -12,9 +12,9 @@ import { LOCALES_BY_ORDER, REQUIRED_LOCALES, type Locale } from '~/i18n/locales'
 const LOCALIZED_TYPES = new Set(['localeString', 'localeText', 'localeBody']);
 const MAX_DEPTH = 6;
 
-const NodeKind = z.enum(['localized', 'object', 'array']);
+export const NodeKind = z.enum(['localized', 'object', 'array']);
 
-type FieldNode =
+export type FieldNode =
   | { kind: typeof NodeKind.enum.localized; name: string; title: string }
   | {
       kind: typeof NodeKind.enum.object | typeof NodeKind.enum.array;
@@ -102,7 +102,7 @@ export type RawDoc = z.infer<typeof RawDoc>;
 
 type FieldGap = { field: string; locales: Locale[] };
 
-const asRecord = (value: unknown): Record<string, unknown> | undefined =>
+export const asRecord = (value: unknown): Record<string, unknown> | undefined =>
   typeof value === 'object' && value !== null && !Array.isArray(value) ? (value as Record<string, unknown>) : undefined;
 
 const collectGaps = (nodes: FieldNode[], value: unknown, trail: string[], gaps: FieldGap[]) => {
@@ -129,6 +129,7 @@ export type RequiredGap = { locale: Locale; fields: string[] };
 export type DocGaps = {
   id: string;
   type: ObjectSchemaType;
+  nodes: FieldNode[];
   preview: PreviewValue;
   required: RequiredGap[];
   optional: Locale[];
@@ -156,5 +157,12 @@ export const gapsOf = (doc: RawDoc, translated: TranslatedType, id: string): Doc
   const optional = LOCALES_BY_ORDER.filter(
     (locale) => !REQUIRED_LOCALES.has(locale) && gaps.some((gap) => gap.locales.includes(locale)),
   );
-  return { id, type: translated.type, preview: preparePreview(translated.type, doc.preview ?? {}), required, optional };
+  return {
+    id,
+    type: translated.type,
+    nodes: translated.nodes,
+    preview: preparePreview(translated.type, doc.preview ?? {}),
+    required,
+    optional,
+  };
 };

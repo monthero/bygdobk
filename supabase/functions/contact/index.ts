@@ -1,8 +1,7 @@
 import { withSupabase } from 'npm:@supabase/server@1';
-import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 import { z } from 'npm:zod@4';
 
-const ALLOWED_ORIGINS = new Set(['http://localhost:5173', 'https://bygdobk.vercel.app']);
+import { reply, withCors } from '../_shared/http.ts';
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 const CONTACT_TO = Deno.env.get('CONTACT_TO');
@@ -48,18 +47,6 @@ const Recipients = z.object({
     })
     .nullable(),
 });
-
-const corsFor = (origin: string | null) => {
-  const headers = new Headers({ Vary: 'Origin' });
-  if (origin && ALLOWED_ORIGINS.has(origin)) {
-    headers.set('Access-Control-Allow-Origin', origin);
-    headers.set('Access-Control-Allow-Headers', corsHeaders['Access-Control-Allow-Headers']);
-    headers.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  }
-  return headers;
-};
-
-const reply = (status: number, body: Record<string, unknown>) => Response.json(body, { status });
 
 const oneLine = (text: string) => text.replaceAll(/\s+/g, ' ');
 
@@ -134,14 +121,4 @@ const handle = withSupabase({ auth: 'publishable', cors: 'disabled', errors: { d
   return reply(200, { ok: true });
 });
 
-export default {
-  fetch: async (req: Request) => {
-    const cors = corsFor(req.headers.get('origin'));
-    if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
-
-    const res = await handle(req);
-    const withCors = new Response(res.body, res);
-    for (const [key, value] of cors) withCors.headers.set(key, value);
-    return withCors;
-  },
-};
+export default withCors(handle);
