@@ -66,7 +66,7 @@ export default defineConfig({
       'typescript/require-array-sort-compare': ['error', { ignoreStringArrays: false }],
       'unicorn/prefer-at': 'error',
       'eslint/no-nested-ternary': 'error',
-      'eslint/no-underscore-dangle': ['warn', { allow: ['_key', '_type', '_ref', '_id'] }],
+      'eslint/no-underscore-dangle': ['warn', { allow: ['_key', '_type', '_ref', '_id', '_createdAt', '_updatedAt'] }],
       'unicorn/prefer-number-properties': 'error',
       'unicorn/no-array-sort': 'off',
       'unicorn/no-array-reverse': 'off',

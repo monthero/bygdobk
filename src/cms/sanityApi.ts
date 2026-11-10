@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const SANITY_API_VERSION = '2026-11-01';
+export const SANITY_API_VERSION = '2026-11-01';
 
 export type SanityProject = { projectId: string; dataset: string };
 

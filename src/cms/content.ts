@@ -82,6 +82,7 @@ const NewsPost = z.object({
   summary: LocaleString,
   banner: opt(Image).catch(undefined),
   eventId: opt(z.string()),
+  author: opt(z.string().min(1)),
   links: listOf('news link', NewsLink),
 });
 

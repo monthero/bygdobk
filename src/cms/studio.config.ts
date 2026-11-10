@@ -9,6 +9,7 @@ import { EventKind } from '~/data/events';
 import { ENV } from '~/env';
 import { ADMIN_PATH } from '~/i18n/locales';
 
+import { stampActions } from './authors/actions';
 import { HELP_TOOL } from './help';
 import { LOCATIONS, MAIN_DOCUMENTS } from './presentation';
 import { SCHEMA_TYPES } from './schema';
@@ -67,7 +68,11 @@ export const STUDIO_CONFIG = defineConfig({
     ],
   },
   document: {
-    actions: (actions, { schemaType }) =>
-      LOCKED_TYPES.has(schemaType) ? actions.filter(({ action }) => !action || !LOCKED_ACTIONS.has(action)) : actions,
+    actions: (actions, { schemaType }) => {
+      const stamped = actions.map(stampActions);
+      return LOCKED_TYPES.has(schemaType)
+        ? stamped.filter(({ action }) => !action || !LOCKED_ACTIONS.has(action))
+        : stamped;
+    },
   },
 });

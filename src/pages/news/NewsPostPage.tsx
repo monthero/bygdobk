@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Anchor, Avatar, Button, Container, Group, SimpleGrid, Stack, Text, Title } from '@mantine/core';
+import { Anchor, Button, Container, Group, SimpleGrid, Stack, Title } from '@mantine/core';
 import { getRouteApi, Link } from '@tanstack/react-router';
 import { memo, useMemo, type FC } from 'react';
 
@@ -7,14 +7,14 @@ import { isPast } from '~/cms/calendar';
 import { useNewsBody, useSiteContent, type NewsPost } from '~/cms/content';
 import { EventCard, isVisitorEvent, type VisitorEvent } from '~/components/events';
 import { ArticleBody, NewsCard } from '~/components/news';
-import { ArrowRight, ArrowUpRight, ClubLogo } from '~/components/ui';
+import { ArrowRight, ArrowUpRight } from '~/components/ui';
 import { EventKind } from '~/data/events';
-import { NEWS_AUTHORS, NewsAuthor } from '~/data/news';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { NotFoundPage } from '~/pages/NotFoundPage';
 import { today } from '~/utils/dates';
 
 import { ArticleHero } from './components/ArticleHero';
+import { Byline } from './components/Byline';
 import { ClosureNotice } from './components/ClosureNotice';
 import { PostPager } from './components/PostPager';
 import { ShareButtons } from './components/ShareButtons';
@@ -24,8 +24,6 @@ import classes from './NewsPostPage.module.css';
 const route = getRouteApi('/nyheter/$slug');
 
 const MORE_COUNT = 3;
-const AUTHOR = NEWS_AUTHORS[NewsAuthor.enum.board];
-
 type NewsLink = NewsPost['links'][number];
 
 const neighbors = (post: NewsPost, news: NewsPost[]) => {
@@ -87,7 +85,6 @@ const EventPointer: FC<{ event: VisitorEvent }> = ({ event }) => {
 };
 
 const Article = memo<{ post: NewsPost }>(({ post }) => {
-  const { i18n } = useLingui();
   const { news, events } = useSiteContent();
   const body = useNewsBody(post.slug);
   const { newer, older, more } = useMemo(() => neighbors(post, news), [post, news]);
@@ -102,19 +99,7 @@ const Article = memo<{ post: NewsPost }>(({ post }) => {
       <Container py={{ base: 28, md: 40 }}>
         <Stack gap={36} className={classes.column}>
           <div className={classes.byline}>
-            <Group gap="sm" wrap="nowrap">
-              <Avatar size={48} radius="xl" variant="light" className={classes.avatar} aria-hidden>
-                <ClubLogo mark height={30} />
-              </Avatar>
-              <div>
-                <Anchor component={Link} to={AUTHOR.page} hash={AUTHOR.hash} fw={700} c="inherit">
-                  {i18n._(AUTHOR.name)}
-                </Anchor>
-                <Text size="sm" c="dimmed">
-                  {i18n._(AUTHOR.role)}
-                </Text>
-              </div>
-            </Group>
+            <Byline author={post.author} />
             <ShareButtons title={post.title} text={post.summary} />
           </div>
 

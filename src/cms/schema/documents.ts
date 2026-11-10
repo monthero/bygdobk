@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType, type CustomValidator } from 'sanity';
+import { defineArrayMember, defineField, defineType, getDraftId, getPublishedId, type CustomValidator } from 'sanity';
 import { z } from 'zod';
 
 import {
@@ -17,6 +17,8 @@ import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { PERK_ICON_NAMES, PerkIcon } from '~/data/sponsors';
 
+import { normalizeEmail } from '../authors/editor';
+import { SANITY_API_VERSION } from '../sanityApi';
 import { BannerInput } from './BannerInput';
 import {
   AUDIENCE_TITLES,
@@ -24,6 +26,7 @@ import {
   GROUP_TITLES,
   NEWS_KIND_TITLES,
   PRICE_KIND_TITLES,
+  SHORT_DATE,
   TEAM_TITLES,
   titledList,
   titleOf,
@@ -174,7 +177,6 @@ const EventTab = z.enum(['about', 'when', 'where', 'signup', 'volunteers']);
 
 const plainTab = ({ document }: { document?: unknown }) => isPlain({ document });
 
-const SHORT_DATE = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 const SHORT_WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'short', timeZone: 'UTC' });
 const LONG_WEEKDAY = new Intl.DateTimeFormat('en-GB', { weekday: 'long', timeZone: 'UTC' });
 
@@ -604,6 +606,20 @@ export const discount = defineType({
   preview: { select: { title: 'title.nb', subtitle: 'body.nb' } },
 });
 
+const SAME_EMAIL_QUERY = 'count(*[_type == "boardMember" && !(_id in $ids) && lower(email) == $email])';
+
+const uniqueEmail: CustomValidator<string | undefined> = async (email, { document, getClient }) => {
+  if (!email || !document) return true;
+  const id = getPublishedId(document._id);
+  const count = z.number().parse(
+    await getClient({ apiVersion: SANITY_API_VERSION }).fetch(SAME_EMAIL_QUERY, {
+      ids: [id, getDraftId(id)],
+      email: normalizeEmail(email),
+    }),
+  );
+  return count === 0 ? true : 'Another board member already uses this email';
+};
+
 export const boardMember = defineType({
   name: 'boardMember',
   title: 'Board member',
@@ -613,7 +629,12 @@ export const boardMember = defineType({
     defineField({ name: 'name', title: 'Name', type: 'string', validation: required }),
     defineField({ name: 'role', title: 'Role on the board', type: 'localeString', validation: required }),
     defineField({ name: 'photo', title: 'Photo', type: 'image', options: { hotspot: true }, validation: required }),
-    defineField({ name: 'email', title: 'Email', type: 'email', validation: required }),
+    defineField({
+      name: 'email',
+      title: 'Email',
+      type: 'email',
+      validation: (rule) => rule.required().custom(uniqueEmail),
+    }),
     defineField({
       name: 'phone',
       title: 'Phone',

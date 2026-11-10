@@ -5,8 +5,8 @@ import { notifications } from '@mantine/notifications';
 import { Link } from '@tanstack/react-router';
 import type { FC, ReactNode } from 'react';
 
-import { imageBuilder } from '~/cms/client';
 import { useSiteContent, type BoardMember } from '~/cms/content';
+import { imageUrl } from '~/cms/images';
 import { useClub } from '~/cms/siteData';
 import { ArrowRight, ArrowUpRight, Check, EnvelopeSimple, Handshake, Info, Phone, ShieldCheck } from '~/components/ui';
 import { contactLink, ContactTopic, SPONSOR_DRAFT } from '~/data/contact';
@@ -35,8 +35,7 @@ const IconCard: FC<{ icon: ReactNode; color?: string; title: ReactNode; children
 const PHONE_GROUPS = /^(\d{3})(\d{2})(\d{3})$/;
 const PHOTO_SIZE = 320;
 
-const photoUrl = (member: BoardMember) =>
-  imageBuilder.image(member.photo).width(PHOTO_SIZE).height(PHOTO_SIZE).fit('crop').auto('format').url();
+const photoUrl = (member: BoardMember) => imageUrl(member.photo, PHOTO_SIZE, 1);
 const COPIED_MS = 1600;
 
 const CopyAction: FC<{ value: string; label: string; done: string; icon: ReactNode }> = ({

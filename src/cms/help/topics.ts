@@ -92,6 +92,8 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Det kan ta noen minutter før endringen vises på nettsiden. Last inn siden på nytt.',
         'Noe finnes bare én av, for eksempel «Notice banner», «Club details», «Payment», «Photos» og «Privacy page». Det gjelder også treningsgruppene og dugnadsteamene. De kan ikke slettes.',
         '«Help» øverst åpner denne guiden.',
+        'Den grå linjen øverst i hvert dokument viser hvem som laget det og hvem som publiserte sist («Created by» og «Last published by»). Står det «the board», ble det laget før vi begynte å lagre navn.',
+        'Lager du en kopi med «Duplicate», står du som den som laget kopien.',
       ],
     },
     en: {
@@ -111,6 +113,8 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'It can take a few minutes before the website shows your change. Reload the page.',
         'Some things exist only once, for example “Notice banner”, “Club details”, “Payment”, “Photos” and “Privacy page”. The same goes for the training groups and volunteer teams. They can’t be deleted.',
         '“Help” at the top opens this guide.',
+        'The gray line at the top of each document shows who created it and who last published it. “the board” means it was made before names were saved.',
+        'If you copy a document with “Duplicate”, you become its creator.',
       ],
     },
   },
@@ -233,6 +237,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Når arrangementet eller pausen er over, flytter saken seg fra toppen av nyhetslisten til arkivet.',
         'I en tabell er første rad overskriften.',
+        'Den som lager saken, står som forfatter på nettsiden. Er du i styret, vises også bildet og rollen din fra «Board members».',
       ],
     },
     en: {
@@ -251,6 +256,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'When the event or break is over, the post moves from the top of the news list to the archive.',
         'In a table, the first row is the header.',
+        'The person who creates the post shows as its author on the website. If you are on the board, your photo and role from “Board members” show too.',
       ],
     },
   },
@@ -518,6 +524,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Fill in “Email” and “Phone”. The phone number is 8 digits with no spaces.',
         '“Order” sets the order. The lowest number comes first.',
         'Click “Publish”.',
+        'Bruk samme e-post som du logger inn i Studio med. Da vises du som forfatter med bilde og rolle. To personer kan ikke ha samme e-post.',
       ],
       tips: ['Someone left the board? Open the person and pick “Delete” in the menu next to “Publish”.'],
     },
@@ -532,6 +539,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Endre «Title» og «Text» på norsk og engelsk.',
         'Sett «Last updated» til datoen for endringen.',
         'Trykk «Publish».',
+        'Use the same email you log in to the Studio with. Then you show as the author with your photo and role. Two people can’t have the same email.',
       ],
       tips: ['Siden finnes bare én gang, så den kan ikke slettes.'],
     },
@@ -818,6 +826,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Et blått tall på profilbildet ditt viser hvor mange forespørsler som venter. Samme tall står på «Styresider» og på «Medlemskap».',
         'Linjen øverst på alle styresidene bytter mellom «Medlemskap», «Frivillige» og «Styretilgang».',
         'Søk på navn eller e-post for å finne noen raskt.',
+        'Åpne en person for å se hvem som la til, godkjente, markerte som betalt og sist endret hvert medlemskap. Merket «Styret» betyr at personen er i styret. Står det «styret» uten navn, skjedde det før vi begynte å lagre navn.',
       ],
     },
     en: {
@@ -838,6 +847,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'A blue number on your profile picture shows how many requests are waiting. The same number shows on “Board pages” and on “Memberships”.',
         'The bar at the top of every board page switches between “Memberships”, “Volunteers” and “Board access”.',
         'Search by name or email to find someone fast.',
+        'Open a person to see who added, approved, marked as paid and last changed each membership. The “Board” tag means the person is on the board. “the board” without a name means it happened before names were saved.',
       ],
     },
   },
@@ -952,6 +962,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'Er vakten full, kan du likevel legge til en til med «Legg til likevel».',
         'Vaktene lager du i Studio. Se «Dugnadsvakter».',
+        'Har noen andre satt opp en person på en vakt, står det «Lagt til av …» under navnet.',
       ],
     },
     en: {
@@ -968,6 +979,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       tips: [
         'If a shift is full, you can still add one more with “Add anyway”.',
         'You make the shifts in the Studio. See “Volunteer shifts”.',
+        'If someone else put a person on a shift, “Added by …” shows under the name.',
       ],
     },
   },
@@ -1017,6 +1029,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Du kan ikke fjerne deg selv. Be en annen administrator gjøre det. Det må alltid være minst én administrator.',
         'Den som fjernes, beholder kontoen og medlemskapene sine.',
         'Studio har sin egen innlogging. En ny administrator må også inviteres i Sanity for å redigere innholdet.',
+        'Under hver administrator står det når de fikk tilgang og hvem som ga den. Administratorer fra før dette ble lagt til, har ingen slik linje.',
       ],
     },
     en: {
@@ -1032,6 +1045,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'You can’t remove yourself. Ask another admin to do it. There must always be at least one admin.',
         'People you remove keep their account and memberships.',
         'The Studio has its own login. A new admin must also be invited in Sanity to edit the content.',
+        'Under each admin you see when they got access and who gave it. Admins from before this was added have no such line.',
       ],
     },
   },

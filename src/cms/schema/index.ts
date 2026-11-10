@@ -1,3 +1,4 @@
+import { withEditorStamps } from '../authors/schema';
 import {
   boardMember,
   discount,
@@ -13,14 +14,7 @@ import { articleBody, callout, localeBody, localeString, localeText, quote, tabl
 import { sitePhotos } from './photos';
 import { SETTINGS_TYPES } from './settings';
 
-export const SCHEMA_TYPES = [
-  localeString,
-  localeText,
-  callout,
-  quote,
-  table,
-  articleBody,
-  localeBody,
+const DOCUMENT_TYPES = [
   ...SETTINGS_TYPES,
   sitePhotos,
   privacyPage,
@@ -32,6 +26,17 @@ export const SCHEMA_TYPES = [
   sponsor,
   trainingGroup,
   volunteerTeam,
+].map(withEditorStamps);
+
+export const SCHEMA_TYPES = [
+  localeString,
+  localeText,
+  callout,
+  quote,
+  table,
+  articleBody,
+  localeBody,
+  ...DOCUMENT_TYPES,
 ];
 
 export const SITE_PHOTOS_ID = 'sitePhotos';

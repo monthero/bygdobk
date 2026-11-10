@@ -6,9 +6,10 @@ import { CalendarX, Trophy } from '~/components/ui/icons';
 import { Group } from '~/data/club';
 import { EventKind, Team, VISITOR_KINDS } from '~/data/events';
 
+import { SANITY_API_VERSION } from './sanityApi';
 import { fixedDocId, PRIVACY_PAGE_ID, SITE_PHOTOS_ID } from './schema';
 
-export const API_VERSION = '2026-11-01';
+export const API_VERSION = SANITY_API_VERSION;
 
 export const ListId = z.enum([
   'trainingTimes',

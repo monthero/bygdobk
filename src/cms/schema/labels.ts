@@ -44,6 +44,8 @@ export const AUDIENCE_TITLES: Record<PlanAudience, string> = {
   [PlanAudience.enum.all]: 'Everyone',
 };
 
+export const SHORT_DATE = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
 export const titledList = <K extends string>(titles: Record<K, string>, values: readonly K[]) =>
   values.map((value) => ({ title: titles[value], value }));
 

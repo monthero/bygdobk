@@ -21,7 +21,8 @@ export const CONTENT_GROQ = `{
     "slug": slug.current, date, kind, ${localized('title', 'summary')},
     "links": links[] { _key, page, hash, url, ${localized('label')} },
     "banner": banner { ..., ${localized('alt')}, "lqip": asset->metadata.lqip },
-    "eventId": event._ref
+    "eventId": event._ref,
+    "author": createdBy.name
   },
   "events": *[_type == "event"] | order(startDate asc) {
     "id": _id, kind, "slug": slug.current, group, groups, startDate, endDate, dateConfirmed,
