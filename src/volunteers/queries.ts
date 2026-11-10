@@ -5,6 +5,7 @@ import { z } from 'zod';
 
 import { queryClient } from '~/cms/queryClient';
 import { useIsAdmin, useSessionUserId } from '~/components/auth/hooks';
+import { authorColumns } from '~/memberships/model';
 import { getSupabase } from '~/supabase/client';
 import { PROFILE_REF_COLUMNS } from '~/supabase/profile';
 
@@ -22,7 +23,7 @@ const COLUMNS = [
   'createdAt:created_at',
 ].join(', ');
 
-const ADMIN_COLUMNS = `${COLUMNS}, ${PROFILE_REF_COLUMNS}`;
+const ADMIN_COLUMNS = `${COLUMNS}, ${PROFILE_REF_COLUMNS}, createdBy:created_by, ${authorColumns('creator', 'created_by')}`;
 
 const VolunteerProblem = z.enum(['offline', 'notAllowed', 'alreadyIn', 'invalid', 'notFound', 'failed']);
 type VolunteerProblem = z.infer<typeof VolunteerProblem>;

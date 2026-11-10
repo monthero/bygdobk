@@ -10,7 +10,7 @@ import type { Plan } from '~/cms/content';
 import { Check, Warning } from '~/components/ui';
 import { PaymentMethod, type AdminMembership, type Membership } from '~/memberships/model';
 import { personName } from '~/supabase/profile';
-import { date, formatDate, formatDateRange, ISO_DAY, SHORT_DATE } from '~/utils/dates';
+import { date, formatDate, formatDateRange, ISO_DAY, SHORT_DATE, today, wallTime } from '~/utils/dates';
 
 export const PAYMENT_LABELS: Record<PaymentMethod, MessageDescriptor> = {
   [PaymentMethod.enum.vipps]: msg({ message: 'Vipps', comment: 'Payment method: the Norwegian mobile payment app' }),
@@ -43,6 +43,15 @@ export const previousSeason = (id: string) => seasonById(String(Number(id.slice(
 export const planName = (plans: ReadonlyMap<string, Plan>, id: string) => plans.get(id)?.name ?? id;
 
 export const formatDay = (iso: string) => formatDate(date(iso), SHORT_DATE);
+
+const DAY_MONTH: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
+
+export const formatWhen = (iso: string) => {
+  const day = wallTime(iso);
+  return formatDate(day, day.isSame(today(), 'year') ? DAY_MONTH : SHORT_DATE);
+};
+
+export const sameDay = (a: string, b: string) => wallTime(a).isSame(wallTime(b), 'day');
 
 export const formatPeriod = (m: Pick<Membership, 'startDate' | 'endDate'>) =>
   formatDateRange(date(m.startDate), date(m.endDate), SHORT_DATE);

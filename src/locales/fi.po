@@ -391,10 +391,25 @@ msgstr "Lisää kalenteriin"
 msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
 msgstr "{count, plural, one {# jäsenyys lisätty} other {# jäsenyyttä lisätty}} kaudelle {toLabel}"
 
+#. Who put this person on the shift. {who} is a name or 'the board'
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Added by {who}"
+msgstr "Lisännyt {who}"
+
+#. Who added this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Added by {who} · {day}"
+msgstr "Lisännyt {who} · {day}"
+
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Ylläpitäjä"
+
+#. When someone became an admin, and who gave them access. {who} is a name or 'the board'
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admin since {day} · added by {who}"
+msgstr "Ylläpitäjä {day} alkaen · lisännyt {who}"
 
 #. Heading: the people with admin access
 #: src/pages/board/access/AccessPage.tsx
@@ -473,6 +488,11 @@ msgstr "Tilin haltija"
 msgid "Approve"
 msgstr "Hyväksy"
 
+#. Who said yes to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Approved by {who} · {day}"
+msgstr "Hyväksynyt {who} · {day}"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "Arkisto"
@@ -528,6 +548,11 @@ msgstr "Ennätys"
 msgid "Big name"
 msgstr "Iso nimi"
 
+#. Badge: this person is on the club board
+#: src/components/ui/BoardBadge.tsx
+msgid "Board"
+msgstr "Hallitus"
+
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/BoardNav.tsx
 msgid "Board access"
@@ -558,11 +583,6 @@ msgstr "Tämän kauden tauot"
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Bring indoor shoes."
 msgstr "Ota mukaan sisäkengät."
-
-#. Who sent a membership request, and when
-#: src/pages/board/MembershipList.tsx
-msgid "By {by}, {day}"
-msgstr "Lähettäjä {by}, {day}"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -934,6 +954,11 @@ msgstr "Hylätäänkö hakijan <0>{name}</0> hakemus? Se siirtyy kohtaan <1>Näy
 #: src/pages/board/MembershipList.tsx
 msgid "Declined"
 msgstr "Hylätty"
+
+#. Who said no to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Declined by {who} · {day}"
+msgstr "Hylännyt {who} · {day}"
 
 #: src/pages/board/DeleteMembershipModal.tsx
 #: src/pages/board/MembershipList.tsx
@@ -1412,6 +1437,11 @@ msgstr "Kieli: {code}"
 msgid "Large"
 msgstr "Suuri"
 
+#. Who last edited this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Last changed by {who} · {day}"
+msgstr "Viimeksi muuttanut {who} · {day}"
+
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Last updated {updated}"
 msgstr "Päivitetty viimeksi {updated}"
@@ -1506,6 +1536,11 @@ msgstr "Merkitse maksetuksi"
 #: src/pages/board/MarkPaidModal.tsx
 msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
 msgstr "{done, plural, one {# jäsenyys merkitty maksetuksi} other {# jäsenyyttä merkitty maksetuksi}}"
+
+#. Who marked this membership as paid. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Marked paid by {who}"
+msgstr "Merkinnyt maksetuksi {who}"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -2296,6 +2331,11 @@ msgstr "Hakemus lähetetty!"
 msgid "Requested"
 msgstr "Odottaa"
 
+#. A member asked for this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Requested by {who} · {day}"
+msgstr "Hakenut {who} · {day}"
+
 #. Tab: membership requests sent from the join page
 #: src/pages/board/MembersPage.tsx
 msgid "Requests"
@@ -2690,6 +2730,11 @@ msgstr "Paljon avoimia hakemuksia! Odota ensin hallituksen vastausta."
 #: src/components/auth/avatar.ts
 msgid "That's not a photo. Pick an image file."
 msgstr "Tämä ei ole kuva. Valitse kuvatiedosto."
+
+#. Stands in for the person who did something, when we don't know who
+#: src/pages/board/Author.tsx
+msgid "the board"
+msgstr "hallitus"
 
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board

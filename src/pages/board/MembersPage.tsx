@@ -343,7 +343,11 @@ export const MembersPage: FC = () => {
               </Tabs.Tab>
             </Tabs.List>
           </Tabs>
-          {onList && <Segmented label={t`Show`} options={filterOptions} value={vis ?? ALL} onChange={pickFilter} />}
+          {onList && (
+            <div className={classes.filters}>
+              <Segmented label={t`Show`} options={filterOptions} value={vis ?? ALL} onChange={pickFilter} />
+            </div>
+          )}
           {!onOverview && (
             <SearchInput
               value={query}

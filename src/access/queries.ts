@@ -10,9 +10,18 @@ import { getSupabase } from '~/supabase/client';
 
 const ADMINS_KEY = 'board-admins';
 
-const AdminRow = BoardProfile.omit({ avatarUrl: true })
-  .extend({ avatar_url: BoardProfile.shape.avatarUrl })
-  .transform(({ avatar_url, ...rest }): BoardProfile => ({ ...rest, avatarUrl: avatar_url }));
+const PROFILE_COLUMNS = 'id, name, email, avatarUrl:avatar_url';
+const ADMIN_COLUMNS = `${PROFILE_COLUMNS}, adminSince:admin_since, grantedByName:granted_by_name, grantedByIsAdmin:granted_by_is_admin`;
+
+const AdminRow = BoardProfile.extend({
+  adminSince: z.iso.datetime({ offset: true }).nullable(),
+  grantedByName: z.string().nullable(),
+  grantedByIsAdmin: z.boolean().nullable(),
+}).transform(({ grantedByName, grantedByIsAdmin, ...rest }) => ({
+  ...rest,
+  grantedBy: grantedByName === null ? null : { name: grantedByName, isAdmin: grantedByIsAdmin ?? false },
+}));
+export type BoardAdmin = z.infer<typeof AdminRow>;
 
 const AdminList = z.array(AdminRow);
 
@@ -54,21 +63,21 @@ export const accessErrorMessage = (error: unknown) =>
 const toError = (error: { code: string }) => new AccessError(PROBLEMS[error.code] ?? AccessProblem.enum.failed, error);
 
 type AdminsKey = readonly [typeof ADMINS_KEY, string | undefined];
-type AdminsOptions<T> = Omit<UseQueryOptions<BoardProfile[], Error, T, AdminsKey>, 'queryKey' | 'queryFn'>;
+type AdminsOptions<T> = Omit<UseQueryOptions<BoardAdmin[], Error, T, AdminsKey>, 'queryKey' | 'queryFn'>;
 type MutationOptions<TData, TVariables> = Omit<UseMutationOptions<TData, Error, TVariables>, 'mutationFn'>;
 
 const fetchAdmins = async () => {
   const supabase = await getSupabase();
-  const { data, error } = await supabase.rpc('board_admins');
+  const { data, error } = await supabase.rpc('board_admins').select(ADMIN_COLUMNS);
   if (error) throw toError(error);
   return AdminList.parse(data);
 };
 
 const grantAdmin = async (email: string) => {
   const supabase = await getSupabase();
-  const { data, error } = await supabase.rpc('grant_admin', { p_email: email }).single();
+  const { data, error } = await supabase.rpc('grant_admin', { p_email: email }).select(PROFILE_COLUMNS).single();
   if (error) throw toError(error);
-  return AdminRow.parse(data);
+  return BoardProfile.parse(data);
 };
 
 const revokeAdmin = async (profileId: string) => {
@@ -79,7 +88,7 @@ const revokeAdmin = async (profileId: string) => {
 
 const invalidateAdmins = () => queryClient.invalidateQueries({ queryKey: [ADMINS_KEY] });
 
-export const useBoardAdmins = <T = BoardProfile[]>(options?: AdminsOptions<T>) => {
+export const useBoardAdmins = <T = BoardAdmin[]>(options?: AdminsOptions<T>) => {
   const userId = useSessionUserId();
   const isAdmin = useIsAdmin();
   return useQuery({

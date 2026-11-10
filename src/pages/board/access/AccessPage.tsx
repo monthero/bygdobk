@@ -4,7 +4,7 @@ import { Avatar, Badge, Button, Container, Group, Paper, Popover, Skeleton, Stac
 import { Navigate } from '@tanstack/react-router';
 import { useCallback, useState, type FC } from 'react';
 
-import { LAST_ADMIN_REASON, SELF_REASON, useBoardAdmins } from '~/access/queries';
+import { LAST_ADMIN_REASON, SELF_REASON, useBoardAdmins, type BoardAdmin } from '~/access/queries';
 import { useSitePhoto } from '~/cms/siteData';
 import { AVATAR_IMAGE_PROPS } from '~/components/auth';
 import { useSessionUserId, useSignedOut } from '~/components/auth/hooks';
@@ -13,6 +13,8 @@ import { Trash } from '~/components/ui';
 import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import type { BoardProfile } from '~/memberships/model';
+import { Author } from '~/pages/board/Author';
+import { formatWhen } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
 
 import { AddAdminForm } from './AddAdminForm';
@@ -58,7 +60,20 @@ const RemoveButton: FC<RemoveProps> = ({ admin, blocked, onRemove }) => {
   );
 };
 
-type ListProps = { admins: BoardProfile[]; userId: string | undefined; onRemove: (a: BoardProfile) => void };
+const AdminSince: FC<{ admin: BoardAdmin }> = ({ admin: { adminSince, grantedBy } }) => {
+  if (!adminSince) return null;
+  const day = formatWhen(adminSince);
+  const who = <Author person={grantedBy} />;
+  return (
+    <Text size="xs" c="dimmed">
+      <Trans comment="When someone became an admin, and who gave them access. {who} is a name or 'the board'">
+        Admin since {day} · added by {who}
+      </Trans>
+    </Text>
+  );
+};
+
+type ListProps = { admins: BoardAdmin[]; userId: string | undefined; onRemove: (a: BoardProfile) => void };
 
 const AdminList: FC<ListProps> = ({ admins, userId, onRemove }) => (
   <Paper withBorder radius="md" component="ul" className={classes.admins}>
@@ -79,6 +94,7 @@ const AdminList: FC<ListProps> = ({ admins, userId, onRemove }) => (
           <Text size="sm" c="dimmed" truncate>
             {admin.email}
           </Text>
+          <AdminSince admin={admin} />
         </div>
         <RemoveButton admin={admin} blocked={blockedReason(admin, userId, admins.length)} onRemove={onRemove} />
       </li>

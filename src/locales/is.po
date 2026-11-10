@@ -391,10 +391,25 @@ msgstr "Bæta í dagatal"
 msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
 msgstr "Bætt við {toLabel}: {count, plural, one {# aðild} other {# aðildir}}"
 
+#. Who put this person on the shift. {who} is a name or 'the board'
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Added by {who}"
+msgstr "Bætt við: {who}"
+
+#. Who added this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Added by {who} · {day}"
+msgstr "Bætt við: {who} · {day}"
+
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Stjórnandi"
+
+#. When someone became an admin, and who gave them access. {who} is a name or 'the board'
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admin since {day} · added by {who}"
+msgstr "Stjórnandi frá {day} · bætt við: {who}"
 
 #. Heading: the people with admin access
 #: src/pages/board/access/AccessPage.tsx
@@ -473,6 +488,11 @@ msgstr "Einhver með aðgang"
 msgid "Approve"
 msgstr "Samþykkja"
 
+#. Who said yes to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Approved by {who} · {day}"
+msgstr "Samþykkt: {who} · {day}"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "Safn"
@@ -528,6 +548,11 @@ msgstr "Met"
 msgid "Big name"
 msgstr "Stórt nafn"
 
+#. Badge: this person is on the club board
+#: src/components/ui/BoardBadge.tsx
+msgid "Board"
+msgstr "Stjórn"
+
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/BoardNav.tsx
 msgid "Board access"
@@ -558,11 +583,6 @@ msgstr "Hlé á þessu tímabili"
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Bring indoor shoes."
 msgstr "Taktu með innanhússkó."
-
-#. Who sent a membership request, and when
-#: src/pages/board/MembershipList.tsx
-msgid "By {by}, {day}"
-msgstr "Sendandi: {by}, {day}"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -934,6 +954,11 @@ msgstr "Hafna umsókn: <0>{name}</0>? Hún fer undir <1>Sýna hafnaðar</1> og �
 #: src/pages/board/MembershipList.tsx
 msgid "Declined"
 msgstr "Hafnað"
+
+#. Who said no to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Declined by {who} · {day}"
+msgstr "Hafnað: {who} · {day}"
 
 #: src/pages/board/DeleteMembershipModal.tsx
 #: src/pages/board/MembershipList.tsx
@@ -1412,6 +1437,11 @@ msgstr "Tungumál: {code}"
 msgid "Large"
 msgstr "Stórt"
 
+#. Who last edited this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Last changed by {who} · {day}"
+msgstr "Síðast breytt: {who} · {day}"
+
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Last updated {updated}"
 msgstr "Síðast uppfært {updated}"
@@ -1506,6 +1536,11 @@ msgstr "Merkja sem greitt"
 #: src/pages/board/MarkPaidModal.tsx
 msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
 msgstr "Merkt sem greitt: {done, plural, one {# aðild} other {# aðildir}}"
+
+#. Who marked this membership as paid. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Marked paid by {who}"
+msgstr "Merkt sem greitt: {who}"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -2296,6 +2331,11 @@ msgstr "Umsókn send!"
 msgid "Requested"
 msgstr "Sótt um"
 
+#. A member asked for this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Requested by {who} · {day}"
+msgstr "Sótt um: {who} · {day}"
+
 #. Tab: membership requests sent from the join page
 #: src/pages/board/MembersPage.tsx
 msgid "Requests"
@@ -2690,6 +2730,11 @@ msgstr "Þetta eru margar opnar umsóknir! Bíddu fyrst eftir svari frá stjórn
 #: src/components/auth/avatar.ts
 msgid "That's not a photo. Pick an image file."
 msgstr "Þetta er ekki mynd. Veldu myndaskrá."
+
+#. Stands in for the person who did something, when we don't know who
+#: src/pages/board/Author.tsx
+msgid "the board"
+msgstr "stjórnin"
 
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board

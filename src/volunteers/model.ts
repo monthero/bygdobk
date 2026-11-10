@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { AuthorRef } from '~/memberships/model';
 import { personName, ProfileRef } from '~/supabase/profile';
 
 export const ShiftVolunteer = z.object({
@@ -13,7 +14,11 @@ export const ShiftVolunteer = z.object({
 });
 export type ShiftVolunteer = z.infer<typeof ShiftVolunteer>;
 
-export const AdminShiftVolunteer = ShiftVolunteer.extend({ profile: ProfileRef });
+export const AdminShiftVolunteer = ShiftVolunteer.extend({
+  profile: ProfileRef,
+  createdBy: z.uuid().nullable(),
+  creator: AuthorRef,
+});
 export type AdminShiftVolunteer = z.infer<typeof AdminShiftVolunteer>;
 
 export const ShiftCount = z.object({ shiftKey: z.string(), taken: z.int().nonnegative() });
@@ -33,3 +38,5 @@ export const NOTE_MAX = 500;
 export const NAME_MAX = 100;
 
 export const volunteerName = (v: AdminShiftVolunteer) => personName(v.volunteerName, v.profile);
+
+export const addedForThem = (v: AdminShiftVolunteer) => v.profileId === null || v.createdBy !== v.profileId;

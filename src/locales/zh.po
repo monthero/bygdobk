@@ -391,10 +391,25 @@ msgstr "添加到日历"
 msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
 msgstr "已向{toLabel}添加{count, plural, other {#条会员记录}}"
 
+#. Who put this person on the shift. {who} is a name or 'the board'
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Added by {who}"
+msgstr "由{who}添加"
+
+#. Who added this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Added by {who} · {day}"
+msgstr "由{who}添加 · {day}"
+
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "管理员"
+
+#. When someone became an admin, and who gave them access. {who} is a name or 'the board'
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admin since {day} · added by {who}"
+msgstr "自{day}起担任管理员 · 由{who}添加"
 
 #. Heading: the people with admin access
 #: src/pages/board/access/AccessPage.tsx
@@ -473,6 +488,11 @@ msgstr "有账户的人"
 msgid "Approve"
 msgstr "批准"
 
+#. Who said yes to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Approved by {who} · {day}"
+msgstr "由{who}批准 · {day}"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "存档"
@@ -528,6 +548,11 @@ msgstr "最高纪录"
 msgid "Big name"
 msgstr "大字名称"
 
+#. Badge: this person is on the club board
+#: src/components/ui/BoardBadge.tsx
+msgid "Board"
+msgstr "理事会"
+
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/BoardNav.tsx
 msgid "Board access"
@@ -558,11 +583,6 @@ msgstr "本赛季停训"
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Bring indoor shoes."
 msgstr "请带上室内运动鞋。"
-
-#. Who sent a membership request, and when
-#: src/pages/board/MembershipList.tsx
-msgid "By {by}, {day}"
-msgstr "{by}于{day}提交"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -934,6 +954,11 @@ msgstr "拒绝<0>{name}</0>的申请吗？它会移到<1>显示已拒绝</1>里�
 #: src/pages/board/MembershipList.tsx
 msgid "Declined"
 msgstr "已拒绝"
+
+#. Who said no to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Declined by {who} · {day}"
+msgstr "由{who}拒绝 · {day}"
 
 #: src/pages/board/DeleteMembershipModal.tsx
 #: src/pages/board/MembershipList.tsx
@@ -1412,6 +1437,11 @@ msgstr "语言：{code}"
 msgid "Large"
 msgstr "大"
 
+#. Who last edited this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Last changed by {who} · {day}"
+msgstr "最后由{who}修改 · {day}"
+
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Last updated {updated}"
 msgstr "最后更新：{updated}"
@@ -1506,6 +1536,11 @@ msgstr "标记为已付款"
 #: src/pages/board/MarkPaidModal.tsx
 msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
 msgstr "已将{done, plural, other {#条会员记录}}标记为已付款"
+
+#. Who marked this membership as paid. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Marked paid by {who}"
+msgstr "由{who}标记为已付款"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -2296,6 +2331,11 @@ msgstr "申请已发送！"
 msgid "Requested"
 msgstr "待审核"
 
+#. A member asked for this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Requested by {who} · {day}"
+msgstr "由{who}申请 · {day}"
+
 #. Tab: membership requests sent from the join page
 #: src/pages/board/MembersPage.tsx
 msgid "Requests"
@@ -2690,6 +2730,11 @@ msgstr "待处理的申请太多啦！请先等理事会回复。"
 #: src/components/auth/avatar.ts
 msgid "That's not a photo. Pick an image file."
 msgstr "这不是照片，请选一个图片文件。"
+
+#. Stands in for the person who did something, when we don't know who
+#: src/pages/board/Author.tsx
+msgid "the board"
+msgstr "理事会"
 
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board

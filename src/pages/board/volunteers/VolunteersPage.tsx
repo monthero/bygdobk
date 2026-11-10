@@ -29,11 +29,12 @@ import { HandHeart, PencilSimple, Trash, Trophy, UserPlus, Warning } from '~/com
 import { Team } from '~/data/events';
 import { PhotoSlot } from '~/data/photos';
 import { usePageTitle } from '~/hooks/usePageTitle';
+import { Author } from '~/pages/board/Author';
 import { LoadError } from '~/pages/board/LoadError';
 import { date, formatDate, todayIso } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
 import { percent } from '~/utils/numbers';
-import { volunteerName, type AdminShiftVolunteer } from '~/volunteers/model';
+import { addedForThem, volunteerName, type AdminShiftVolunteer } from '~/volunteers/model';
 import { useEventVolunteers } from '~/volunteers/queries';
 
 import { DialogKind, type Dialog } from './dialog';
@@ -62,6 +63,7 @@ const VolunteerRow: FC<{ volunteer: AdminShiftVolunteer } & Omit<Handlers, 'onAd
 }) => {
   const { t } = useLingui();
   const name = volunteerName(volunteer);
+  const who = <Author person={volunteer.creator} />;
   return (
     <li className={classes.list__item}>
       <div className={classes.list__who}>
@@ -76,6 +78,11 @@ const VolunteerRow: FC<{ volunteer: AdminShiftVolunteer } & Omit<Handlers, 'onAd
         {volunteer.note && (
           <Text size="xs" fs="italic">
             {volunteer.note}
+          </Text>
+        )}
+        {addedForThem(volunteer) && (
+          <Text size="xs" c="dimmed">
+            <Trans comment="Who put this person on the shift. {who} is a name or 'the board'">Added by {who}</Trans>
           </Text>
         )}
       </div>

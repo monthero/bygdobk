@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Card,
   Container,
   createTheme,
@@ -215,8 +216,11 @@ export const buildTheme = ({ palette, shape, density, width, font }: ThemeOption
       Container: Container.extend({ defaultProps: { size: 'lg', fluid: width === Width.enum.full } }),
       Card: Card.extend({ classNames: { root: surfaces.card } }),
       Tabs: Tabs.extend({ classNames: { list: surfaces.tabsList } }),
+      Avatar: Avatar.extend({ defaultProps: { allowedInitialsColors: INITIALS_COLORS } }),
     },
   });
+
+const INITIALS_COLORS = ['blue', 'cyan', 'grape', 'green', 'indigo', 'orange', 'pink', 'red', 'teal', 'violet'];
 
 const SOFT_DARK_COLORS = ['brand', 'teal', 'blue', 'orange', 'grape', 'green', 'red', 'yellow', 'gray'];
 

@@ -391,10 +391,25 @@ msgstr "Føj til kalender"
 msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
 msgstr "{count, plural, one {# medlemskab} other {# medlemskaber}} tilføjet til {toLabel}"
 
+#. Who put this person on the shift. {who} is a name or 'the board'
+#: src/pages/board/volunteers/VolunteersPage.tsx
+msgid "Added by {who}"
+msgstr "Tilføjet af {who}"
+
+#. Who added this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Added by {who} · {day}"
+msgstr "Tilføjet af {who} · {day}"
+
 #. User role: can edit the site
 #: src/components/auth/ProfileCard.tsx
 msgid "Admin"
 msgstr "Admin"
+
+#. When someone became an admin, and who gave them access. {who} is a name or 'the board'
+#: src/pages/board/access/AccessPage.tsx
+msgid "Admin since {day} · added by {who}"
+msgstr "Admin siden {day} · tilføjet af {who}"
 
 #. Heading: the people with admin access
 #: src/pages/board/access/AccessPage.tsx
@@ -473,6 +488,11 @@ msgstr "En med konto"
 msgid "Approve"
 msgstr "Godkend"
 
+#. Who said yes to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Approved by {who} · {day}"
+msgstr "Godkendt af {who} · {day}"
+
 #: src/pages/news/NewsPage.tsx
 msgid "Archive"
 msgstr "Arkiv"
@@ -528,6 +548,11 @@ msgstr "Rekord"
 msgid "Big name"
 msgstr "Stort navn"
 
+#. Badge: this person is on the club board
+#: src/components/ui/BoardBadge.tsx
+msgid "Board"
+msgstr "Bestyrelsen"
+
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/BoardNav.tsx
 msgid "Board access"
@@ -558,11 +583,6 @@ msgstr "Pauser i denne sæson"
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Bring indoor shoes."
 msgstr "Tag indendørssko med."
-
-#. Who sent a membership request, and when
-#: src/pages/board/MembershipList.tsx
-msgid "By {by}, {day}"
-msgstr "Fra {by}, {day}"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -934,6 +954,11 @@ msgstr "Afvis anmodningen fra <0>{name}</0>? Den flyttes til <1>Vis afviste</1>,
 #: src/pages/board/MembershipList.tsx
 msgid "Declined"
 msgstr "Afvist"
+
+#. Who said no to a membership request. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Declined by {who} · {day}"
+msgstr "Afvist af {who} · {day}"
 
 #: src/pages/board/DeleteMembershipModal.tsx
 #: src/pages/board/MembershipList.tsx
@@ -1412,6 +1437,11 @@ msgstr "Sprog: {code}"
 msgid "Large"
 msgstr "Stor"
 
+#. Who last edited this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Last changed by {who} · {day}"
+msgstr "Senest ændret af {who} · {day}"
+
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Last updated {updated}"
 msgstr "Sidst opdateret {updated}"
@@ -1506,6 +1536,11 @@ msgstr "Markér som betalt"
 #: src/pages/board/MarkPaidModal.tsx
 msgid "Marked {done, plural, one {# membership} other {# memberships}} as paid"
 msgstr "{done, plural, one {# medlemskab markeret som betalt} other {# medlemskaber markeret som betalt}}"
+
+#. Who marked this membership as paid. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Marked paid by {who}"
+msgstr "Markeret som betalt af {who}"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -2296,6 +2331,11 @@ msgstr "Anmodning sendt!"
 msgid "Requested"
 msgstr "Afventer"
 
+#. A member asked for this membership. {who} is a name or 'the board'
+#: src/pages/board/MembershipList.tsx
+msgid "Requested by {who} · {day}"
+msgstr "Ansøgt af {who} · {day}"
+
 #. Tab: membership requests sent from the join page
 #: src/pages/board/MembersPage.tsx
 msgid "Requests"
@@ -2690,6 +2730,11 @@ msgstr "Det er mange åbne anmodninger! Vent på, at bestyrelsen svarer først."
 #: src/components/auth/avatar.ts
 msgid "That's not a photo. Pick an image file."
 msgstr "Det er ikke et billede. Vælg en billedfil."
+
+#. Stands in for the person who did something, when we don't know who
+#: src/pages/board/Author.tsx
+msgid "the board"
+msgstr "bestyrelsen"
 
 #. Author of a news post: the club board. Norwegian: Styret
 #. Eyebrow above the page title: the club board

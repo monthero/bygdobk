@@ -10,6 +10,7 @@ import { PROFILE_REF_COLUMNS } from '~/supabase/profile';
 
 import {
   AdminMembership,
+  authorColumns,
   BoardProfile,
   Membership,
   MembershipStatus,
@@ -38,7 +39,18 @@ const COLUMNS = [
   'createdAt:created_at',
 ].join(', ');
 
-const ADMIN_COLUMNS = `${COLUMNS}, ${PROFILE_REF_COLUMNS}, requester:profiles!created_by(name, email)`;
+const ADMIN_COLUMNS = [
+  COLUMNS,
+  PROFILE_REF_COLUMNS,
+  'updatedAt:updated_at',
+  'updatedBy:updated_by',
+  'decidedAt:decided_at',
+  'decidedBy:decided_by',
+  authorColumns('creator', 'created_by'),
+  authorColumns('updater', 'updated_by'),
+  authorColumns('paidMarker', 'paid_by'),
+  authorColumns('decider', 'decided_by'),
+].join(', ');
 
 const MembershipProblem = z.enum(['offline', 'notAllowed', 'invalid', 'notFound', 'duplicate', 'tooMany', 'failed']);
 type MembershipProblem = z.infer<typeof MembershipProblem>;

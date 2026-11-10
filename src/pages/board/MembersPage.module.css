@@ -1,3 +1,10 @@
 .more {
   border-inline-start-color: color-mix(in srgb, var(--button-color) 30%, transparent);
 }
+
+.filters {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+}

@@ -2,6 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import {
   ActionIcon,
   Badge,
+  Box,
   Button,
   Card,
   Checkbox,
@@ -22,9 +23,19 @@ import { useIsMobile } from '~/hooks/useIsMobile';
 import { MembershipStatus, type AdminMembership } from '~/memberships/model';
 import { membershipErrorMessage, useUpdateMembership } from '~/memberships/queries';
 import { kr } from '~/pages/join/offers';
-import { personName } from '~/supabase/profile';
 
-import { formatDay, formatPeriod, memberName, notifyFailed, notifyDone, PAYMENT_LABELS, planName } from './format';
+import { Author } from './Author';
+import {
+  formatDay,
+  formatPeriod,
+  formatWhen,
+  memberName,
+  notifyFailed,
+  notifyDone,
+  PAYMENT_LABELS,
+  planName,
+  sameDay,
+} from './format';
 import { isUnpaid } from './people';
 
 import classes from './selection.module.css';
@@ -65,26 +76,105 @@ const PaidBadge: FC<{ membership: AdminMembership }> = ({ membership: { paidAt, 
   );
 };
 
-const StatusCell: FC<{ membership: AdminMembership }> = ({ membership }) => {
-  if (membership.status === MembershipStatus.enum.active) return <PaidBadge membership={membership} />;
-  const by = personName(null, membership.requester);
-  const day = formatDay(membership.createdAt);
-  return (
-    <Stack gap={2} align="flex-start">
-      {membership.status === MembershipStatus.enum.requested ? (
+const StatusBadge: FC<{ membership: AdminMembership }> = ({ membership }) => {
+  switch (membership.status) {
+    case MembershipStatus.enum.active:
+      return <PaidBadge membership={membership} />;
+    case MembershipStatus.enum.requested:
+      return (
         <Badge color="blue" variant="light" leftSection={<Clock />}>
           <Trans comment="Badge: membership request waiting for the board">Requested</Trans>
         </Badge>
-      ) : (
+      );
+    case MembershipStatus.enum.declined:
+      return (
         <Badge color="gray" variant="light" leftSection={<X />}>
           <Trans comment="Badge: the board said no to this membership request">Declined</Trans>
         </Badge>
-      )}
+      );
+  }
+};
+
+const isRepeat = (by: string | null, at: string, otherBy: string | null, otherAt: string | null) =>
+  otherAt !== null && by === otherBy && sameDay(at, otherAt);
+
+const Created: FC<{ membership: AdminMembership }> = ({ membership: m }) => {
+  const who = <Author person={m.creator} />;
+  const day = formatWhen(m.createdAt);
+  if (m.status !== MembershipStatus.enum.active || m.decidedAt !== null) {
+    return (
+      <Trans comment="A member asked for this membership. {who} is a name or 'the board'">
+        Requested by {who} · {day}
+      </Trans>
+    );
+  }
+  return (
+    <Trans comment="Who added this membership. {who} is a name or 'the board'">
+      Added by {who} · {day}
+    </Trans>
+  );
+};
+
+const Decided: FC<{ membership: AdminMembership; decidedAt: string }> = ({ membership: m, decidedAt }) => {
+  const who = <Author person={m.decider} />;
+  const day = formatWhen(decidedAt);
+  if (m.status === MembershipStatus.enum.declined) {
+    return (
+      <Trans comment="Who said no to a membership request. {who} is a name or 'the board'">
+        Declined by {who} · {day}
+      </Trans>
+    );
+  }
+  return (
+    <Trans comment="Who said yes to a membership request. {who} is a name or 'the board'">
+      Approved by {who} · {day}
+    </Trans>
+  );
+};
+
+const Changed: FC<{ membership: AdminMembership; updatedAt: string }> = ({ membership: m, updatedAt }) => {
+  const who = <Author person={m.updater} />;
+  const day = formatWhen(updatedAt);
+  return (
+    <Trans comment="Who last edited this membership. {who} is a name or 'the board'">
+      Last changed by {who} · {day}
+    </Trans>
+  );
+};
+
+const Paid: FC<{ membership: AdminMembership }> = ({ membership: m }) => {
+  const who = <Author person={m.paidMarker} />;
+  return (
+    <Trans comment="Who marked this membership as paid. {who} is a name or 'the board'">Marked paid by {who}</Trans>
+  );
+};
+
+const Provenance: FC<{ membership: AdminMembership }> = ({ membership: m }) => {
+  const { decidedAt, updatedAt } = m;
+  const showChanged =
+    updatedAt !== null &&
+    !isRepeat(m.updatedBy, updatedAt, m.createdBy, m.createdAt) &&
+    !isRepeat(m.updatedBy, updatedAt, m.decidedBy, decidedAt);
+  return (
+    <Stack gap={2}>
       <Text size="xs" c="dimmed">
-        <Trans comment="Who sent a membership request, and when">
-          By {by}, {day}
-        </Trans>
+        <Created membership={m} />
       </Text>
+      {decidedAt && (
+        <Text size="xs" c="dimmed">
+          <Decided membership={m} decidedAt={decidedAt} />
+        </Text>
+      )}
+      {m.paidAt && (
+        <Text size="xs" c="dimmed">
+          <Paid membership={m} />
+        </Text>
+      )}
+      {showChanged && (
+        <Text size="xs" c="dimmed">
+          <Changed membership={m} updatedAt={updatedAt} />
+        </Text>
+      )}
     </Stack>
   );
 };
@@ -221,7 +311,10 @@ const MembershipRow = memo<ItemProps>(({ membership, plans, selected, onSelect, 
       {kr(membership.priceNok)}
     </Table.Td>
     <Table.Td>
-      <StatusCell membership={membership} />
+      <Stack gap={6} align="flex-start">
+        <StatusBadge membership={membership} />
+        <Provenance membership={membership} />
+      </Stack>
     </Table.Td>
     <Table.Td>
       <Actions membership={membership} {...handlers} />
@@ -241,7 +334,7 @@ const MembershipCard = memo<ItemProps>(({ membership, plans, selected, onSelect,
           <Account membership={membership} />
         </Stack>
       </Group>
-      <StatusCell membership={membership} />
+      <StatusBadge membership={membership} />
     </Group>
     <Group justify="space-between" wrap="nowrap" mt="sm">
       <Text size="sm">{planName(plans, membership.planId)}</Text>
@@ -252,6 +345,9 @@ const MembershipCard = memo<ItemProps>(({ membership, plans, selected, onSelect,
     <Text size="sm" c="dimmed">
       {formatPeriod(membership)}
     </Text>
+    <Box mt="xs">
+      <Provenance membership={membership} />
+    </Box>
     <Divider my="sm" />
     <Actions membership={membership} {...handlers} />
   </Card>

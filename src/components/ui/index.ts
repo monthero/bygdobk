@@ -1,5 +1,6 @@
 export { IntroText, PageIntroBase, type PageIntroProps } from './PageIntro';
 export { PhotoBadge } from './PhotoBadge';
+export { BoardBadge } from './BoardBadge';
 export { BottomSheet } from './BottomSheet';
 export { ResponsiveModal } from './ResponsiveModal';
 export { ResponsivePanel, type PanelVariant } from './ResponsivePanel';
