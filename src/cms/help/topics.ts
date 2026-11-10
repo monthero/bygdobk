@@ -349,8 +349,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     area: HelpArea.enum.studio,
     nb: {
       title: 'Arrangementer',
-      intro:
-        'Turneringer, sosiale kvelder, møter og turer ligger i «Events». Hvert arrangement får sin egen side.',
+      intro: 'Turneringer, sosiale kvelder, møter og turer ligger i «Events». Hvert arrangement får sin egen side.',
       steps: [
         'Trykk «Add an event» på «Start». Eller åpne «Events» i «Content», trykk «+» og velg «Tournament», «Social», «Meeting» eller «Trip».',
         'Skjemaet har faner: «About», «Date and time», «Place» og «Sign-up». «All fields» viser alt på én gang.',
@@ -372,8 +371,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     },
     en: {
       title: 'Events',
-      intro:
-        'Tournaments, socials, meetings and trips are in “Events”. Each event gets its own page.',
+      intro: 'Tournaments, socials, meetings and trips are in “Events”. Each event gets its own page.',
       steps: [
         'Click “Add an event” on “Start”. Or open “Events” in “Content”, click “+” and pick “Tournament”, “Social”, “Meeting” or “Trip”.',
         'The form has tabs: “About”, “Date and time”, “Place” and “Sign-up”. “All fields” shows everything at once.',

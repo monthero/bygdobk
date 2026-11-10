@@ -44,7 +44,6 @@ export const FIXED_SETS = [
 
 export const eventTemplateId = (kind: EventKind) => `event-${kind}`;
 
-
 const VISITOR_FILTER = '_type == "event" && kind in $kinds';
 const VISITOR_TEMPLATES = VISITOR_KINDS.map(eventTemplateId);
 
