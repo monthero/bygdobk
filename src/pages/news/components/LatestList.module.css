@@ -40,9 +40,5 @@
 }
 
 .thumb {
-  flex: none;
-  width: 88px;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--mantine-radius-md);
-  object-fit: cover;
+  composes: thumb from '../../../styles/media.module.css';
 }

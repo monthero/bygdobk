@@ -28,7 +28,8 @@ export const CONTENT_GROQ = `{
     "id": _id, kind, "slug": slug.current, group, groups, startDate, endDate, dateConfirmed,
     ${localized('title', 'whenText', 'description')},
     "tip": tip { ${localized('title', 'text')} },
-    startTime, endTime, recurrence, ownEvent, venue, registrationDeadline, registrationUrl, signupUrl, shifts
+    startTime, endTime, recurrence, ownEvent, venue, registrationDeadline, registrationUrl, signupUrl, shifts,
+    "banner": banner { ..., ${localized('alt')}, "lqip": asset->metadata.lqip }
   },
   "plans": *[_type == "membershipPlan"] | order(order asc) {
     "id": slug.current, kind, audience, group, ${localized('name', 'note')}, membership, training, perVisit

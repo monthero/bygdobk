@@ -30,10 +30,10 @@ export const Membership = z.object({
 });
 export type Membership = z.infer<typeof Membership>;
 
-export const AuthorRef = z.object({ name: z.string(), isAdmin: z.boolean() }).nullable();
+export const AuthorRef = z.object({ name: z.string(), email: z.string() }).nullable();
 export type AuthorRef = z.infer<typeof AuthorRef>;
 
-export const authorColumns = (alias: string, column: string) => `${alias}:profiles!${column}(name, isAdmin:is_admin)`;
+export const authorColumns = (alias: string, column: string) => `${alias}:profiles!${column}(name, email)`;
 
 export const AdminMembership = Membership.extend({
   profile: ProfileRef,

@@ -9,6 +9,8 @@ import {
 } from 'sanity';
 import { z } from 'zod';
 
+import { normalizeEmail } from '~/utils/email';
+
 import { queryClient } from '../queryClient';
 import { SANITY_API_VERSION } from '../sanityApi';
 
@@ -16,8 +18,6 @@ export const Editor = z.object({ id: z.string(), name: z.string() });
 export type Editor = z.infer<typeof Editor>;
 
 export const StampField = z.enum(['createdBy', 'updatedBy']);
-
-export const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
 const BOARD_NAMES_QUERY = '*[_type == "boardMember" && lower(email) == $email].name';
 const BoardNames = z.array(z.string());

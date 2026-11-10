@@ -9,6 +9,7 @@ import { EVENT_KINDS } from '~/data/events';
 import { today } from '~/utils/dates';
 import { useShiftCounts } from '~/volunteers/queries';
 
+import { EventBanner } from './EventBanner';
 import { EVENT_ICONS, eventWhen, registrationOf, RegistrationState, type VisitorEvent } from './eventMeta';
 import { peopleNeeded, spotsTaken } from './shifts';
 
@@ -100,16 +101,24 @@ export const EventCard = memo<Props & { withIcon?: boolean }>(({ event, compact 
       renderRoot={(props) => <Link {...props} to="/arrangementer/$slug" params={{ slug: event.slug }} />}
       className={classes.card}
     >
-      {withIcon ? (
-        <Group wrap="nowrap" align="flex-start">
-          <ThemeIcon size={compact ? 40 : 48} radius="md" variant="light" color={kind.color}>
+      <Group wrap="nowrap" align={compact ? 'center' : 'flex-start'}>
+        {withIcon && (
+          <ThemeIcon
+            visibleFrom={compact ? 'sm' : undefined}
+            size={compact ? 40 : 48}
+            radius="md"
+            variant="light"
+            color={kind.color}
+            className={classes.icon}
+          >
             <Icon width={compact ? 22 : 26} height={compact ? 22 : 26} />
           </ThemeIcon>
+        )}
+        <div className={classes.summary}>
           <EventSummary event={event} compact={compact} />
-        </Group>
-      ) : (
-        <EventSummary event={event} compact={compact} />
-      )}
+        </div>
+        {compact && <EventBanner event={event} aspect={4 / 3} sizes="88px" decorative className={classes.thumb} />}
+      </Group>
     </Card>
   );
 });

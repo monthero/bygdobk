@@ -1,4 +1,12 @@
-import { defineArrayMember, defineField, defineType, getDraftId, getPublishedId, type CustomValidator } from 'sanity';
+import {
+  defineArrayMember,
+  defineField,
+  defineType,
+  getDraftId,
+  getPublishedId,
+  type CustomValidator,
+  type ConditionalProperty,
+} from 'sanity';
 import { z } from 'zod';
 
 import {
@@ -16,8 +24,8 @@ import { Group, GroupStatus, PlanAudience, PriceKind } from '~/data/club';
 import { allowsShifts, EventKind, Team } from '~/data/events';
 import { InternalPath, NewsKind } from '~/data/news';
 import { PERK_ICON_NAMES, PerkIcon } from '~/data/sponsors';
+import { normalizeEmail } from '~/utils/email';
 
-import { normalizeEmail } from '../authors/editor';
 import { SANITY_API_VERSION } from '../sanityApi';
 import { BannerInput } from './BannerInput';
 import {
@@ -57,6 +65,25 @@ const slug = (source: string) =>
 const hasAsset = (image: unknown) =>
   typeof image === 'object' && image !== null && 'asset' in image && Boolean(image.asset);
 
+const bannerField = (description: string, extra: { group?: string; hidden?: ConditionalProperty } = {}) =>
+  defineField({
+    name: 'banner',
+    title: 'Banner image',
+    type: 'image',
+    description,
+    ...extra,
+    options: { hotspot: true },
+    components: { input: BannerInput },
+    fields: [
+      defineField({
+        name: 'alt',
+        title: 'Describe the image',
+        type: 'localeString',
+        validation: (rule) => rule.custom((alt, { parent }) => (hasAsset(parent) && !alt ? 'Required' : true)),
+      }),
+    ],
+  });
+
 const order = defineField({ name: 'order', title: 'Order', type: 'number', description: 'Lower comes first' });
 
 export const privacyPage = defineType({
@@ -89,23 +116,9 @@ export const newsPost = defineType({
       validation: required,
     }),
     defineField({ name: 'summary', title: 'Summary', type: 'localeText', validation: required }),
-    defineField({
-      name: 'banner',
-      title: 'Banner image',
-      type: 'image',
-      description:
-        "Optional. A wide photo shown behind the title and on news cards. Without it, the site uses one of the club's photos. Posters and other images go in the article.",
-      options: { hotspot: true },
-      components: { input: BannerInput },
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Describe the image',
-          type: 'localeString',
-          validation: (rule) => rule.custom((alt, { parent }) => (hasAsset(parent) && !alt ? 'Required' : true)),
-        }),
-      ],
-    }),
+    bannerField(
+      "Optional. A wide photo shown behind the title and on news cards. Without it, the site uses one of the club's photos. Posters and other images go in the article.",
+    ),
     defineField({ name: 'body', title: 'Article', type: 'localeBody', validation: required }),
     defineField({
       name: 'event',
@@ -285,6 +298,10 @@ export const event = defineType({
       group: EventTab.enum.about,
       hidden: isTraining,
     }),
+    bannerField(
+      'Optional. A wide photo shown at the top of the event page and on event cards. Without it, the site uses the default events photo.',
+      { group: EventTab.enum.about, hidden: isTraining },
+    ),
     defineField({
       name: 'ownEvent',
       title: 'Organized by the club',

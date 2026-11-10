@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 import { isPast } from '~/cms/calendar';
 import { useSiteContent } from '~/cms/content';
-import { useSitePhoto } from '~/cms/siteData';
+import { useBannerPhoto } from '~/cms/siteData';
 import {
   EventActions,
   EventVenue,
@@ -37,7 +37,7 @@ export const EventPage: FC = () => {
   const { events, club } = useSiteContent();
   const event = events.find((e): e is VisitorEvent => e.slug === slug && isVisitorEvent(e));
   usePageTitle(event?.title, t`Events`);
-  const photo = useSitePhoto(PhotoSlot.enum.events);
+  const photo = useBannerPhoto(event?.banner, PhotoSlot.enum.events);
   if (!event) return <NotFoundPage />;
 
   const eventTitle = event.title;

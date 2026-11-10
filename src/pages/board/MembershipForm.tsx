@@ -44,6 +44,7 @@ import {
 } from '~/memberships/queries';
 import { planTotal } from '~/pages/join/offers';
 import { todayIso } from '~/utils/dates';
+import { normalizeEmail } from '~/utils/email';
 
 import { DAY_FORMATTER, NO_METHOD, NO_PAID_DAY, notifyDone, paidAtOf, paidDayOf } from './format';
 import { PaymentFields } from './PaymentFields';
@@ -74,8 +75,6 @@ const NO_ACCOUNT = msg`No account with that email`;
 const ALWAYS = { when: () => true };
 
 const IS_EMAIL = z.email();
-
-const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
 const profileByEmailQuery = (email: string) =>
   queryOptions({

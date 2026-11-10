@@ -133,6 +133,7 @@ const Event = z
     registrationUrl: lenient(WebUrl),
     signupUrl: opt(z.url()),
     shifts: listOf('shift', Shift),
+    banner: opt(Image).catch(undefined),
   })
   .refine(
     (e) =>

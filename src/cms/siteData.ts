@@ -1,15 +1,17 @@
 import { useLingui } from '@lingui/react/macro';
 import type { MantineColor } from '@mantine/core';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { GROUP_COLORS, Group, GroupStatus } from '~/data/club';
 import { Team } from '~/data/events';
 import { SLOT_DEFAULTS, type PhotoSlot } from '~/data/photos';
 import { currentLocale } from '~/i18n/current';
 import { CONTENT_FALLBACK, DEFAULT_LOCALE } from '~/i18n/locales';
+import { normalizeEmail } from '~/utils/email';
 
 import {
   useSiteContent,
+  type CmsImageData,
   type SiteContent,
   type SlotPhoto,
   type Sponsor,
@@ -64,6 +66,12 @@ export const useTeams = () => {
 
 export const useClub = () => useSiteContent().club;
 
+export const useIsOnBoard = () => {
+  const { board } = useSiteContent();
+  const emails = useMemo(() => new Set(board.map((member) => normalizeEmail(member.email))), [board]);
+  return useCallback((email: string) => emails.has(normalizeEmail(email)), [emails]);
+};
+
 export type DealSponsor = Sponsor & { deal: NonNullable<Sponsor['deal']> };
 
 export const hasDeal = (sponsor: Sponsor): sponsor is DealSponsor => sponsor.deal !== undefined;
@@ -79,12 +87,14 @@ const altText = (photo: SlotPhoto) => {
   return alt?.[locale] || alt?.[CONTENT_FALLBACK[locale]] || alt?.[DEFAULT_LOCALE] || '';
 };
 
-const cmsPhoto = (photo: SlotPhoto): SitePhoto => ({
+const toSitePhoto = (photo: SlotPhoto | CmsImageData, alt: string): SitePhoto => ({
   src: imageUrl(photo, FALLBACK_WIDTH),
   srcSet: WIDTHS.map((w) => `${imageUrl(photo, w)} ${w}w`).join(', '),
-  alt: altText(photo),
+  alt,
   position: hotspotPosition(photo.hotspot),
 });
+
+const cmsPhoto = (photo: SlotPhoto) => toSitePhoto(photo, altText(photo));
 
 export const useSitePhoto = (slot: PhotoSlot): SitePhoto => {
   const { i18n } = useLingui();
@@ -94,4 +104,9 @@ export const useSitePhoto = (slot: PhotoSlot): SitePhoto => {
     const fallback = SLOT_DEFAULTS[slot];
     return { ...fallback, alt: i18n._(fallback.alt) };
   }, [photo, slot, i18n]);
+};
+
+export const useBannerPhoto = (banner: CmsImageData | undefined, slot: PhotoSlot): SitePhoto => {
+  const fallback = useSitePhoto(slot);
+  return useMemo(() => (banner ? toSitePhoto(banner, banner.alt) : fallback), [banner, fallback]);
 };

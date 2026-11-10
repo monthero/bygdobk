@@ -12,6 +12,7 @@ export { copyState, CopyState } from './copyState';
 export { SocialLinks } from './SocialLinks';
 export { ClubLogo } from './ClubLogo';
 export { CmsImage } from './CmsImage';
+export { SiteBanner, type SiteBannerProps } from './SiteBanner';
 export { SearchInput } from './SearchInput';
 export { VenuePhoto } from './VenuePhoto';
 export { LocaleFlag } from './LocaleFlag';

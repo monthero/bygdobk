@@ -112,8 +112,8 @@ begin
   end if;
   select * into strict listed from public.board_admins() where id = '00000000-0000-4000-8000-00000000ab03';
   if listed.admin_since is distinct from c.admin_since or listed.granted_by_name is distinct from 'Authors Test A'
-    or listed.granted_by_is_admin is distinct from true then
-    raise exception 'board_admins should return admin_since and the granter name: %', listed;
+    or listed.granted_by_email is distinct from 'record-authors-a@example.invalid' then
+    raise exception 'board_admins should return admin_since and the granter name and email: %', listed;
   end if;
 end $$;
 

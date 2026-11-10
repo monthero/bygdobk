@@ -11,15 +11,15 @@ import { getSupabase } from '~/supabase/client';
 const ADMINS_KEY = 'board-admins';
 
 const PROFILE_COLUMNS = 'id, name, email, avatarUrl:avatar_url';
-const ADMIN_COLUMNS = `${PROFILE_COLUMNS}, adminSince:admin_since, grantedByName:granted_by_name, grantedByIsAdmin:granted_by_is_admin`;
+const ADMIN_COLUMNS = `${PROFILE_COLUMNS}, adminSince:admin_since, grantedByName:granted_by_name, grantedByEmail:granted_by_email`;
 
 const AdminRow = BoardProfile.extend({
   adminSince: z.iso.datetime({ offset: true }).nullable(),
   grantedByName: z.string().nullable(),
-  grantedByIsAdmin: z.boolean().nullable(),
-}).transform(({ grantedByName, grantedByIsAdmin, ...rest }) => ({
+  grantedByEmail: z.string().nullable(),
+}).transform(({ grantedByName, grantedByEmail, ...rest }) => ({
   ...rest,
-  grantedBy: grantedByName === null ? null : { name: grantedByName, isAdmin: grantedByIsAdmin ?? false },
+  grantedBy: grantedByName === null ? null : { name: grantedByName, email: grantedByEmail ?? '' },
 }));
 export type BoardAdmin = z.infer<typeof AdminRow>;
 

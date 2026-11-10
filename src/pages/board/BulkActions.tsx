@@ -63,7 +63,7 @@ export const SelectionBar: FC<BarProps> = ({ count, totalNok, onClear, onMarkPai
       justify="space-between"
       wrap="nowrap"
       gap="xs"
-      role="region"
+      component="section"
       aria-label={t`Selected memberships`}
     >
       <Text size="sm" fw={600} className="tabular">

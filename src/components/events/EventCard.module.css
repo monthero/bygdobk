@@ -8,6 +8,19 @@
   }
 }
 
+.icon {
+  flex: none;
+}
+
+.summary {
+  flex: 1;
+  min-width: 0;
+}
+
+.thumb {
+  composes: thumb from '../../styles/media.module.css';
+}
+
 .shifts {
   & svg {
     flex: none;
