@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { LOCALES, type Locale } from '../../i18n/locales.ts';
+import { fixUp } from './fixups.ts';
 
 export const TEXT_MAX = 8000;
 export const ITEMS_MAX = 1000;
@@ -91,7 +92,7 @@ export const translateItems = async (
         const index = batch[i]?.index;
         for (const { text, to: code } of translations) {
           const locale = localeOfAzure(code);
-          if (index !== undefined && locale) found.get(locale)?.set(index, text);
+          if (index !== undefined && locale) found.get(locale)?.set(index, fixUp(locale, text));
         }
       }
     }

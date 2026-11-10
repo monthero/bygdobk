@@ -204,6 +204,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         '«Translations» inne i et tekstfelt er noe annet. Der skriver du de valgfrie språkene. Se «Språk».',
         '«Translate missing» endrer aldri et språk som allerede har tekst, og publiserer aldri selv.',
         'Står det at det ble for mye på en gang, vent ett minutt og trykk igjen. Det som allerede er oversatt, er lagret.',
+        'Noen idrettsord rettes automatisk, for eksempel blir svensk «utbildning» til «träning». Finner du et ord som blir feil hver gang, si fra, så legger vi det til.',
       ],
     },
     en: {
@@ -222,6 +223,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         '“Translations” inside a text field is something else. That is where you write the optional languages. See “Languages”.',
         '“Translate missing” never changes a language that already has text, and never publishes on its own.',
         'If it says it was too much at once, wait a minute and click again. What was already translated is saved.',
+        'Some sports words are fixed automatically, for example Swedish “utbildning” becomes “träning”. If you see a word that is wrong every time, tell us and we add it.',
       ],
     },
   },
