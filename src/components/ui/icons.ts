@@ -26,6 +26,7 @@ export { default as FlowArrow } from '~icons/ph/flow-arrow';
 export { default as Gauge } from '~icons/ph/gauge';
 export { default as Gift } from '~icons/ph/gift';
 export { default as GoogleLogo } from '~icons/ph/google-logo';
+export { default as WindowsLogo } from '~icons/ph/windows-logo';
 export { default as HandHeart } from '~icons/ph/hand-heart';
 export { default as Handshake } from '~icons/ph/handshake';
 export { default as House } from '~icons/ph/house';

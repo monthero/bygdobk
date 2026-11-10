@@ -12,7 +12,10 @@ const AUTH_SETTINGS_STALE_MS = 10 * 60_000;
 type ProfileKey = readonly [typeof PROFILE_KEY, string | undefined];
 type ProfileOptions<T> = Omit<UseQueryOptions<User, Error, T, ProfileKey>, 'queryKey' | 'queryFn'>;
 
-const AuthSettings = z.object({ external: z.object({ google: z.boolean() }) });
+export const OAuthProvider = z.enum(['google', 'azure']);
+export type OAuthProvider = z.infer<typeof OAuthProvider>;
+
+const AuthSettings = z.object({ external: z.object({ google: z.boolean(), azure: z.boolean().catch(false) }) });
 type AuthSettings = z.infer<typeof AuthSettings>;
 type AuthSettingsOptions = Omit<UseQueryOptions<AuthSettings>, 'queryKey' | 'queryFn'>;
 

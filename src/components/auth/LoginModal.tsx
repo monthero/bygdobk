@@ -4,17 +4,25 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { Alert, Badge, Button, Divider, Group, Stack, Text, TextInput, ThemeIcon } from '@mantine/core';
 import { schemaResolver, useForm } from '@mantine/form';
 import { useMutation } from '@tanstack/react-query';
-import { memo, useEffect, useMemo, useState, type FC } from 'react';
+import { memo, useEffect, useMemo, useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
 
-import { Check, EnvelopeSimple, GoogleLogo, PaperPlaneTilt, ResponsiveModal, Warning } from '~/components/ui';
+import {
+  Check,
+  EnvelopeSimple,
+  GoogleLogo,
+  PaperPlaneTilt,
+  ResponsiveModal,
+  Warning,
+  WindowsLogo,
+} from '~/components/ui';
 import type { Translate } from '~/i18n/current';
 import { startAuth, useAuth } from '~/stores/auth';
 import { useUi } from '~/stores/ui';
 import { getSupabase } from '~/supabase/client';
 
 import { authErrorMessage, LOGIN_FAILED } from './errors';
-import { useAuthSettings } from './hooks';
+import { OAuthProvider, useAuthSettings } from './hooks';
 
 const loginSchema = (t: Translate) =>
   z.object({
@@ -32,11 +40,27 @@ const sendLink = async (email: string) => {
   if (error) throw error;
 };
 
-const continueWithGoogle = async () => {
+type ProviderInfo = { label: MessageDescriptor; off: MessageDescriptor; icon: ReactNode; scopes?: string };
+
+const PROVIDERS: Record<OAuthProvider, ProviderInfo> = {
+  [OAuthProvider.enum.google]: {
+    label: msg`Continue with Google`,
+    off: msg`Google login isn't switched on yet.`,
+    icon: <GoogleLogo />,
+  },
+  [OAuthProvider.enum.azure]: {
+    label: msg`Continue with Microsoft`,
+    off: msg`Microsoft login isn't switched on yet.`,
+    icon: <WindowsLogo />,
+    scopes: 'email',
+  },
+};
+
+const continueWith = async (provider: OAuthProvider) => {
   const supabase = await getSupabase();
   const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.href },
+    provider,
+    options: { redirectTo: window.location.href, scopes: PROVIDERS[provider].scopes },
   });
   if (error) throw error;
 };
@@ -95,7 +119,7 @@ const LinkSent: FC<LinkSentProps> = ({ sent, error, resending, onResend, onBack 
 };
 
 const LoginForm: FC = () => {
-  const { t } = useLingui();
+  const { i18n, t } = useLingui();
   const linkError = useAuth((s) => s.linkError);
   const settings = useAuthSettings();
   const [sent, setSent] = useState<Sent | null>(null);
@@ -108,7 +132,7 @@ const LoginForm: FC = () => {
     validate: schemaResolver(schema, { sync: true }),
   });
 
-  const google = useMutation({ mutationFn: continueWithGoogle });
+  const oauth = useMutation({ mutationFn: continueWith });
   const link = useMutation({
     mutationFn: sendLink,
     onMutate: () => useAuth.setState({ linkError: null }),
@@ -130,8 +154,6 @@ const LoginForm: FC = () => {
     );
   }
 
-  const googleOff = settings.data?.external.google === false;
-
   return (
     <Stack gap="md">
       <Text size="sm" c="dimmed">
@@ -139,21 +161,29 @@ const LoginForm: FC = () => {
       </Text>
       {linkError && <ErrorAlert error={linkError} fallback={LOGIN_FAILED} />}
       <Stack gap={6}>
-        <Button
-          variant="default"
-          leftSection={<GoogleLogo />}
-          loading={settings.isPending || google.isPending || google.isSuccess}
-          disabled={googleOff}
-          onClick={() => google.mutate()}
-        >
-          <Trans>Continue with Google</Trans>
-        </Button>
-        {googleOff && (
-          <Text size="xs" c="dimmed" ta="center">
-            <Trans>Google login isn't switched on yet.</Trans>
-          </Text>
-        )}
-        {google.isError && <ErrorAlert error={google.error} />}
+        {OAuthProvider.options.map((provider) => {
+          const off = settings.data?.external[provider] === false;
+          const busy = oauth.variables === provider && (oauth.isPending || oauth.isSuccess);
+          return (
+            <Stack key={provider} gap={6}>
+              <Button
+                variant="default"
+                leftSection={PROVIDERS[provider].icon}
+                loading={settings.isPending || busy}
+                disabled={off || (oauth.isPending && !busy)}
+                onClick={() => oauth.mutate(provider)}
+              >
+                {i18n._(PROVIDERS[provider].label)}
+              </Button>
+              {off && (
+                <Text size="xs" c="dimmed" ta="center">
+                  {i18n._(PROVIDERS[provider].off)}
+                </Text>
+              )}
+            </Stack>
+          );
+        })}
+        {oauth.isError && <ErrorAlert error={oauth.error} />}
       </Stack>
       <Divider label={t`or get a link by email`} />
       <form onSubmit={form.onSubmit(({ email }) => link.mutate(email.trim()))} noValidate>
