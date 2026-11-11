@@ -17,7 +17,8 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import { memo, useMemo, type FC } from 'react';
 
 import type { Shift } from '~/cms/calendar';
-import { useTeams } from '~/cms/siteData';
+import { useSiteContent } from '~/cms/content';
+import { useClub, useTeams } from '~/cms/siteData';
 import { useSessionUserId } from '~/components/auth/hooks';
 import { ArrowCounterClockwise, ArrowUpRight, CheckCircle, HandHeart, Warning } from '~/components/ui';
 import { Team } from '~/data/events';
@@ -33,6 +34,8 @@ import {
   volunteerErrorMessage,
 } from '~/volunteers/queries';
 
+import { CalendarButton } from './CalendarButton';
+import { isVisitorEvent, shiftIcsEvent, type VisitorEvent } from './eventMeta';
 import { shiftTime, TEAM_COLORS } from './shifts';
 import { TeamBadge } from './TeamBadge';
 
@@ -198,9 +201,13 @@ const ShiftItem = memo<ShiftItemProps>((props) => (
   </Paper>
 ));
 
-const MyShiftRow: FC<{ shift: Shift; entry: ShiftVolunteer; readOnly: boolean }> = ({ shift, entry, readOnly }) => {
-  const { i18n } = useLingui();
+type MyShiftRowProps = { shift: Shift; entry: ShiftVolunteer; readOnly: boolean; event: VisitorEvent | undefined };
+
+const MyShiftRow: FC<MyShiftRowProps> = ({ shift, entry, readOnly, event }) => {
+  const { i18n, t } = useLingui();
   const remove = useRemoveVolunteer();
+  const teamName = useTeams()[shift.team].name;
+  const home = useClub().venue;
   return (
     <Stack gap={2}>
       <Group gap="sm" wrap="wrap" justify="space-between">
@@ -211,15 +218,32 @@ const MyShiftRow: FC<{ shift: Shift; entry: ShiftVolunteer; readOnly: boolean }>
           </Text>
         </Group>
         {!readOnly && (
-          <Button
-            size="compact-xs"
-            variant="subtle"
-            color="red"
-            loading={remove.isPending}
-            onClick={() => remove.mutate(entry.id)}
-          >
-            <Trans comment="Button that drops your own volunteer shift">Cancel</Trans>
-          </Button>
+          <Group gap={4} wrap="nowrap">
+            {event && (
+              <CalendarButton
+                size="compact-xs"
+                variant="subtle"
+                fileName={`${event.slug}-${shift.day}.ics`}
+                events={() => {
+                  const eventTitle = event.title;
+                  const title = t({
+                    message: `Volunteer shift: ${teamName} · ${eventTitle}`,
+                    comment: 'Calendar entry title for your own volunteer shift',
+                  });
+                  return [shiftIcsEvent(event, shift, title, home)];
+                }}
+              />
+            )}
+            <Button
+              size="compact-xs"
+              variant="subtle"
+              color="red"
+              loading={remove.isPending}
+              onClick={() => remove.mutate(entry.id)}
+            >
+              <Trans comment="Button that drops your own volunteer shift">Cancel</Trans>
+            </Button>
+          </Group>
         )}
       </Group>
       {remove.error && (
@@ -231,11 +255,11 @@ const MyShiftRow: FC<{ shift: Shift; entry: ShiftVolunteer; readOnly: boolean }>
   );
 };
 
-const MyShifts: FC<{ shifts: readonly Shift[]; mine: readonly ShiftVolunteer[]; readOnly: boolean }> = ({
-  shifts,
-  mine,
-  readOnly,
-}) => {
+type MyShiftsProps = { eventId: string; shifts: readonly Shift[]; mine: readonly ShiftVolunteer[]; readOnly: boolean };
+
+const MyShifts: FC<MyShiftsProps> = ({ eventId, shifts, mine, readOnly }) => {
+  const { events } = useSiteContent();
+  const event = events.find((e): e is VisitorEvent => e.id === eventId && isVisitorEvent(e));
   const rows = useMemo(() => {
     const byKey = new Map(shifts.map((s) => [s._key, s]));
     return mine.flatMap((entry) => {
@@ -252,7 +276,7 @@ const MyShifts: FC<{ shifts: readonly Shift[]; mine: readonly ShiftVolunteer[]; 
           <Text fw={700}>{readOnly ? <Trans>You helped out</Trans> : <Trans>You're on</Trans>}</Text>
         </Group>
         {rows.map(({ shift, entry }) => (
-          <MyShiftRow key={entry.id} shift={shift} entry={entry} readOnly={readOnly} />
+          <MyShiftRow key={entry.id} shift={shift} entry={entry} readOnly={readOnly} event={event} />
         ))}
       </Stack>
     </Paper>
@@ -315,7 +339,7 @@ export const ShiftBoard: FC<ShiftBoardProps> = ({
 
   return (
     <Stack gap="md">
-      {signedIn && <MyShifts shifts={shifts} mine={myShifts} readOnly={readOnly} />}
+      {signedIn && <MyShifts eventId={eventId} shifts={shifts} mine={myShifts} readOnly={readOnly} />}
       {!readOnly && <HowToJoin signedIn={signedIn} signupUrl={signupUrl} />}
       {counts.isError && (
         <Alert variant="light" color="red" radius="lg" icon={WARN_ICON} title={<Trans>Couldn't load the spots</Trans>}>

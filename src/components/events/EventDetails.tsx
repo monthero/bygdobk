@@ -1,13 +1,11 @@
 import { Trans } from '@lingui/react/macro';
 import { Badge, Button, Group, Paper, Stack, Text } from '@mantine/core';
-import { useTimeout } from '@mantine/hooks';
-import { memo, useState, type FC } from 'react';
+import { memo, type FC } from 'react';
 
-import { calendarFile } from '~/cms/ics';
 import { useClub } from '~/cms/siteData';
-import { AddressLink, ArrowUpRight, CalendarPlus, Check, Clock, LockSimple } from '~/components/ui';
-import { downloadFile } from '~/utils/download';
+import { AddressLink, ArrowUpRight, Clock, LockSimple } from '~/components/ui';
 
+import { CalendarButton } from './CalendarButton';
 import {
   canAddToCalendar,
   eventVenue,
@@ -15,14 +13,10 @@ import {
   registrationOf,
   RegistrationState,
   type Registration,
-  type Venue,
   type VisitorEvent,
 } from './eventMeta';
 
 import classes from './EventDetails.module.css';
-
-const DONE_MS = 2500;
-const ICS_TYPE = 'text/calendar;charset=utf-8';
 
 export const EventVenue = memo<{ event: VisitorEvent }>(({ event }) => {
   const venue = eventVenue(event, useClub().venue);
@@ -32,33 +26,9 @@ export const EventVenue = memo<{ event: VisitorEvent }>(({ event }) => {
   );
 });
 
-const downloadIcs = (event: VisitorEvent, home: Venue | undefined) =>
-  downloadFile(calendarFile([icsEvent(event, home)]), `${event.slug}.ics`, ICS_TYPE);
-
 const AddToCalendar: FC<{ event: VisitorEvent }> = ({ event }) => {
   const home = useClub().venue;
-  const [done, setDone] = useState(false);
-  const { start } = useTimeout(() => setDone(false), DONE_MS);
-  const add = () => {
-    downloadIcs(event, home);
-    setDone(true);
-    start();
-  };
-  return (
-    <Button
-      variant={done ? 'light' : 'default'}
-      color={done ? 'teal' : undefined}
-      leftSection={done ? <Check /> : <CalendarPlus />}
-      onClick={add}
-      aria-live="polite"
-    >
-      {done ? (
-        <Trans comment="Shown briefly after the calendar file was downloaded">Downloaded</Trans>
-      ) : (
-        <Trans>Add to calendar</Trans>
-      )}
-    </Button>
-  );
+  return <CalendarButton fileName={`${event.slug}.ics`} events={() => [icsEvent(event, home)]} />;
 };
 
 const Deadline: FC<{ registration: Registration }> = ({ registration: { state, deadline } }) => {

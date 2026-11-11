@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { eventDays, isPast, type CalendarEvent } from '~/cms/calendar';
+import { eventDays, isPast, type CalendarEvent, type Shift } from '~/cms/calendar';
 import { SITE_URL, type IcsEvent } from '~/cms/ics';
 import { ClipboardText, MapPin, PauseCircle, Racket, Trophy, UsersThree } from '~/components/ui';
 import { EventKind, VISITOR_KINDS } from '~/data/events';
@@ -39,10 +39,22 @@ export const eventVenue = (event: CalendarEvent, home: Venue | undefined) => {
 
 export const canAddToCalendar = (event: CalendarEvent) => event.dateConfirmed && !isPast(event, today());
 
+const eventUrl = (event: VisitorEvent) => `${SITE_URL}${withLocale(`/arrangementer/${event.slug}`, currentLocale())}`;
+
 export const icsEvent = (event: VisitorEvent, home: Venue | undefined): IcsEvent => ({
   ...event,
   venue: eventVenue(event, home),
-  url: `${SITE_URL}${withLocale(`/arrangementer/${event.slug}`, currentLocale())}`,
+  url: eventUrl(event),
+});
+
+export const shiftIcsEvent = (event: VisitorEvent, shift: Shift, title: string, home: Venue | undefined): IcsEvent => ({
+  id: `${event.id}-${shift._key}`,
+  title,
+  startDate: shift.day,
+  startTime: shift.start,
+  endTime: shift.end,
+  venue: eventVenue(event, home),
+  url: eventUrl(event),
 });
 
 export const RegistrationState = z.enum(['open', 'closingSoon', 'closed']);
