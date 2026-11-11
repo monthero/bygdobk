@@ -7,12 +7,16 @@ import { useSignedOut } from '~/components/auth/hooks';
 import { ContentError, PageLoader, RootLayout } from '~/components/layout';
 import { currentLocale } from '~/i18n/current';
 import { isAdminPath } from '~/i18n/locales';
+import { usePageViews } from '~/visitors/tracking';
 
 const selectIsAdmin = (s: RouterState) => s.matches.some((m) => m.routeId === '/admin/$');
 
 const AdminOutlet: FC = () => (useSignedOut() ? <Navigate to="/" replace /> : <Outlet />);
 
-const Root: FC = () => (useRouterState({ select: selectIsAdmin }) ? <AdminOutlet /> : <RootLayout />);
+const Root: FC = () => {
+  usePageViews();
+  return useRouterState({ select: selectIsAdmin }) ? <AdminOutlet /> : <RootLayout />;
+};
 
 export const Route = createRootRoute({
   loader: ({ location }) =>

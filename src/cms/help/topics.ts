@@ -35,6 +35,7 @@ export const TopicId = z.enum([
   'volunteers',
   'printShifts',
   'boardAccess',
+  'visitors',
 ]);
 export type TopicId = z.infer<typeof TopicId>;
 
@@ -834,7 +835,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       ],
       tips: [
         'Et blått tall på profilbildet ditt viser hvor mange forespørsler som venter. Samme tall står på «Styresider» og på «Medlemskap».',
-        'Linjen øverst på alle styresidene bytter mellom «Medlemskap», «Frivillige» og «Styretilgang».',
+        'Linjen øverst på alle styresidene bytter mellom «Medlemskap», «Frivillige», «Styretilgang» og «Besøkende».',
         'Søk på navn eller e-post for å finne noen raskt.',
         'Åpne en person for å se hvem som la til, godkjente, markerte som betalt og sist endret hvert medlemskap. Merket «Styret» betyr at e-posten til personen står i «Board members» i Studio. Står det «styret» uten navn, skjedde det før vi begynte å lagre navn.',
       ],
@@ -855,7 +856,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
       ],
       tips: [
         'A blue number on your profile picture shows how many requests are waiting. The same number shows on “Board pages” and on “Memberships”.',
-        'The bar at the top of every board page switches between “Memberships”, “Volunteers” and “Board access”.',
+        'The bar at the top of every board page switches between “Memberships”, “Volunteers”, “Board access” and “Visitors”.',
         'Search by name or email to find someone fast.',
         'Open a person to see who added, approved, marked as paid and last changed each membership. The “Board” tag means the person’s email is in “Board members” in the Studio. “the board” without a name means it happened before names were saved.',
       ],
@@ -1058,6 +1059,37 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'The Studio has its own login. A new admin must also be invited in Sanity to edit the content.',
         'Under each admin you see when they got access and who gave it. Admins from before this was added have no such line.',
         'Admin and board are not the same. Admins can open the board pages. Who is on the board is set in “Board members” in the Studio.',
+      ],
+    },
+  },
+  [TopicId.enum.visitors]: {
+    area: HelpArea.enum.site,
+    nb: {
+      title: 'Besøkende',
+      intro: 'Se hvor mange sider folk åpner på nettsiden, hvilke sider, og hvor de kommer fra.',
+      steps: [
+        'Åpne kontomenyen, trykk «Styresider» og velg «Besøkende» i linjen øverst.',
+        'Velg periode: 7 dager, 30 dager eller 12 måneder.',
+        'Se antall visninger per dag (eller måned), de mest besøkte sidene, andre nettsider som lenker til oss, mobil, nettbrett eller datamaskin, og språk.',
+        'Trykk «Vis tallene» under grafen for å se tallene i en tabell.',
+      ],
+      tips: [
+        'Tallene telles uten informasjonskapsler og uten personopplysninger. Vi lagrer bare summer per dag.',
+        'Styresidene, Studio og besøk fra innloggede administratorer telles ikke.',
+      ],
+    },
+    en: {
+      title: 'Visitors',
+      intro: 'See how many pages people open on the website, which pages, and where they come from.',
+      steps: [
+        'Open the account menu, click “Board pages” and pick “Visitors” in the bar at the top.',
+        'Pick a period: 7 days, 30 days or 12 months.',
+        'See the views per day (or month), the most visited pages, other websites that link to us, phone, tablet or computer, and languages.',
+        'Click “Show the numbers” under the chart to see the numbers in a table.',
+      ],
+      tips: [
+        'The numbers are counted without cookies and without personal data. We only store totals per day.',
+        'The board pages, the Studio and visits from logged-in admins are not counted.',
       ],
     },
   },

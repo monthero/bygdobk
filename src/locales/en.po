@@ -162,6 +162,11 @@ msgstr "{requestCount} open"
 msgid "{requested} requested"
 msgstr "{requested} requested"
 
+#. Below the number of views that came from links on other websites, e.g. 12% of all views
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "{share} of all views"
+msgstr "{share} of all views"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown} is on the shift"
@@ -210,6 +215,16 @@ msgstr "<0>Write to the board</0> before the new season starts."
 msgid "<0>Write to the board</0>."
 msgstr "<0>Write to the board</0>."
 
+#. Period picker for visitor numbers: the last 12 months
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "12 months"
+msgstr "12 months"
+
+#. Period picker for visitor numbers: the last 30 days
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "30 days"
+msgstr "30 days"
+
 #: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "404 · Out"
 msgstr "404 · Out"
@@ -230,6 +245,11 @@ msgstr "404 idea"
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "404 ideas"
 msgstr "404 ideas"
+
+#. Period picker for visitor numbers: the last 7 days
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "7 days"
+msgstr "7 days"
 
 #. The shuttle hit the racket away from the middle
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
@@ -382,7 +402,7 @@ msgstr "Add person"
 msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "Add shifts to an event in Sanity, and they show up here."
 
-#: src/components/events/EventDetails.tsx
+#: src/components/events/CalendarButton.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "Add to calendar"
@@ -599,7 +619,6 @@ msgstr "Bygdø Badmintonklubb"
 msgid "Bygdø Badmintonklubb is one of Norway’s oldest badminton clubs. We play at Bygdøhus, a private foundation where the club rents court time."
 msgstr "Bygdø Badmintonklubb is one of Norway’s oldest badminton clubs. We play at Bygdøhus, a private foundation where the club rents court time."
 
-#: src/components/layout/SiteHeader.tsx
 #: src/components/layout/SiteNavbar.tsx
 msgid "Bygdø Badmintonklubb, front page"
 msgstr "Bygdø Badmintonklubb, front page"
@@ -779,6 +798,11 @@ msgstr "Coming up"
 msgid "Compact"
 msgstr "Compact"
 
+#. Visitor numbers: views from laptops and desktops
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Computer"
+msgstr "Computer"
+
 #. Main menu
 #: src/components/layout/nav.ts
 #: src/pages/contact/ContactPage.tsx
@@ -868,6 +892,10 @@ msgstr "Couldn't load the memberships"
 msgid "Couldn't load the spots"
 msgstr "Couldn't load the spots"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Couldn't load the visitor numbers"
+msgstr "Couldn't load the visitor numbers"
+
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Couldn't load the volunteers"
 msgstr "Couldn't load the volunteers"
@@ -935,7 +963,9 @@ msgstr "Cropped stamp"
 msgid "Dark"
 msgstr "Dark"
 
+#. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
+#: src/pages/board/visitors/ViewsChart.tsx
 msgid "Day"
 msgstr "Day"
 
@@ -981,6 +1011,15 @@ msgstr "Delete membership?"
 msgid "Delete the membership for <0>{name}</0> in season {season}? You can't undo this."
 msgstr "Delete the membership for <0>{name}</0> in season {season}? You can't undo this."
 
+#. Column heading: phone, tablet or computer
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Device"
+msgstr "Device"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Devices"
+msgstr "Devices"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Discounts and help"
 msgstr "Discounts and help"
@@ -1006,7 +1045,7 @@ msgstr "Download spreadsheet"
 
 #. Shown briefly after the calendar file was downloaded
 #. Shown briefly after the file was downloaded
-#: src/components/events/EventDetails.tsx
+#: src/components/events/CalendarButton.tsx
 #: src/pages/board/MembersOverview.tsx
 msgid "Downloaded"
 msgstr "Downloaded"
@@ -1225,11 +1264,25 @@ msgstr "Frame shot!"
 msgid "From {from}"
 msgstr "From {from}"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "From other sites"
+msgstr "From other sites"
+
 #: src/components/styles/classic/ClassicHero.tsx
 #: src/components/styles/court/CourtHero.tsx
 #: src/components/styles/flight/FlightHero.tsx
 msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
 msgstr "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
+
+#. Read after the club name in the logo link, for screen readers
+#: src/components/layout/SiteHeader.tsx
+msgid "front page"
+msgstr "front page"
+
+#. Visitor numbers: the home page of the website
+#: src/pages/board/visitors/pageNames.ts
+msgid "Front page"
+msgstr "Front page"
 
 #. A training group takes no new players
 #. Volunteer shift with no free spots
@@ -1336,6 +1389,10 @@ msgstr "Hi! We'd like to hear more about sponsoring the club."
 msgid "Hide memberships for {name}"
 msgstr "Hide memberships for {name}"
 
+#: src/pages/board/visitors/ViewsChart.tsx
+msgid "Hide the numbers"
+msgstr "Hide the numbers"
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Hits"
 msgstr "Hits"
@@ -1347,6 +1404,10 @@ msgstr "How do I change or end my membership?"
 #: src/components/layout/SponsorStrip.tsx
 msgid "How it works"
 msgstr "How it works"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "How many pages people open on the website. Counted without cookies or personal data."
+msgstr "How many pages people open on the website. Counted without cookies or personal data."
 
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/pages/membership/MembershipPage.tsx
@@ -1389,6 +1450,7 @@ msgstr "Join Bygdø Badmintonklubb"
 #: src/components/layout/SiteNavbar.tsx
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/components/styles/HeroActions.tsx
+#: src/pages/board/visitors/pageNames.ts
 #: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Join the club"
@@ -1424,6 +1486,7 @@ msgid "Kids 7–12: try half a season for {0}"
 msgstr "Kids 7–12: try half a season for {0}"
 
 #: src/components/layout/LanguageSwitch.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
 msgid "Language"
 msgstr "Language"
 
@@ -1435,6 +1498,10 @@ msgstr "Language: {0}"
 #: src/components/layout/LanguageSwitch.tsx
 msgid "Language: {code}"
 msgstr "Language: {code}"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Languages"
+msgstr "Languages"
 
 #. Size of text and controls
 #: src/components/layout/VariantMenu.tsx
@@ -1638,7 +1705,9 @@ msgstr "Missed the sweet spot"
 msgid "Missed!"
 msgstr "Missed!"
 
+#. Table column: calendar month
 #: src/components/training/TrainingSchedule.tsx
+#: src/pages/board/visitors/ViewsChart.tsx
 msgid "Month"
 msgstr "Month"
 
@@ -1656,6 +1725,7 @@ msgstr "My child"
 
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/board/visitors/pageNames.ts
 #: src/pages/home/components/StartCards.tsx
 #: src/pages/membership/MembershipPage.tsx
 #: src/pages/membership/MyMembershipPage.tsx
@@ -1854,6 +1924,14 @@ msgstr "No training: {range}."
 msgid "No training: {reason}"
 msgstr "No training: {reason}"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "No visits counted yet"
+msgstr "No visits counted yet"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "No visits from other sites in this period."
+msgstr "No visits from other sites in this period."
+
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Nobody yet."
 msgstr "Nobody yet."
@@ -2009,6 +2087,11 @@ msgstr "Org. no. {0}"
 msgid "Other"
 msgstr "Other"
 
+#. Heading: websites that linked visitors to us
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Other sites"
+msgstr "Other sites"
+
 #: src/pages/events/EventsPage.tsx
 msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
 msgstr "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
@@ -2031,6 +2114,11 @@ msgstr "Outline"
 msgid "Overview"
 msgstr "Overview"
 
+#. Column heading: a page on the website
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Page"
+msgstr "Page"
+
 #: src/pages/NotFoundPage.tsx
 msgid "Page not found"
 msgstr "Page not found"
@@ -2038,6 +2126,10 @@ msgstr "Page not found"
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Page not found, but the rally isn't over"
 msgstr "Page not found, but the rally isn't over"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Page views"
+msgstr "Page views"
 
 #. Badge: all of this person's memberships are paid
 #. People filter: everyone has paid
@@ -2088,6 +2180,7 @@ msgstr "Pay"
 
 #. Table column: from and to date of the membership
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
 msgid "Period"
 msgstr "Period"
 
@@ -2095,6 +2188,11 @@ msgstr "Period"
 #: src/pages/board/PeopleList.tsx
 msgid "Person"
 msgstr "Person"
+
+#. Visitor numbers: views from mobile phones
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Phone"
+msgstr "Phone"
 
 #. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
 #: src/components/layout/InstallApp.tsx
@@ -2229,6 +2327,7 @@ msgstr "Print shift plan"
 
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/board/visitors/pageNames.ts
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Privacy"
 msgstr "Privacy"
@@ -2544,6 +2643,10 @@ msgstr "Show memberships"
 msgid "Show memberships for {name}"
 msgstr "Show memberships for {name}"
 
+#: src/pages/board/visitors/ViewsChart.tsx
+msgid "Show the numbers"
+msgstr "Show the numbers"
+
 #. Button: list the members who have not paid yet
 #: src/pages/board/MembersOverview.tsx
 msgid "Show who"
@@ -2591,6 +2694,11 @@ msgstr "Signing up a child?"
 #: src/pages/club/ClubPage.tsx
 msgid "Since {0}"
 msgstr "Since {0}"
+
+#. Column heading: another website
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Site"
+msgstr "Site"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Size"
@@ -2679,6 +2787,11 @@ msgstr "Switch color, shape, size, menu and width to compare design variants."
 msgid "System"
 msgstr "System"
 
+#. Visitor numbers: views from tablets
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Tablet"
+msgstr "Tablet"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "Take <0>{name}</0> off this shift?"
@@ -2753,9 +2866,11 @@ msgstr "the board"
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/MembersPage.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
 msgid "The board"
@@ -2886,6 +3001,10 @@ msgstr "Too many tries. Try again in a bit."
 msgid "Top bar"
 msgstr "Top bar"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Top pages"
+msgstr "Top pages"
+
 #: src/pages/contact/ContactSection.tsx
 msgid "Topic"
 msgstr "Topic"
@@ -2910,6 +3029,11 @@ msgstr "Tournament"
 #: src/pages/training/TrainingPage.tsx
 msgid "Training"
 msgstr "Training"
+
+#. Visitor numbers: the training page for one season
+#: src/pages/board/visitors/pageNames.ts
+msgid "Training {season}"
+msgstr "Training {season}"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Training changes, events, volunteering and club news, with dates."
@@ -2937,6 +3061,10 @@ msgstr "Training today"
 #: src/data/events.ts
 msgid "Trip"
 msgstr "Trip"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Try a longer period, or check back later."
+msgstr "Try a longer period, or check back later."
 
 #: src/components/layout/MobileMenu.tsx
 #: src/components/styles/HeroActions.tsx
@@ -3006,6 +3134,19 @@ msgstr "Use the email they log in with."
 msgid "Variants"
 msgstr "Variants"
 
+#: src/pages/board/visitors/ViewsChart.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Views"
+msgstr "Views"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Views per day"
+msgstr "Views per day"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Views per month"
+msgstr "Views per month"
+
 #. Payment method: the Norwegian mobile payment app
 #: src/pages/board/format.ts
 msgid "Vipps"
@@ -3014,6 +3155,18 @@ msgstr "Vipps"
 #: src/pages/membership/MembershipPage.tsx
 msgid "Vipps number {vipps}"
 msgstr "Vipps number {vipps}"
+
+#. Board screen with website visitor numbers
+#. Board screen with website visitor numbers
+#: src/pages/board/BoardNav.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Visitors"
+msgstr "Visitors"
+
+#. Calendar entry title for your own volunteer shift
+#: src/components/events/ShiftBoard.tsx
+msgid "Volunteer shift: {teamName} · {eventTitle}"
+msgstr "Volunteer shift: {teamName} · {eventTitle}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx

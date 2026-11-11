@@ -162,6 +162,11 @@ msgstr "{requestCount}份待处理"
 msgid "{requested} requested"
 msgstr "{requested}个待处理"
 
+#. Below the number of views that came from links on other websites, e.g. 12% of all views
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "{share} of all views"
+msgstr "占全部浏览量的 {share}"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "{shown} is on the shift"
 msgstr "{shown}已加入班次"
@@ -210,6 +215,16 @@ msgstr "新赛季开始前，请<0>联系理事会</0>。"
 msgid "<0>Write to the board</0>."
 msgstr "<0>联系理事会</0>。"
 
+#. Period picker for visitor numbers: the last 12 months
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "12 months"
+msgstr "12个月"
+
+#. Period picker for visitor numbers: the last 30 days
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "30 days"
+msgstr "30天"
+
 #: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "404 · Out"
 msgstr "404 · 出界"
@@ -230,6 +245,11 @@ msgstr "404创意"
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "404 ideas"
 msgstr "404创意"
+
+#. Period picker for visitor numbers: the last 7 days
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "7 days"
+msgstr "7天"
 
 #. The shuttle hit the racket away from the middle
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
@@ -382,7 +402,7 @@ msgstr "添加人员"
 msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "在Sanity里给活动添加班次，它们就会显示在这里。"
 
-#: src/components/events/EventDetails.tsx
+#: src/components/events/CalendarButton.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "添加到日历"
@@ -599,7 +619,6 @@ msgstr "Bygdø Badmintonklubb"
 msgid "Bygdø Badmintonklubb is one of Norway’s oldest badminton clubs. We play at Bygdøhus, a private foundation where the club rents court time."
 msgstr "Bygdø Badmintonklubb是挪威历史最悠久的羽毛球俱乐部之一。我们在Bygdøhus打球，这是一家私人基金会，俱乐部在那里租用场地时间。"
 
-#: src/components/layout/SiteHeader.tsx
 #: src/components/layout/SiteNavbar.tsx
 msgid "Bygdø Badmintonklubb, front page"
 msgstr "Bygdø Badmintonklubb，首页"
@@ -779,6 +798,11 @@ msgstr "即将到来"
 msgid "Compact"
 msgstr "紧凑"
 
+#. Visitor numbers: views from laptops and desktops
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Computer"
+msgstr "电脑"
+
 #. Main menu
 #: src/components/layout/nav.ts
 #: src/pages/contact/ContactPage.tsx
@@ -868,6 +892,10 @@ msgstr "会员名单加载失败"
 msgid "Couldn't load the spots"
 msgstr "名额加载失败"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Couldn't load the visitor numbers"
+msgstr "无法加载访问数据"
+
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Couldn't load the volunteers"
 msgstr "志愿者加载失败"
@@ -935,7 +963,9 @@ msgstr "裁切印章"
 msgid "Dark"
 msgstr "深色"
 
+#. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
+#: src/pages/board/visitors/ViewsChart.tsx
 msgid "Day"
 msgstr "星期"
 
@@ -981,6 +1011,15 @@ msgstr "删除会员？"
 msgid "Delete the membership for <0>{name}</0> in season {season}? You can't undo this."
 msgstr "删除<0>{name}</0>在{season}赛季的会员吗？删除后无法恢复。"
 
+#. Column heading: phone, tablet or computer
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Device"
+msgstr "设备"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Devices"
+msgstr "设备"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Discounts and help"
 msgstr "优惠和帮助"
@@ -1006,7 +1045,7 @@ msgstr "下载表格"
 
 #. Shown briefly after the calendar file was downloaded
 #. Shown briefly after the file was downloaded
-#: src/components/events/EventDetails.tsx
+#: src/components/events/CalendarButton.tsx
 #: src/pages/board/MembersOverview.tsx
 msgid "Downloaded"
 msgstr "已下载"
@@ -1225,11 +1264,25 @@ msgstr "拍框球！"
 msgid "From {from}"
 msgstr "{from}起生效"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "From other sites"
+msgstr "来自其他网站"
+
 #: src/components/styles/classic/ClassicHero.tsx
 #: src/components/styles/court/CourtHero.tsx
 #: src/components/styles/flight/FlightHero.tsx
 msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
 msgstr "从第一次挥拍到全力扣杀。新手、青少年和成人，每周三个晚上。"
+
+#. Read after the club name in the logo link, for screen readers
+#: src/components/layout/SiteHeader.tsx
+msgid "front page"
+msgstr "首页"
+
+#. Visitor numbers: the home page of the website
+#: src/pages/board/visitors/pageNames.ts
+msgid "Front page"
+msgstr "首页"
 
 #. A training group takes no new players
 #. Volunteer shift with no free spots
@@ -1336,6 +1389,10 @@ msgstr "你好！我们想多了解一下赞助俱乐部的事。"
 msgid "Hide memberships for {name}"
 msgstr "隐藏{name}的会员"
 
+#: src/pages/board/visitors/ViewsChart.tsx
+msgid "Hide the numbers"
+msgstr "隐藏数字"
+
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Hits"
 msgstr "击球数"
@@ -1347,6 +1404,10 @@ msgstr "怎样更改或终止我的会员？"
 #: src/components/layout/SponsorStrip.tsx
 msgid "How it works"
 msgstr "怎么用"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "How many pages people open on the website. Counted without cookies or personal data."
+msgstr "人们在网站上打开了多少个页面。统计时不使用 Cookie，也不收集个人信息。"
 
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/pages/membership/MembershipPage.tsx
@@ -1389,6 +1450,7 @@ msgstr "加入Bygdø Badmintonklubb"
 #: src/components/layout/SiteNavbar.tsx
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/components/styles/HeroActions.tsx
+#: src/pages/board/visitors/pageNames.ts
 #: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Join the club"
@@ -1424,6 +1486,7 @@ msgid "Kids 7–12: try half a season for {0}"
 msgstr "7–12岁儿童：花{0}体验半个赛季"
 
 #: src/components/layout/LanguageSwitch.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
 msgid "Language"
 msgstr "语言"
 
@@ -1435,6 +1498,10 @@ msgstr "语言：{0}"
 #: src/components/layout/LanguageSwitch.tsx
 msgid "Language: {code}"
 msgstr "语言：{code}"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Languages"
+msgstr "语言"
 
 #. Size of text and controls
 #: src/components/layout/VariantMenu.tsx
@@ -1638,7 +1705,9 @@ msgstr "没打到甜区"
 msgid "Missed!"
 msgstr "没接住！"
 
+#. Table column: calendar month
 #: src/components/training/TrainingSchedule.tsx
+#: src/pages/board/visitors/ViewsChart.tsx
 msgid "Month"
 msgstr "月"
 
@@ -1656,6 +1725,7 @@ msgstr "我的孩子"
 
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/board/visitors/pageNames.ts
 #: src/pages/home/components/StartCards.tsx
 #: src/pages/membership/MembershipPage.tsx
 #: src/pages/membership/MyMembershipPage.tsx
@@ -1854,6 +1924,14 @@ msgstr "停训：{range}。"
 msgid "No training: {reason}"
 msgstr "停训：{reason}"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "No visits counted yet"
+msgstr "还没有统计到访问"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "No visits from other sites in this period."
+msgstr "此期间没有来自其他网站的访问。"
+
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Nobody yet."
 msgstr "还没有人。"
@@ -2009,6 +2087,11 @@ msgstr "组织编号{0}"
 msgid "Other"
 msgstr "其他"
 
+#. Heading: websites that linked visitors to us
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Other sites"
+msgstr "其他网站"
+
 #: src/pages/events/EventsPage.tsx
 msgid "Our tournaments at Bygdøhus run on volunteers. Grab a shift!"
 msgstr "我们在Bygdøhus的比赛靠志愿者撑起来。来领个班次吧！"
@@ -2031,6 +2114,11 @@ msgstr "线框"
 msgid "Overview"
 msgstr "概览"
 
+#. Column heading: a page on the website
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Page"
+msgstr "页面"
+
 #: src/pages/NotFoundPage.tsx
 msgid "Page not found"
 msgstr "页面未找到"
@@ -2038,6 +2126,10 @@ msgstr "页面未找到"
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Page not found, but the rally isn't over"
 msgstr "页面找不到了，但这一回合还没结束"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Page views"
+msgstr "页面浏览量"
 
 #. Badge: all of this person's memberships are paid
 #. People filter: everyone has paid
@@ -2088,6 +2180,7 @@ msgstr "付款"
 
 #. Table column: from and to date of the membership
 #: src/pages/board/MembershipList.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
 msgid "Period"
 msgstr "有效期"
 
@@ -2095,6 +2188,11 @@ msgstr "有效期"
 #: src/pages/board/PeopleList.tsx
 msgid "Person"
 msgstr "人员"
+
+#. Visitor numbers: views from mobile phones
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Phone"
+msgstr "手机"
 
 #. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
 #: src/components/layout/InstallApp.tsx
@@ -2229,6 +2327,7 @@ msgstr "打印班次表"
 
 #: src/components/layout/PageTitle.tsx
 #: src/components/layout/SiteFooter.tsx
+#: src/pages/board/visitors/pageNames.ts
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Privacy"
 msgstr "隐私"
@@ -2544,6 +2643,10 @@ msgstr "显示会员"
 msgid "Show memberships for {name}"
 msgstr "显示{name}的会员"
 
+#: src/pages/board/visitors/ViewsChart.tsx
+msgid "Show the numbers"
+msgstr "显示数字"
+
 #. Button: list the members who have not paid yet
 #: src/pages/board/MembersOverview.tsx
 msgid "Show who"
@@ -2591,6 +2694,11 @@ msgstr "要给孩子报名？"
 #: src/pages/club/ClubPage.tsx
 msgid "Since {0}"
 msgstr "始于{0}年"
+
+#. Column heading: another website
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Site"
+msgstr "网站"
 
 #: src/components/layout/VariantMenu.tsx
 msgid "Size"
@@ -2679,6 +2787,11 @@ msgstr "切换颜色、形状、大小、菜单和宽度，比较不同设计方
 msgid "System"
 msgstr "跟随系统"
 
+#. Visitor numbers: views from tablets
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Tablet"
+msgstr "平板"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Take <0>{name}</0> off this shift?"
 msgstr "把<0>{name}</0>从这个班次移除吗？"
@@ -2753,9 +2866,11 @@ msgstr "理事会"
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
 #. Eyebrow above the page title: the club board
+#. Eyebrow above the page title: the club board
 #: src/data/news.ts
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/board/MembersPage.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
 #: src/pages/board/volunteers/VolunteersPage.tsx
 #: src/pages/club/ClubPage.tsx
 msgid "The board"
@@ -2886,6 +3001,10 @@ msgstr "尝试次数太多，请稍等一下再试。"
 msgid "Top bar"
 msgstr "顶栏"
 
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Top pages"
+msgstr "热门页面"
+
 #: src/pages/contact/ContactSection.tsx
 msgid "Topic"
 msgstr "主题"
@@ -2910,6 +3029,11 @@ msgstr "比赛"
 #: src/pages/training/TrainingPage.tsx
 msgid "Training"
 msgstr "训练"
+
+#. Visitor numbers: the training page for one season
+#: src/pages/board/visitors/pageNames.ts
+msgid "Training {season}"
+msgstr "训练 {season}"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Training changes, events, volunteering and club news, with dates."
@@ -2937,6 +3061,10 @@ msgstr "今天有训练"
 #: src/data/events.ts
 msgid "Trip"
 msgstr "外出参赛"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Try a longer period, or check back later."
+msgstr "试试更长的时间段，或稍后再来看看。"
 
 #: src/components/layout/MobileMenu.tsx
 #: src/components/styles/HeroActions.tsx
@@ -3006,6 +3134,19 @@ msgstr "请使用对方登录用的邮箱。"
 msgid "Variants"
 msgstr "设计方案"
 
+#: src/pages/board/visitors/ViewsChart.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Views"
+msgstr "浏览量"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Views per day"
+msgstr "每日浏览量"
+
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Views per month"
+msgstr "每月浏览量"
+
 #. Payment method: the Norwegian mobile payment app
 #: src/pages/board/format.ts
 msgid "Vipps"
@@ -3014,6 +3155,18 @@ msgstr "Vipps"
 #: src/pages/membership/MembershipPage.tsx
 msgid "Vipps number {vipps}"
 msgstr "Vipps号码{vipps}"
+
+#. Board screen with website visitor numbers
+#. Board screen with website visitor numbers
+#: src/pages/board/BoardNav.tsx
+#: src/pages/board/visitors/VisitorsPage.tsx
+msgid "Visitors"
+msgstr "访客"
+
+#. Calendar entry title for your own volunteer shift
+#: src/components/events/ShiftBoard.tsx
+msgid "Volunteer shift: {teamName} · {eventTitle}"
+msgstr "志愿者班次：{teamName} · {eventTitle}"
 
 #. Sticky title of the board page that lists who is on each volunteer shift
 #: src/components/layout/PageTitle.tsx

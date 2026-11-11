@@ -4,7 +4,7 @@ import { Link, useRouterState, type LinkProps, type RouterState } from '@tanstac
 import { useEffect, useRef, type FC, type ReactNode } from 'react';
 
 import { RequestCountBadge } from '~/components/auth/RequestCountBadge';
-import { FolderSimpleLock, HandHeart, IdentificationCard, ShieldCheck } from '~/components/ui';
+import { ChartLineUp, FolderSimpleLock, HandHeart, IdentificationCard, ShieldCheck } from '~/components/ui';
 
 import classes from './BoardNav.module.css';
 
@@ -46,6 +46,9 @@ export const BoardNav: FC = () => {
         </NavLink>
         <NavLink to="/styret/tilgang" icon={<ShieldCheck aria-hidden />}>
           <Trans>Board access</Trans>
+        </NavLink>
+        <NavLink to="/styret/besokende" icon={<ChartLineUp aria-hidden />}>
+          <Trans comment="Board screen with website visitor numbers">Visitors</Trans>
         </NavLink>
       </Container>
     </nav>

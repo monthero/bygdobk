@@ -8,6 +8,7 @@ export { default as CalendarPlus } from '~icons/ph/calendar-plus';
 export { default as CalendarX } from '~icons/ph/calendar-x';
 export { default as Camera } from '~icons/ph/camera';
 export { default as CaretDown } from '~icons/ph/caret-down';
+export { default as ChartLineUp } from '~icons/ph/chart-line-up';
 export { default as ChatCircle } from '~icons/ph/chat-circle';
 export { default as Check } from '~icons/ph/check';
 export { default as CheckCircle } from '~icons/ph/check-circle';

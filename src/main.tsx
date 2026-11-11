@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css';
+import '@mantine/charts/styles.css';
 import '@mantine/notifications/styles.css';
 import '@fontsource-variable/instrument-sans';
 import '@fontsource/chakra-petch/latin-500.css';

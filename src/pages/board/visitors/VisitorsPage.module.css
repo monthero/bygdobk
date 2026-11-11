@@ -1,0 +1,58 @@
+.chart {
+  --visits-ink: var(--mantine-color-brand-7);
+
+  :where([data-mantine-color-scheme='dark']) & {
+    --visits-ink: var(--mantine-color-brand-6);
+  }
+}
+
+.toggle {
+  align-self: flex-start;
+}
+
+.toggle__caret {
+  transition: transform 0.15s;
+
+  &[data-opened] {
+    transform: rotate(180deg);
+  }
+}
+
+.section {
+  min-width: 0;
+}
+
+.ranking__head {
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ranking__row {
+  min-width: 0;
+}
+
+.ranking__bar {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  line-height: var(--bars-list-bar-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: -1;
+    width: var(--ranking-size);
+    border-radius: var(--mantine-radius-sm);
+    background: var(--bk-accent-line);
+  }
+}

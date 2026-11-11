@@ -29,6 +29,7 @@ const SLOTS: Record<PhotoSlot, { title: string; tab: z.infer<typeof PhotoTab> }>
   [PhotoSlot.enum.boardMembers]: { title: 'Memberships', tab: PhotoTab.enum.board },
   [PhotoSlot.enum.boardVolunteers]: { title: 'Volunteers', tab: PhotoTab.enum.board },
   [PhotoSlot.enum.boardAccess]: { title: 'Board access', tab: PhotoTab.enum.board },
+  [PhotoSlot.enum.boardVisitors]: { title: 'Visitors', tab: PhotoTab.enum.board },
 };
 
 const hasAsset = (image: unknown) =>

@@ -115,6 +115,7 @@ export const PhotoSlot = z.enum([
   'boardMembers',
   'boardVolunteers',
   'boardAccess',
+  'boardVisitors',
 ]);
 export type PhotoSlot = z.infer<typeof PhotoSlot>;
 
@@ -139,4 +140,5 @@ export const SLOT_DEFAULTS: Record<PhotoSlot, Photo> = {
   [PhotoSlot.enum.boardMembers]: PHOTOS.shuttleRacket,
   [PhotoSlot.enum.boardVolunteers]: PHOTOS.hallSunset,
   [PhotoSlot.enum.boardAccess]: PHOTOS.bygdohusOutside,
+  [PhotoSlot.enum.boardVisitors]: PHOTOS.newspaperBench,
 };

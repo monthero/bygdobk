@@ -1,8 +1,8 @@
 import { msg } from '@lingui/core/macro';
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Button, Card, Group, Progress, SimpleGrid, Skeleton, Stack, Table, Text, Title } from '@mantine/core';
+import { Button, Group, Progress, SimpleGrid, Skeleton, Stack, Table, Text, Title } from '@mantine/core';
 import { useTimeout } from '@mantine/hooks';
-import { useMemo, useState, type FC, type ReactNode } from 'react';
+import { useMemo, useState, type FC } from 'react';
 
 import type { Plan } from '~/cms/content';
 import { Check, CheckCircle, Clock, DownloadSimple } from '~/components/ui';
@@ -12,6 +12,7 @@ import { percent } from '~/utils/numbers';
 
 import { planName } from './format';
 import { csvFileName, downloadCsv, membersCsv } from './membersCsv';
+import { StatCard } from './StatCard';
 
 type Tally = { members: number; paid: number; received: number; expected: number };
 type PlanRow = Tally & { planId: string; name: string };
@@ -52,20 +53,6 @@ const tallyOf = (memberships: readonly AdminMembership[], plans: ReadonlyMap<str
   );
   return { total, rows };
 };
-
-const StatCard: FC<{ label: ReactNode; value: ReactNode; children?: ReactNode }> = ({ label, value, children }) => (
-  <Card withBorder radius="lg" padding="md">
-    <Stack gap={6}>
-      <Text size="sm" c="dimmed" fw={600}>
-        {label}
-      </Text>
-      <Text fz={32} fw={800} lh={1.1} className="tabular">
-        {value}
-      </Text>
-      {children}
-    </Stack>
-  </Card>
-);
 
 const PaidCard: FC<{ total: Tally; onShowUnpaid: () => void }> = ({ total, onShowUnpaid }) => {
   const { t } = useLingui();

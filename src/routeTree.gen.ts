@@ -24,6 +24,7 @@ import { Route as NyheterIndexRouteImport } from './routes/nyheter.index'
 import { Route as NyheterSlugRouteImport } from './routes/nyheter.$slug'
 import { Route as Studie404RouteImport } from './routes/studie_.404'
 import { Route as StyretIndexRouteImport } from './routes/styret.index'
+import { Route as StyretBesokendeRouteImport } from './routes/styret.besokende'
 import { Route as StyretDugnadRouteImport } from './routes/styret.dugnad'
 import { Route as StyretMedlemmerRouteImport } from './routes/styret.medlemmer'
 import { Route as StyretTilgangRouteImport } from './routes/styret.tilgang'
@@ -105,6 +106,11 @@ const StyretIndexRoute = StyretIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StyretRoute,
 } as any)
+const StyretBesokendeRoute = StyretBesokendeRouteImport.update({
+  id: '/besokende',
+  path: '/besokende',
+  getParentRoute: () => StyretRoute,
+} as any)
 const StyretDugnadRoute = StyretDugnadRouteImport.update({
   id: '/dugnad',
   path: '/dugnad',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/medlemskap/mine': typeof MedlemskapMineRoute
   '/nyheter/$slug': typeof NyheterSlugRoute
   '/studie/404': typeof Studie404Route
+  '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
   '/styret/medlemmer': typeof StyretMedlemmerRoute
   '/styret/tilgang': typeof StyretTilgangRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/medlemskap/mine': typeof MedlemskapMineRoute
   '/nyheter/$slug': typeof NyheterSlugRoute
   '/studie/404': typeof Studie404Route
+  '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
   '/styret/medlemmer': typeof StyretMedlemmerRoute
   '/styret/tilgang': typeof StyretTilgangRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/medlemskap/mine': typeof MedlemskapMineRoute
   '/nyheter/$slug': typeof NyheterSlugRoute
   '/studie_/404': typeof Studie404Route
+  '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
   '/styret/medlemmer': typeof StyretMedlemmerRoute
   '/styret/tilgang': typeof StyretTilgangRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/medlemskap/mine'
     | '/nyheter/$slug'
     | '/studie/404'
+    | '/styret/besokende'
     | '/styret/dugnad'
     | '/styret/medlemmer'
     | '/styret/tilgang'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/medlemskap/mine'
     | '/nyheter/$slug'
     | '/studie/404'
+    | '/styret/besokende'
     | '/styret/dugnad'
     | '/styret/medlemmer'
     | '/styret/tilgang'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/medlemskap/mine'
     | '/nyheter/$slug'
     | '/studie_/404'
+    | '/styret/besokende'
     | '/styret/dugnad'
     | '/styret/medlemmer'
     | '/styret/tilgang'
@@ -391,6 +403,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StyretIndexRouteImport
       parentRoute: typeof StyretRoute
     }
+    '/styret/besokende': {
+      id: '/styret/besokende'
+      path: '/besokende'
+      fullPath: '/styret/besokende'
+      preLoaderRoute: typeof StyretBesokendeRouteImport
+      parentRoute: typeof StyretRoute
+    }
     '/styret/dugnad': {
       id: '/styret/dugnad'
       path: '/dugnad'
@@ -430,6 +449,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface StyretRouteChildren {
+  StyretBesokendeRoute: typeof StyretBesokendeRoute
   StyretDugnadRoute: typeof StyretDugnadRoute
   StyretMedlemmerRoute: typeof StyretMedlemmerRoute
   StyretTilgangRoute: typeof StyretTilgangRoute
@@ -437,6 +457,7 @@ interface StyretRouteChildren {
 }
 
 const StyretRouteChildren: StyretRouteChildren = {
+  StyretBesokendeRoute: StyretBesokendeRoute,
   StyretDugnadRoute: StyretDugnadRoute,
   StyretMedlemmerRoute: StyretMedlemmerRoute,
   StyretTilgangRoute: StyretTilgangRoute,
