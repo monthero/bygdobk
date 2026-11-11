@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 import { eventDays, isPast, type CalendarEvent, type Shift } from '~/cms/calendar';
-import { SITE_URL, type IcsEvent } from '~/cms/ics';
+import type { IcsEvent } from '~/cms/ics';
+import { SITE_URL } from '~/components/seo/pageMeta';
 import { ClipboardText, MapPin, PauseCircle, Racket, Trophy, UsersThree } from '~/components/ui';
 import { EventKind, VISITOR_KINDS } from '~/data/events';
 import { currentLocale } from '~/i18n/current';

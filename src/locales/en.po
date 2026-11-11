@@ -805,7 +805,6 @@ msgstr "Computer"
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/contact/ContactPage.tsx
 msgid "Contact"
 msgstr "Contact"
 
@@ -1271,8 +1270,8 @@ msgstr "From other sites"
 #: src/components/styles/classic/ClassicHero.tsx
 #: src/components/styles/court/CourtHero.tsx
 #: src/components/styles/flight/FlightHero.tsx
-msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
-msgstr "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
+msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week on Bygdøy in Oslo."
+msgstr "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week on Bygdøy in Oslo."
 
 #. Read after the club name in the logo link, for screen readers
 #: src/components/layout/SiteHeader.tsx
@@ -1451,7 +1450,6 @@ msgstr "Join Bygdø Badmintonklubb"
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/components/styles/HeroActions.tsx
 #: src/pages/board/visitors/pageNames.ts
-#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Join the club"
 msgstr "Join the club"
@@ -1648,7 +1646,6 @@ msgstr "Members also get deals from our partners. <0>See the member deals</0>"
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "Membership"
@@ -2890,7 +2887,6 @@ msgstr "The board will confirm it and let you know about payment."
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/club/ClubPage.tsx
 msgid "The club"
 msgstr "The club"
 

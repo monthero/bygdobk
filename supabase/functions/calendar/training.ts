@@ -1,8 +1,9 @@
 import type { Dayjs } from 'dayjs';
 import { z } from 'zod';
 
-import { calendarFile, IcsStatus, SITE_URL, type IcsEvent } from '../../../src/cms/ics.ts';
+import { calendarFile, IcsStatus, type IcsEvent } from '../../../src/cms/ics.ts';
 import { date, seasonAround, trainingSessions } from '../../../src/cms/schedule.ts';
+import { SITE_URL } from '../../../src/components/seo/pageMeta.ts';
 import { EventKind } from '../../../src/data/eventKinds.ts';
 import { GROUP_SLUGS, type Group } from '../../../src/data/groupKeys.ts';
 import { withLocale, type Locale } from '../../../src/i18n/locales.ts';

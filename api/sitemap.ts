@@ -1,20 +1,9 @@
 import { z } from 'zod';
 
+import { PAGE_META } from '../src/components/seo/pageMeta.js';
 import { VISITOR_KINDS } from '../src/data/eventKinds.js';
 import { DEFAULT_LOCALE, LOCALE_META, LOCALES, withLocale, type Locale } from '../src/i18n/locales.js';
 import { sanityQuery } from './_sanity.js';
-
-const PAGES = [
-  '/',
-  '/trening',
-  '/medlemskap',
-  '/medlemskap/bli-medlem',
-  '/arrangementer',
-  '/nyheter',
-  '/klubben',
-  '/kontakt',
-  '/personvern',
-];
 
 const GROQ = `{
   "news": *[_type == "newsPost" && defined(slug.current)] { "slug": slug.current, "updated": _updatedAt },
@@ -42,7 +31,7 @@ export const GET = async (request: Request) => {
   const { origin } = new URL(request.url);
   const { news, events } = await sanityQuery(Content, GROQ, { kinds: VISITOR_KINDS });
   const entries: Entry[] = [
-    ...PAGES.map((path) => ({ path })),
+    ...Object.keys(PAGE_META).map((path) => ({ path })),
     ...news.map((n) => ({ path: `/nyheter/${n.slug}`, updated: n.updated })),
     ...events.map((e) => ({ path: `/arrangementer/${e.slug}`, updated: e.updated })),
   ];

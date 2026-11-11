@@ -27,7 +27,7 @@ import { GroupStatusBadge } from '~/components/training';
 import { ArrowRight, CheckCircle, Clock, PaperPlaneTilt, SignIn, User, UsersThree, Warning } from '~/components/ui';
 import { GROUP_SLUGS, GroupStatus, PriceKind } from '~/data/club';
 import { PhotoSlot } from '~/data/photos';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { membershipSeason, MembershipStatus, NAME_MAX, seasonDates, type Membership } from '~/memberships/model';
 import { membershipErrorMessage, useMyMemberships, useRequestMembership } from '~/memberships/queries';
@@ -121,7 +121,7 @@ const PriceAmount: FC<{ plan: Plan }> = ({ plan }) =>
 
 export const JoinPage: FC = () => {
   const { i18n, t } = useLingui();
-  usePageTitle(t`Join the club`, t`Membership`);
+  usePageMetaTitle('/medlemskap/bli-medlem');
   const photo = useSitePhoto(PhotoSlot.enum.join);
   const search = route.useSearch();
   const navigate = route.useNavigate();

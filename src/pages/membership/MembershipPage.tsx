@@ -26,7 +26,7 @@ import { ArrowRight, CalendarBlank, UserPlus } from '~/components/ui';
 import { DEAL_HASH, GROUP_SLUGS, GroupStatus, Group as TrainingGroup, PriceKind } from '~/data/club';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { PhotoSlot } from '~/data/photos';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { orListFormat } from '~/i18n/current';
 import { groupOfPlan, kr, planForGroup, planTotal } from '~/pages/join/offers';
@@ -94,7 +94,7 @@ const ASK_LINK = contactLink(ContactTopic.enum.membership);
 
 export const MembershipPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(t`Membership`);
+  usePageMetaTitle('/medlemskap');
   const photo = useSitePhoto(PhotoSlot.enum.membership);
   const { plans, discounts, sponsors, payment } = useSiteContent();
   const groups = useGroups();

@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
 import { z } from 'zod';
 
-import { SITE_URL, type IcsEvent } from '../../../src/cms/ics.ts';
+import type { IcsEvent } from '../../../src/cms/ics.ts';
+import { SITE_URL } from '../../../src/components/seo/pageMeta.ts';
 import { EventKind } from '../../../src/data/eventKinds.ts';
 import { withLocale, type Locale } from '../../../src/i18n/locales.ts';
 import { localized, opt, parseList, sanityQuery, Time, Venue } from './sanity.ts';

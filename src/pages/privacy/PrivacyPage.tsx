@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { Button, Container, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
@@ -10,7 +10,7 @@ import { PageIntro } from '~/components/styles';
 import { ArrowRight, ShieldCheck } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { PhotoSlot } from '~/data/photos';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 import { date, formatDate, LONG_DATE } from '~/utils/dates';
 
 import classes from './PrivacyPage.module.css';
@@ -50,9 +50,8 @@ const NotWritten: FC<{ photo: SitePhoto }> = ({ photo }) => (
 );
 
 export const PrivacyPage: FC = () => {
-  const { t } = useLingui();
   const page = usePrivacyPage();
-  usePageTitle(page?.title || t`Privacy`);
+  usePageMetaTitle('/personvern');
   const photo = useSitePhoto(PhotoSlot.enum.privacy);
   if (!page) return <NotWritten photo={photo} />;
 

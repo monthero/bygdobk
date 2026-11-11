@@ -99,7 +99,8 @@ export const FlightHero: FC = () => {
               </Title>
               <Text size="xl" maw={560} className={classes.halo}>
                 <Trans>
-                  From your first swing to a full smash. Beginners, juniors and adults, three evenings a week.
+                  From your first swing to a full smash. Beginners, juniors and adults, three evenings a week on Bygdøy
+                  in Oslo.
                 </Trans>
               </Text>
               <Box mt={36}>

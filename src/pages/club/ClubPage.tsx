@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { Anchor, Container, Group, SimpleGrid, Stack, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
@@ -9,7 +9,7 @@ import { PageIntro } from '~/components/styles';
 import { ArrowRight } from '~/components/ui';
 import { CLUB } from '~/data/club';
 import { PhotoSlot } from '~/data/photos';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 
 import { BoardSection, PrivacySection, SafetySection, SponsorSection } from './sections';
 
@@ -18,8 +18,7 @@ import classes from './ClubPage.module.css';
 const ClubSection = z.enum(['styret', 'varsling', 'personvern']);
 
 export const ClubPage: FC = () => {
-  const { t } = useLingui();
-  usePageTitle(t`The club`);
+  usePageMetaTitle('/klubben');
   const photo = useSitePhoto(PhotoSlot.enum.club);
   return (
     <>

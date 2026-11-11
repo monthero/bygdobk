@@ -14,7 +14,7 @@ import {
   ThemeIcon,
   Title,
 } from '@mantine/core';
-import { getRouteApi, Link } from '@tanstack/react-router';
+import { Link, useNavigate, useParams, useSearch } from '@tanstack/react-router';
 import { memo, useId, useMemo, type FC } from 'react';
 
 import type { Season } from '~/cms/calendar';
@@ -41,7 +41,7 @@ import {
 import { GROUP_SLUGS, Group as TrainingGroup, GroupStatus } from '~/data/club';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { PhotoSlot } from '~/data/photos';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 import { useSeasons } from '~/hooks/useSeasons';
 import { listFormat } from '~/i18n/current';
 import { formatDate, weekdayName } from '~/utils/dates';
@@ -52,8 +52,6 @@ import { seasonTraining, trainingBreaks, weeklySessions, type Session } from '~/
 import classes from './TrainingPage.module.css';
 
 export const BRING_HASH = 'ta-med';
-
-const route = getRouteApi('/trening/$sesong');
 
 const ALL = 'all';
 type GroupFilter = TrainingGroup | typeof ALL;
@@ -156,11 +154,11 @@ const SpondCode: FC<{ code: string }> = ({ code }) => (
 
 export const TrainingPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(t`Training`);
+  usePageMetaTitle('/trening');
   const photo = useSitePhoto(PhotoSlot.enum.training);
-  const { sesong } = route.useParams();
-  const { gruppe } = route.useSearch();
-  const navigate = route.useNavigate();
+  const { sesong } = useParams({ strict: false });
+  const { gruppe } = useSearch({ strict: false });
+  const navigate = useNavigate();
   const { events, club } = useSiteContent();
   const { venue } = club;
   const groupInfo = useGroups();
@@ -196,12 +194,16 @@ export const TrainingPage: FC = () => {
 
   const pickGroup = (value: GroupFilter) =>
     navigate({
+      to: '.',
       search: { gruppe: value === ALL ? undefined : GROUP_SLUGS.toSlug(value) },
       ...STAY,
     });
 
-  const pickSeason = (value: string | null) =>
-    value && navigate({ to: '/trening/$sesong', params: { sesong: value }, search: (prev) => prev, ...STAY });
+  const pickSeason = (value: string | null) => {
+    if (!value) return;
+    if (value === current.id) void navigate({ to: '/trening', search: { gruppe }, ...STAY });
+    else void navigate({ to: '/trening/$sesong', params: { sesong: value }, search: { gruppe }, ...STAY });
+  };
 
   return (
     <>
@@ -248,9 +250,7 @@ export const TrainingPage: FC = () => {
                   variant="white"
                   color="dark"
                   rightSection={<ArrowRight />}
-                  renderRoot={(props) => (
-                    <Link {...props} to="/trening/$sesong" params={{ sesong: current.id }} search={{ gruppe }} />
-                  )}
+                  renderRoot={(props) => <Link {...props} to="/trening" search={{ gruppe }} />}
                 >
                   <Trans>Go to season {currentLabel}</Trans>
                 </Button>

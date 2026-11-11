@@ -1,4 +1,4 @@
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { Container } from '@mantine/core';
 import { getRouteApi } from '@tanstack/react-router';
 import type { FC } from 'react';
@@ -6,15 +6,14 @@ import type { FC } from 'react';
 import { useSitePhoto } from '~/cms/siteData';
 import { PageIntro } from '~/components/styles';
 import { PhotoSlot } from '~/data/photos';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 
 import { ContactSection } from './ContactSection';
 
 const route = getRouteApi('/kontakt');
 
 export const ContactPage: FC = () => {
-  const { t } = useLingui();
-  usePageTitle(t`Contact`);
+  usePageMetaTitle('/kontakt');
   const photo = useSitePhoto(PhotoSlot.enum.contact);
   const { emne, melding } = route.useSearch();
   return (

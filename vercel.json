@@ -21,6 +21,26 @@
       "destination": "/api/sitemap"
     },
     {
+      "source": "/:page(trening|arrangementer|nyheter|medlemskap|klubben|kontakt|personvern)",
+      "destination": "/:page/index.html"
+    },
+    {
+      "source": "/medlemskap/bli-medlem",
+      "destination": "/medlemskap/bli-medlem/index.html"
+    },
+    {
+      "source": "/:locale(en|sv|da|fi|is|zh)",
+      "destination": "/:locale/index.html"
+    },
+    {
+      "source": "/:locale(en|sv|da|fi|is|zh)/:page(trening|arrangementer|nyheter|medlemskap|klubben|kontakt|personvern)",
+      "destination": "/:locale/:page/index.html"
+    },
+    {
+      "source": "/:locale(en|sv|da|fi|is|zh)/medlemskap/bli-medlem",
+      "destination": "/:locale/medlemskap/bli-medlem/index.html"
+    },
+    {
       "source": "/:path((?!api/|assets/)[^.]*)",
       "has": [
         {
@@ -33,7 +53,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/shell.html"
     }
   ]
 }

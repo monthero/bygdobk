@@ -122,7 +122,8 @@ export const CourtHero: FC = () => {
               </Title>
               <Text size="lg" maw={520}>
                 <Trans>
-                  From your first swing to a full smash. Beginners, juniors and adults, three evenings a week.
+                  From your first swing to a full smash. Beginners, juniors and adults, three evenings a week on Bygdøy
+                  in Oslo.
                 </Trans>
               </Text>
               <HeroActions size="md" />

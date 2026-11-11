@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { localized } from '../src/cms/queries.js';
+import { PAGE_META, SITE_NAME } from '../src/components/seo/pageMeta.js';
 import { VISITOR_KINDS } from '../src/data/eventKinds.js';
 import {
   contentLocaleParams,
@@ -12,21 +13,10 @@ import {
 } from '../src/i18n/locales.js';
 import { imageBuilder, sanityQuery } from './_sanity.js';
 
-const SITE_NAME = 'Bygdø Badmintonklubb';
 const IMAGE_WIDTH = 1200;
 const IMAGE_HEIGHT = 630;
 const DEFAULT_IMAGE_PATH = '/og-image.jpg';
 const DETAIL_PATH = /^\/(nyheter|arrangementer)\/([^/]+)$/;
-
-const DESCRIPTIONS: Record<Locale, string> = {
-  nb: 'Badminton for alle på Bygdøhus i Oslo. Trening, medlemskap, arrangementer og nyheter fra Bygdø Badmintonklubb.',
-  en: 'Badminton for everyone at Bygdøhus in Oslo. Training, membership, events and news from Bygdø Badmintonklubb.',
-  sv: 'Badminton för alla på Bygdøhus i Oslo. Träning, medlemskap, evenemang och nyheter från Bygdø Badmintonklubb.',
-  da: 'Badminton for alle på Bygdøhus i Oslo. Træning, medlemskab, arrangementer og nyheder fra Bygdø Badmintonklubb.',
-  fi: 'Sulkapalloa kaikille Bygdøhusissa Oslossa. Treenit, jäsenyys, tapahtumat ja uutiset Bygdø Badmintonklubbilta.',
-  is: 'Badminton fyrir alla í Bygdøhus í Osló. Æfingar, aðild, viðburðir og fréttir frá Bygdø Badmintonklubb.',
-  zh: '奥斯陆 Bygdøhus 的羽毛球，人人都能打。Bygdø Badmintonklubb 的训练、会员、活动和新闻。',
-};
 
 const NEWS_GROQ = `*[_type == "newsPost" && slug.current == $slug][0] { ${localized('title', 'summary')}, banner }`;
 const EVENT_GROQ = `*[_type == "event" && kind in $kinds && slug.current == $slug][0] { ${localized('title', 'description')} }`;
@@ -65,7 +55,7 @@ const detailPreview = async (path: string, locale: Locale, defaultImage: string)
   if (!detail?.title) return null;
   return {
     title: detail.title,
-    description: (isNews ? detail.summary : detail.description) ?? DESCRIPTIONS[locale],
+    description: (isNews ? detail.summary : detail.description) ?? PAGE_META['/'][locale].description,
     image: bannerUrl(detail.banner) ?? defaultImage,
     type: 'article',
   };
@@ -110,7 +100,12 @@ export const GET = async (request: Request) => {
   const path = searchParams.get('path') ?? '/';
   const locale = localeInPath(path) ?? DEFAULT_LOCALE;
   const image = `${origin}${DEFAULT_IMAGE_PATH}`;
-  const fallback: Preview = { title: SITE_NAME, description: DESCRIPTIONS[locale], image, type: 'website' };
+  const fallback: Preview = {
+    title: SITE_NAME,
+    description: PAGE_META['/'][locale].description,
+    image,
+    type: 'website',
+  };
   const preview = (await detailPreview(stripLocale(path), locale, image).catch(() => null)) ?? fallback;
   return new Response(page(preview, locale, `${origin}${path}`), {
     headers: {

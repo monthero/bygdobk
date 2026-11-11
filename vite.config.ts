@@ -1,3 +1,6 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
+
 import { lingui } from '@lingui/vite-plugin';
 import { tanstackRouter } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
@@ -8,7 +11,16 @@ import { defineConfig, type Plugin } from 'vite-plus';
 
 import { CONTENT_GROQ } from './src/cms/queries.ts';
 import { sanityQueryUrl } from './src/cms/sanityApi.ts';
-import { ADMIN_PATH, CONTENT_FALLBACK } from './src/i18n/locales.ts';
+import { PAGE_META, SITE_NAME, SITE_URL, type PageMeta } from './src/components/seo/pageMeta.ts';
+import {
+  ADMIN_PATH,
+  CONTENT_FALLBACK,
+  DEFAULT_LOCALE,
+  LOCALE_META,
+  LOCALES,
+  withLocale,
+  type Locale,
+} from './src/i18n/locales.ts';
 
 const RESPONSIVE_PHOTO = new URLSearchParams({
   w: '640;960;1400;2048',
@@ -40,7 +52,63 @@ const contentPreload = (): Plugin => {
   document.head.append(link);
 })();`;
     },
-    transformIndexHtml: () => [{ tag: 'script', children: script, injectTo: 'head' }],
+    transformIndexHtml: { order: 'pre', handler: () => [{ tag: 'script', children: script, injectTo: 'head' }] },
+  };
+};
+
+const SEO_MARKER = '<!--seo-->';
+const HTML_ESCAPES: Record<string, string> = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' };
+const escapeHtml = (text: string) => text.replaceAll(/[&<>"]/g, (ch) => HTML_ESCAPES[ch] ?? ch);
+
+const seoHead = (locale: Locale, { title, description }: PageMeta, url: string) =>
+  [
+    `<title>${escapeHtml(title)}</title>`,
+    `<link rel="canonical" href="${url}" />`,
+    ...[
+      ['name', 'description', description],
+      ['property', 'og:site_name', SITE_NAME],
+      ['property', 'og:type', 'website'],
+      ['property', 'og:title', title],
+      ['property', 'og:description', description],
+      ['property', 'og:url', url],
+      ['property', 'og:locale', LOCALE_META[locale].intl.replace('-', '_')],
+      ['property', 'og:image', `${SITE_URL}/og-image.jpg`],
+      ['property', 'og:image:width', '1200'],
+      ['property', 'og:image:height', '630'],
+      ['name', 'twitter:card', 'summary_large_image'],
+    ].map(([attr, key, value]) => `<meta ${attr}="${key}" content="${escapeHtml(value ?? '')}" />`),
+  ].join('\n    ');
+
+const pageHtml = (template: string, locale: Locale, head: string) =>
+  template.replace('<html lang="nb"', `<html lang="${LOCALE_META[locale].lang}"`).replace(SEO_MARKER, head);
+
+const seoPages = (): Plugin => {
+  let isBuild = false;
+  let outDir = '';
+  const write = async (file: string, html: string) => {
+    await mkdir(dirname(`${outDir}/${file}`), { recursive: true });
+    await writeFile(`${outDir}/${file}`, html);
+  };
+  return {
+    name: 'bk-seo-pages',
+    configResolved: ({ command, root, build }) => {
+      isBuild = command === 'build';
+      outDir = resolve(root, build.outDir);
+    },
+    transformIndexHtml: (html) =>
+      isBuild ? html : html.replace(SEO_MARKER, `<title>${escapeHtml(PAGE_META['/'][DEFAULT_LOCALE].title)}</title>`),
+    closeBundle: async () => {
+      if (!isBuild) return;
+      const template = await readFile(`${outDir}/index.html`, 'utf8');
+      const pages = LOCALES.flatMap((locale) =>
+        Object.entries(PAGE_META).map(([path, meta]) => {
+          const localized = withLocale(path, locale);
+          const file = localized === '/' ? 'index.html' : `${localized.slice(1)}/index.html`;
+          return write(file, pageHtml(template, locale, seoHead(locale, meta[locale], `${SITE_URL}${localized}`)));
+        }),
+      );
+      await Promise.all([write('shell.html', template.replace(SEO_MARKER, `<title>${SITE_NAME}</title>`)), ...pages]);
+    },
   };
 };
 
@@ -94,6 +162,7 @@ export default defineConfig({
     }),
     responsivePhotos(),
     contentPreload(),
+    seoPages(),
   ],
   resolve: { tsconfigPaths: true },
 });

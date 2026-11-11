@@ -1,6 +1,5 @@
 import { Trans } from '@lingui/react/macro';
 import { Anchor, Button, Container, Grid, Group, Stack, Text, Title } from '@mantine/core';
-import { useDocumentTitle } from '@mantine/hooks';
 import { Link } from '@tanstack/react-router';
 import { useMemo, type FC } from 'react';
 
@@ -10,7 +9,7 @@ import { EventCard, isVisitorEvent, type VisitorEvent } from '~/components/event
 import { clubJsonLd, JsonLd } from '~/components/seo';
 import { useStyleKit } from '~/components/styles';
 import { ArrowRight, CalendarBlank, CourtTexture } from '~/components/ui';
-import { CLUB } from '~/data/club';
+import { usePageMetaTitle } from '~/hooks/usePageTitle';
 import { date, todayIso } from '~/utils/dates';
 import { currentPosts } from '~/utils/news';
 
@@ -46,7 +45,7 @@ export const HomePage: FC = () => {
     () => homeContent(content.news, content.events, dayIso),
     [content.news, content.events, dayIso],
   );
-  useDocumentTitle(CLUB.name);
+  usePageMetaTitle('/');
 
   return (
     <>

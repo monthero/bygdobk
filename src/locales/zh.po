@@ -805,7 +805,6 @@ msgstr "电脑"
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/contact/ContactPage.tsx
 msgid "Contact"
 msgstr "联系"
 
@@ -1271,8 +1270,8 @@ msgstr "来自其他网站"
 #: src/components/styles/classic/ClassicHero.tsx
 #: src/components/styles/court/CourtHero.tsx
 #: src/components/styles/flight/FlightHero.tsx
-msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week."
-msgstr "从第一次挥拍到全力扣杀。新手、青少年和成人，每周三个晚上。"
+msgid "From your first swing to a full smash. Beginners, juniors and adults, three evenings a week on Bygdøy in Oslo."
+msgstr "从第一次挥拍到全力扣杀。新手、青少年和成人，每周三个晚上，地点在奥斯陆 Bygdøy。"
 
 #. Read after the club name in the logo link, for screen readers
 #: src/components/layout/SiteHeader.tsx
@@ -1451,7 +1450,6 @@ msgstr "加入Bygdø Badmintonklubb"
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/components/styles/HeroActions.tsx
 #: src/pages/board/visitors/pageNames.ts
-#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 msgid "Join the club"
 msgstr "加入俱乐部"
@@ -1648,7 +1646,6 @@ msgstr "会员还能享受合作伙伴的优惠。<0>查看会员优惠</0>"
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/join/JoinPage.tsx
 #: src/pages/membership/MembershipPage.tsx
 #: src/pages/membership/MyMembershipPage.tsx
 msgid "Membership"
@@ -2890,7 +2887,6 @@ msgstr "理事会确认后会通知你怎么付款。"
 
 #. Main menu
 #: src/components/layout/nav.ts
-#: src/pages/club/ClubPage.tsx
 msgid "The club"
 msgstr "俱乐部"
 

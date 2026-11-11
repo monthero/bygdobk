@@ -6,8 +6,6 @@ import { CLUB_TIME_ZONE } from './schedule.ts';
 
 dayjs.extend(utc);
 
-export const SITE_URL = 'https://bygdobk.vercel.app';
-
 const UID_DOMAIN = 'bygdobk.no';
 const MAX_OCTETS = 75;
 const CRLF = '\r\n';
