@@ -26,6 +26,8 @@ import { NotFoundPage } from '~/pages/NotFoundPage';
 import { today } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
 
+import classes from './EventPage.module.css';
+
 const route = getRouteApi('/arrangementer/$slug');
 
 export const EventPage: FC = () => {
@@ -54,12 +56,7 @@ export const EventPage: FC = () => {
   return (
     <>
       <JsonLd data={eventJsonLd(event, club.venue, photo.src)} />
-      <PageIntro
-        photo={photo}
-        eyebrow={i18n._(EVENT_KINDS[event.kind].label)}
-        title={event.title}
-        lede={event.description}
-      >
+      <PageIntro photo={photo} eyebrow={i18n._(EVENT_KINDS[event.kind].label)} title={event.title}>
         <Group gap="lg" mt="sm">
           <Group gap={6}>
             <CalendarBlank />
@@ -90,6 +87,11 @@ export const EventPage: FC = () => {
           >
             <Trans>All events</Trans>
           </Button>
+          {event.description && (
+            <Text size="lg" className={classes.description}>
+              {event.description}
+            </Text>
+          )}
           <EventActions event={event} />
           {past && (
             <Alert icon={<HandHeart />} variant="light" color="teal" title={<Trans>Done!</Trans>}>
