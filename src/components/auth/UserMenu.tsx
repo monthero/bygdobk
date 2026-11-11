@@ -11,6 +11,7 @@ import {
   Skeleton,
   Stack,
   Text,
+  VisuallyHidden,
   type FloatingPosition,
 } from '@mantine/core';
 import { useMutation } from '@tanstack/react-query';
@@ -204,11 +205,11 @@ export const AccountButton: FC<{ position?: FloatingPosition }> = ({ position })
               variant="subtle"
               size="lg"
               radius="xl"
-              aria-label={label}
               loading={profile.isLoading}
               className={classes.account}
               {...props}
             >
+              <VisuallyHidden>{label}</VisuallyHidden>
               <Indicator
                 label={requestCount}
                 disabled={requestCount === 0}

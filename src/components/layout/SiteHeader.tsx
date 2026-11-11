@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Burger, Button, Container } from '@mantine/core';
+import { Burger, Button, Container, VisuallyHidden } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo } from 'react';
 
@@ -20,15 +20,18 @@ export const SiteHeader = memo<Props>(({ menuOpened, onToggleMenu, showLinks }) 
 
   return (
     <Container className={classes.inner}>
-      <Link to="/" className={classes.brand} aria-label={t`Bygdø Badmintonklubb, front page`}>
+      <Link to="/" className={classes.brand}>
         <ClubLogo mark height={42} className={classes.logo} />
         <span className={classes.brandText}>
-          <span className={classes.brandEst}>
+          <span className={classes.brandEst} aria-hidden>
             <Trans comment="Short for established, as on the club logo. Norwegian: Etabl.">Est. {CLUB.founded}</Trans>
           </span>
           <span className={classes.brandName}>Bygdø</span>
           <span className={classes.brandEst}>Badmintonklubb</span>
         </span>
+        <VisuallyHidden>
+          <Trans comment="Read after the club name in the logo link, for screen readers">front page</Trans>
+        </VisuallyHidden>
       </Link>
 
       {showLinks && (
