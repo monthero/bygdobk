@@ -1,5 +1,16 @@
 .segmented {
-  background: var(--bk-surface-2);
+  border: 1px solid var(--bk-border);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  & svg {
+    flex: none;
+    font-size: 18px;
+  }
 }
 
 .segmentLabel {
@@ -10,21 +21,41 @@
   font-weight: 600;
 }
 
-.points {
+.courts {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 16px;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    & > * {
+      flex: 1 1 100%;
+    }
+  }
 }
 
-.chip {
-  min-height: 44px;
-  min-width: 52px;
-  justify-content: center;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+.tile {
+  border-color: var(--bk-border);
+  background: transparent;
+
+  &[data-checked] {
+    border-color: var(--mantine-primary-color-filled);
+    background: var(--bk-accent-soft);
+  }
 }
 
 .levelHelp {
-  background: var(--bk-surface-2);
+  background: transparent;
+}
+
+.levelChipRoot {
+  width: 100%;
+}
+
+.levelChip {
+  width: 100%;
+  min-height: 44px;
+  justify-content: center;
+  padding-inline: 4px;
+  font-weight: 600;
 }

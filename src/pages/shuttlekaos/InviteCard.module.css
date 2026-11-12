@@ -1,6 +1,5 @@
 .card {
-  border: 2px solid var(--bk-accent-strong);
-  background: linear-gradient(135deg, var(--bk-accent-soft), var(--bk-surface) 70%);
+  composes: glass from './glass.module.css';
 }
 
 .url {

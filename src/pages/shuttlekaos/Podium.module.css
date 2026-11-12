@@ -1,11 +1,16 @@
 .podium {
+  composes: glass from './glass.module.css';
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: end;
   gap: 8px;
   max-width: 520px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0;
+  padding: 16px 12px 0;
+  border: 1px solid;
+  border-radius: var(--mantine-radius-lg);
+  overflow: hidden;
   list-style: none;
 }
 

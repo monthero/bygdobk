@@ -15,9 +15,9 @@ const Wordmark: FC = () => (
   </>
 );
 
-type Props = { title?: ReactNode; back?: boolean; children?: ReactNode };
+type Props = { title?: ReactNode; eyebrow?: ReactNode; back?: boolean; actions?: ReactNode };
 
-export const BrandHeader: FC<Props> = ({ title, back, children }) => {
+export const BrandHeader: FC<Props> = ({ title, eyebrow, back, actions }) => {
   const { t, i18n } = useLingui();
   return (
     <header className={classes.header} data-compact={title ? true : undefined}>
@@ -39,18 +39,14 @@ export const BrandHeader: FC<Props> = ({ title, back, children }) => {
             </span>
           )}
           <div className={classes.text}>
-            {title && (
-              <Text className={classes.eyebrow}>
-                <Wordmark />
-              </Text>
-            )}
+            {title && <Text className={classes.eyebrow}>{eyebrow ?? <Wordmark />}</Text>}
             <Title order={1} className={classes.title}>
               {title ?? <Wordmark />}
             </Title>
             {!title && <Text className={classes.tagline}>{i18n._(TAGLINE)}</Text>}
           </div>
         </div>
-        {children}
+        {actions && <div className={classes.actions}>{actions}</div>}
       </Container>
     </header>
   );

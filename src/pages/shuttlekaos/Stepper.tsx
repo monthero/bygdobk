@@ -19,9 +19,10 @@ type Props = {
   onChange: (value: number | null) => void;
   nullable?: boolean;
   large?: boolean;
+  fullWidth?: boolean;
 };
 
-export const Stepper: FC<Props> = ({ label, value, min, max, onChange, nullable, large }) => {
+export const Stepper: FC<Props> = ({ label, value, min, max, onChange, nullable, large, fullWidth }) => {
   const { t } = useLingui();
   const isTouch = useMediaQuery(TOUCH_QUERY);
   const [shown, setShown] = useState(value);
@@ -53,7 +54,7 @@ export const Stepper: FC<Props> = ({ label, value, min, max, onChange, nullable,
   const step = (by: number) => onChange(Math.min(max, Math.max(min, (value ?? min - by) + by)));
 
   return (
-    <div className={classes.stepper} data-large={large || undefined}>
+    <div className={classes.stepper} data-large={large || undefined} data-full={fullWidth || undefined}>
       <ActionIcon
         variant="default"
         radius="xl"

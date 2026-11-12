@@ -1,5 +1,5 @@
 .empty {
-  background: var(--bk-surface);
+  composes: glass from './glass.module.css';
 }
 
 .icon {

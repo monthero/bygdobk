@@ -9,6 +9,7 @@ import {
   ConfirmActions,
   DotsThreeVertical,
   FlagCheckered,
+  LinkSimple,
   ResponsiveModal,
   SignOut,
   Trash,
@@ -17,7 +18,9 @@ import { notifyDone } from '~/pages/board/format';
 import { SessionStatus } from '~/shuttlekaos/model';
 import { shuttleKaosErrorMessage, useDeleteSession, useLeaveSession, type SessionView } from '~/shuttlekaos/queries';
 
-const Confirm = z.enum(['end', 'delete', 'leave']);
+import { LinkPlayersModal } from './LinkPlayers';
+
+const Confirm = z.enum(['end', 'delete', 'leave', 'link']);
 type Confirm = z.infer<typeof Confirm>;
 
 type Props = { view: SessionView; hasOpenCourts?: boolean; onEnd?: () => void };
@@ -83,6 +86,11 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
               <Trans>Set up again</Trans>
             </Menu.Item>
           )}
+          {isOwner && finished && (
+            <Menu.Item leftSection={<LinkSimple />} onClick={() => setConfirm(Confirm.enum.link)}>
+              <Trans>Link players</Trans>
+            </Menu.Item>
+          )}
           {canLeave && (
             <Menu.Item leftSection={<SignOut />} onClick={() => setConfirm(Confirm.enum.leave)}>
               {finished ? <Trans>Remove me</Trans> : <Trans>Leave session</Trans>}
@@ -95,6 +103,8 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
           )}
         </Menu.Dropdown>
       </Menu>
+
+      {isOwner && finished && <LinkPlayersModal view={view} opened={confirm === Confirm.enum.link} onClose={close} />}
 
       <ResponsiveModal opened={confirm === Confirm.enum.end} onClose={close} title={<Trans>End the session?</Trans>}>
         <Stack gap="md">

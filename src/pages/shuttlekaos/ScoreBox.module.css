@@ -1,0 +1,65 @@
+.box {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--bk-border);
+  border-radius: var(--mantine-radius-md);
+  background: var(--kaos-field, var(--bk-surface));
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-text);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+
+  &[data-empty] {
+    border-style: dashed;
+    border-color: var(--bk-accent-line);
+    color: var(--mantine-color-dimmed);
+  }
+
+  &[data-won] {
+    border-color: var(--bk-ok);
+    background: var(--bk-ok-soft);
+  }
+
+  &:is(button):hover {
+    border-color: var(--mantine-color-brand-filled);
+  }
+
+  &:is(button):focus-visible {
+    outline: 2px solid var(--bk-accent-strong);
+    outline-offset: 2px;
+  }
+}
+
+.selectRoot {
+  width: 56px;
+
+  &[data-won] .select {
+    border-color: var(--bk-ok);
+    background: var(--bk-ok-soft);
+  }
+
+  &[data-empty] .select {
+    border-style: dashed;
+    border-color: var(--bk-accent-line);
+    color: var(--mantine-color-dimmed);
+  }
+}
+
+.select {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 2px solid var(--bk-border);
+  border-radius: var(--mantine-radius-md);
+  background: var(--kaos-field, var(--bk-surface));
+  font-size: 1.6rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  text-align-last: center;
+}

@@ -1,8 +1,8 @@
 .prompt {
+  composes: glass from './glass.module.css';
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: var(--bk-surface);
 }

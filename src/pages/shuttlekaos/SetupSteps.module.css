@@ -1,0 +1,55 @@
+.head {
+  composes: glass from './glass.module.css';
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--bk-border);
+}
+
+.count {
+  color: var(--bk-accent-strong);
+  letter-spacing: 0.02em;
+}
+
+.stepper {
+  padding-inline: 2px;
+}
+
+.step {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stepBody {
+  margin-inline-start: 0;
+}
+
+.stepLabel {
+  font-size: var(--mantine-font-size-xs);
+  white-space: nowrap;
+}
+
+.separator {
+  align-self: flex-start;
+  margin-top: 16px;
+  margin-inline: 6px;
+}
+
+.stepIcon {
+  font-size: 18px;
+}
+
+.actions {
+  & > :last-child {
+    flex: 1;
+  }
+
+  &[data-final] > :nth-last-child(2) {
+    flex: none;
+  }
+}

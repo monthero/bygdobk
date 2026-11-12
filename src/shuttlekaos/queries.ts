@@ -159,6 +159,7 @@ type QueryOptions<TData, T, TKey extends readonly unknown[]> = Omit<
 >;
 type MutationOptions<TData, TVariables> = Omit<UseMutationOptions<TData, Error, TVariables>, 'mutationFn'>;
 type StartVariables = { code: string; revision: number };
+type LinkVariables = { code: string; playerId: string; profileId: string | null };
 
 const callRpc = async (name: string, args?: Record<string, unknown>): Promise<unknown> => {
   const supabase = await getSupabase();
@@ -236,6 +237,12 @@ const startSession = async ({ code, revision }: StartVariables) => {
 const joinSession = (code: string) => callFunction({ action: ShuttleKaosAction.enum.join, code });
 
 const leaveSession = (code: string) => callFunction({ action: ShuttleKaosAction.enum.leave, code });
+
+const linkPlayer = async ({ code, playerId, profileId }: LinkVariables) => {
+  const linked = await callFunction({ action: ShuttleKaosAction.enum.link, code, playerId, profileId });
+  if (linked.session) putSession(linked.session);
+  return linked;
+};
 
 const deleteSession = async (code: string) => {
   const deleted = await callFunction({ action: ShuttleKaosAction.enum.delete, code });
@@ -403,6 +410,9 @@ export const useJoinSession = (options?: MutationOptions<ShuttleKaosReply, strin
 
 export const useLeaveSession = (options?: MutationOptions<ShuttleKaosReply, string>) =>
   useMutation({ mutationFn: leaveSession, onSettled: refreshAll, ...options });
+
+export const useLinkPlayer = (options?: MutationOptions<ShuttleKaosReply, LinkVariables>) =>
+  useMutation({ mutationFn: linkPlayer, onSettled: refreshAll, ...options });
 
 export const useDeleteSession = (options?: MutationOptions<ShuttleKaosReply, string>) =>
   useMutation({ mutationFn: deleteSession, onSettled: refreshLists, ...options });

@@ -74,6 +74,7 @@ type Outcome = { shareCode: string; session: Session | null; nudge: Nudge | null
 const DbError = z.object({ code: z.string(), details: z.string().nullish() });
 const Names = z.array(z.string()).catch([]);
 const Profile = z.object({ name: z.string(), avatar_url: z.string().nullable() });
+const LinkTarget = z.object({ avatar_url: z.string().nullable(), shuttlekaos_findable: z.boolean() });
 
 class Rejection extends Error {
   constructor(
@@ -332,6 +333,57 @@ const leave = (admin: Admin, userId: string, code: string) =>
     return changedHidden(await write(admin, row.owner_id, { ...next, updatedAt: nowIso() }, row.revision, removed));
   });
 
+const settledFinished = (row: Row): Session | null => {
+  if (row.data.status === SessionStatus.enum.finished) return row.data;
+  if (row.data.status !== SessionStatus.enum.running || !isIdle(row)) return null;
+  return { ...row.data, status: SessionStatus.enum.finished, finishedAt: new Date(row.updated_at).toISOString() };
+};
+
+const link = (admin: Admin, userId: string, code: string, playerId: string, profileId: string | null) =>
+  retryStale(async () => {
+    const row = await loadRow(admin, 'share_code', code);
+    const current = settledFinished(row);
+    if (!current) throw new Rejection(ShuttleKaosProblem.enum.locked);
+    const isOwner = row.owner_id === userId;
+    const player = current.players.find((candidate) => candidate.id === playerId);
+    if (!player) throw new Rejection(ShuttleKaosProblem.enum.notFound);
+    if (player.profileId === profileId) return unchanged(row.share_code);
+
+    let avatarUrl: string | null = null;
+    let removed = row.removed_profile_ids;
+    if (profileId === null) {
+      if (!isOwner) throw new Rejection(ShuttleKaosProblem.enum.notAllowed);
+    } else {
+      const self = profileId === userId;
+      if (!isOwner && !self) throw new Rejection(ShuttleKaosProblem.enum.notAllowed);
+      if (player.profileId !== null) throw new Rejection(ShuttleKaosProblem.enum.invalid);
+      if (current.players.some((candidate) => candidate.profileId === profileId)) {
+        throw new Rejection(ShuttleKaosProblem.enum.invalid);
+      }
+      if (!self && removed.includes(profileId)) throw new Rejection(ShuttleKaosProblem.enum.notAllowed);
+      const { data, error } = await admin
+        .from('profiles')
+        .select('avatar_url, shuttlekaos_findable')
+        .eq('id', profileId)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) throw new Rejection(ShuttleKaosProblem.enum.notFound);
+      const target = LinkTarget.parse(data);
+      if (!self && !target.shuttlekaos_findable) throw new Rejection(ShuttleKaosProblem.enum.notAllowed);
+      avatarUrl = target.avatar_url;
+      if (self) removed = removed.filter((id) => id !== userId);
+    }
+
+    const next: Session = {
+      ...current,
+      players: current.players.map((candidate) =>
+        candidate.id === playerId ? { ...candidate, profileId, avatarUrl } : candidate,
+      ),
+    };
+    const written = await write(admin, row.owner_id, validated(next), row.revision, removed);
+    return isOwner ? changed(written) : changedHidden(written);
+  });
+
 const remove = async (admin: Admin, userId: string, code: string) => {
   const row = await ownRow(admin, 'share_code', code, userId);
   const { error } = await admin.from('shuttlekaos_sessions').delete().eq('id', row.id).eq('owner_id', userId);
@@ -365,6 +417,8 @@ const perform = (admin: Admin, userId: string, request: ShuttleKaosRequest): Pro
       return leave(admin, userId, request.code);
     case ShuttleKaosAction.enum.delete:
       return remove(admin, userId, request.code);
+    case ShuttleKaosAction.enum.link:
+      return link(admin, userId, request.code, request.playerId, request.profileId);
   }
 };
 

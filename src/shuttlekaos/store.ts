@@ -36,7 +36,7 @@ export const sessionTopic = (shareCode: string) => `shuttlekaos:${shareCode}`;
 export const Nudge = z.union([z.object({ revision: z.number().int() }), z.object({ deleted: z.literal(true) })]);
 export type Nudge = z.infer<typeof Nudge>;
 
-export const ShuttleKaosAction = z.enum(['create', 'save', 'start', 'join', 'leave', 'delete']);
+export const ShuttleKaosAction = z.enum(['create', 'save', 'start', 'join', 'leave', 'delete', 'link']);
 export type ShuttleKaosAction = z.infer<typeof ShuttleKaosAction>;
 
 export const ShuttleKaosRequest = z.discriminatedUnion('action', [
@@ -46,6 +46,12 @@ export const ShuttleKaosRequest = z.discriminatedUnion('action', [
   z.object({ action: z.literal(ShuttleKaosAction.enum.join), code: ShareCode }),
   z.object({ action: z.literal(ShuttleKaosAction.enum.leave), code: ShareCode }),
   z.object({ action: z.literal(ShuttleKaosAction.enum.delete), code: ShareCode }),
+  z.object({
+    action: z.literal(ShuttleKaosAction.enum.link),
+    code: ShareCode,
+    playerId: z.string().min(1),
+    profileId: z.uuid().nullable(),
+  }),
 ]);
 export type ShuttleKaosRequest = z.infer<typeof ShuttleKaosRequest>;
 

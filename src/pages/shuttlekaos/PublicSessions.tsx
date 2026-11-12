@@ -1,25 +1,11 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import {
-  Badge,
-  Button,
-  Chip,
-  Drawer,
-  Group,
-  Paper,
-  SegmentedControl,
-  Select,
-  Skeleton,
-  Stack,
-  Text,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { Badge, Button, Group, Menu, Paper, Skeleton, Stack, Text } from '@mantine/core';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { memo, useMemo, useState, type FC } from 'react';
+import { memo, useMemo, useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
 
 import { useSessionUserId } from '~/components/auth/hooks';
-import { Eye, SlidersHorizontal, UserPlus } from '~/components/ui';
-import { useIsMobile } from '~/hooks/useIsMobile';
+import { CaretDown, Check, Eye, UserPlus, X } from '~/components/ui';
 import { notifyFailed } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
 import { Format, Level, PlayStyle, SessionStatus, type PublicSession } from '~/shuttlekaos/model';
@@ -28,6 +14,7 @@ import { useUi } from '~/stores/ui';
 
 import { BRAND, FORMAT_LABELS, STYLE_LABELS } from './labels';
 import { LevelsText } from './Levels';
+import { NewSessionButton } from './NewSessionButton';
 
 import classes from './PublicSessions.module.css';
 
@@ -50,7 +37,6 @@ const NO_FILTERS: Filters = {
 };
 const EMPTY: PublicSession[] = [];
 const SKELETONS = [0, 1];
-const CHIP_CLASS_NAMES = { label: classes.chip };
 
 const selectOpenLogin = (s: ReturnType<typeof useUi.getState>) => s.openLogin;
 
@@ -69,64 +55,138 @@ const matches = (s: PublicSession, f: Filters) =>
   (f.organizer === null || s.organizerId === f.organizer) &&
   (f.live === Live.enum.all || s.status === f.live);
 
-const FilterFields: FC<{
+const FilterPill: FC<{
+  name: string;
+  value: ReactNode;
+  multiple?: boolean;
+  onClear: () => void;
+  children: ReactNode;
+}> = ({ name, value, multiple, onClear, children }) => {
+  const { t } = useLingui();
+  const active = value !== null;
+  return (
+    <Button.Group className={classes.pill}>
+      <Menu closeOnItemClick={!multiple} position="bottom-start" shadow="md" width={220}>
+        <Menu.Target>
+          <Button
+            h={44}
+            radius="xl"
+            variant={active ? 'light' : 'default'}
+            color={active ? 'brand' : undefined}
+            rightSection={<CaretDown />}
+          >
+            {value ?? name}
+          </Button>
+        </Menu.Target>
+        <Menu.Dropdown>{children}</Menu.Dropdown>
+      </Menu>
+      {active && (
+        <Button
+          h={44}
+          radius="xl"
+          variant="light"
+          color="brand"
+          px={12}
+          aria-label={t`Clear ${name}`}
+          onClick={onClear}
+        >
+          <X />
+        </Button>
+      )}
+    </Button.Group>
+  );
+};
+
+const CheckItem: FC<{ checked: boolean; onClick: () => void; children: ReactNode }> = ({
+  checked,
+  onClick,
+  children,
+}) => (
+  <Menu.Item
+    role="menuitemcheckbox"
+    aria-checked={checked}
+    leftSection={checked ? <Check /> : <span className={classes.noCheck} />}
+    color={checked ? 'brand' : undefined}
+    onClick={onClick}
+  >
+    {children}
+  </Menu.Item>
+);
+
+const FilterRow: FC<{
   filters: Filters;
   organizers: { value: string; label: string }[];
   onChange: (f: Filters) => void;
 }> = ({ filters, organizers, onChange }) => {
   const { t, i18n } = useLingui();
   const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
+  const toggleLevel = (level: Level) =>
+    set({
+      levels: filters.levels.includes(level) ? filters.levels.filter((l) => l !== level) : [...filters.levels, level],
+    });
+  const organizer = organizers.find((o) => o.value === filters.organizer)?.label ?? null;
+
+  let live: string | null = null;
+  if (filters.live === Live.enum.open) live = t`Open to join`;
+  else if (filters.live === Live.enum.running) live = t`Live now`;
+
   return (
-    <Stack gap="sm">
-      <Chip.Group multiple value={filters.levels} onChange={(v) => set({ levels: z.array(Level).catch([]).parse(v) })}>
-        <Group gap={6} aria-label={t`Level`}>
-          {Level.options.map((level) => (
-            <Chip key={level} value={level} radius="xl" classNames={CHIP_CLASS_NAMES}>
-              {level}
-            </Chip>
-          ))}
-        </Group>
-      </Chip.Group>
-      <SegmentedControl
-        fullWidth
-        radius="xl"
-        value={filters.live}
-        onChange={(v) => set({ live: Live.parse(v) })}
-        data={[
-          { value: Live.enum.all, label: t`All` },
-          { value: Live.enum.open, label: t`Open to join` },
-          { value: Live.enum.running, label: t`Live now` },
-        ]}
-      />
-      <SegmentedControl
-        fullWidth
-        radius="xl"
-        value={filters.style}
-        onChange={(v) => set({ style: StyleFilter.parse(v) })}
-        data={[
-          { value: StyleFilter.enum.all, label: t`Any play` },
-          ...PlayStyle.options.map((value) => ({ value, label: i18n._(STYLE_LABELS[value]) })),
-        ]}
-      />
-      <SegmentedControl
-        fullWidth
-        radius="xl"
-        value={filters.format}
-        onChange={(v) => set({ format: FormatFilter.parse(v) })}
-        data={[
-          { value: FormatFilter.enum.all, label: t`Any format` },
-          ...Format.options.map((value) => ({ value, label: i18n._(FORMAT_LABELS[value].label) })),
-        ]}
-      />
-      <Select
-        clearable
-        placeholder={t`Any organizer`}
-        aria-label={t`Organizer`}
-        data={organizers}
-        value={filters.organizer}
-        onChange={(organizer) => set({ organizer })}
-      />
-    </Stack>
+    <div className={classes.row}>
+      <FilterPill
+        name={t`Level`}
+        multiple
+        value={filters.levels.length > 0 ? <LevelsText levels={filters.levels} /> : null}
+        onClear={() => set({ levels: [] })}
+      >
+        {Level.options.map((level) => (
+          <CheckItem key={level} checked={filters.levels.includes(level)} onClick={() => toggleLevel(level)}>
+            {level}
+          </CheckItem>
+        ))}
+      </FilterPill>
+      <FilterPill name={t`Status`} value={live} onClear={() => set({ live: Live.enum.all })}>
+        <CheckItem checked={filters.live === Live.enum.open} onClick={() => set({ live: Live.enum.open })}>
+          <Trans>Open to join</Trans>
+        </CheckItem>
+        <CheckItem checked={filters.live === Live.enum.running} onClick={() => set({ live: Live.enum.running })}>
+          <Trans>Live now</Trans>
+        </CheckItem>
+      </FilterPill>
+      <FilterPill
+        name={t({ message: 'Play', context: 'ShuttleKaos setup: singles or doubles' })}
+        value={filters.style === StyleFilter.enum.all ? null : i18n._(STYLE_LABELS[filters.style])}
+        onClear={() => set({ style: StyleFilter.enum.all })}
+      >
+        {PlayStyle.options.map((style) => (
+          <CheckItem key={style} checked={filters.style === style} onClick={() => set({ style })}>
+            {i18n._(STYLE_LABELS[style])}
+          </CheckItem>
+        ))}
+      </FilterPill>
+      <FilterPill
+        name={t`Format`}
+        value={filters.format === FormatFilter.enum.all ? null : i18n._(FORMAT_LABELS[filters.format].label)}
+        onClear={() => set({ format: FormatFilter.enum.all })}
+      >
+        {Format.options.map((format) => (
+          <CheckItem key={format} checked={filters.format === format} onClick={() => set({ format })}>
+            {i18n._(FORMAT_LABELS[format].label)}
+          </CheckItem>
+        ))}
+      </FilterPill>
+      <FilterPill name={t`Organizer`} value={organizer} onClear={() => set({ organizer: null })}>
+        {organizers.map((o) => (
+          <CheckItem key={o.value} checked={filters.organizer === o.value} onClick={() => set({ organizer: o.value })}>
+            {o.label}
+          </CheckItem>
+        ))}
+      </FilterPill>
+      {activeCount(filters) > 0 && (
+        <Button variant="subtle" color="brand" h={44} radius="xl" onClick={() => onChange(NO_FILTERS)}>
+          <Trans>Clear all</Trans>
+        </Button>
+      )}
+    </div>
   );
 };
 
@@ -155,7 +215,7 @@ const SessionCard = memo<{ session: PublicSession }>(({ session }) => {
   };
 
   return (
-    <Paper withBorder radius="lg" className={classes.card}>
+    <Paper withBorder radius="lg" className={classes.card} data-live={!open || undefined}>
       <Link to="/shuttlekaos/$code" params={{ code: session.shareCode }} className={classes.cardLink}>
         <Group gap={6}>
           {open ? (
@@ -167,13 +227,13 @@ const SessionCard = memo<{ session: PublicSession }>(({ session }) => {
               <Trans comment="Session status: being played right now">Live now</Trans>
             </Badge>
           )}
-          <Badge variant="default" tt="none">
+          <Badge variant="light" color="blue" tt="none">
             <LevelsText levels={session.levels} />
           </Badge>
-          <Badge variant="default" tt="none">
+          <Badge variant="light" color="blue" tt="none">
             {format}
           </Badge>
-          <Badge variant="default" tt="none">
+          <Badge variant="light" color="blue" tt="none">
             {style}
           </Badge>
         </Group>
@@ -207,9 +267,7 @@ const SessionCard = memo<{ session: PublicSession }>(({ session }) => {
 
 export const PublicSessions: FC = () => {
   const { t } = useLingui();
-  const mobile = useIsMobile();
   const [filters, setFilters] = useState(NO_FILTERS);
-  const [drawer, drawerControls] = useDisclosure(false);
   const list = usePublicSessions(filters.levels);
   const all = list.data ?? EMPTY;
   const organizers = useMemo(
@@ -217,27 +275,19 @@ export const PublicSessions: FC = () => {
     [all],
   );
   const shown = all.filter((s) => matches(s, filters));
-  const count = activeCount(filters);
-  const shownCount = shown.length;
+  const filtering = activeCount(filters) > 0;
 
-  const fields = <FilterFields filters={filters} organizers={organizers} onChange={setFilters} />;
-  const clear = count > 0 && (
-    <Button variant="subtle" size="compact-md" h={44} onClick={() => setFilters(NO_FILTERS)}>
-      <Trans>Clear</Trans>
-    </Button>
-  );
-
-  let body;
   if (list.isPending) {
-    body = (
+    return (
       <Stack gap="sm" aria-busy>
         {SKELETONS.map((i) => (
           <Skeleton key={i} height={120} radius="lg" />
         ))}
       </Stack>
     );
-  } else if (list.isError) {
-    body = (
+  }
+  if (list.isError) {
+    return (
       <LoadError
         title={t`Couldn't load open sessions`}
         error={list.error}
@@ -245,74 +295,32 @@ export const PublicSessions: FC = () => {
         onRetry={() => void list.refetch()}
       />
     );
-  } else if (shown.length === 0) {
-    body = (
-      <Text c="dimmed">
-        {count > 0 ? (
-          <Trans>Nothing matches these filters.</Trans>
-        ) : (
+  }
+  if (all.length === 0 && !filtering) {
+    return (
+      <Paper withBorder radius="lg" p="lg" className={classes.empty}>
+        <Text>
           <Trans>No open sessions right now. Start one and get the chaos going!</Trans>
-        )}
-      </Text>
-    );
-  } else {
-    body = (
-      <div className={classes.grid}>
-        {shown.map((session) => (
-          <SessionCard key={session.id} session={session} />
-        ))}
-      </div>
+        </Text>
+        <NewSessionButton size="sm" />
+      </Paper>
     );
   }
 
   return (
     <Stack gap="sm">
-      {mobile ? (
-        <Group gap="xs">
-          <Button
-            variant="default"
-            h={44}
-            leftSection={<SlidersHorizontal />}
-            rightSection={
-              count > 0 && (
-                <Badge size="sm" circle>
-                  {count}
-                </Badge>
-              )
-            }
-            onClick={drawerControls.open}
-          >
-            <Trans>Filters</Trans>
-          </Button>
-          {clear}
-        </Group>
+      <FilterRow filters={filters} organizers={organizers} onChange={setFilters} />
+      {shown.length === 0 ? (
+        <Text c="dimmed">
+          <Trans>Nothing matches these filters.</Trans>
+        </Text>
       ) : (
-        <Paper withBorder radius="lg" p="sm" className={classes.filters}>
-          {fields}
-          {clear}
-        </Paper>
+        <div className={classes.grid}>
+          {shown.map((session) => (
+            <SessionCard key={session.id} session={session} />
+          ))}
+        </div>
       )}
-      {body}
-      <Drawer
-        opened={drawer}
-        onClose={drawerControls.close}
-        position="bottom"
-        radius="lg"
-        size="auto"
-        title={<Trans>Filters</Trans>}
-      >
-        <Stack gap="md" pb="calc(16px + env(safe-area-inset-bottom))">
-          {fields}
-          <Group grow>
-            <Button variant="default" disabled={count === 0} onClick={() => setFilters(NO_FILTERS)}>
-              <Trans>Clear</Trans>
-            </Button>
-            <Button onClick={drawerControls.close}>
-              <Trans comment="Button that closes the filters, e.g. Show 4">Show {shownCount}</Trans>
-            </Button>
-          </Group>
-        </Stack>
-      </Drawer>
     </Stack>
   );
 };

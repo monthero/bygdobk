@@ -1,6 +1,10 @@
 .top {
+  composes: glass from './glass.module.css';
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-radius: 0;
+  box-shadow: none;
   padding-block: 12px 8px;
-  background: linear-gradient(180deg, var(--bk-accent-soft), transparent);
 }
 
 .inner {

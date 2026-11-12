@@ -30,7 +30,7 @@ export const RoundDone: FC<Props> = ({ session, round, players, last, pending, o
     <ResponsiveModal opened onClose={onClose} title={<Trans>Round {round} done</Trans>}>
       <Stack gap="md">
         <div className={classes.table}>
-          <StandingsTable rows={rows} settings={session.settings} players={players} moves={moves} podium />
+          <StandingsTable rows={rows} session={session} players={players} moves={moves} podium />
         </div>
         <Group justify="flex-end" gap="sm" grow={Boolean(action)}>
           <Button variant="default" size="md" onClick={onClose}>

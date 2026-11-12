@@ -1,15 +1,30 @@
-.filters {
+.row {
   display: flex;
-  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 8px;
-  background: var(--bk-surface);
+  margin-inline: calc(var(--mantine-spacing-md) * -1);
+  padding: 2px var(--mantine-spacing-md) 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 
-.chip {
-  min-height: 40px;
-  min-width: 48px;
-  justify-content: center;
-  font-weight: 600;
+.pill {
+  flex: none;
+}
+
+.noCheck {
+  display: inline-block;
+  width: 1em;
+}
+
+.empty {
+  composes: glass from './glass.module.css';
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .grid {
@@ -19,11 +34,11 @@
 }
 
 .card {
+  composes: glass from './glass.module.css';
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding: 14px 16px;
-  background: var(--bk-surface);
   transition: border-color 0.15s;
 
   &:hover {

@@ -31,6 +31,12 @@ const listFormats = cachedFormat<null, Intl.ListFormat>((tag) => new Intl.ListFo
 
 export const listFormat = () => listFormats(null);
 
+const unitListFormats = cachedFormat<null, Intl.ListFormat>(
+  (tag) => new Intl.ListFormat(tag, { type: 'unit', style: 'narrow' }),
+);
+
+export const unitListFormat = () => unitListFormats(null);
+
 const orListFormats = cachedFormat<null, Intl.ListFormat>((tag) => new Intl.ListFormat(tag, { type: 'disjunction' }));
 
 export const orListFormat = () => orListFormats(null);

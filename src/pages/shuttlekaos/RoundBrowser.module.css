@@ -1,0 +1,55 @@
+.head {
+  composes: glass from './glass.module.css';
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px 8px;
+  text-align: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.courts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
+  gap: var(--mantine-spacing-md);
+}
+
+.resting {
+  composes: glass from './glass.module.css';
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.restingIcon {
+  flex: none;
+  font-size: 20px;
+  color: var(--mantine-color-dimmed);
+}

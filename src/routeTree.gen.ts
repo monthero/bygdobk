@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as KontaktRouteImport } from './routes/kontakt'
 import { Route as PersonvernRouteImport } from './routes/personvern'
+import { Route as ShuttlekaosRouteImport } from './routes/shuttlekaos'
 import { Route as StyretRouteImport } from './routes/styret'
 import { Route as AdminSplatRouteImport } from './routes/admin.$'
 import { Route as ArrangementerIndexRouteImport } from './routes/arrangementer.index'
@@ -47,6 +48,11 @@ const KontaktRoute = KontaktRouteImport.update({
 const PersonvernRoute = PersonvernRouteImport.update({
   id: '/personvern',
   path: '/personvern',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShuttlekaosRoute = ShuttlekaosRouteImport.update({
+  id: '/shuttlekaos',
+  path: '/shuttlekaos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StyretRoute = StyretRouteImport.update({
@@ -100,19 +106,19 @@ const NyheterSlugRoute = NyheterSlugRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ShuttlekaosIndexRoute = ShuttlekaosIndexRouteImport.update({
-  id: '/shuttlekaos/',
-  path: '/shuttlekaos/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => ShuttlekaosRoute,
 } as any)
 const ShuttlekaosCodeRoute = ShuttlekaosCodeRouteImport.update({
-  id: '/shuttlekaos/$code',
-  path: '/shuttlekaos/$code',
-  getParentRoute: () => rootRouteImport,
+  id: '/$code',
+  path: '/$code',
+  getParentRoute: () => ShuttlekaosRoute,
 } as any)
 const ShuttlekaosNyRoute = ShuttlekaosNyRouteImport.update({
-  id: '/shuttlekaos/ny',
-  path: '/shuttlekaos/ny',
-  getParentRoute: () => rootRouteImport,
+  id: '/ny',
+  path: '/ny',
+  getParentRoute: () => ShuttlekaosRoute,
 } as any)
 const Studie404Route = Studie404RouteImport.update({
   id: '/studie_/404',
@@ -159,6 +165,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
   '/personvern': typeof PersonvernRoute
+  '/shuttlekaos': typeof ShuttlekaosRouteWithChildren
   '/styret': typeof StyretRouteWithChildren
   '/admin/$': typeof AdminSplatRoute
   '/arrangementer/$slug': typeof ArrangementerSlugRoute
@@ -211,6 +218,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/kontakt': typeof KontaktRoute
   '/personvern': typeof PersonvernRoute
+  '/shuttlekaos': typeof ShuttlekaosRouteWithChildren
   '/styret': typeof StyretRouteWithChildren
   '/admin/$': typeof AdminSplatRoute
   '/arrangementer/$slug': typeof ArrangementerSlugRoute
@@ -239,6 +247,7 @@ export interface FileRouteTypes {
     | '/'
     | '/kontakt'
     | '/personvern'
+    | '/shuttlekaos'
     | '/styret'
     | '/admin/$'
     | '/arrangementer/$slug'
@@ -290,6 +299,7 @@ export interface FileRouteTypes {
     | '/'
     | '/kontakt'
     | '/personvern'
+    | '/shuttlekaos'
     | '/styret'
     | '/admin/$'
     | '/arrangementer/$slug'
@@ -317,21 +327,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KontaktRoute: typeof KontaktRoute
   PersonvernRoute: typeof PersonvernRoute
+  ShuttlekaosRoute: typeof ShuttlekaosRouteWithChildren
   StyretRoute: typeof StyretRouteWithChildren
   AdminSplatRoute: typeof AdminSplatRoute
   ArrangementerSlugRoute: typeof ArrangementerSlugRoute
   MedlemskapBliMedlemRoute: typeof MedlemskapBliMedlemRoute
   MedlemskapMineRoute: typeof MedlemskapMineRoute
   NyheterSlugRoute: typeof NyheterSlugRoute
-  ShuttlekaosCodeRoute: typeof ShuttlekaosCodeRoute
-  ShuttlekaosNyRoute: typeof ShuttlekaosNyRoute
   Studie404Route: typeof Studie404Route
   TreningSesongRoute: typeof TreningSesongRoute
   ArrangementerIndexRoute: typeof ArrangementerIndexRoute
   KlubbenIndexRoute: typeof KlubbenIndexRoute
   MedlemskapIndexRoute: typeof MedlemskapIndexRoute
   NyheterIndexRoute: typeof NyheterIndexRoute
-  ShuttlekaosIndexRoute: typeof ShuttlekaosIndexRoute
   TreningIndexRoute: typeof TreningIndexRoute
 }
 
@@ -356,6 +364,13 @@ declare module '@tanstack/react-router' {
       path: '/personvern'
       fullPath: '/personvern'
       preLoaderRoute: typeof PersonvernRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shuttlekaos': {
+      id: '/shuttlekaos'
+      path: '/shuttlekaos'
+      fullPath: '/shuttlekaos'
+      preLoaderRoute: typeof ShuttlekaosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/styret': {
@@ -430,24 +445,24 @@ declare module '@tanstack/react-router' {
     }
     '/shuttlekaos/': {
       id: '/shuttlekaos/'
-      path: '/shuttlekaos'
+      path: '/'
       fullPath: '/shuttlekaos/'
       preLoaderRoute: typeof ShuttlekaosIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ShuttlekaosRoute
     }
     '/shuttlekaos/$code': {
       id: '/shuttlekaos/$code'
-      path: '/shuttlekaos/$code'
+      path: '/$code'
       fullPath: '/shuttlekaos/$code'
       preLoaderRoute: typeof ShuttlekaosCodeRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ShuttlekaosRoute
     }
     '/shuttlekaos/ny': {
       id: '/shuttlekaos/ny'
-      path: '/shuttlekaos/ny'
+      path: '/ny'
       fullPath: '/shuttlekaos/ny'
       preLoaderRoute: typeof ShuttlekaosNyRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ShuttlekaosRoute
     }
     '/studie_/404': {
       id: '/studie_/404'
@@ -508,6 +523,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ShuttlekaosRouteChildren {
+  ShuttlekaosCodeRoute: typeof ShuttlekaosCodeRoute
+  ShuttlekaosNyRoute: typeof ShuttlekaosNyRoute
+  ShuttlekaosIndexRoute: typeof ShuttlekaosIndexRoute
+}
+
+const ShuttlekaosRouteChildren: ShuttlekaosRouteChildren = {
+  ShuttlekaosCodeRoute: ShuttlekaosCodeRoute,
+  ShuttlekaosNyRoute: ShuttlekaosNyRoute,
+  ShuttlekaosIndexRoute: ShuttlekaosIndexRoute,
+}
+
+const ShuttlekaosRouteWithChildren = ShuttlekaosRoute._addFileChildren(
+  ShuttlekaosRouteChildren,
+)
+
 interface StyretRouteChildren {
   StyretBesokendeRoute: typeof StyretBesokendeRoute
   StyretDugnadRoute: typeof StyretDugnadRoute
@@ -531,21 +562,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KontaktRoute: KontaktRoute,
   PersonvernRoute: PersonvernRoute,
+  ShuttlekaosRoute: ShuttlekaosRouteWithChildren,
   StyretRoute: StyretRouteWithChildren,
   AdminSplatRoute: AdminSplatRoute,
   ArrangementerSlugRoute: ArrangementerSlugRoute,
   MedlemskapBliMedlemRoute: MedlemskapBliMedlemRoute,
   MedlemskapMineRoute: MedlemskapMineRoute,
   NyheterSlugRoute: NyheterSlugRoute,
-  ShuttlekaosCodeRoute: ShuttlekaosCodeRoute,
-  ShuttlekaosNyRoute: ShuttlekaosNyRoute,
   Studie404Route: Studie404Route,
   TreningSesongRoute: TreningSesongRoute,
   ArrangementerIndexRoute: ArrangementerIndexRoute,
   KlubbenIndexRoute: KlubbenIndexRoute,
   MedlemskapIndexRoute: MedlemskapIndexRoute,
   NyheterIndexRoute: NyheterIndexRoute,
-  ShuttlekaosIndexRoute: ShuttlekaosIndexRoute,
   TreningIndexRoute: TreningIndexRoute,
 }
 export const routeTree = rootRouteImport

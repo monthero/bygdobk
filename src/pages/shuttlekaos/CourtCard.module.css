@@ -1,9 +1,12 @@
 .card {
+  composes: glass from './glass.module.css';
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 12px 14px 14px;
-  background: var(--bk-surface);
   transition: border-color 0.2s;
 
   &[data-done] {
@@ -70,4 +73,59 @@
 
 .action {
   margin-top: 8px;
+}
+
+.duel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding-block: 4px;
+}
+
+.duelSide {
+  min-width: 0;
+  padding: 6px;
+  border-radius: var(--mantine-radius-md);
+  font-size: var(--mantine-font-size-sm);
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+
+  &[data-won] {
+    font-weight: 700;
+  }
+
+  &[data-lost] {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 30em) {
+    padding-inline: 2px;
+
+    & :global(.mantine-Avatar-root) {
+      display: none;
+    }
+  }
+}
+
+.boxes {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dash {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--mantine-color-dimmed);
+}
+
+.problem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--bk-danger);
+  font-weight: 600;
 }

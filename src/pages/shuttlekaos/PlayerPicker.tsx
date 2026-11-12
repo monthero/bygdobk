@@ -1,20 +1,15 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { ActionIcon, Badge, Button, Combobox, Loader, Stack, Text, TextInput, useCombobox } from '@mantine/core';
-import { useDebouncedValue } from '@mantine/hooks';
 import { useRef, useState, type FC, type KeyboardEvent } from 'react';
 
 import { LinkSimple, Plus, X } from '~/components/ui';
 import { MAX_NAME, MAX_PLAYERS, type AccountMatch, type Player } from '~/shuttlekaos/model';
-import { useAccountSearch } from '~/shuttlekaos/queries';
 
 import { sameName } from './labels';
 import { PlayerAvatar } from './People';
+import { useAccountLookup } from './useAccountLookup';
 
 import classes from './PlayerPicker.module.css';
-
-const MIN_SEARCH = 2;
-const SEARCH_DEBOUNCE_MS = 250;
-const EMPTY_MATCHES: AccountMatch[] = [];
 
 const newPlayer = (name: string, account?: AccountMatch): Player => ({
   id: crypto.randomUUID(),
@@ -31,7 +26,7 @@ const PlayerRow: FC<{ player: Player; me?: boolean; onRemove?: (id: string) => v
       <PlayerAvatar player={player} />
       <span className={classes.name}>{playerName}</span>
       {player.profileId && (
-        <Badge variant="light" size="sm" leftSection={<LinkSimple />} className={classes.linked}>
+        <Badge variant="light" color="blue" size="sm" leftSection={<LinkSimple />} className={classes.linked}>
           <Trans comment="Badge on a player that is linked to a club account">Account</Trans>
         </Badge>
       )}
@@ -75,17 +70,13 @@ export const PlayerPicker: FC<Props> = ({ players, signedIn, onChange }) => {
   const input = useRef<HTMLInputElement>(null);
   const combobox = useCombobox();
   const [name, setName] = useState('');
-  const [debounced] = useDebouncedValue(name.trim(), SEARCH_DEBOUNCE_MS);
-  const query = signedIn && debounced.length >= MIN_SEARCH ? debounced : '';
-  const search = useAccountSearch(query);
   const trimmed = name.trim();
   const taken = trimmed !== '' && players.some((p) => sameName(p.name, trimmed));
   const full = players.length >= MAX_PLAYERS;
 
   const linked = new Set(players.flatMap((p) => (p.profileId ? [p.profileId] : [])));
-  const matches = query ? (search.data ?? EMPTY_MATCHES).filter((a) => !linked.has(a.profileId)) : EMPTY_MATCHES;
-  const searching = signedIn && trimmed.length >= MIN_SEARCH && (trimmed !== query || search.isFetching);
-  const showDropdown = query !== '' && (matches.length > 0 || search.isError);
+  const { query, matches, searching, failed } = useAccountLookup(name, signedIn, linked);
+  const showDropdown = query !== '' && (matches.length > 0 || failed);
 
   const done = () => {
     setName('');
@@ -126,7 +117,7 @@ export const PlayerPicker: FC<Props> = ({ players, signedIn, onChange }) => {
 
   return (
     <Stack gap="md">
-      <Combobox store={combobox} onOptionSubmit={link} withinPortal={false}>
+      <Combobox store={combobox} onOptionSubmit={link}>
         <div className={classes.add}>
           <Combobox.Target>
             <TextInput
@@ -162,7 +153,7 @@ export const PlayerPicker: FC<Props> = ({ players, signedIn, onChange }) => {
             </Text>
           </Combobox.Header>
           <Combobox.Options>
-            {search.isError && (
+            {failed && (
               <Combobox.Empty>
                 <Trans>Couldn't search accounts. You can still add the name.</Trans>
               </Combobox.Empty>

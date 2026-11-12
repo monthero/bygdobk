@@ -1,8 +1,8 @@
 import { Trans } from '@lingui/react/macro';
-import { Button, CopyButton, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import { Button, CopyButton, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import type { FC } from 'react';
 
-import { Check, LinkSimple, ShareNetwork } from '~/components/ui';
+import { Check, LinkSimple, ShareNetwork, UserPlus } from '~/components/ui';
 
 import { sessionUrl } from './labels';
 import { useShareSession } from './useShareSession';
@@ -15,9 +15,14 @@ export const InviteCard: FC<{ code: string; title: string }> = ({ code, title })
   return (
     <Paper radius="lg" p="md" className={classes.card}>
       <Stack gap="sm">
-        <Title order={2} size="h4">
-          <Trans>Invite players</Trans>
-        </Title>
+        <Group gap="sm" wrap="nowrap">
+          <ThemeIcon variant="light" color="brand" radius="xl" size={36}>
+            <UserPlus />
+          </ThemeIcon>
+          <Title order={2} size="h4">
+            <Trans>Invite players</Trans>
+          </Title>
+        </Group>
         <Text size="sm">
           <Trans>Send the link. People join from their own phone and show up below.</Trans>
         </Text>

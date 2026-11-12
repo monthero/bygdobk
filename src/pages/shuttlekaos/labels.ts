@@ -3,10 +3,11 @@ import { msg } from '@lingui/core/macro';
 import { clamp } from '@mantine/hooks';
 import { z } from 'zod';
 
-import { currentLocale, listFormat } from '~/i18n/current';
+import { currentLocale, listFormat, numberFormat, unitListFormat } from '~/i18n/current';
 import { withLocale } from '~/i18n/locales';
-import { entrantsNeeded, finishSession, standings } from '~/shuttlekaos/engine';
+import { entrantsNeeded, finishSession, gamesProblem, matchWinner, standings } from '~/shuttlekaos/engine';
 import {
+  EVERYONE_ONCE,
   Format,
   GamesProblem,
   Level,
@@ -181,3 +182,76 @@ export const suggestedCourts = (settings: Settings, playerCount: number) =>
   clamp(Math.floor(playerCount / entrantsNeeded(settings)), 1, MAX_COURTS);
 
 export const namesOf = (players: Pick<Player, 'name'>[]) => listFormat().format(players.map((p) => p.name));
+
+export const DEFAULT_POINTS: Record<ScoreMode, number> = {
+  [ScoreMode.enum.total]: 21,
+  [ScoreMode.enum.race]: 15,
+};
+
+export const RoundsChoice = z.enum(['everyone', 'count', 'open']);
+export type RoundsChoice = z.infer<typeof RoundsChoice>;
+
+export const roundsChoice = (rounds: Settings['rounds']): RoundsChoice => {
+  if (rounds === EVERYONE_ONCE) return RoundsChoice.enum.everyone;
+  return rounds === null ? RoundsChoice.enum.open : RoundsChoice.enum.count;
+};
+
+export const SectionColor = z.enum(['brand', 'teal', 'blue', 'grape']);
+export type SectionColor = z.infer<typeof SectionColor>;
+
+export const MatchResult = z.enum(['win', 'draw', 'loss']);
+export type MatchResult = z.infer<typeof MatchResult>;
+
+export type Form = {
+  played: number;
+  average: number;
+  last: MatchResult[];
+  streak: { result: MatchResult; count: number } | null;
+};
+
+const FORM_LENGTH = 5;
+
+export const formOf = (session: Session, playerIds: string[]): Form => {
+  const key = playerIds.at(0);
+  const results: MatchResult[] = [];
+  let points = 0;
+  for (const match of session.rounds.flatMap((r) => r.matches)) {
+    const side = match.sides.findIndex((ids) => key !== undefined && ids.includes(key));
+    if (side < 0 || gamesProblem(session.settings, match.games) !== null) continue;
+    const winner = matchWinner(session.settings, match);
+    if (winner === null) results.push(MatchResult.enum.draw);
+    else results.push(winner === side ? MatchResult.enum.win : MatchResult.enum.loss);
+    points += match.games.reduce((sum, game) => sum + (game[side] ?? 0), 0);
+  }
+  const latest = results.at(-1);
+  let count = 0;
+  for (const result of results.toReversed()) {
+    if (result !== latest) break;
+    count += 1;
+  }
+  return {
+    played: results.length,
+    average: results.length > 0 ? points / results.length : 0,
+    last: results.slice(-FORM_LENGTH),
+    streak: latest ? { result: latest, count } : null,
+  };
+};
+
+export const TableVariant = z.enum(['compact', 'full', 'final']);
+export type TableVariant = z.infer<typeof TableVariant>;
+
+const MINUTES_PER_HOUR = 60;
+
+export const minutesText = (minutes: number) =>
+  numberFormat({ style: 'unit', unit: 'minute', unitDisplay: 'short' }).format(minutes);
+
+export const durationText = (minutes: number) => {
+  const hours = Math.floor(minutes / MINUTES_PER_HOUR);
+  const rest = minutes % MINUTES_PER_HOUR;
+  if (hours === 0) return minutesText(rest);
+  const hoursText = numberFormat({ style: 'unit', unit: 'hour', unitDisplay: 'short' }).format(hours);
+  return rest === 0 ? hoursText : unitListFormat().format([hoursText, minutesText(rest)]);
+};
+
+export const SummaryPart = z.enum(['format', 'play', 'courts', 'scoring', 'rounds', 'levels', 'visibility']);
+export type SummaryPart = z.infer<typeof SummaryPart>;

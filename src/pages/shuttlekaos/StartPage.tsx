@@ -23,7 +23,6 @@ import {
   ArrowRight,
   ConfirmActions,
   DotsThreeVertical,
-  Plus,
   ResponsiveModal,
   SignOut,
   Trash,
@@ -33,13 +32,14 @@ import { formatWhen, notifyDone } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
 import { SessionStatus, type SessionSummary } from '~/shuttlekaos/model';
 import { shuttleKaosErrorMessage, useDeleteSession, useLeaveSession, useMySessions } from '~/shuttlekaos/queries';
-import { useUi } from '~/stores/ui';
 
 import { BrandHeader } from './BrandHeader';
 import { BRAND, TAGLINE } from './labels';
 import { LoginPrompt } from './LoginPrompt';
+import { NewSessionButton } from './NewSessionButton';
 import { PublicSessions } from './PublicSessions';
 import { VisibilityBadge } from './SettingsSummary';
+import { useSetupPrefs, type PrefsState } from './setupPrefs';
 
 import classes from './StartPage.module.css';
 
@@ -47,15 +47,9 @@ const Action = z.enum(['leave', 'delete']);
 type Action = z.infer<typeof Action>;
 
 const HISTORY_SKELETONS = [0, 1, 2];
+
+const selectHasLineup = (s: PrefsState) => s.lineup !== null;
 const EMPTY_SUMMARIES: SessionSummary[] = [];
-
-const selectOpenLogin = (s: ReturnType<typeof useUi.getState>) => s.openLogin;
-
-const newestOwned = (summaries: SessionSummary[]) =>
-  summaries.reduce<SessionSummary | undefined>(
-    (best, s) => (s.isOwner && (!best || s.createdAt > best.createdAt) ? s : best),
-    undefined,
-  );
 
 const Section: FC<{ title: ReactNode; children: ReactNode }> = ({ title, children }) => (
   <Stack component="section" gap="sm">
@@ -286,44 +280,30 @@ export const StartPage: FC = () => {
   usePageTitle(i18n._(TAGLINE), BRAND);
   const ready = useAuthReady();
   const userId = useSessionUserId();
-  const openLogin = useUi(selectOpenLogin);
   const mine = useMySessions();
   const summaries = mine.data ?? EMPTY_SUMMARIES;
   const active = summaries.find((s) => s.isActive);
   const past = summaries.filter((s) => s !== active);
-  const last = newestOwned(summaries);
+  const hasLastSetup = useSetupPrefs(selectHasLineup);
 
   return (
     <>
-      <BrandHeader>
-        <div className={classes.headerActions}>
-          {userId ? (
-            <Button
-              size="xl"
-              leftSection={<Plus />}
-              className={classes.new}
-              renderRoot={(props) => <Link {...props} to="/shuttlekaos/ny" />}
-            >
-              <Trans>New session</Trans>
-            </Button>
-          ) : (
-            <Button size="xl" leftSection={<Plus />} className={classes.new} onClick={openLogin}>
-              <Trans>New session</Trans>
-            </Button>
-          )}
-          {last && (
-            <Button
-              size="lg"
-              variant="default"
-              leftSection={<ArrowCounterClockwise />}
-              className={classes.again}
-              renderRoot={(props) => <Link {...props} to="/shuttlekaos/ny" search={{ fra: last.shareCode }} />}
-            >
-              <Trans>Use last setup</Trans>
-            </Button>
-          )}
-        </div>
-      </BrandHeader>
+      <BrandHeader
+        actions={
+          <>
+            <NewSessionButton />
+            {userId && hasLastSetup && (
+              <Button
+                variant="default"
+                leftSection={<ArrowCounterClockwise />}
+                renderRoot={(props) => <Link {...props} to="/shuttlekaos/ny" search={{ siste: true }} />}
+              >
+                <Trans>Use last setup</Trans>
+              </Button>
+            )}
+          </>
+        }
+      />
       <Container size="md" py="lg">
         <Stack gap="xl">
           {active && (

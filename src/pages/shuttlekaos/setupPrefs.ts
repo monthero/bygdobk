@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { EVERYONE_ONCE, Format, Partners, PlayStyle, ScoreMode, Settings } from '~/shuttlekaos/model';
+import { EVERYONE_ONCE, Format, Pair, Partners, Player, PlayStyle, ScoreMode, Settings } from '~/shuttlekaos/model';
 import { mergeParsed, safeJSONStorage } from '~/stores/persistence';
 
 const STORAGE_KEY = 'bygdo-shuttlekaos-setup';
@@ -19,14 +19,21 @@ const DEFAULT_SETTINGS: Settings = {
   levels: [],
 };
 
-const PrefsData = z.object({ settings: Settings.catch(DEFAULT_SETTINGS), isPublic: z.boolean().catch(true) });
+const Lineup = z.object({ players: z.array(Player), pairs: z.array(Pair) });
+export type Lineup = z.infer<typeof Lineup>;
+
+const PrefsData = z.object({
+  settings: Settings.catch(DEFAULT_SETTINGS),
+  isPublic: z.boolean().catch(true),
+  lineup: Lineup.nullable().catch(null),
+});
 type PrefsData = z.infer<typeof PrefsData>;
 
 export interface PrefsState extends PrefsData {
   remember: (prefs: PrefsData) => void;
 }
 
-const DEFAULTS: PrefsData = { settings: DEFAULT_SETTINGS, isPublic: true };
+const DEFAULTS: PrefsData = { settings: DEFAULT_SETTINGS, isPublic: true, lineup: null };
 
 export const useSetupPrefs = create<PrefsState>()(
   persist(
@@ -38,7 +45,7 @@ export const useSetupPrefs = create<PrefsState>()(
       name: STORAGE_KEY,
       version: 2,
       storage: safeJSONStorage<PrefsData>(),
-      partialize: ({ settings, isPublic }): PrefsData => ({ settings, isPublic }),
+      partialize: ({ settings, isPublic, lineup }): PrefsData => ({ settings, isPublic, lineup }),
       migrate: () => DEFAULTS,
       merge: mergeParsed(PrefsData, () => DEFAULTS),
     },

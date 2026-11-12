@@ -23,9 +23,10 @@ import { useUi } from '~/stores/ui';
 import { BusyAlert } from './BusyAlert';
 import { Section, StickyBar } from './FormParts';
 import { InviteCard } from './InviteCard';
-import { BRAND, FORMAT_LABELS, SETUP_PROBLEMS, suggestedCourts } from './labels';
+import { BRAND, FORMAT_LABELS, SectionColor, SETUP_PROBLEMS, suggestedCourts } from './labels';
 import { PairPicker } from './PairPicker';
 import { PlayerList, PlayerPicker } from './PlayerPicker';
+import { SECTION_ICONS } from './sectionIcons';
 import { SessionMenu } from './SessionMenu';
 import { SessionTop } from './SessionTop';
 import { SettingsForm, VisibilityPicker } from './SettingsForm';
@@ -110,6 +111,8 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
             <InviteCard code={shareCode} title={session.title} />
             <Section
               title={<Trans>Settings</Trans>}
+              icon={SECTION_ICONS.game}
+              color={SectionColor.enum.brand}
               aside={
                 <Button variant="subtle" size="compact-md" h={44} leftSection={<PencilSimple />} onClick={edit.open}>
                   <Trans>Change</Trans>
@@ -145,6 +148,8 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
           <Stack gap="md">
             <Section
               title={<Trans>Players</Trans>}
+              icon={SECTION_ICONS.players}
+              color={SectionColor.enum.blue}
               aside={
                 <Text c="dimmed" className="tabular">
                   {session.players.length}
@@ -154,7 +159,7 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
               <PlayerPicker players={session.players} signedIn onChange={changePlayers} />
             </Section>
             {fixed && session.players.length > 1 && (
-              <Section title={<Trans>Pairs</Trans>}>
+              <Section title={<Trans>Pairs</Trans>} icon={SECTION_ICONS.pairs} color={SectionColor.enum.teal}>
                 <PairPicker
                   players={session.players}
                   pairs={session.pairs}
@@ -252,7 +257,7 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
     <>
       <Container py="md">
         <div className={classes.grid}>
-          <Section title={<Trans>Settings</Trans>}>
+          <Section title={<Trans>Settings</Trans>} icon={SECTION_ICONS.game} color={SectionColor.enum.brand}>
             <SettingsSummary
               settings={session.settings}
               isPublic={session.isPublic}
@@ -262,6 +267,8 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
           </Section>
           <Section
             title={<Trans>Who's in</Trans>}
+            icon={SECTION_ICONS.players}
+            color={SectionColor.enum.blue}
             aside={
               <Text c="dimmed" className="tabular">
                 {session.players.length}

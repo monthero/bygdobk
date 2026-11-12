@@ -14,6 +14,15 @@
   flex-direction: column;
   gap: 4px;
   min-width: 0;
+
+  &[data-end] {
+    align-items: flex-end;
+  }
+
+  &[data-end] .entrant {
+    flex-direction: row-reverse;
+    max-width: 100%;
+  }
 }
 
 .name {

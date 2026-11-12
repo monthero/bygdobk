@@ -1,15 +1,39 @@
 .section {
-  background: var(--bk-surface);
+  composes: glass from './glass.module.css';
+}
+
+.icon {
+  font-size: 20px;
 }
 
 .bar {
+  composes: glass from './glass.module.css';
   position: sticky;
   bottom: 0;
   z-index: 60;
   padding-block: 10px calc(10px + env(safe-area-inset-bottom));
-  border-top: 1px solid var(--bk-border);
-  background: color-mix(in srgb, var(--mantine-color-body) 92%, transparent);
-  backdrop-filter: blur(10px);
+  border-width: 1px 0 0;
+  border-style: solid;
+  border-radius: 0;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    position: fixed;
+    inset-inline: 0;
+    z-index: 150;
+  }
+}
+
+.spacer {
+  display: none;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    display: block;
+    height: calc(80px + env(safe-area-inset-bottom));
+
+    &[data-reason] {
+      height: calc(108px + env(safe-area-inset-bottom));
+    }
+  }
 }
 
 .barInner {
@@ -29,5 +53,11 @@
 
   &[data-warn] {
     color: var(--bk-warn);
+  }
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  :global(body):has(.bar) :global(#main) {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
 }

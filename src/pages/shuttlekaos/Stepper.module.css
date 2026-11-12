@@ -12,6 +12,17 @@
     --stepper-field: 80px;
     --stepper-font: 32px;
   }
+
+  &[data-full] {
+    @media (max-width: $mantine-breakpoint-sm) {
+      display: flex;
+      width: 100%;
+
+      & .field {
+        flex: 1;
+      }
+    }
+  }
 }
 
 .button {
@@ -33,4 +44,10 @@
   font-variant-numeric: tabular-nums;
   text-align: center;
   text-align-last: center;
+}
+
+.input:focus,
+.input:focus-within {
+  border-color: var(--mantine-color-brand-filled);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mantine-color-brand-filled) 35%, transparent);
 }

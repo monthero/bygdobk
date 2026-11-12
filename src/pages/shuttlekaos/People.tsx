@@ -14,12 +14,12 @@ export const PlayerAvatar: FC<AvatarProps> = ({ player, size = 'md' }) => (
   <Avatar src={player.avatarUrl} name={player.name} color="initials" size={size} imageProps={AVATAR_IMAGE_PROPS} />
 );
 
-type Props = { players: Player[]; size?: MantineSize | number; stacked?: boolean };
+type Props = { players: Player[]; size?: MantineSize | number; stacked?: boolean; end?: boolean };
 
-export const PlayerNames = memo<Props>(({ players, size = 'sm', stacked }) => {
+export const PlayerNames = memo<Props>(({ players, size = 'sm', stacked, end }) => {
   if (stacked) {
     return (
-      <span className={classes.lines}>
+      <span className={classes.lines} data-end={end || undefined}>
         {players.map((p) => (
           <span key={p.id} className={classes.entrant}>
             <PlayerAvatar player={p} size={size} />

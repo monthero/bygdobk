@@ -113,6 +113,20 @@ export const addRound = (session: Session): Session => {
   return { ...session, updatedAt: new Date().toISOString(), rounds: [...session.rounds, nextRound(session)] };
 };
 
+export const canUndoRound = (session: Session): boolean => {
+  const last = session.rounds.at(-1);
+  return (
+    session.status === SessionStatus.enum.running &&
+    session.rounds.length > 1 &&
+    last?.matches.every((match) => match.games.length === 0) === true
+  );
+};
+
+export const undoRound = (session: Session): Session => {
+  if (!canUndoRound(session)) return session;
+  return { ...session, updatedAt: new Date().toISOString(), rounds: session.rounds.slice(0, -1) };
+};
+
 export const setScore = (session: Session, matchId: string, games: Game[]): Session => {
   const hasMatch = (round: Round) => round.matches.some((match) => match.id === matchId);
   if (!session.rounds.some(hasMatch)) return session;

@@ -1,35 +1,10 @@
-.headerActions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  @media (min-width: $mantine-breakpoint-sm) {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
-.new {
-  height: 60px;
-  font-size: 1.15rem;
-
-  @media (min-width: $mantine-breakpoint-sm) {
-    min-width: 280px;
-  }
-}
-
-.again {
-  height: 52px;
-}
-
 .current {
+  composes: glass from './glass.module.css';
   display: flex;
   align-items: center;
   gap: 12px;
   min-height: 88px;
   padding: 14px 16px;
-  border: 2px solid var(--bk-accent-strong);
-  background: linear-gradient(135deg, var(--bk-accent-soft), var(--bk-surface) 70%);
   color: inherit;
   text-decoration: none;
   transition: box-shadow 0.15s;
@@ -70,8 +45,8 @@
 }
 
 .history {
+  composes: glass from './glass.module.css';
   overflow: hidden;
-  background: var(--bk-surface);
 }
 
 .rows {

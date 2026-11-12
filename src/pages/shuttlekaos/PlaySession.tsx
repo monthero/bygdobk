@@ -1,17 +1,20 @@
 import { Plural, Trans } from '@lingui/react/macro';
-import { Alert, Button, CloseButton, Group, Text } from '@mantine/core';
+import { Alert, Button, CloseButton, Group, Stack, Text } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 
-import { ArrowRight, FlagCheckered, Play, Trophy } from '~/components/ui';
+import { ArrowRight, ArrowUUpLeft, FlagCheckered, Play, ResponsiveModal, Trophy } from '~/components/ui';
 import { numberFormat } from '~/i18n/current';
 import {
   addRound,
   canAddRound,
+  canUndoRound,
   finishSession,
   gamesProblem,
   isRoundComplete,
   roundsLeft,
   setScore,
+  undoRound,
 } from '~/shuttlekaos/engine';
 import { SessionStatus, type Game, type Match, type Session } from '~/shuttlekaos/model';
 import type { SessionView as SessionData } from '~/shuttlekaos/queries';
@@ -20,6 +23,7 @@ import { SESSION_IDLE_MINUTES } from '~/shuttlekaos/store';
 import { LiveBadge } from './Fallbacks';
 import { StickyBar } from './FormParts';
 import { endedAutomatically, playerMap, resume, shownSession } from './labels';
+import { ClaimNotice } from './LinkPlayers';
 import { RoundDone } from './RoundDone';
 import { ScoreSheet } from './ScoreSheet';
 import { SessionMenu } from './SessionMenu';
@@ -69,14 +73,18 @@ const RoundDoneBanner: FC<{ round: number; onOpen: () => void; onDismiss: () => 
   </Alert>
 );
 
-const RoundBar: FC<{ session: Session; pending: boolean; onNext: () => void; onFinish: () => void }> = ({
-  session,
-  pending,
-  onNext,
-  onFinish,
-}) => {
+const RoundBar: FC<{
+  session: Session;
+  pending: boolean;
+  onNext: () => void;
+  onFinish: () => void;
+  onUndo: () => void;
+}> = ({ session, pending, onNext, onFinish, onUndo }) => {
+  const [asking, ask] = useDisclosure(false);
   const left = openCourts(session);
   const lastPlanned = roundsLeft(session) === 0;
+  const canUndo = canUndoRound(session);
+  const round = session.rounds.at(-1)?.number ?? 0;
 
   let reason = null;
   if (left > 0) {
@@ -84,31 +92,62 @@ const RoundBar: FC<{ session: Session; pending: boolean; onNext: () => void; onF
   } else if (lastPlanned) reason = <Trans>That was the last round. Time for the results!</Trans>;
 
   return (
-    <StickyBar reason={reason}>
-      {lastPlanned ? (
-        <Button
-          size="lg"
-          fullWidth
-          leftSection={<FlagCheckered />}
-          disabled={left > 0}
-          loading={pending}
-          onClick={onFinish}
-        >
-          <Trans>Finish session</Trans>
-        </Button>
-      ) : (
-        <Button
-          size="lg"
-          fullWidth
-          rightSection={<ArrowRight />}
-          disabled={!canAddRound(session)}
-          loading={pending}
-          onClick={onNext}
-        >
-          <Trans>Next round</Trans>
-        </Button>
-      )}
-    </StickyBar>
+    <>
+      <StickyBar reason={reason}>
+        <Group gap="sm" wrap="nowrap" grow={canUndo}>
+          {canUndo && (
+            <Button size="lg" variant="default" leftSection={<ArrowUUpLeft />} onClick={ask.open}>
+              <Trans>Undo round</Trans>
+            </Button>
+          )}
+          {lastPlanned ? (
+            <Button
+              size="lg"
+              fullWidth
+              leftSection={<FlagCheckered />}
+              disabled={left > 0}
+              loading={pending}
+              onClick={onFinish}
+            >
+              <Trans>Finish session</Trans>
+            </Button>
+          ) : (
+            <Button
+              size="lg"
+              fullWidth
+              rightSection={<ArrowRight />}
+              disabled={!canAddRound(session)}
+              loading={pending}
+              onClick={onNext}
+            >
+              <Trans>Next round</Trans>
+            </Button>
+          )}
+        </Group>
+      </StickyBar>
+      <ResponsiveModal opened={asking} onClose={ask.close} title={<Trans>Take back round {round}?</Trans>}>
+        <Stack gap="md">
+          <Text>
+            <Trans>The new draw goes away and you're back on the previous round.</Trans>
+          </Text>
+          <Group justify="flex-end">
+            <Button variant="default" onClick={ask.close} data-autofocus>
+              <Trans>Cancel</Trans>
+            </Button>
+            <Button
+              leftSection={<ArrowUUpLeft />}
+              loading={pending}
+              onClick={() => {
+                onUndo();
+                ask.close();
+              }}
+            >
+              <Trans>Undo round</Trans>
+            </Button>
+          </Group>
+        </Stack>
+      </ResponsiveModal>
+    </>
   );
 };
 
@@ -132,10 +171,9 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
 
   const match = editing ? session.rounds.flatMap((r) => r.matches).find((m) => m.id === editing) : undefined;
 
-  const saveScore = (games: Game[]) => {
-    if (!editing) return;
+  const saveScore = (matchId: string, games: Game[]) => {
     const round = session.rounds.at(-1);
-    const next = setScore(session, editing, games);
+    const next = setScore(session, matchId, games);
     save.mutate(next);
     setEditing(null);
     if (round && !isRoundComplete(session, round.number) && isRoundComplete(next, round.number)) {
@@ -149,6 +187,8 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const undo = () => save.mutate(undoRound(session), { onSuccess: () => setDoneRound(null) });
+
   const finish = () => {
     save.mutate(finishSession(session), { onSuccess: () => setDoneRound(null) });
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -161,6 +201,7 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
       <SessionView
         session={session}
         highlight={myPlayerId}
+        onScore={isOwner && running ? saveScore : undefined}
         onEdit={isOwner && running ? setEditing : undefined}
         actions={
           <>
@@ -174,6 +215,7 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
             {isOwner && !running && endedAutomatically(session) && (
               <AutoEndedNotice pending={save.isPending} onResume={() => save.mutate(resume(session))} />
             )}
+            <ClaimNotice view={view} session={session} />
             {showBanner && (
               <RoundDoneBanner
                 round={latestDone}
@@ -184,7 +226,10 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
           </>
         }
         footer={
-          isOwner && running && <RoundBar session={session} pending={save.isPending} onNext={next} onFinish={finish} />
+          isOwner &&
+          running && (
+            <RoundBar session={session} pending={save.isPending} onNext={next} onFinish={finish} onUndo={undo} />
+          )
         }
       />
 
@@ -194,7 +239,7 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
           settings={session.settings}
           match={match}
           players={players}
-          onSave={saveScore}
+          onSave={(games) => saveScore(match.id, games)}
           onClose={() => setEditing(null)}
         />
       )}

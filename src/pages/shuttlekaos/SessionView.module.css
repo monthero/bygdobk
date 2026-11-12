@@ -3,39 +3,22 @@
 }
 
 .roundLayout {
-  &[data-wide] {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 380px;
-    align-items: start;
-    gap: var(--mantine-spacing-lg);
-  }
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  align-items: start;
+  gap: var(--mantine-spacing-lg);
 }
 
 .aside {
   position: sticky;
-  top: calc(var(--app-shell-header-offset, 0px) + 72px);
-}
-
-.courts {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  gap: var(--mantine-spacing-md);
-}
-
-.resting {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--bk-surface-2);
-}
-
-.restingIcon {
-  flex: none;
-  font-size: 20px;
-  color: var(--mantine-color-dimmed);
+  top: calc(var(--app-shell-header-offset, 0px) + 16px);
 }
 
 .panel {
-  background: var(--bk-surface);
+  composes: glass from './glass.module.css';
   overflow: hidden;
+}
+
+.fullTable {
+  margin-inline: -8px;
 }

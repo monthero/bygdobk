@@ -16,5 +16,7 @@
   @media (min-width: $mantine-breakpoint-md) {
     position: sticky;
     top: calc(var(--app-shell-header-offset, 0px) + var(--mantine-spacing-md));
+    max-height: calc(100dvh - var(--app-shell-header-offset, 0px) - 120px);
+    overflow-y: auto;
   }
 }
