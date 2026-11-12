@@ -3,19 +3,7 @@ import { Accordion, Button, Chip, Group, Radio, SegmentedControl, SimpleGrid, St
 import { useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
 
-import {
-  ArrowsClockwise,
-  ChartLineUp,
-  Globe,
-  Handshake,
-  Hash,
-  Infinity as InfinityIcon,
-  LockSimple,
-  Shuffle,
-  User,
-  Users,
-  UsersThree,
-} from '~/components/ui';
+import { Globe, Hash, Infinity as InfinityIcon, LockSimple, UsersThree } from '~/components/ui';
 import { entrantsNeeded, plannedRounds } from '~/shuttlekaos/engine';
 import {
   EVERYONE_ONCE,
@@ -46,7 +34,7 @@ import {
   VISIBILITY_LABELS,
 } from './labels';
 import { LevelsText } from './Levels';
-import { SECTION_ICONS } from './sectionIcons';
+import { FORMAT_ICONS, PARTNER_ICONS, SECTION_ICONS, STYLE_ICONS } from './sectionIcons';
 import { Stepper } from './Stepper';
 import { useSettingsEditor, type SettingsEditor } from './useSettingsEditor';
 
@@ -62,18 +50,6 @@ const SetsChoice = z.enum(['1', '3']);
 const LEVEL_CHIP_CLASS_NAMES = { root: classes.levelChipRoot, label: classes.levelChip };
 const SEGMENT_CLASS_NAMES = { root: classes.segmented, label: classes.segmentLabel };
 
-const FORMAT_ICONS: Record<Format, ReactNode> = {
-  [Format.enum.americano]: <Shuffle />,
-  [Format.enum.mexicano]: <ChartLineUp />,
-};
-const STYLE_ICONS: Record<PlayStyle, ReactNode> = {
-  [PlayStyle.enum.singles]: <User />,
-  [PlayStyle.enum.doubles]: <Users />,
-};
-const PARTNER_ICONS: Record<Partners, ReactNode> = {
-  [Partners.enum.rotating]: <ArrowsClockwise />,
-  [Partners.enum.fixed]: <Handshake />,
-};
 const VISIBILITY_ICONS: Record<Visibility, ReactNode> = {
   [Visibility.enum.public]: <Globe />,
   [Visibility.enum.private]: <LockSimple />,

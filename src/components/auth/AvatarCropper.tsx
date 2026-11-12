@@ -132,9 +132,10 @@ const AvatarCropper: FC<Props> = ({ file, onClose }) => {
   const change = useChangeAvatar({ onSuccess: onClose });
   const [src, setSrc] = useState<string | null>(null);
   useEffect(() => {
-    const url = URL.createObjectURL(file);
-    setSrc(url);
-    return () => URL.revokeObjectURL(url);
+    const reader = new FileReader();
+    reader.onload = () => setSrc(typeof reader.result === 'string' ? reader.result : null);
+    reader.readAsDataURL(file);
+    return () => reader.abort();
   }, [file]);
   const close = () => {
     if (!change.isPending) onClose();

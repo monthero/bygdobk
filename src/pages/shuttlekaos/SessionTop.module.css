@@ -13,20 +13,25 @@
 }
 
 .inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'title actions'
+    'meta actions'
+    'details actions';
   align-items: center;
-  gap: 12px;
-}
+  gap: 6px 12px;
 
-.heading {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
+  @media (max-width: $mantine-breakpoint-sm) {
+    grid-template-areas:
+      'title actions'
+      'meta meta'
+      'details details';
+  }
 }
 
 .title {
+  grid-area: title;
   font-size: clamp(1.3rem, 5vw, 1.75rem);
   line-height: 1.2;
 
@@ -42,6 +47,7 @@
 }
 
 .meta {
+  grid-area: meta;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -57,18 +63,33 @@
   }
 }
 
+.part {
+  white-space: nowrap;
+}
+
+.details {
+  grid-area: details;
+  min-width: 0;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    .top[data-compact] & {
+      display: none;
+    }
+  }
+}
+
 .dot {
   margin-inline: 6px;
   opacity: 0.7;
 }
 
 .progress {
-  white-space: nowrap;
   font-weight: 700;
   color: var(--mantine-color-text);
 }
 
 .actions {
+  grid-area: actions;
   display: flex;
   flex: none;
   align-items: center;
@@ -80,18 +101,6 @@
       min-width: 36px;
       height: 36px;
       min-height: 36px;
-    }
-  }
-}
-
-.where {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  @media (max-width: $mantine-breakpoint-sm) {
-    .top[data-compact] & {
-      display: none;
     }
   }
 }

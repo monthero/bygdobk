@@ -196,10 +196,14 @@ msgid "{over} over"
 msgstr "超{over}人"
 
 #: src/pages/shuttlekaos/SessionView.tsx
+msgid "{playedRounds, plural, one {# round, finished after {duration}} other {# rounds, finished after {duration}}}"
+msgstr "{playedRounds, plural, other {共 # 轮，用时 {duration}}}"
+
+#: src/pages/shuttlekaos/SessionView.tsx
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, other {打了#轮后结束}}"
 
-#: src/pages/shuttlekaos/SessionTop.tsx
+#: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{playerCount} players"
 msgstr "{playerCount}人"
 
@@ -272,11 +276,6 @@ msgstr "{trimmed}已经在名单里了。"
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount}个未付款"
-
-#. Your place and points in a table cell, e.g. #2 · 84 pts
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "#{rank} · {points} pts"
-msgstr "第{rank}名 · {points}分"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
@@ -1312,11 +1311,6 @@ msgstr "平"
 msgid "Dark"
 msgstr "深色"
 
-#. Table heading
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Date"
-msgstr "日期"
-
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/board/visitors/ViewsChart.tsx
@@ -1416,14 +1410,6 @@ msgstr "点阵图案"
 #: src/pages/shuttlekaos/labels.ts
 msgid "Doubles"
 msgstr "双打"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, fixed partners"
-msgstr "双打，固定搭档"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, rotating partners"
-msgstr "双打，轮换搭档"
 
 #: src/pages/shuttlekaos/QuickStart.tsx
 msgid "Doubles. Matched by score."
@@ -1766,6 +1752,11 @@ msgstr "先到X分"
 msgid "Fixed"
 msgstr "固定"
 
+#. Doubles with the same partner all session
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Fixed pairs"
+msgstr "固定搭档"
+
 #. Color palette name
 #: src/components/layout/VariantPanel.tsx
 msgid "Fjord blue"
@@ -1794,8 +1785,10 @@ msgid "For"
 msgstr "给谁"
 
 #. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Format"
 msgstr "赛制"
 
@@ -1905,13 +1898,6 @@ msgstr "组别"
 #: src/pages/home/components/StartCards.tsx
 msgid "Half price on Beginners your first season"
 msgstr "第一个赛季新手组半价"
-
-#. Table heading: the sports hall
-#. Table heading: the sports hall
-#: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Hall"
-msgstr "场馆"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
@@ -2154,7 +2140,6 @@ msgstr "此项请留空"
 msgid "Leave this session?"
 msgstr "退出这个球局？"
 
-#. Table heading: player level
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
@@ -2249,9 +2234,12 @@ msgstr "进行中"
 msgid "Live now"
 msgstr "正在进行"
 
+#. Table heading: where the session is played
+#. Table heading: where the session is played
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Location"
 msgstr "地点"
 
@@ -3552,6 +3540,11 @@ msgstr "审核中…"
 msgid "Rotating"
 msgstr "轮换"
 
+#. Doubles with a new partner every round
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Rotating pairs"
+msgstr "轮换搭档"
+
 #. Corner style
 #: src/components/layout/VariantPanel.tsx
 msgid "Round"
@@ -4027,6 +4020,12 @@ msgstr "开始"
 msgctxt "ShuttleKaos: button that starts the session"
 msgid "Start"
 msgstr "开始"
+
+#. Table heading: when the session started, in Oslo time
+#: src/pages/shuttlekaos/StartPage.tsx
+msgctxt "table heading"
+msgid "Start"
+msgstr "开始时间"
 
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Start now"
@@ -4819,7 +4818,6 @@ msgstr "可以。孩子可以先办体验会员，成人可以单次参加。价
 
 #. Badge next to your own name in the admin list
 #. Shown instead of your own name in a session
-#. Table heading: your place and points
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/shuttlekaos/labels.ts
 #: src/pages/shuttlekaos/StartPage.tsx

@@ -29,6 +29,7 @@ import { LiveBadge } from './Fallbacks';
 import { BRAND, FORMAT_LABELS, stop, STYLE_LABELS, TABLE_QUERY } from './labels';
 import { LevelsText } from './Levels';
 import { NewSessionButton } from './NewSessionButton';
+import { FormatCell } from './SettingsSummary';
 
 import classes from './PublicSessions.module.css';
 import tables from './SessionTables.module.css';
@@ -332,7 +333,6 @@ const SessionCard = memo<{ session: PublicSession }>(({ session }) => {
 });
 
 const OpenTable: FC<{ sessions: PublicSession[] }> = ({ sessions }) => {
-  const { i18n } = useLingui();
   const navigate = useNavigate();
   return (
     <Paper withBorder radius="lg" className={tables.panel}>
@@ -342,14 +342,11 @@ const OpenTable: FC<{ sessions: PublicSession[] }> = ({ sessions }) => {
             <Table.Th>
               <Trans comment="Table heading">Session</Trans>
             </Table.Th>
-            <Table.Th>
-              <Trans comment="Table heading: the sports hall">Hall</Trans>
+            <Table.Th className={tables.location}>
+              <Trans comment="Table heading: where the session is played">Location</Trans>
             </Table.Th>
             <Table.Th>
               <Trans comment="Table heading">Format</Trans>
-            </Table.Th>
-            <Table.Th>
-              <Trans comment="Table heading: player level">Level</Trans>
             </Table.Th>
             <Table.Th className={tables.num}>
               <Trans comment="Table heading">Players</Trans>
@@ -386,10 +383,7 @@ const OpenTable: FC<{ sessions: PublicSession[] }> = ({ sessions }) => {
               </Table.Td>
               <Table.Td>{session.location?.name ?? '–'}</Table.Td>
               <Table.Td>
-                {i18n._(FORMAT_LABELS[session.format].label)} · {i18n._(STYLE_LABELS[session.style])}
-              </Table.Td>
-              <Table.Td>
-                <LevelsText levels={session.levels} />
+                <FormatCell format={session.format} style={session.style} levels={session.levels} />
               </Table.Td>
               <Table.Td className={tables.num}>{session.playerCount}</Table.Td>
               <Table.Td>{session.organizerName}</Table.Td>

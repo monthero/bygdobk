@@ -196,10 +196,14 @@ msgid "{over} over"
 msgstr "{over} over"
 
 #: src/pages/shuttlekaos/SessionView.tsx
+msgid "{playedRounds, plural, one {# round, finished after {duration}} other {# rounds, finished after {duration}}}"
+msgstr "{playedRounds, plural, one {# round, finished after {duration}} other {# rounds, finished after {duration}}}"
+
+#: src/pages/shuttlekaos/SessionView.tsx
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 
-#: src/pages/shuttlekaos/SessionTop.tsx
+#: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{playerCount} players"
 msgstr "{playerCount} players"
 
@@ -272,11 +276,6 @@ msgstr "{trimmed} is already playing."
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} not paid"
-
-#. Your place and points in a table cell, e.g. #2 · 84 pts
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "#{rank} · {points} pts"
-msgstr "#{rank} · {points} pts"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
@@ -1312,11 +1311,6 @@ msgstr "D"
 msgid "Dark"
 msgstr "Dark"
 
-#. Table heading
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Date"
-msgstr "Date"
-
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/board/visitors/ViewsChart.tsx
@@ -1416,14 +1410,6 @@ msgstr "Dot pattern"
 #: src/pages/shuttlekaos/labels.ts
 msgid "Doubles"
 msgstr "Doubles"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, fixed partners"
-msgstr "Doubles, fixed partners"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, rotating partners"
-msgstr "Doubles, rotating partners"
 
 #: src/pages/shuttlekaos/QuickStart.tsx
 msgid "Doubles. Matched by score."
@@ -1766,6 +1752,11 @@ msgstr "First to X points"
 msgid "Fixed"
 msgstr "Fixed"
 
+#. Doubles with the same partner all session
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Fixed pairs"
+msgstr "Fixed pairs"
+
 #. Color palette name
 #: src/components/layout/VariantPanel.tsx
 msgid "Fjord blue"
@@ -1794,8 +1785,10 @@ msgid "For"
 msgstr "For"
 
 #. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Format"
 msgstr "Format"
 
@@ -1905,13 +1898,6 @@ msgstr "Groups"
 #: src/pages/home/components/StartCards.tsx
 msgid "Half price on Beginners your first season"
 msgstr "Half price on Beginners your first season"
-
-#. Table heading: the sports hall
-#. Table heading: the sports hall
-#: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Hall"
-msgstr "Hall"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
@@ -2154,7 +2140,6 @@ msgstr "Leave this empty"
 msgid "Leave this session?"
 msgstr "Leave this session?"
 
-#. Table heading: player level
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
@@ -2249,9 +2234,12 @@ msgstr "Live"
 msgid "Live now"
 msgstr "Live now"
 
+#. Table heading: where the session is played
+#. Table heading: where the session is played
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Location"
 msgstr "Location"
 
@@ -3552,6 +3540,11 @@ msgstr "Reviewing…"
 msgid "Rotating"
 msgstr "Rotating"
 
+#. Doubles with a new partner every round
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Rotating pairs"
+msgstr "Rotating pairs"
+
 #. Corner style
 #: src/components/layout/VariantPanel.tsx
 msgid "Round"
@@ -4025,6 +4018,12 @@ msgstr "Start"
 
 #: src/pages/shuttlekaos/OpenSession.tsx
 msgctxt "ShuttleKaos: button that starts the session"
+msgid "Start"
+msgstr "Start"
+
+#. Table heading: when the session started, in Oslo time
+#: src/pages/shuttlekaos/StartPage.tsx
+msgctxt "table heading"
 msgid "Start"
 msgstr "Start"
 
@@ -4819,7 +4818,6 @@ msgstr "Yes. Children can start with a trial membership, and adults can drop in.
 
 #. Badge next to your own name in the admin list
 #. Shown instead of your own name in a session
-#. Table heading: your place and points
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/shuttlekaos/labels.ts
 #: src/pages/shuttlekaos/StartPage.tsx

@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Anchor, Container, Stack, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { memo, type FC } from 'react';
+import { memo, useLayoutEffect, useRef, type FC } from 'react';
 
 import { useClub } from '~/cms/siteData';
 import { AddressLink, SocialLinks, ClubLogo } from '~/components/ui';
@@ -17,7 +17,52 @@ import { VariantMenu } from './VariantMenu';
 
 import classes from './SiteFooter.module.css';
 
-const WORDMARK = CLUB.name.split(' ').at(0);
+const WORDMARK = (CLUB.name.split(' ').at(0) ?? '').toLocaleUpperCase('nb');
+
+const WORDMARK_VISIBLE = 0.66;
+
+const fitToInk = (svg: SVGSVGElement, text: SVGTextElement) => {
+  const context = document.createElement('canvas').getContext('2d');
+  if (!context) return;
+  const style = getComputedStyle(text);
+  context.font = `${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+  const ink = context.measureText(WORDMARK);
+  const left = -ink.actualBoundingBoxLeft;
+  const top = -ink.actualBoundingBoxAscent;
+  const width = ink.actualBoundingBoxRight - left;
+  const height = ink.actualBoundingBoxDescent - top;
+  svg.setAttribute('viewBox', `${left} ${top} ${width} ${height * WORDMARK_VISIBLE}`);
+};
+
+const FittedWordmark: FC = () => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const textRef = useRef<SVGTextElement>(null);
+
+  useLayoutEffect(() => {
+    let live = true;
+    const fit = () => {
+      if (live && svgRef.current && textRef.current) fitToInk(svgRef.current, textRef.current);
+    };
+    fit();
+    void document.fonts.ready.then(fit);
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  return (
+    <Container size="lg" className={classes.wordmarkBox} aria-hidden>
+      <svg ref={svgRef} viewBox="0 -170 1000 116" className={classes.wordmark}>
+        <text ref={textRef}>{WORDMARK}</text>
+      </svg>
+    </Container>
+  );
+};
+
+const Wordmark: FC = () => {
+  const font = useSettings((s) => s.font);
+  return <FittedWordmark key={font} />;
+};
 
 const Decor: FC<{ mark: FooterMark }> = ({ mark }) => {
   switch (mark) {
@@ -26,11 +71,7 @@ const Decor: FC<{ mark: FooterMark }> = ({ mark }) => {
     case FooterMark.enum.outline:
       return <ClubLogo mark height={420} className={classes.outline} />;
     case FooterMark.enum.wordmark:
-      return (
-        <div className={classes.wordmark} aria-hidden>
-          {WORDMARK}
-        </div>
-      );
+      return null;
     default:
       return <div className={`${classes.shuttle} ${classes[mark]}`} aria-hidden />;
   }
@@ -113,6 +154,7 @@ export const SiteFooter = memo(() => {
           </Anchor>
         </Stack>
       </Container>
+      {footerMark === FooterMark.enum.wordmark && <Wordmark />}
     </footer>
   );
 });

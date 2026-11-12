@@ -42,8 +42,10 @@ export const EventsPage: FC = () => {
   const { events } = useSiteContent();
   const dayIso = todayIso();
 
-  const visible = useMemo(() => events.filter(isVisitorEvent), [events]);
-  const years = useMemo(() => [...new Set(visible.values().map(eventYear))].sort((a, b) => b - a), [visible]);
+  const { visible, years } = useMemo(() => {
+    const list = events.filter(isVisitorEvent);
+    return { visible: list, years: [...new Set(list.values().map(eventYear))].sort((a, b) => b - a) };
+  }, [events]);
   const yearOptions = useMemo(() => Array.from(years, String), [years]);
   const thisYear = date(dayIso).year();
   const defaultYear = years.includes(thisYear) ? thisYear : years.at(0);

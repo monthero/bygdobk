@@ -8,11 +8,12 @@ import { usePageTitle } from '~/hooks/usePageTitle';
 import { gamesProblem, standings } from '~/shuttlekaos/engine';
 import { SessionStatus, type Game, type Session } from '~/shuttlekaos/model';
 
-import { BRAND, durationText, FORMAT_LABELS, playerMap, rankMoves, sessionMinutes, TableVariant, YOU } from './labels';
+import { BRAND, durationText, formatStart, playerMap, rankMoves, sessionMinutes, TableVariant, YOU } from './labels';
 import { MatchGrid } from './MatchGrid';
 import { Podium } from './Podium';
 import { RoundBrowser, RoundNav } from './RoundBrowser';
 import { SessionTop } from './SessionTop';
+import { SettingsSummary } from './SettingsSummary';
 import { StandingsTable, StatsTitle, StatsToggle } from './StandingsTable';
 
 import classes from './SessionView.module.css';
@@ -69,8 +70,7 @@ export const SessionView: FC<Props> = ({ session, actions, notice, footer, onSco
     !headEntry.isIntersecting &&
     headEntry.boundingClientRect.bottom <= (headEntry.rootBounds?.top ?? 0);
   const viewed = picked !== null && picked <= last ? picked : last;
-  const playerCount = session.players.length;
-  const format = i18n._(FORMAT_LABELS[session.settings.format].label);
+  const started = session.startedAt ? formatStart(session.startedAt) : undefined;
   const playedRounds = session.rounds.filter((r) =>
     r.matches.some((m) => gamesProblem(session.settings, m.games) === null),
   ).length;
@@ -78,12 +78,19 @@ export const SessionView: FC<Props> = ({ session, actions, notice, footer, onSco
   const view = (round: number) => setPicked(round === last ? null : round);
 
   const minutes = finished ? sessionMinutes(session) : null;
-  const duration = minutes !== null && minutes > 0 ? durationText(minutes) : undefined;
-  const progress = finished ? (
-    <Plural value={playedRounds} one="Finished after # round" other="Finished after # rounds" />
-  ) : (
-    <Trans comment="Session status: being played right now">Playing now</Trans>
-  );
+  const duration = minutes !== null && minutes > 0 ? durationText(minutes).replaceAll(' ', '\u00a0') : undefined;
+  let progress: ReactNode = <Trans comment="Session status: being played right now">Playing now</Trans>;
+  if (finished && duration) {
+    progress = (
+      <Plural
+        value={playedRounds}
+        one={`# round, finished after ${duration}`}
+        other={`# rounds, finished after ${duration}`}
+      />
+    );
+  } else if (finished) {
+    progress = <Plural value={playedRounds} one="Finished after # round" other="Finished after # rounds" />;
+  }
 
   const table = (variant: TableVariant) => (
     <StandingsTable
@@ -174,9 +181,16 @@ export const SessionView: FC<Props> = ({ session, actions, notice, footer, onSco
         <SessionTop
           title={session.title}
           progress={progress}
-          duration={duration}
-          format={format}
-          playerCount={playerCount}
+          started={started}
+          details={
+            <SettingsSummary
+              settings={session.settings}
+              isPublic={session.isPublic}
+              playerCount={session.players.length}
+              pairs={session.pairs}
+              inSession
+            />
+          }
           actions={actions}
           compact={compact}
           location={session.location}

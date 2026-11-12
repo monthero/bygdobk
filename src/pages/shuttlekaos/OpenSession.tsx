@@ -23,7 +23,7 @@ import { useUi } from '~/stores/ui';
 import { BusyAlert } from './BusyAlert';
 import { Field, Section, StickyBar } from './FormParts';
 import { InviteCard } from './InviteCard';
-import { BRAND, FORMAT_LABELS, SectionColor, SETUP_PROBLEMS, suggestedCourts } from './labels';
+import { BRAND, SectionColor, SETUP_PROBLEMS, suggestedCourts } from './labels';
 import { LocationPicker } from './LocationPicker';
 import { PairPicker } from './PairPicker';
 import { PlayerList, PlayerPicker } from './PlayerPicker';
@@ -290,7 +290,6 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
 };
 
 export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
-  const { i18n } = useLingui();
   const { session } = view;
   usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
   return (
@@ -298,8 +297,15 @@ export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
       <SessionTop
         title={session.title}
         progress={<Trans comment="Session status: people can still join">Open to join</Trans>}
-        format={i18n._(FORMAT_LABELS[session.settings.format].label)}
-        playerCount={session.players.length}
+        details={
+          <SettingsSummary
+            settings={session.settings}
+            isPublic={session.isPublic}
+            playerCount={session.players.length}
+            pairs={session.pairs}
+            inSession
+          />
+        }
         actions={<SessionMenu view={view} />}
         location={session.location}
       />

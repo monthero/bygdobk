@@ -9,8 +9,8 @@
   color-scheme: dark;
   container-type: inline-size;
 
-  &:has(.wordmark) {
-    padding-bottom: max(80px, calc(11cqi + 24px));
+  &:has(.wordmarkBox) {
+    padding-bottom: 0;
   }
 }
 
@@ -25,8 +25,7 @@
 }
 
 .outline,
-.shuttle,
-.wordmark {
+.shuttle {
   position: absolute;
   z-index: -1;
   pointer-events: none;
@@ -113,22 +112,27 @@
   }
 }
 
+.wordmarkBox {
+  margin-top: 64px;
+  pointer-events: none;
+}
+
 .wordmark {
-  inset-inline: 0;
-  bottom: 0;
-  translate: 0 34%;
-  font-family: var(--bk-font-display);
-  font-weight: var(--bk-font-display-weight);
-  font-stretch: var(--bk-font-display-stretch);
-  font-size: 21cqi;
-  line-height: 0.8;
-  letter-spacing: 0.06em;
-  text-indent: 0.06em;
-  text-align: center;
-  text-transform: uppercase;
-  white-space: nowrap;
-  color: color-mix(in srgb, var(--bk-accent) 4%, transparent);
-  -webkit-text-stroke: 1px color-mix(in srgb, var(--bk-accent) 14%, transparent);
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+
+  & text {
+    font-family: var(--bk-font-display);
+    font-weight: var(--bk-font-display-weight);
+    font-stretch: var(--bk-font-display-stretch);
+    font-size: 200px;
+    fill: color-mix(in srgb, var(--bk-accent) 4%, transparent);
+    stroke: color-mix(in srgb, var(--bk-accent) 14%, transparent);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
 }
 
 .logo {

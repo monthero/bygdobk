@@ -126,16 +126,14 @@ export type SessionSummary = {
   isOwner: boolean;
   isActive: boolean;
   location: SessionLocation | null;
+  format: Format;
+  style: PlayStyle;
   myResult: Pick<Standing, 'rank' | 'played' | 'won' | 'pointsFor'> | null;
 };
 
 export type SessionSummaryPage = { total: number; items: SessionSummary[] };
 
-export type PublicSession = Omit<SessionSummary, 'isOwner' | 'isActive' | 'myResult'> & {
-  format: Format;
-  style: PlayStyle;
-  organizerId: string;
-};
+export type PublicSession = Omit<SessionSummary, 'isOwner' | 'isActive' | 'myResult'> & { organizerId: string };
 
 export type AccountMatch = { profileId: string; name: string; avatarUrl: string | null; busy: boolean };
 

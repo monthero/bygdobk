@@ -147,6 +147,8 @@ const SummaryList = z.array(
     isOwner: z.boolean(),
     isActive: z.boolean(),
     location: SessionLocation.nullable().catch(null),
+    format: Format,
+    style: PlayStyle,
     myResult: z
       .object({ rank: z.number().int(), played: z.number().int(), won: z.number().int(), pointsFor: z.number().int() })
       .nullable(),

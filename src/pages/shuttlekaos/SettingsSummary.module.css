@@ -12,3 +12,34 @@
     outline-offset: 2px;
   }
 }
+
+.visibility {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bk-accent-soft);
+  color: var(--bk-accent-strong);
+  font-size: 14px;
+}
+
+.formatCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.formatLine {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.styleIcon {
+  display: inline-grid;
+  place-items: center;
+  color: var(--bk-accent-strong);
+  font-size: 16px;
+}

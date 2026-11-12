@@ -4,6 +4,7 @@
 }
 
 .table {
+  font-size: var(--mantine-font-size-sm);
   font-variant-numeric: tabular-nums;
 
   & th,
@@ -26,7 +27,11 @@
 
 .main {
   max-width: 0;
-  width: 40%;
+  width: 34%;
+}
+
+.location {
+  width: 24%;
 }
 
 .title {
@@ -41,6 +46,12 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+.stacked {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .num {

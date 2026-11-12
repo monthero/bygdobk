@@ -196,10 +196,14 @@ msgid "{over} over"
 msgstr "{over} of mörg"
 
 #: src/pages/shuttlekaos/SessionView.tsx
+msgid "{playedRounds, plural, one {# round, finished after {duration}} other {# rounds, finished after {duration}}}"
+msgstr "{playedRounds, plural, one {# umferð, lauk eftir {duration}} other {# umferðir, lauk eftir {duration}}}"
+
+#: src/pages/shuttlekaos/SessionView.tsx
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Lokið eftir # umferð} other {Lokið eftir # umferðir}}"
 
-#: src/pages/shuttlekaos/SessionTop.tsx
+#: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{playerCount} players"
 msgstr "{playerCount} leikmenn"
 
@@ -272,11 +276,6 @@ msgstr "{trimmed} er nú þegar með."
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "Ógreitt: {unpaidCount}"
-
-#. Your place and points in a table cell, e.g. #2 · 84 pts
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "#{rank} · {points} pts"
-msgstr "#{rank} · {points} stig"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
@@ -1312,11 +1311,6 @@ msgstr "J"
 msgid "Dark"
 msgstr "Dökkt"
 
-#. Table heading
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Date"
-msgstr "Dagsetning"
-
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/board/visitors/ViewsChart.tsx
@@ -1416,14 +1410,6 @@ msgstr "Punktamynstur"
 #: src/pages/shuttlekaos/labels.ts
 msgid "Doubles"
 msgstr "Tvíliðaleikur"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, fixed partners"
-msgstr "Tvíliðaleikur, fastir meðspilarar"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, rotating partners"
-msgstr "Tvíliðaleikur, breytilegir meðspilarar"
 
 #: src/pages/shuttlekaos/QuickStart.tsx
 msgid "Doubles. Matched by score."
@@ -1766,6 +1752,11 @@ msgstr "Fyrst upp í X stig"
 msgid "Fixed"
 msgstr "Fastir"
 
+#. Doubles with the same partner all session
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Fixed pairs"
+msgstr "Föst pör"
+
 #. Color palette name
 #: src/components/layout/VariantPanel.tsx
 msgid "Fjord blue"
@@ -1794,8 +1785,10 @@ msgid "For"
 msgstr "Fyrir"
 
 #. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Format"
 msgstr "Fyrirkomulag"
 
@@ -1905,13 +1898,6 @@ msgstr "Hópar"
 #: src/pages/home/components/StartCards.tsx
 msgid "Half price on Beginners your first season"
 msgstr "Hálft verð í byrjendahópnum fyrsta tímabilið"
-
-#. Table heading: the sports hall
-#. Table heading: the sports hall
-#: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Hall"
-msgstr "Salur"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
@@ -2154,7 +2140,6 @@ msgstr "Hafðu þetta autt"
 msgid "Leave this session?"
 msgstr "Yfirgefa þennan spilatíma?"
 
-#. Table heading: player level
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
@@ -2249,9 +2234,12 @@ msgstr "Í beinni"
 msgid "Live now"
 msgstr "Í gangi núna"
 
+#. Table heading: where the session is played
+#. Table heading: where the session is played
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Location"
 msgstr "Staður"
 
@@ -3552,6 +3540,11 @@ msgstr "Í skoðun…"
 msgid "Rotating"
 msgstr "Breytilegir"
 
+#. Doubles with a new partner every round
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Rotating pairs"
+msgstr "Breytileg pör"
+
 #. Corner style
 #: src/components/layout/VariantPanel.tsx
 msgid "Round"
@@ -4027,6 +4020,12 @@ msgstr "Upphaf"
 msgctxt "ShuttleKaos: button that starts the session"
 msgid "Start"
 msgstr "Byrja"
+
+#. Table heading: when the session started, in Oslo time
+#: src/pages/shuttlekaos/StartPage.tsx
+msgctxt "table heading"
+msgid "Start"
+msgstr "Upphaf"
 
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Start now"
@@ -4819,7 +4818,6 @@ msgstr "Já. Börn geta byrjað með prufuaðild og fullorðnir geta komið í d
 
 #. Badge next to your own name in the admin list
 #. Shown instead of your own name in a session
-#. Table heading: your place and points
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/shuttlekaos/labels.ts
 #: src/pages/shuttlekaos/StartPage.tsx

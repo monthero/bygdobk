@@ -196,10 +196,14 @@ msgid "{over} over"
 msgstr "{over} liikaa"
 
 #: src/pages/shuttlekaos/SessionView.tsx
+msgid "{playedRounds, plural, one {# round, finished after {duration}} other {# rounds, finished after {duration}}}"
+msgstr "{playedRounds, plural, one {# kierros, päättyi {duration} jälkeen} other {# kierrosta, päättyi {duration} jälkeen}}"
+
+#: src/pages/shuttlekaos/SessionView.tsx
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Päättyi # kierroksen jälkeen} other {Päättyi # kierroksen jälkeen}}"
 
-#: src/pages/shuttlekaos/SessionTop.tsx
+#: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{playerCount} players"
 msgstr "{playerCount} pelaajaa"
 
@@ -272,11 +276,6 @@ msgstr "{trimmed} on jo mukana."
 #: src/pages/board/MembersOverview.tsx
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} maksamatta"
-
-#. Your place and points in a table cell, e.g. #2 · 84 pts
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "#{rank} · {points} pts"
-msgstr "#{rank} · {points} p"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
@@ -1312,11 +1311,6 @@ msgstr "T"
 msgid "Dark"
 msgstr "Tumma"
 
-#. Table heading
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Date"
-msgstr "Päivä"
-
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/board/visitors/ViewsChart.tsx
@@ -1416,14 +1410,6 @@ msgstr "Pistekuvio"
 #: src/pages/shuttlekaos/labels.ts
 msgid "Doubles"
 msgstr "Nelinpeli"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, fixed partners"
-msgstr "Nelinpeli, kiinteät parit"
-
-#: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "Doubles, rotating partners"
-msgstr "Nelinpeli, vaihtuvat parit"
 
 #: src/pages/shuttlekaos/QuickStart.tsx
 msgid "Doubles. Matched by score."
@@ -1766,6 +1752,11 @@ msgstr "Ensin X pisteeseen"
 msgid "Fixed"
 msgstr "Kiinteät"
 
+#. Doubles with the same partner all session
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Fixed pairs"
+msgstr "Kiinteät parit"
+
 #. Color palette name
 #: src/components/layout/VariantPanel.tsx
 msgid "Fjord blue"
@@ -1794,8 +1785,10 @@ msgid "For"
 msgstr "Kenelle"
 
 #. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Format"
 msgstr "Pelimuoto"
 
@@ -1905,13 +1898,6 @@ msgstr "Ryhmät"
 #: src/pages/home/components/StartCards.tsx
 msgid "Half price on Beginners your first season"
 msgstr "Aloittelijat puoleen hintaan ensimmäisenä kautena"
-
-#. Table heading: the sports hall
-#. Table heading: the sports hall
-#: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Hall"
-msgstr "Halli"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
@@ -2154,7 +2140,6 @@ msgstr "Jätä tämä tyhjäksi"
 msgid "Leave this session?"
 msgstr "Poistutaanko tästä sessiosta?"
 
-#. Table heading: player level
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
@@ -2249,9 +2234,12 @@ msgstr "Live"
 msgid "Live now"
 msgstr "Käynnissä nyt"
 
+#. Table heading: where the session is played
+#. Table heading: where the session is played
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Location"
 msgstr "Paikka"
 
@@ -3552,6 +3540,11 @@ msgstr "Tarkistetaan…"
 msgid "Rotating"
 msgstr "Vaihtuvat"
 
+#. Doubles with a new partner every round
+#: src/pages/shuttlekaos/SettingsSummary.tsx
+msgid "Rotating pairs"
+msgstr "Vaihtuvat parit"
+
 #. Corner style
 #: src/components/layout/VariantPanel.tsx
 msgid "Round"
@@ -4027,6 +4020,12 @@ msgstr "Alku"
 msgctxt "ShuttleKaos: button that starts the session"
 msgid "Start"
 msgstr "Aloita"
+
+#. Table heading: when the session started, in Oslo time
+#: src/pages/shuttlekaos/StartPage.tsx
+msgctxt "table heading"
+msgid "Start"
+msgstr "Alku"
 
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Start now"
@@ -4819,7 +4818,6 @@ msgstr "Kyllä. Lapset voivat aloittaa kokeilujäsenyydellä, ja aikuiset voivat
 
 #. Badge next to your own name in the admin list
 #. Shown instead of your own name in a session
-#. Table heading: your place and points
 #: src/pages/board/access/AccessPage.tsx
 #: src/pages/shuttlekaos/labels.ts
 #: src/pages/shuttlekaos/StartPage.tsx

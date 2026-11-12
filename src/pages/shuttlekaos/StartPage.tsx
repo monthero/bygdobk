@@ -32,7 +32,7 @@ import {
   Trash,
 } from '~/components/ui';
 import { usePageTitle } from '~/hooks/usePageTitle';
-import { formatWhen, notifyDone } from '~/pages/board/format';
+import { notifyDone } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
 import { SessionStatus, type SessionSummary } from '~/shuttlekaos/model';
 import {
@@ -46,11 +46,11 @@ import {
 
 import { BrandHeader } from './BrandHeader';
 import { LiveBadge } from './Fallbacks';
-import { BRAND, stop, TABLE_QUERY } from './labels';
+import { BRAND, durationText, formatStart, sessionMinutes, stop, TABLE_QUERY } from './labels';
 import { LoginPrompt } from './LoginPrompt';
 import { NewSessionButton } from './NewSessionButton';
 import { PublicSessions } from './PublicSessions';
-import { VisibilityBadge } from './SettingsSummary';
+import { FormatCell, VisibilityBadge, VisibilityIcon } from './SettingsSummary';
 import { useSetupPrefs, type PrefsState } from './setupPrefs';
 
 import tables from './SessionTables.module.css';
@@ -122,7 +122,7 @@ const SessionCard = memo<CardProps>(({ summary, onAction }) => {
           {title}
         </Text>
         <Text size="sm" c="dimmed">
-          {formatWhen(summary.createdAt)}
+          {formatStart(summary.startedAt ?? summary.createdAt)}
           {' · '}
           {summary.isOwner ? (
             <Trans>You organize · {players} players</Trans>
@@ -249,22 +249,24 @@ const PastTable: FC<{ summaries: SessionSummary[]; onAction: CardProps['onAction
         <Table.Thead>
           <Table.Tr>
             <Table.Th>
-              <Trans comment="Table heading">Date</Trans>
+              <Trans context="table heading" comment="Table heading: when the session started, in Oslo time">
+                Start
+              </Trans>
             </Table.Th>
             <Table.Th>
               <Trans comment="Table heading">Session</Trans>
             </Table.Th>
+            <Table.Th className={tables.location}>
+              <Trans comment="Table heading: where the session is played">Location</Trans>
+            </Table.Th>
             <Table.Th>
-              <Trans comment="Table heading: the sports hall">Hall</Trans>
+              <Trans comment="Table heading">Format</Trans>
             </Table.Th>
             <Table.Th>
               <Trans comment="Table heading">Organizer</Trans>
             </Table.Th>
             <Table.Th className={tables.num}>
               <Trans comment="Table heading">Players</Trans>
-            </Table.Th>
-            <Table.Th className={tables.num}>
-              <Trans comment="Table heading: your place and points">You</Trans>
             </Table.Th>
             <Table.Th className={tables.num}>
               <VisuallyHidden>
@@ -275,15 +277,23 @@ const PastTable: FC<{ summaries: SessionSummary[]; onAction: CardProps['onAction
         </Table.Thead>
         <Table.Tbody>
           {summaries.map((summary) => {
-            const rank = summary.myResult?.rank;
-            const points = summary.myResult?.pointsFor;
+            const minutes = sessionMinutes(summary);
             return (
               <Table.Tr
                 key={summary.id}
                 className={tables.row}
                 onClick={() => void navigate({ to: '/shuttlekaos/$code', params: { code: summary.shareCode } })}
               >
-                <Table.Td className={tables.num}>{formatWhen(summary.createdAt)}</Table.Td>
+                <Table.Td>
+                  <div className={tables.stacked}>
+                    {formatStart(summary.startedAt ?? summary.createdAt)}
+                    {minutes !== null && minutes > 0 && (
+                      <Text size="xs" c="dimmed">
+                        {durationText(minutes)}
+                      </Text>
+                    )}
+                  </div>
+                </Table.Td>
                 <Table.Td className={tables.main}>
                   <Group gap={8} wrap="nowrap">
                     <Link
@@ -294,19 +304,15 @@ const PastTable: FC<{ summaries: SessionSummary[]; onAction: CardProps['onAction
                     >
                       {summary.title || BRAND}
                     </Link>
-                    {!summary.isPublic && <VisibilityBadge isPublic={false} />}
+                    <VisibilityIcon isPublic={summary.isPublic} />
                   </Group>
                 </Table.Td>
                 <Table.Td>{summary.location?.name ?? '–'}</Table.Td>
+                <Table.Td>
+                  <FormatCell format={summary.format} style={summary.style} levels={summary.levels} />
+                </Table.Td>
                 <Table.Td>{summary.isOwner ? <Trans>You</Trans> : summary.organizerName}</Table.Td>
                 <Table.Td className={tables.num}>{summary.playerCount}</Table.Td>
-                <Table.Td className={tables.num} fw={700}>
-                  {rank !== undefined && (
-                    <Trans comment="Your place and points in a table cell, e.g. #2 · 84 pts">
-                      #{rank} · {points} pts
-                    </Trans>
-                  )}
-                </Table.Td>
                 <Table.Td className={tables.num}>
                   <PastMenu summary={summary} onAction={onAction} />
                 </Table.Td>

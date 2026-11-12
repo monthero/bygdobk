@@ -1,10 +1,30 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Badge, Group, Stack, Text, ThemeIcon, type MantineColor } from '@mantine/core';
+import {
+  Badge,
+  Group,
+  Stack,
+  Text,
+  ThemeIcon,
+  Tooltip,
+  useMatches,
+  VisuallyHidden,
+  type MantineColor,
+  type MantineSize,
+} from '@mantine/core';
 import { memo, type FC, type ReactNode } from 'react';
 
-import { Clock, Globe, LockSimple, PencilSimple } from '~/components/ui';
+import { Clock, Globe, LockSimple, PencilSimple, Users } from '~/components/ui';
 import { plannedRounds } from '~/shuttlekaos/engine';
-import { EVERYONE_ONCE, Partners, PlayStyle, ScoreMode, type Pair, type Settings } from '~/shuttlekaos/model';
+import {
+  EVERYONE_ONCE,
+  Partners,
+  PlayStyle,
+  ScoreMode,
+  type Format,
+  type Level,
+  type Pair,
+  type Settings,
+} from '~/shuttlekaos/model';
 
 import { estimate } from './estimate';
 import {
@@ -17,8 +37,45 @@ import {
   VISIBILITY_LABELS,
 } from './labels';
 import { LevelsText } from './Levels';
+import { FORMAT_ICONS, PARTNER_ICONS, SECTION_ICONS, STYLE_ICONS } from './sectionIcons';
 
 import classes from './SettingsSummary.module.css';
+
+type FormatCellProps = { format: Format; style: PlayStyle; levels: Level[] };
+
+export const FormatCell: FC<FormatCellProps> = ({ format, style, levels }) => {
+  const { i18n } = useLingui();
+  const styleLabel = i18n._(STYLE_LABELS[style]);
+  return (
+    <div className={classes.formatCell}>
+      <span className={classes.formatLine}>
+        <Tooltip label={styleLabel} withArrow>
+          <span className={classes.styleIcon}>
+            {STYLE_ICONS[style]}
+            <VisuallyHidden>{styleLabel}</VisuallyHidden>
+          </span>
+        </Tooltip>
+        {i18n._(FORMAT_LABELS[format].label)}
+      </span>
+      <Text size="xs" c="dimmed">
+        <LevelsText levels={levels} />
+      </Text>
+    </div>
+  );
+};
+
+export const VisibilityIcon: FC<{ isPublic: boolean }> = ({ isPublic }) => {
+  const { i18n } = useLingui();
+  const label = i18n._(VISIBILITY_LABELS[isPublic ? Visibility.enum.public : Visibility.enum.private].label);
+  return (
+    <Tooltip label={label} withArrow>
+      <span className={classes.visibility}>
+        {isPublic ? <Globe aria-hidden /> : <LockSimple aria-hidden />}
+        <VisuallyHidden>{label}</VisuallyHidden>
+      </span>
+    </Tooltip>
+  );
+};
 
 export const VisibilityBadge: FC<{ isPublic: boolean }> = ({ isPublic }) => {
   const { i18n } = useLingui();
@@ -37,13 +94,14 @@ export const VisibilityBadge: FC<{ isPublic: boolean }> = ({ isPublic }) => {
 
 type ChipProps = {
   part: SummaryPart;
+  size?: MantineSize;
   color: MantineColor;
   icon?: ReactNode;
   onPick?: (part: SummaryPart) => void;
   children: ReactNode;
 };
 
-const SummaryChip: FC<ChipProps> = ({ part, color, icon, onPick, children }) =>
+const SummaryChip: FC<ChipProps> = ({ part, size, color, icon, onPick, children }) =>
   onPick ? (
     <Badge
       component="button"
@@ -60,29 +118,24 @@ const SummaryChip: FC<ChipProps> = ({ part, color, icon, onPick, children }) =>
       {children}
     </Badge>
   ) : (
-    <Badge variant="light" color={color} tt="none" leftSection={icon}>
+    <Badge size={size} variant="light" color={color} tt="none" leftSection={icon}>
       {children}
     </Badge>
   );
 
-type Props = {
-  settings: Settings;
-  isPublic: boolean;
-  playerCount: number;
-  pairs: Pair[];
-  onPick?: (part: SummaryPart) => void;
-};
+type SessionFacts = Record<SummaryPart, ReactNode> & { partners: ReactNode };
 
-export const SettingsSummary = memo<Props>(({ settings, isPublic, playerCount, pairs, onPick }) => {
+const useSessionFacts = (settings: Settings, playerCount: number, pairs: Pair[], isPublic: boolean): SessionFacts => {
   const { i18n } = useLingui();
   const { courts, points, rounds } = settings;
-  let play: ReactNode = i18n._(STYLE_LABELS[settings.style]);
+
+  let partners: ReactNode = null;
   if (settings.style === PlayStyle.enum.doubles) {
-    play =
+    partners =
       settings.partners === Partners.enum.fixed ? (
-        <Trans>Doubles, fixed partners</Trans>
+        <Trans comment="Doubles with the same partner all session">Fixed pairs</Trans>
       ) : (
-        <Trans>Doubles, rotating partners</Trans>
+        <Trans comment="Doubles with a new partner every round">Rotating pairs</Trans>
       );
   }
 
@@ -99,40 +152,110 @@ export const SettingsSummary = memo<Props>(({ settings, isPublic, playerCount, p
       );
   } else if (rounds !== null) roundsText = <Plural value={rounds} one="# round" other="# rounds" />;
 
-  let scoring;
+  let scoring: ReactNode;
   if (settings.scoreMode === ScoreMode.enum.total) scoring = <Trans>{points} points per match</Trans>;
   else if (settings.sets === 3) scoring = <Trans>Best of 3 to {points}</Trans>;
   else scoring = <Trans>First to {points}</Trans>;
 
-  const visibility = isPublic ? Visibility.enum.public : Visibility.enum.private;
+  return {
+    [SummaryPart.enum.format]: i18n._(FORMAT_LABELS[settings.format].label),
+    [SummaryPart.enum.play]: i18n._(STYLE_LABELS[settings.style]),
+    [SummaryPart.enum.courts]: <Plural value={courts} one="# court" other="# courts" />,
+    [SummaryPart.enum.scoring]: scoring,
+    [SummaryPart.enum.rounds]: roundsText,
+    [SummaryPart.enum.levels]: <LevelsText levels={settings.levels} />,
+    partners,
+    [SummaryPart.enum.visibility]: i18n._(
+      VISIBILITY_LABELS[isPublic ? Visibility.enum.public : Visibility.enum.private].label,
+    ),
+  };
+};
 
+const SESSION_CHIP_SIZE: Record<'base' | 'sm', MantineSize> = { base: 'md', sm: 'lg' };
+
+type Props = {
+  settings: Settings;
+  isPublic: boolean;
+  playerCount: number;
+  pairs: Pair[];
+  onPick?: (part: SummaryPart) => void;
+  inSession?: boolean;
+};
+
+export const SettingsSummary = memo<Props>(({ settings, isPublic, playerCount, pairs, onPick, inSession }) => {
+  const facts = useSessionFacts(settings, playerCount, pairs, isPublic);
+  const sessionSize = useMatches<MantineSize>(SESSION_CHIP_SIZE);
+  const size = inSession ? sessionSize : undefined;
   return (
     <Group gap={6}>
-      <SummaryChip part={SummaryPart.enum.format} color="brand" onPick={onPick}>
-        {i18n._(FORMAT_LABELS[settings.format].label)}
-      </SummaryChip>
-      <SummaryChip part={SummaryPart.enum.play} color="teal" onPick={onPick}>
-        {play}
-      </SummaryChip>
-      <SummaryChip part={SummaryPart.enum.courts} color="blue" onPick={onPick}>
-        <Plural value={courts} one="# court" other="# courts" />
-      </SummaryChip>
-      <SummaryChip part={SummaryPart.enum.scoring} color="teal" onPick={onPick}>
-        {scoring}
-      </SummaryChip>
-      <SummaryChip part={SummaryPart.enum.rounds} color="blue" onPick={onPick}>
-        {roundsText}
-      </SummaryChip>
-      <SummaryChip part={SummaryPart.enum.levels} color="grape" onPick={onPick}>
-        <LevelsText levels={settings.levels} />
+      {inSession && (
+        <Badge size={size} variant="light" color="gray" tt="none" leftSection={<Users />}>
+          <Trans>{playerCount} players</Trans>
+        </Badge>
+      )}
+      <SummaryChip
+        size={size}
+        part={SummaryPart.enum.format}
+        color="brand"
+        icon={FORMAT_ICONS[settings.format]}
+        onPick={onPick}
+      >
+        {facts.format}
       </SummaryChip>
       <SummaryChip
+        size={size}
+        part={SummaryPart.enum.play}
+        color="teal"
+        icon={STYLE_ICONS[settings.style]}
+        onPick={onPick}
+      >
+        {facts.play}
+      </SummaryChip>
+      {facts.partners && (
+        <SummaryChip
+          size={size}
+          part={SummaryPart.enum.play}
+          color="teal"
+          icon={PARTNER_ICONS[settings.partners]}
+          onPick={onPick}
+        >
+          {facts.partners}
+        </SummaryChip>
+      )}
+      <SummaryChip size={size} part={SummaryPart.enum.courts} color="blue" icon={SECTION_ICONS.courts} onPick={onPick}>
+        {facts.courts}
+      </SummaryChip>
+      <SummaryChip
+        size={size}
+        part={SummaryPart.enum.scoring}
+        color="teal"
+        icon={SECTION_ICONS.scoring}
+        onPick={onPick}
+      >
+        {facts.scoring}
+      </SummaryChip>
+      {!inSession && (
+        <SummaryChip
+          size={size}
+          part={SummaryPart.enum.rounds}
+          color="blue"
+          icon={SECTION_ICONS.rounds}
+          onPick={onPick}
+        >
+          {facts.rounds}
+        </SummaryChip>
+      )}
+      <SummaryChip size={size} part={SummaryPart.enum.levels} color="grape" icon={SECTION_ICONS.level} onPick={onPick}>
+        {facts.levels}
+      </SummaryChip>
+      <SummaryChip
+        size={size}
         part={SummaryPart.enum.visibility}
         color={isPublic ? 'teal' : 'gray'}
         icon={isPublic ? <Globe /> : <LockSimple />}
         onPick={onPick}
       >
-        {i18n._(VISIBILITY_LABELS[visibility].label)}
+        {facts.visibility}
       </SummaryChip>
     </Group>
   );

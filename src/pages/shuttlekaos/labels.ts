@@ -22,10 +22,11 @@ import {
   type Player,
   type Round,
   type Session,
+  type SessionSummary,
   type Settings,
 } from '~/shuttlekaos/model';
 import { isStale, SESSION_IDLE_MINUTES } from '~/shuttlekaos/store';
-import { dayjs } from '~/utils/dates';
+import { CLOCK, dayjs, formatDate, today, wallTime } from '~/utils/dates';
 
 export const BRAND = 'ShuttleKaos';
 
@@ -267,5 +268,13 @@ export type SummaryPart = z.infer<typeof SummaryPart>;
 export const matchMinutes = (round: Round, match: Match): number | null =>
   round.startedAt && match.endedAt ? Math.max(1, dayjs(match.endedAt).diff(round.startedAt, 'minute')) : null;
 
-export const sessionMinutes = (session: Session): number | null =>
-  session.startedAt && session.finishedAt ? dayjs(session.finishedAt).diff(session.startedAt, 'minute') : null;
+const START: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', ...CLOCK };
+const START_OTHER_YEAR: Intl.DateTimeFormatOptions = { ...START, year: 'numeric' };
+
+export const formatStart = (iso: string) => {
+  const start = wallTime(iso);
+  return formatDate(start, start.isSame(today(), 'year') ? START : START_OTHER_YEAR);
+};
+
+export const sessionMinutes = ({ startedAt, finishedAt }: Pick<SessionSummary, 'startedAt' | 'finishedAt'>) =>
+  startedAt && finishedAt ? dayjs(finishedAt).diff(startedAt, 'minute') : null;
