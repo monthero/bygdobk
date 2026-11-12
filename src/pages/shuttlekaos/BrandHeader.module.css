@@ -1,0 +1,67 @@
+.header {
+  padding-block: 28px 24px;
+  background: linear-gradient(180deg, var(--bk-accent-soft), transparent 90%);
+  border-bottom: 1px solid var(--bk-border);
+
+  &[data-compact] {
+    padding-block: 16px;
+  }
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--mantine-color-brand-filled);
+  color: var(--mantine-color-brand-contrast, var(--bk-accent-ink));
+  font-size: 30px;
+  transform: rotate(-18deg);
+}
+
+.text {
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+}
+
+.title {
+  font-size: clamp(1.75rem, 7vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  overflow-wrap: anywhere;
+
+  .header[data-compact] & {
+    font-size: clamp(1.4rem, 5vw, 1.9rem);
+  }
+}
+
+.kaos {
+  color: var(--bk-accent-strong);
+}
+
+.tagline {
+  margin-top: 2px;
+  font-size: 1.05rem;
+  color: var(--mantine-color-dimmed);
+}

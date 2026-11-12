@@ -1,0 +1,29 @@
+.empty {
+  background: var(--bk-surface);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bk-accent-soft);
+  color: var(--bk-accent-strong);
+  font-size: 34px;
+  transform: rotate(160deg);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}

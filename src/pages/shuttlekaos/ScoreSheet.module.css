@@ -1,0 +1,36 @@
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-md);
+  background: var(--bk-surface-2);
+}
+
+.gameLabel {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+
+  & + & {
+    padding-top: 8px;
+    border-top: 1px dashed var(--bk-border);
+  }
+}
+
+.problem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bk-danger);
+  font-weight: 600;
+}

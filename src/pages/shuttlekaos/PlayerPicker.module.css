@@ -1,0 +1,86 @@
+.add {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+
+  &[data-combobox-disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.accountText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.accountName {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accountIcon {
+  flex: none;
+  color: var(--bk-accent-strong);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.player {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding-block: 4px;
+
+  & + & {
+    border-top: 1px solid var(--bk-border);
+  }
+
+  &[data-me] {
+    margin-inline: -8px;
+    padding-inline: 8px;
+    border-radius: var(--mantine-radius-md);
+    background: var(--bk-accent-soft);
+    font-weight: 700;
+  }
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.linked {
+  flex: none;
+}
+
+.empty {
+  padding-block: 8px;
+}

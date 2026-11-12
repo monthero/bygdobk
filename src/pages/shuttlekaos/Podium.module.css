@@ -1,0 +1,70 @@
+.podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  gap: 8px;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.place {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+
+  &[data-place='1'] {
+    order: 2;
+  }
+
+  &[data-place='2'] {
+    order: 1;
+  }
+
+  &[data-place='3'] {
+    order: 3;
+  }
+}
+
+.avatars {
+  justify-content: center;
+}
+
+.name {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.step {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin-top: 6px;
+  border-radius: var(--mantine-radius-md) var(--mantine-radius-md) 0 0;
+  background: var(--bk-surface-2);
+  border: 1px solid var(--bk-border);
+  border-bottom: 0;
+  font-family: var(--bk-font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--mantine-color-dimmed);
+
+  .place[data-place='1'] & {
+    height: 96px;
+    background: var(--bk-accent-soft);
+    border-color: var(--bk-accent-line);
+    color: var(--bk-accent-strong);
+    font-size: 2.25rem;
+  }
+
+  .place[data-place='2'] & {
+    height: 68px;
+  }
+
+  .place[data-place='3'] & {
+    height: 48px;
+  }
+}

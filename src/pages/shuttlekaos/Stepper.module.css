@@ -1,0 +1,36 @@
+.stepper {
+  --stepper-button: 48px;
+  --stepper-field: 64px;
+  --stepper-font: 22px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  &[data-large] {
+    --stepper-button: 56px;
+    --stepper-field: 80px;
+    --stepper-font: 32px;
+  }
+}
+
+.button {
+  width: var(--stepper-button);
+  height: var(--stepper-button);
+  min-width: var(--stepper-button);
+  font-size: 20px;
+}
+
+.field {
+  width: var(--stepper-field);
+}
+
+.input {
+  height: var(--stepper-button);
+  padding: 0 4px;
+  font-size: var(--stepper-font);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  text-align-last: center;
+}

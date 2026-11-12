@@ -1,0 +1,38 @@
+.top {
+  padding-block: 12px 8px;
+  background: linear-gradient(180deg, var(--bk-accent-soft), transparent);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: clamp(1.3rem, 5vw, 1.75rem);
+  line-height: 1.2;
+}
+
+.meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progress {
+  font-weight: 700;
+  color: var(--mantine-color-text);
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+}

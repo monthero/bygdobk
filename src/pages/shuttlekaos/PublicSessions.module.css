@@ -1,0 +1,56 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--bk-surface);
+}
+
+.chip {
+  min-height: 40px;
+  min-width: 48px;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--mantine-spacing-md);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bk-surface);
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: var(--bk-accent-line);
+  }
+}
+
+.cardLink {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--bk-accent-strong);
+    outline-offset: 2px;
+    border-radius: var(--mantine-radius-sm);
+  }
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.action {
+  align-self: stretch;
+}

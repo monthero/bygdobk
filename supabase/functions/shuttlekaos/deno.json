@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "@supabase/server": "npm:@supabase/server@1",
+    "dayjs": "npm:dayjs@1.11.23",
+    "zod": "npm:zod@4"
+  }
+}

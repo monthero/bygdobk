@@ -1,0 +1,5 @@
+.table {
+  max-height: 60dvh;
+  overflow-y: auto;
+  margin-inline: -8px;
+}

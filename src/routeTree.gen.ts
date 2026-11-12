@@ -22,6 +22,9 @@ import { Route as MedlemskapBliMedlemRouteImport } from './routes/medlemskap.bli
 import { Route as MedlemskapMineRouteImport } from './routes/medlemskap.mine'
 import { Route as NyheterIndexRouteImport } from './routes/nyheter.index'
 import { Route as NyheterSlugRouteImport } from './routes/nyheter.$slug'
+import { Route as ShuttlekaosIndexRouteImport } from './routes/shuttlekaos.index'
+import { Route as ShuttlekaosCodeRouteImport } from './routes/shuttlekaos.$code'
+import { Route as ShuttlekaosNyRouteImport } from './routes/shuttlekaos.ny'
 import { Route as Studie404RouteImport } from './routes/studie_.404'
 import { Route as StyretIndexRouteImport } from './routes/styret.index'
 import { Route as StyretBesokendeRouteImport } from './routes/styret.besokende'
@@ -96,6 +99,21 @@ const NyheterSlugRoute = NyheterSlugRouteImport.update({
   path: '/nyheter/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShuttlekaosIndexRoute = ShuttlekaosIndexRouteImport.update({
+  id: '/shuttlekaos/',
+  path: '/shuttlekaos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShuttlekaosCodeRoute = ShuttlekaosCodeRouteImport.update({
+  id: '/shuttlekaos/$code',
+  path: '/shuttlekaos/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShuttlekaosNyRoute = ShuttlekaosNyRouteImport.update({
+  id: '/shuttlekaos/ny',
+  path: '/shuttlekaos/ny',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Studie404Route = Studie404RouteImport.update({
   id: '/studie_/404',
   path: '/studie/404',
@@ -147,6 +165,8 @@ export interface FileRoutesByFullPath {
   '/medlemskap/bli-medlem': typeof MedlemskapBliMedlemRoute
   '/medlemskap/mine': typeof MedlemskapMineRoute
   '/nyheter/$slug': typeof NyheterSlugRoute
+  '/shuttlekaos/$code': typeof ShuttlekaosCodeRoute
+  '/shuttlekaos/ny': typeof ShuttlekaosNyRoute
   '/studie/404': typeof Studie404Route
   '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
@@ -157,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/klubben/': typeof KlubbenIndexRoute
   '/medlemskap/': typeof MedlemskapIndexRoute
   '/nyheter/': typeof NyheterIndexRoute
+  '/shuttlekaos/': typeof ShuttlekaosIndexRoute
   '/styret/': typeof StyretIndexRoute
   '/trening/': typeof TreningIndexRoute
 }
@@ -169,6 +190,8 @@ export interface FileRoutesByTo {
   '/medlemskap/bli-medlem': typeof MedlemskapBliMedlemRoute
   '/medlemskap/mine': typeof MedlemskapMineRoute
   '/nyheter/$slug': typeof NyheterSlugRoute
+  '/shuttlekaos/$code': typeof ShuttlekaosCodeRoute
+  '/shuttlekaos/ny': typeof ShuttlekaosNyRoute
   '/studie/404': typeof Studie404Route
   '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
@@ -179,6 +202,7 @@ export interface FileRoutesByTo {
   '/klubben': typeof KlubbenIndexRoute
   '/medlemskap': typeof MedlemskapIndexRoute
   '/nyheter': typeof NyheterIndexRoute
+  '/shuttlekaos': typeof ShuttlekaosIndexRoute
   '/styret': typeof StyretIndexRoute
   '/trening': typeof TreningIndexRoute
 }
@@ -193,6 +217,8 @@ export interface FileRoutesById {
   '/medlemskap/bli-medlem': typeof MedlemskapBliMedlemRoute
   '/medlemskap/mine': typeof MedlemskapMineRoute
   '/nyheter/$slug': typeof NyheterSlugRoute
+  '/shuttlekaos/$code': typeof ShuttlekaosCodeRoute
+  '/shuttlekaos/ny': typeof ShuttlekaosNyRoute
   '/studie_/404': typeof Studie404Route
   '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
@@ -203,6 +229,7 @@ export interface FileRoutesById {
   '/klubben/': typeof KlubbenIndexRoute
   '/medlemskap/': typeof MedlemskapIndexRoute
   '/nyheter/': typeof NyheterIndexRoute
+  '/shuttlekaos/': typeof ShuttlekaosIndexRoute
   '/styret/': typeof StyretIndexRoute
   '/trening/': typeof TreningIndexRoute
 }
@@ -218,6 +245,8 @@ export interface FileRouteTypes {
     | '/medlemskap/bli-medlem'
     | '/medlemskap/mine'
     | '/nyheter/$slug'
+    | '/shuttlekaos/$code'
+    | '/shuttlekaos/ny'
     | '/studie/404'
     | '/styret/besokende'
     | '/styret/dugnad'
@@ -228,6 +257,7 @@ export interface FileRouteTypes {
     | '/klubben/'
     | '/medlemskap/'
     | '/nyheter/'
+    | '/shuttlekaos/'
     | '/styret/'
     | '/trening/'
   fileRoutesByTo: FileRoutesByTo
@@ -240,6 +270,8 @@ export interface FileRouteTypes {
     | '/medlemskap/bli-medlem'
     | '/medlemskap/mine'
     | '/nyheter/$slug'
+    | '/shuttlekaos/$code'
+    | '/shuttlekaos/ny'
     | '/studie/404'
     | '/styret/besokende'
     | '/styret/dugnad'
@@ -250,6 +282,7 @@ export interface FileRouteTypes {
     | '/klubben'
     | '/medlemskap'
     | '/nyheter'
+    | '/shuttlekaos'
     | '/styret'
     | '/trening'
   id:
@@ -263,6 +296,8 @@ export interface FileRouteTypes {
     | '/medlemskap/bli-medlem'
     | '/medlemskap/mine'
     | '/nyheter/$slug'
+    | '/shuttlekaos/$code'
+    | '/shuttlekaos/ny'
     | '/studie_/404'
     | '/styret/besokende'
     | '/styret/dugnad'
@@ -273,6 +308,7 @@ export interface FileRouteTypes {
     | '/klubben/'
     | '/medlemskap/'
     | '/nyheter/'
+    | '/shuttlekaos/'
     | '/styret/'
     | '/trening/'
   fileRoutesById: FileRoutesById
@@ -287,12 +323,15 @@ export interface RootRouteChildren {
   MedlemskapBliMedlemRoute: typeof MedlemskapBliMedlemRoute
   MedlemskapMineRoute: typeof MedlemskapMineRoute
   NyheterSlugRoute: typeof NyheterSlugRoute
+  ShuttlekaosCodeRoute: typeof ShuttlekaosCodeRoute
+  ShuttlekaosNyRoute: typeof ShuttlekaosNyRoute
   Studie404Route: typeof Studie404Route
   TreningSesongRoute: typeof TreningSesongRoute
   ArrangementerIndexRoute: typeof ArrangementerIndexRoute
   KlubbenIndexRoute: typeof KlubbenIndexRoute
   MedlemskapIndexRoute: typeof MedlemskapIndexRoute
   NyheterIndexRoute: typeof NyheterIndexRoute
+  ShuttlekaosIndexRoute: typeof ShuttlekaosIndexRoute
   TreningIndexRoute: typeof TreningIndexRoute
 }
 
@@ -389,6 +428,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NyheterSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shuttlekaos/': {
+      id: '/shuttlekaos/'
+      path: '/shuttlekaos'
+      fullPath: '/shuttlekaos/'
+      preLoaderRoute: typeof ShuttlekaosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shuttlekaos/$code': {
+      id: '/shuttlekaos/$code'
+      path: '/shuttlekaos/$code'
+      fullPath: '/shuttlekaos/$code'
+      preLoaderRoute: typeof ShuttlekaosCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shuttlekaos/ny': {
+      id: '/shuttlekaos/ny'
+      path: '/shuttlekaos/ny'
+      fullPath: '/shuttlekaos/ny'
+      preLoaderRoute: typeof ShuttlekaosNyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/studie_/404': {
       id: '/studie_/404'
       path: '/studie/404'
@@ -477,12 +537,15 @@ const rootRouteChildren: RootRouteChildren = {
   MedlemskapBliMedlemRoute: MedlemskapBliMedlemRoute,
   MedlemskapMineRoute: MedlemskapMineRoute,
   NyheterSlugRoute: NyheterSlugRoute,
+  ShuttlekaosCodeRoute: ShuttlekaosCodeRoute,
+  ShuttlekaosNyRoute: ShuttlekaosNyRoute,
   Studie404Route: Studie404Route,
   TreningSesongRoute: TreningSesongRoute,
   ArrangementerIndexRoute: ArrangementerIndexRoute,
   KlubbenIndexRoute: KlubbenIndexRoute,
   MedlemskapIndexRoute: MedlemskapIndexRoute,
   NyheterIndexRoute: NyheterIndexRoute,
+  ShuttlekaosIndexRoute: ShuttlekaosIndexRoute,
   TreningIndexRoute: TreningIndexRoute,
 }
 export const routeTree = rootRouteImport

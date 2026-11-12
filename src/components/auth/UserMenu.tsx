@@ -10,6 +10,7 @@ import {
   Indicator,
   Skeleton,
   Stack,
+  Switch,
   Text,
   VisuallyHidden,
   type FloatingPosition,
@@ -33,6 +34,7 @@ import {
 import { isCurrent, isOwn, type Membership } from '~/memberships/model';
 import { useMyMemberships, useOpenRequestCount } from '~/memberships/queries';
 import { MembersTab } from '~/pages/board/format';
+import { shuttleKaosErrorMessage, useFindable, useSetFindable } from '~/shuttlekaos/queries';
 import { useUi } from '~/stores/ui';
 import { getSupabase } from '~/supabase/client';
 
@@ -81,6 +83,29 @@ const LoggedOut: FC<{ close: () => void }> = ({ close }) => {
   );
 };
 
+const FindableSwitch: FC = () => {
+  const { i18n } = useLingui();
+  const findable = useFindable();
+  const change = useSetFindable();
+  const checked = change.isPending ? change.variables : (findable.data ?? true);
+  return (
+    <Stack gap={4}>
+      <Switch
+        label={<Trans>Others can add me to ShuttleKaos</Trans>}
+        description={<Trans>Organizers can find you by name when they set up a session.</Trans>}
+        checked={checked}
+        disabled={findable.isPending}
+        onChange={(e) => change.mutate(e.currentTarget.checked)}
+      />
+      {change.isError && (
+        <Text size="sm" c="red">
+          {i18n._(shuttleKaosErrorMessage(change.error))}
+        </Text>
+      )}
+    </Stack>
+  );
+};
+
 const LoggedIn: FC<{ close: () => void; onPickPhoto: (file: File) => void }> = ({ close, onPickPhoto }) => {
   const { i18n } = useLingui();
   const email = useSessionEmail();
@@ -106,6 +131,7 @@ const LoggedIn: FC<{ close: () => void; onPickPhoto: (file: File) => void }> = (
         />
       )}
       <MyMemberships memberships={memberships} />
+      {user && <FindableSwitch />}
       {profile.isPending && (
         <Group gap="sm" wrap="nowrap" aria-busy>
           <Skeleton circle height={56} />

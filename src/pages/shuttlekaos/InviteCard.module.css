@@ -1,0 +1,14 @@
+.card {
+  border: 2px solid var(--bk-accent-strong);
+  background: linear-gradient(135deg, var(--bk-accent-soft), var(--bk-surface) 70%);
+}
+
+.url {
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-md);
+  background: var(--bk-surface);
+  border: 1px dashed var(--bk-accent-line);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: var(--mantine-font-size-sm);
+  overflow-wrap: anywhere;
+}
