@@ -242,37 +242,6 @@ export const PAGE_META = {
       description: '挪威历史最悠久的羽毛球俱乐部之一，成立于 1936 年。我们在奥斯陆 Bygdøy 的 Bygdøhus 打球。',
     },
   },
-  '/kontakt': {
-    nb: {
-      title: 'Kontakt oss - Bygdø Badmintonklubb',
-      description: 'Spørsmål om trening, medlemskap eller noe annet? Skriv til styret i Bygdø Badmintonklubb.',
-    },
-    en: {
-      title: 'Contact us - Bygdø Badmintonklubb',
-      description:
-        'A question about training, membership or something else? Write to the board of Bygdø Badmintonklubb.',
-    },
-    sv: {
-      title: 'Kontakta oss - Bygdø Badmintonklubb',
-      description: 'Frågor om träning, medlemskap eller något annat? Skriv till styrelsen i Bygdø Badmintonklubb.',
-    },
-    da: {
-      title: 'Kontakt os - Bygdø Badmintonklubb',
-      description: 'Spørgsmål om træning, medlemskab eller noget andet? Skriv til bestyrelsen i Bygdø Badmintonklubb.',
-    },
-    fi: {
-      title: 'Ota yhteyttä - Bygdø Badmintonklubb',
-      description: 'Kysyttävää treeneistä, jäsenyydestä tai muusta? Kirjoita Bygdø Badmintonklubbin hallitukselle.',
-    },
-    is: {
-      title: 'Hafðu samband - Bygdø Badmintonklubb',
-      description: 'Spurning um æfingar, aðild eða eitthvað annað? Skrifaðu stjórn Bygdø Badmintonklubb.',
-    },
-    zh: {
-      title: '联系我们 - Bygdø Badmintonklubb',
-      description: '对训练、会员或其他事情有疑问？写信给 Bygdø Badmintonklubb 理事会。',
-    },
-  },
   '/personvern': {
     nb: {
       title: 'Personvern - Bygdø Badmintonklubb',

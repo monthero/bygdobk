@@ -11,6 +11,10 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ],
+  "redirects": [
+    { "source": "/kontakt", "destination": "/klubben#kontakt", "permanent": true },
+    { "source": "/:locale(en|sv|da|fi|is|zh)/kontakt", "destination": "/:locale/klubben#kontakt", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/kalender.ics",
@@ -21,7 +25,7 @@
       "destination": "/api/sitemap"
     },
     {
-      "source": "/:page(trening|arrangementer|nyheter|medlemskap|klubben|kontakt|personvern)",
+      "source": "/:page(trening|arrangementer|nyheter|medlemskap|klubben|personvern)",
       "destination": "/:page/index.html"
     },
     {
@@ -33,7 +37,7 @@
       "destination": "/:locale/index.html"
     },
     {
-      "source": "/:locale(en|sv|da|fi|is|zh)/:page(trening|arrangementer|nyheter|medlemskap|klubben|kontakt|personvern)",
+      "source": "/:locale(en|sv|da|fi|is|zh)/:page(trening|arrangementer|nyheter|medlemskap|klubben|personvern)",
       "destination": "/:locale/:page/index.html"
     },
     {

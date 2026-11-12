@@ -26,5 +26,7 @@ export const CONTACT_SEARCH = z.object({
 
 export const SPONSOR_DRAFT = msg`Hi! We'd like to hear more about sponsoring the club.`;
 
+export const CONTACT_HASH = 'kontakt';
+
 export const contactLink = (emne: string, melding?: string) =>
-  linkOptions({ to: '/kontakt', search: { emne, melding } });
+  linkOptions({ to: '/klubben', hash: CONTACT_HASH, search: { emne, melding } });

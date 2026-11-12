@@ -33,7 +33,7 @@ export const NEWS_KIND_SLUGS = slugMap<NewsKind>({
   [NewsKind.enum.club]: 'klubben',
 });
 
-export const InternalPath = z.enum(['/trening', '/arrangementer', '/klubben', '/kontakt']);
+export const InternalPath = z.enum(['/trening', '/arrangementer', '/klubben']);
 export type InternalPath = z.infer<typeof InternalPath>;
 
 export const NewsAuthor = z.enum(['board']);

@@ -17,7 +17,6 @@ const SLOTS: Record<PhotoSlot, { title: string; tab: z.infer<typeof PhotoTab> }>
   [PhotoSlot.enum.events]: { title: 'Events', tab: PhotoTab.enum.pages },
   [PhotoSlot.enum.news]: { title: 'News', tab: PhotoTab.enum.pages },
   [PhotoSlot.enum.club]: { title: 'The club', tab: PhotoTab.enum.pages },
-  [PhotoSlot.enum.contact]: { title: 'Contact', tab: PhotoTab.enum.pages },
   [PhotoSlot.enum.venue]: { title: 'The hall, next to the address', tab: PhotoTab.enum.pages },
   [PhotoSlot.enum.membership]: { title: 'Membership', tab: PhotoTab.enum.pages },
   [PhotoSlot.enum.join]: { title: 'Join', tab: PhotoTab.enum.pages },

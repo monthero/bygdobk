@@ -11,7 +11,6 @@ const TRAINING: DocumentLocation = { title: 'Training', href: '/trening' };
 const MEMBERSHIP: DocumentLocation = { title: 'Membership', href: '/medlemskap' };
 const JOIN: DocumentLocation = { title: 'Join the club', href: '/medlemskap/bli-medlem' };
 const CLUB: DocumentLocation = { title: 'The club', href: '/klubben' };
-const CONTACT: DocumentLocation = { title: 'Contact', href: '/kontakt' };
 const PRIVACY: DocumentLocation = { title: 'Privacy', href: '/personvern' };
 
 const VISITOR_KIND_SET = new Set<string>(VISITOR_KINDS);
@@ -25,8 +24,8 @@ export const LOCATIONS = {
   sitePhotos: fixed(HOME, TRAINING, EVENTS, NEWS, CLUB),
   socialLinks: defineLocations(EVERY_PAGE),
   sponsor: fixed(HOME, MEMBERSHIP),
-  clubDetails: fixed(CONTACT, CLUB),
-  contactForm: fixed(CONTACT),
+  clubDetails: fixed(CLUB),
+  contactForm: fixed(CLUB),
   payment: fixed(MEMBERSHIP, JOIN),
   privacyPage: fixed(PRIVACY),
   trainingGroup: fixed(TRAINING),

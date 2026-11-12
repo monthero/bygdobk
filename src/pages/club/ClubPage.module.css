@@ -15,9 +15,3 @@
 .title {
   margin-bottom: 20px;
 }
-
-.more {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}

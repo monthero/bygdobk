@@ -362,6 +362,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Er datoen ikke bestemt? Slå av «The date is set» og skriv omtrent når under «When, in words», for eksempel «Våren 2027». Datoen brukes da bare til sortering.',
         'I «Place» fyller du ut «Venue» hvis det ikke er i hjemmehallen. Tomt betyr hallen fra «Club details». En tur må alltid ha en «Venue». Uten «Map link» åpner siden adressen i kartappen.',
         'Har arrangementet påmelding, fyll ut «Registration link» og «Registration deadline» i «Sign-up».',
+        'Nettadresser og e-postadresser i «Description» blir lenker på nettsiden av seg selv.',
         'Trykk «Publish».',
       ],
       tips: [
@@ -384,6 +385,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Date not decided yet? Turn off “The date is set” and write roughly when under “When, in words”, for example “Spring 2027”. The date is then only used to sort.',
         'In “Place”, fill in the “Venue” if it is not in the home hall. Empty means the hall from “Club details”. A trip always needs a “Venue”. Without a “Map link”, the site opens the address in the map app.',
         'If people must sign up, fill in “Registration link” and “Registration deadline” in “Sign-up”.',
+        'Web and email addresses in “Description” become links on the website by themselves.',
         'Click “Publish”.',
       ],
       tips: [
@@ -442,7 +444,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Velg «Tone»: «Info» for vanlige beskjeder, «Warning» for viktige. Den viktige meldingen er gul.',
         'Trykk «Publish».',
         'For sosiale medier åpner du «Social links». Under «Links» legger du til én lenke per plattform. Velg «Platform» og lim inn «Link». Lenken må starte med https://.',
-        'Dra lenkene i den rekkefølgen du vil ha. Slik vises de i bunnen av siden, i menyen og på kontaktsiden.',
+        'Dra lenkene i den rekkefølgen du vil ha. Slik vises de i bunnen av siden, i menyen og på klubbsiden.',
         'Trykk «Publish».',
       ],
       tips: ['Slå av «Show the notice» når meldingen er utdatert. Teksten blir liggende til neste gang.'],
@@ -457,7 +459,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Pick the “Tone”: “Info” for normal news, “Warning” for important news. The important one is yellow.',
         'Click “Publish”.',
         'For social media, open “Social links”. Under “Links”, add one link per platform. Pick the “Platform” and paste the “Link”. It must start with https://.',
-        'Drag the links into the order you want. That is the order in the footer, the menu and on the contact page.',
+        'Drag the links into the order you want. That is the order in the footer, the menu and on the club page.',
         'Click “Publish”.',
       ],
       tips: ['Turn off “Show the notice” when it is out of date. The text stays for next time.'],
@@ -569,7 +571,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     nb: {
       title: 'Klubbinfo',
       intro:
-        'E-post, hallen, organisasjonsnummer og varslingslenke. Vises i bunnen av siden, i menyen, på kontaktsiden og på trening og arrangementer.',
+        'E-post, hallen, organisasjonsnummer og varslingslenke. Vises i bunnen av siden, i menyen, på klubbsiden og på trening og arrangementer.',
       steps: [
         'Åpne «Club details» under «The club» i «Content».',
         '«Board email» er e-posten som vises på siden. Den får også meldinger fra kontaktskjemaet, hvis ikke et tema sier noe annet.',
@@ -584,7 +586,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     en: {
       title: 'Club details',
       intro:
-        'Email, the hall, organization number and whistleblowing link. Shown in the footer, the menu, on the contact page and on training and events.',
+        'Email, the hall, organization number and whistleblowing link. Shown in the footer, the menu, on the club page and on training and events.',
       steps: [
         'Open “Club details” under “The club” in “Content”.',
         '“Board email” is the email shown on the site. It also gets contact form messages, unless a topic says otherwise.',
@@ -630,7 +632,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     area: HelpArea.enum.studio,
     nb: {
       title: 'Kontaktskjema',
-      intro: 'Temaene besøkende velger på kontaktsiden, og hvem som får meldingene.',
+      intro: 'Temaene besøkende velger i kontaktskjemaet på klubbsiden, og hvem som får meldingene.',
       steps: [
         'Åpne «Contact form» under «The club» i «Content».',
         'Under «Topics» har hvert tema en «Label» (det besøkende ser), «Send to» og en «ID».',
@@ -645,7 +647,7 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
     },
     en: {
       title: 'Contact form',
-      intro: 'The topics visitors pick on the contact page, and who gets the messages.',
+      intro: 'The topics visitors pick in the contact form on the club page, and who gets the messages.',
       steps: [
         'Open “Contact form” under “The club” in “Content”.',
         'Under “Topics”, each topic has a “Label” (what visitors see), “Send to” and an “ID”.',
