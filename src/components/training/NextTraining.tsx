@@ -37,7 +37,7 @@ export const NextTraining: FC<Props> = ({ group, frosted = false }) => {
           <Text size="xs" fw={700} tt="uppercase" c="dimmed">
             {isToday ? <Trans>Training today</Trans> : <Trans>Next training</Trans>}
           </Text>
-          <Title order={3} className={classes.day}>
+          <Title order={2} size="h3" className={classes.day}>
             {dayLabel}
           </Title>
         </div>

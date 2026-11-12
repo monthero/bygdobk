@@ -1,6 +1,8 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Alert, Button, Container, Group, Stack, Text, ThemeIcon, Title } from '@mantine/core';
+import { Alert, Anchor, Button, Container, Group, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { getRouteApi, Link } from '@tanstack/react-router';
+import Linkify from 'linkify-react';
+import type { Opts } from 'linkifyjs';
 import type { FC } from 'react';
 
 import { isPast } from '~/cms/calendar';
@@ -17,7 +19,7 @@ import {
 } from '~/components/events';
 import { eventJsonLd, JsonLd } from '~/components/seo';
 import { PageIntro, useStyleKit } from '~/components/styles';
-import { ArrowLeft, CalendarBlank, ChatCircle, HandHeart, Info, MapPin } from '~/components/ui';
+import { ArrowLeft, CalendarBlank, CalendarCheck, ChatCircle, HandHeart, Info, MapPin } from '~/components/ui';
 import { contactLink, ContactTopic } from '~/data/contact';
 import { EVENT_KINDS } from '~/data/events';
 import { PhotoSlot } from '~/data/photos';
@@ -27,6 +29,13 @@ import { today } from '~/utils/dates';
 import { STAY } from '~/utils/navigation';
 
 import classes from './EventPage.module.css';
+
+const LINK_OPTIONS: Opts = {
+  defaultProtocol: 'https',
+  target: { url: '_blank' },
+  rel: { url: 'noopener noreferrer' },
+  render: ({ attributes, content }) => <Anchor {...attributes}>{content}</Anchor>,
+};
 
 const route = getRouteApi('/arrangementer/$slug');
 
@@ -89,14 +98,17 @@ export const EventPage: FC = () => {
           </Button>
           {event.description && (
             <Text size="lg" className={classes.description}>
-              {event.description}
+              <Linkify options={LINK_OPTIONS}>{event.description}</Linkify>
             </Text>
           )}
           <EventActions event={event} />
-          {past && (
+          {past && event.ownEvent && hasShifts && (
             <Alert icon={<HandHeart />} variant="light" color="teal" title={<Trans>Done!</Trans>}>
               <Trans>Thanks to everyone who helped.</Trans>
             </Alert>
+          )}
+          {past && !(event.ownEvent && hasShifts) && (
+            <Alert icon={<CalendarCheck />} variant="light" color="gray" title={<Trans>This event is over</Trans>} />
           )}
           {!past && event.tip && (
             <Alert icon={<Info />} variant="light" title={event.tip.title}>

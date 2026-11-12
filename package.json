@@ -36,6 +36,8 @@
     "@tanstack/react-router": "^1.170.46",
     "dayjs": "^1.11.23",
     "fuse.js": "7.5.0",
+    "linkify-react": "^4.4.0",
+    "linkifyjs": "^4.4.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-easy-crop": "^6.2.4",
