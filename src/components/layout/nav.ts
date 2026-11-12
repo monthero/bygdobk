@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 
-import { CalendarBlank, ChatCircle, IdentificationCard, Newspaper, Shuffle, Trophy, UsersThree } from '~/components/ui';
+import { CalendarBlank, ChatCircle, IdentificationCard, Newspaper, Shuttle, Trophy, UsersThree } from '~/components/ui';
 import type { FileRouteTypes } from '~/routeTree.gen';
 
 type NavItem = { to: FileRouteTypes['to']; label: MessageDescriptor; Icon: typeof ChatCircle };
@@ -13,7 +13,7 @@ export const NAV: readonly NavItem[] = [
   {
     to: '/shuttlekaos',
     label: msg({ message: 'ShuttleKaos', comment: 'Main menu. Brand name of the social play tool, keep as is' }),
-    Icon: Shuffle,
+    Icon: Shuttle,
   },
   { to: '/nyheter', label: msg({ message: 'News', comment: 'Main menu' }), Icon: Newspaper },
   { to: '/klubben', label: msg({ message: 'The club', comment: 'Main menu' }), Icon: UsersThree },
