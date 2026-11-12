@@ -111,6 +111,8 @@
 }
 
 .more {
+  display: block;
+  width: fit-content;
   color: color-mix(in srgb, var(--mantine-color-anchor) 80%, var(--mantine-color-text));
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -140,6 +142,10 @@
     flex-direction: column;
     flex-basis: auto;
     gap: 10px;
+  }
+
+  .more {
+    margin-inline: auto;
   }
 
   .sponsor {

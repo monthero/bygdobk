@@ -508,7 +508,7 @@ const FreshSetup: FC<{ me: Me }> = ({ me }) => {
 
 export const SetupPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(t`New session`, BRAND);
+  usePageTitle(t({ message: 'Creating new session', comment: 'Browser tab title while setting up a session' }), BRAND);
   const { fra, siste } = route.useSearch();
   const ready = useAuthReady();
   const userId = useSessionUserId();

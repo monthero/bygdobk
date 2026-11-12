@@ -1284,6 +1284,11 @@ msgstr "没有比分的场地不计入。"
 msgid "Create"
 msgstr "创建"
 
+#. Browser tab title while setting up a session
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Creating new session"
+msgstr "正在创建新场次"
+
 #: src/components/auth/AvatarCropper.tsx
 msgid "Crop area"
 msgstr "裁剪区域"

@@ -1284,6 +1284,11 @@ msgstr "Baner uden resultat tæller ikke."
 msgid "Create"
 msgstr "Opret"
 
+#. Browser tab title while setting up a session
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Creating new session"
+msgstr "Opretter ny session"
+
 #: src/components/auth/AvatarCropper.tsx
 msgid "Crop area"
 msgstr "Beskæringsområde"

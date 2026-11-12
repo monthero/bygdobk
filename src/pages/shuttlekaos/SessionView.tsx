@@ -49,7 +49,7 @@ type Props = {
 
 export const SessionView: FC<Props> = ({ session, actions, notice, footer, onScore, onEdit, highlight }) => {
   const { i18n } = useLingui();
-  usePageTitle(session.title || BRAND, BRAND);
+  usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
   const wide = useMediaQuery(WIDE_QUERY);
   const [full, fullControls] = useDisclosure(false);
   const [picked, setPicked] = useState<number | null>(null);

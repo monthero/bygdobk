@@ -1284,6 +1284,11 @@ msgstr "Banor utan resultat räknas inte."
 msgid "Create"
 msgstr "Skapa"
 
+#. Browser tab title while setting up a session
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Creating new session"
+msgstr "Skapar nytt pass"
+
 #: src/components/auth/AvatarCropper.tsx
 msgid "Crop area"
 msgstr "Beskärningsområde"

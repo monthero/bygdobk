@@ -292,7 +292,7 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
 export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
   const { i18n } = useLingui();
   const { session } = view;
-  usePageTitle(session.title || BRAND, BRAND);
+  usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
   return (
     <>
       <SessionTop

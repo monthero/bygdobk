@@ -1284,6 +1284,11 @@ msgstr "Kenttiä ilman tulosta ei lasketa."
 msgid "Create"
 msgstr "Luo"
 
+#. Browser tab title while setting up a session
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Creating new session"
+msgstr "Luodaan uutta sessiota"
+
 #: src/components/auth/AvatarCropper.tsx
 msgid "Crop area"
 msgstr "Rajausalue"

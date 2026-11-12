@@ -46,7 +46,7 @@ import {
 
 import { BrandHeader } from './BrandHeader';
 import { LiveBadge } from './Fallbacks';
-import { BRAND, stop, TABLE_QUERY, TAGLINE } from './labels';
+import { BRAND, stop, TABLE_QUERY } from './labels';
 import { LoginPrompt } from './LoginPrompt';
 import { NewSessionButton } from './NewSessionButton';
 import { PublicSessions } from './PublicSessions';
@@ -328,8 +328,8 @@ const SessionGrid: FC<{ summaries: SessionSummary[]; onAction: CardProps['onActi
 );
 
 export const StartPage: FC = () => {
-  const { t, i18n } = useLingui();
-  usePageTitle(i18n._(TAGLINE), BRAND);
+  const { t } = useLingui();
+  usePageTitle(BRAND);
   const ready = useAuthReady();
   const userId = useSessionUserId();
   const wide = useMediaQuery(TABLE_QUERY);

@@ -1284,6 +1284,11 @@ msgstr "Vellir án úrslita teljast ekki með."
 msgid "Create"
 msgstr "Stofna"
 
+#. Browser tab title while setting up a session
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Creating new session"
+msgstr "Bý til nýja lotu"
+
 #: src/components/auth/AvatarCropper.tsx
 msgid "Crop area"
 msgstr "Skurðarsvæði"
