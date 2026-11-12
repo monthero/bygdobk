@@ -59,6 +59,14 @@
   }
 }
 
+.divider {
+  align-self: center;
+  width: 1px;
+  height: 22px;
+  margin-inline: 6px;
+  background: var(--bk-border);
+}
+
 .link {
   position: relative;
   display: flex;

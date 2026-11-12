@@ -1,10 +1,14 @@
-import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Collapse, Group, Stack, Table, Text, UnstyledButton } from '@mantine/core';
+import { Trans, useLingui } from '@lingui/react/macro';
+import { Button, Collapse, Group, Stack, Table, Text, UnstyledButton, VisuallyHidden } from '@mantine/core';
 import { Fragment, memo, useState, type FC, type ReactNode } from 'react';
+import { z } from 'zod';
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-import { CaretDown, CrownSimple } from '~/components/ui';
+import { CaretDown, CaretDownBold, CaretUpBold, CrownSimple, Minus, Plus } from '~/components/ui';
 import { numberFormat } from '~/i18n/current';
 import { Partners, PlayStyle, ScoreMode, type Session, type Standing } from '~/shuttlekaos/model';
+import { mergeParsed, safeJSONStorage } from '~/stores/persistence';
 
 import { formOf, MatchResult, playersOf, TableVariant, type PlayerMap } from './labels';
 import { PlayerNames } from './People';
@@ -19,39 +23,93 @@ const RESULT_MARKS: Record<MatchResult, string> = {
   [MatchResult.enum.loss]: '✗',
 };
 
+const DETAIL_STORAGE_KEY = 'bygdo-shuttlekaos-standings';
+
+const StatsDetail = z.enum(['fewer', 'more']);
+type StatsDetail = z.infer<typeof StatsDetail>;
+
+const DetailData = z.object({ detail: StatsDetail.catch(StatsDetail.enum.fewer) });
+type DetailData = z.infer<typeof DetailData>;
+
+interface DetailState extends DetailData {
+  setDetail: (detail: StatsDetail) => void;
+}
+
+const DETAIL_DEFAULTS: DetailData = { detail: StatsDetail.enum.fewer };
+
+const useStatsDetail = create<DetailState>()(
+  persist(
+    (set) => ({
+      ...DETAIL_DEFAULTS,
+      setDetail: (detail) => set({ detail }),
+    }),
+    {
+      name: DETAIL_STORAGE_KEY,
+      storage: safeJSONStorage<DetailData>(),
+      partialize: ({ detail }): DetailData => ({ detail }),
+      merge: mergeParsed(DetailData, () => DETAIL_DEFAULTS),
+    },
+  ),
+);
+
+export const StatsTitle: FC<{ children: ReactNode }> = ({ children }) => (
+  <Group justify="space-between" gap="sm" wrap="nowrap" className={classes.statsTitle}>
+    {children}
+    <StatsToggle />
+  </Group>
+);
+
+export const StatsToggle: FC = () => {
+  const detail = useStatsDetail((s) => s.detail);
+  const setDetail = useStatsDetail((s) => s.setDetail);
+  const more = detail === StatsDetail.enum.more;
+  return (
+    <Button
+      variant="default"
+      radius="xl"
+      size="compact-sm"
+      leftSection={more ? <Minus /> : <Plus />}
+      onClick={() => setDetail(more ? StatsDetail.enum.fewer : StatsDetail.enum.more)}
+    >
+      {more ? <Trans>Fewer stats</Trans> : <Trans>More stats</Trans>}
+    </Button>
+  );
+};
+
 const signed = (n: number) => numberFormat(SIGNED).format(n);
 
 const Abbr: FC<{ title: string; short: string }> = ({ title, short }) => <abbr title={title}>{short}</abbr>;
 
-type Column = { key: string; header: ReactNode; cell: (row: Standing) => ReactNode; wide?: boolean; strong?: boolean };
+type Column = {
+  key: string;
+  header: ReactNode;
+  cell: (row: Standing) => ReactNode;
+  wide?: boolean;
+  strong?: boolean;
+  extra?: boolean;
+};
 
 const Move: FC<{ by: number | undefined }> = ({ by }) => {
   const { t } = useLingui();
   if (!by) {
     return (
-      <span className={classes.move} aria-label={t`No change`}>
-        –
+      <span className={classes.move}>
+        <span className={classes.still} aria-hidden />
+        <VisuallyHidden>{t`No change`}</VisuallyHidden>
       </span>
     );
   }
   const steps = Math.abs(by);
-  return by > 0 ? (
-    <span className={classes.move} data-up aria-label={t`Up ${steps}`}>
-      ▲{steps}
-    </span>
-  ) : (
-    <span className={classes.move} data-down aria-label={t`Down ${steps}`}>
-      ▼{steps}
+  const up = by > 0;
+  return (
+    <span className={classes.move} data-up={up || undefined} data-down={!up || undefined}>
+      <span className={classes.moveMark} aria-hidden>
+        {up ? <CaretUpBold /> : <CaretDownBold />}
+        {steps}
+      </span>
+      <VisuallyHidden>{up ? t`Up ${steps}` : t`Down ${steps}`}</VisuallyHidden>
     </span>
   );
-};
-
-const Streak: FC<{ result: MatchResult; count: number }> = ({ result, count }) => {
-  if (result === MatchResult.enum.win) return <Plural value={count} one="# win in a row" other="# wins in a row" />;
-  if (result === MatchResult.enum.loss) {
-    return <Plural value={count} one="# loss in a row" other="# losses in a row" />;
-  }
-  return <Plural value={count} one="# draw in a row" other="# draws in a row" />;
 };
 
 const FormDetails: FC<{ session: Session; row: Standing }> = ({ session, row }) => {
@@ -85,16 +143,6 @@ const FormDetails: FC<{ session: Session; row: Standing }> = ({ session, row }) 
           ))}
         </Group>
       </Stack>
-      {form.streak && (
-        <Stack gap={4}>
-          <Text size="xs" c="dimmed">
-            <Trans>Streak</Trans>
-          </Text>
-          <Text fw={700}>
-            <Streak result={form.streak.result} count={form.streak.count} />
-          </Text>
-        </Stack>
-      )}
     </div>
   );
 };
@@ -107,12 +155,16 @@ type Props = {
   moves?: ReadonlyMap<string, number>;
   podium?: boolean;
   highlight?: string | null;
+  adjustable?: boolean;
 };
 
 export const StandingsTable = memo<Props>(
-  ({ rows, session, players, variant = TableVariant.enum.full, moves, podium, highlight }) => {
+  ({ rows, session, players, variant = TableVariant.enum.full, moves: allMoves, podium, highlight, adjustable }) => {
     const { t } = useLingui();
     const [expanded, setExpanded] = useState<string | null>(null);
+    const detail = useStatsDetail((s) => s.detail);
+    const fewer = adjustable && detail === StatsDetail.enum.fewer;
+    const moves = fewer ? undefined : allMoves;
     const { settings } = session;
     const total = settings.scoreMode === ScoreMode.enum.total;
     const bestOfThree = !total && settings.sets === 3;
@@ -124,17 +176,40 @@ export const StandingsTable = memo<Props>(
       key: 'points',
       header: <Abbr title={t`Points`} short={t({ message: 'Pts', comment: 'Short column heading for points' })} />,
       cell: (row) => row.pointsFor,
-      strong: true,
+      strong: total,
     };
     const diff: Column = {
       key: 'diff',
       header: <Abbr title={t`Point difference`} short="+/−" />,
       cell: (row) => signed(row.pointsFor - row.pointsAgainst),
     };
+    const scored: Column = {
+      key: 'for',
+      header: (
+        <Abbr
+          title={t`Points scored`}
+          short={t({ message: 'F', comment: 'Short column heading for points scored (for)' })}
+        />
+      ),
+      cell: (row) => row.pointsFor,
+      extra: true,
+    };
+    const conceded: Column = {
+      key: 'against',
+      header: (
+        <Abbr
+          title={t`Points conceded`}
+          short={t({ message: 'A', comment: 'Short column heading for points conceded (against)' })}
+        />
+      ),
+      cell: (row) => row.pointsAgainst,
+      extra: true,
+    };
     const won: Column = {
       key: 'won',
       header: <Abbr title={t`Won`} short={t({ message: 'W', comment: 'Short column heading for matches won' })} />,
       cell: (row) => row.won,
+      strong: !total,
     };
 
     let columns: Column[];
@@ -158,6 +233,7 @@ export const StandingsTable = memo<Props>(
           cell: (row) => row.lost,
         },
         points,
+        conceded,
         diff,
       ];
     } else {
@@ -180,10 +256,12 @@ export const StandingsTable = memo<Props>(
               },
             ]
           : []),
+        ...(total ? [points] : [scored]),
+        conceded,
         { ...diff, wide: total },
-        ...(total ? [points] : []),
       ];
     }
+    if (fewer) columns = columns.filter((c) => !c.extra);
     const span = columns.length + (moves ? 3 : 2);
 
     return (
@@ -210,6 +288,7 @@ export const StandingsTable = memo<Props>(
           {rows.map((row) => {
             const leader = row.rank === 1 && !nobodyPlayed;
             const open = expanded === row.entrantId;
+            const me = Boolean(highlight && row.playerIds.includes(highlight));
             const names = <PlayerNames players={playersOf(players, row.playerIds)} />;
             return (
               <Fragment key={row.entrantId}>
@@ -217,7 +296,7 @@ export const StandingsTable = memo<Props>(
                   className={classes.row}
                   data-leader={leader || undefined}
                   data-podium={(podium && row.rank <= 3 && !nobodyPlayed) || undefined}
-                  data-me={(highlight && row.playerIds.includes(highlight)) || undefined}
+                  data-me={me || undefined}
                   data-open={open || undefined}
                 >
                   <Table.Td className={classes.rank}>

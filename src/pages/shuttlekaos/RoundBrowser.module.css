@@ -1,8 +1,51 @@
 .head {
   composes: glass from './glass.module.css';
+}
+
+.navBox {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  &[data-compact] {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.arrow {
+  &[data-hidden] {
+    visibility: hidden;
+  }
+}
+
+.round {
+  font-size: var(--mantine-font-size-lg);
+  font-variant-numeric: tabular-nums;
+
+  .navBox[data-compact] & {
+    font-size: var(--mantine-font-size-md);
+  }
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .navBox[data-compact] & {
+    flex: none;
+  }
+}
+
+.progress {
+  flex: 1;
+  min-width: 0;
+
+  .navBox[data-compact] & {
+    display: none;
+  }
 }
 
 .nav {
@@ -10,6 +53,12 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+
+  .navBox[data-compact] & {
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-start;
+  }
 }
 
 .label {
@@ -21,20 +70,6 @@
   text-align: center;
 }
 
-.dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
-  animation: pulse 1.6s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  50% {
-    opacity: 0.3;
-  }
-}
-
 .courts {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
@@ -44,8 +79,24 @@
 .resting {
   composes: glass from './glass.module.css';
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px 10px;
+}
+
+.restingPlayers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.restingPlayer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .restingIcon {

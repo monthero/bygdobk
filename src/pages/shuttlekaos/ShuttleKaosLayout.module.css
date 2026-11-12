@@ -9,7 +9,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: rgb(255 255 255 / 0.28);
+    background: rgb(255 255 255 / 0.55);
   }
 
   :where([data-mantine-color-scheme='dark']) &::after {
@@ -24,10 +24,22 @@
 }
 
 .kaos {
-  --kaos-field: color-mix(in srgb, var(--mantine-color-brand-0) 55%, transparent);
-  --kaos-field-border: color-mix(in srgb, var(--mantine-color-brand-9) 16%, transparent);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  --kaos-field: color-mix(in srgb, var(--bk-surface) 88%, transparent);
+  --kaos-field-border: color-mix(in srgb, var(--mantine-color-brand-9) 22%, transparent);
+  --kaos-me: var(--bk-me);
+  --kaos-me-soft: color-mix(in srgb, var(--kaos-me) 13%, transparent);
+
+  :where([data-mantine-color-scheme='light']) & {
+    --mantine-color-text: color-mix(in oklab, var(--mantine-color-brand-8) 38%, #35302b);
+    --mantine-color-dimmed: color-mix(in oklab, var(--mantine-color-text) 70%, #fff);
+  }
 
   :where([data-mantine-color-scheme='dark']) & {
+    --kaos-me-soft: color-mix(in srgb, var(--kaos-me) 20%, transparent);
     --kaos-field: color-mix(in srgb, var(--mantine-color-brand-9) 35%, transparent);
     --kaos-field-border: rgb(255 255 255 / 0.14);
   }
@@ -38,6 +50,25 @@
   & :global(.mantine-Accordion-item) {
     border-color: var(--kaos-field-border);
     background: var(--kaos-field);
+  }
+
+  & :global(.mantine-Container-root) {
+    width: 100%;
+  }
+
+  & :global(.mantine-Avatar-root) {
+    box-shadow: 0 1px 4px rgb(0 0 0 / 0.3);
+  }
+
+  :where([data-mantine-color-scheme='light']) & :global(.mantine-Avatar-placeholder) {
+    background: color-mix(in oklab, var(--avatar-color) 72%, #3b2a1a);
+    color: #fff;
+  }
+
+  & :global(.mantine-Avatar-root[data-me]) {
+    box-shadow:
+      0 0 0 2px var(--kaos-me),
+      0 1px 4px rgb(0 0 0 / 0.3);
   }
 
   & :global(.mantine-ActionIcon-root[data-variant='default']),

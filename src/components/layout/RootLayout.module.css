@@ -18,10 +18,18 @@
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+
+  &[data-headroom] {
+    padding-top: 64px;
+  }
 }
 
 .content {
   flex: 1;
+
+  &:has([data-bottom-bar]) + * {
+    margin-top: 0;
+  }
 
   &:has(> [data-fill]) {
     display: flex;

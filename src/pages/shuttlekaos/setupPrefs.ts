@@ -2,7 +2,17 @@ import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { EVERYONE_ONCE, Format, Pair, Partners, Player, PlayStyle, ScoreMode, Settings } from '~/shuttlekaos/model';
+import {
+  EVERYONE_ONCE,
+  Format,
+  Pair,
+  Partners,
+  Player,
+  PlayStyle,
+  ScoreMode,
+  SessionLocation,
+  Settings,
+} from '~/shuttlekaos/model';
 import { mergeParsed, safeJSONStorage } from '~/stores/persistence';
 
 const STORAGE_KEY = 'bygdo-shuttlekaos-setup';
@@ -19,7 +29,11 @@ const DEFAULT_SETTINGS: Settings = {
   levels: [],
 };
 
-const Lineup = z.object({ players: z.array(Player), pairs: z.array(Pair) });
+const Lineup = z.object({
+  players: z.array(Player),
+  pairs: z.array(Pair),
+  location: SessionLocation.nullable().catch(null),
+});
 export type Lineup = z.infer<typeof Lineup>;
 
 const PrefsData = z.object({

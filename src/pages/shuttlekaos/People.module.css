@@ -30,4 +30,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &[data-me] {
+    font-weight: 800;
+  }
 }

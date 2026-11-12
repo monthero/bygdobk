@@ -67,14 +67,6 @@ msgstr "每次{0}"
 msgid "{added, plural, one {Copy # membership} other {Copy # memberships}}"
 msgstr "{added, plural, other {复制#条会员记录}}"
 
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "{count, plural, one {# draw in a row} other {# draws in a row}}"
-msgstr "{count, plural, other {连续#场平局}}"
-
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "{count, plural, one {# loss in a row} other {# losses in a row}}"
-msgstr "{count, plural, other {#连败}}"
-
 #: src/pages/board/MarkPaidModal.tsx
 msgid "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
 msgstr "{count, plural, other {#条会员记录}}，共计<0>{total}</0>。"
@@ -82,10 +74,6 @@ msgstr "{count, plural, other {#条会员记录}}，共计<0>{total}</0>。"
 #: src/components/auth/RequestCountBadge.tsx
 msgid "{count, plural, one {# open request} other {# open requests}}"
 msgstr "{count, plural, other {#份待处理的申请}}"
-
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "{count, plural, one {# win in a row} other {# wins in a row}}"
-msgstr "{count, plural, other {#连胜}}"
 
 #: src/pages/board/BulkActions.tsx
 msgid "{count, plural, one {Copy # email} other {Copy # emails}}"
@@ -215,17 +203,9 @@ msgstr "{playedRounds, plural, other {打了#轮后结束}}"
 msgid "{playerCount} players"
 msgstr "{playerCount}人"
 
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "{players} players"
-msgstr "{players}人"
-
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{points} points per match"
 msgstr "每场{points}分"
-
-#: src/pages/shuttlekaos/Podium.tsx
-msgid "{points} pts"
-msgstr "{points}分"
 
 #: src/components/auth/UserMenu.tsx
 msgid "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
@@ -293,9 +273,10 @@ msgstr "{trimmed}已经在名单里了。"
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount}个未付款"
 
-#: src/pages/shuttlekaos/Podium.tsx
-msgid "{won} won"
-msgstr "胜{won}场"
+#. Your place and points in a table cell, e.g. #2 · 84 pts
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "#{rank} · {points} pts"
+msgstr "第{rank}名 · {points}分"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
@@ -372,6 +353,11 @@ msgstr "50–149 分。经常参加比赛的选手。"
 #: src/pages/board/visitors/VisitorsPage.tsx
 msgid "7 days"
 msgstr "7天"
+
+#. Short column heading for points conceded (against)
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "A"
+msgstr "失"
 
 #. The shuttle hit the racket away from the middle
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
@@ -462,6 +448,10 @@ msgstr "一个水瓶"
 msgid "A woman looking at her phone, her face covered by a digital grid"
 msgstr "一位女士看着手机,脸上覆盖着数字网格"
 
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "About {minutes} minutes"
+msgstr "约 {minutes} 分钟"
+
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "About {perRound} per round"
 msgstr "每轮约{perRound}"
@@ -501,6 +491,11 @@ msgstr "{name}的账户菜单"
 #: src/pages/membership/MembershipPage.tsx
 msgid "Account number: {0}"
 msgstr "账号：{0}"
+
+#. Table heading for the Join or Watch buttons
+#: src/pages/shuttlekaos/PublicSessions.tsx
+msgid "Action"
+msgstr "操作"
 
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/PeopleList.tsx
@@ -623,10 +618,12 @@ msgid "Ages 7–12 try half a season for {0}"
 msgstr "7–12岁可用{0}体验半个赛季"
 
 #. Events filter option that shows upcoming and past events
+#. Filter option: show every round
 #. People filter: everyone
 #: src/pages/board/MembersPage.tsx
 #: src/pages/events/EventsPage.tsx
 #: src/pages/news/NewsPage.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "All"
 msgstr "全部"
@@ -648,11 +645,19 @@ msgstr "全部组别"
 msgid "All levels"
 msgstr "不限级别"
 
+#: src/pages/shuttlekaos/SessionView.tsx
+msgid "All matches"
+msgstr "全部比赛"
+
 #: src/pages/home/HomePage.tsx
 #: src/pages/news/components/ArticleHero.tsx
 #: src/pages/news/NewsPostPage.tsx
 msgid "All news"
 msgstr "全部新闻"
+
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "All players"
+msgstr "全部球员"
 
 #. Season filter option
 #: src/pages/board/MembersPage.tsx
@@ -715,6 +720,10 @@ msgstr "询问名额"
 msgid "Ask for the code"
 msgstr "索取优惠码"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Ask the board to add it"
+msgstr "请理事会添加"
+
 #: src/pages/shuttlekaos/SetupSteps.tsx
 msgid "Back"
 msgstr "上一步"
@@ -722,6 +731,11 @@ msgstr "上一步"
 #: src/pages/news/components/ClosureNotice.tsx
 msgid "Back on court {back}."
 msgstr "{back}重返球场。"
+
+#. Button on a finished session, goes to the ShuttleKaos start page
+#: src/pages/shuttlekaos/PlaySession.tsx
+msgid "Back to lobby"
+msgstr "返回大厅"
 
 #: src/pages/shuttlekaos/BrandHeader.tsx
 msgid "Back to ShuttleKaos"
@@ -916,6 +930,10 @@ msgstr "挑战。正在查看回放…"
 msgid "Change"
 msgstr "修改"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Change location"
+msgstr "更换地点"
+
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Change since last round"
 msgstr "与上一轮相比的变化"
@@ -953,6 +971,7 @@ msgstr "传统局制，先拿到目标分的一方获胜。"
 
 #. Button: unselect all picked memberships
 #: src/pages/board/BulkActions.tsx
+#: src/pages/shuttlekaos/NumberSheet.tsx
 msgid "Clear"
 msgstr "清除选择"
 
@@ -1081,6 +1100,11 @@ msgstr "联系：<0>{email}</0>"
 msgid "Contained"
 msgstr "居中"
 
+#. Button on your running session card
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Continue"
+msgstr "继续"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Continue with Google"
 msgstr "使用Google继续"
@@ -1088,10 +1112,6 @@ msgstr "使用Google继续"
 #: src/components/auth/LoginModal.tsx
 msgid "Continue with Microsoft"
 msgstr "使用Microsoft继续"
-
-#: src/pages/shuttlekaos/labels.ts
-msgid "Controlled chaos on court"
-msgstr "场上乱中有序"
 
 #: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Copied"
@@ -1142,6 +1162,10 @@ msgstr "无法复制"
 msgid "Could not copy the link"
 msgstr "无法复制链接"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Couldn't find where you are. Pick the hall from the list."
+msgstr "无法确定你的位置，请从列表中选择场馆。"
+
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Couldn't load open sessions"
 msgstr "无法加载开放的球局"
@@ -1157,6 +1181,10 @@ msgstr "无法加载那个球局"
 #: src/pages/board/access/AccessPage.tsx
 msgid "Couldn't load the admins"
 msgstr "管理员名单加载失败"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Couldn't load the halls. Try again."
+msgstr "无法加载场馆，请重试。"
 
 #: src/pages/board/MembersPage.tsx
 msgid "Couldn't load the memberships"
@@ -1228,6 +1256,7 @@ msgid "Couldn't search accounts. You can still add the name."
 msgstr "无法搜索账户，你仍然可以直接添加名字。"
 
 #: src/pages/shuttlekaos/CourtCard.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/ScoreSheet.tsx
 msgid "Court {court}"
 msgstr "{court}号场地"
@@ -1277,6 +1306,11 @@ msgstr "平"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Dark"
 msgstr "深色"
+
+#. Table heading
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Date"
+msgstr "日期"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -1419,7 +1453,9 @@ msgid "Drag to move. Pinch to zoom."
 msgstr "拖动来移动，双指缩放。"
 
 #. A match that ended level
+#. A match that ended level
 #: src/pages/shuttlekaos/CourtCard.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 msgid "Draw"
 msgstr "平局"
 
@@ -1603,6 +1639,10 @@ msgstr "活动"
 msgid "Events"
 msgstr "活动"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Every hall has its own rules. Some only let in members of the club that rents it, others charge a fee. Only pick a hall you know how to get into."
+msgstr "每个场馆都有自己的规定。有的只允许租用场馆的俱乐部会员入场，有的要收费。只选择你清楚怎么进入的场馆。"
+
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
 msgstr "名额全满了，干得漂亮！"
@@ -1637,10 +1677,24 @@ msgstr "全员轮遍，约{planned}轮"
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "所有打球的人都是会员。赛季价格是会员费加上你所在组别的训练费。"
 
+#: src/pages/shuttlekaos/FocusToggle.tsx
+msgid "Exit focus mode"
+msgstr "退出专注模式"
+
 #. Table column: kroner the memberships should bring in
 #: src/pages/board/MembersOverview.tsx
 msgid "Expected"
 msgstr "应收"
+
+#. Tooltip on the flask icon next to ShuttleKaos in menus
+#: src/components/layout/ExperimentalMark.tsx
+msgid "Experimental feature"
+msgstr "实验性功能"
+
+#. Short column heading for points scored (for)
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "F"
+msgstr "得"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
@@ -1649,6 +1703,10 @@ msgstr "失误"
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault!"
 msgstr "失误！"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "Fewer stats"
+msgstr "更少数据"
 
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/pages/membership/MembershipPage.tsx
@@ -1708,6 +1766,10 @@ msgstr "固定"
 msgid "Fjord blue"
 msgstr "峡湾蓝"
 
+#: src/pages/shuttlekaos/FocusToggle.tsx
+msgid "Focus mode"
+msgstr "专注模式"
+
 #: src/components/ui/SocialLinks.tsx
 msgid "Follow us"
 msgstr "关注我们"
@@ -1726,6 +1788,7 @@ msgstr "页脚菜单"
 msgid "For"
 msgstr "给谁"
 
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Format"
@@ -1771,10 +1834,6 @@ msgstr "已满"
 #: src/components/training/NextTraining.tsx
 msgid "Full schedule"
 msgstr "完整时间表"
-
-#: src/pages/shuttlekaos/SessionView.tsx
-msgid "Full table"
-msgstr "完整排名"
 
 #. Page width: edge to edge
 #: src/components/layout/VariantPanel.tsx
@@ -1842,6 +1901,13 @@ msgstr "组别"
 msgid "Half price on Beginners your first season"
 msgstr "第一个赛季新手组半价"
 
+#. Table heading: the sports hall
+#. Table heading: the sports hall
+#: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Hall"
+msgstr "场馆"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
 msgstr "场馆记分牌"
@@ -1878,6 +1944,10 @@ msgstr "你好！我想在赛季中途加入，价格是多少？"
 #: src/pages/training/TrainingPage.tsx
 msgid "Hi! Let me know when a spot opens up in a group."
 msgstr "你好！哪个组有空位了请告诉我。"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Hi! Please add this hall to ShuttleKaos: "
+msgstr "你好！请把这个场馆加到 ShuttleKaos："
 
 #: src/data/contact.ts
 msgid "Hi! We'd like to hear more about sponsoring the club."
@@ -2079,6 +2149,7 @@ msgstr "此项请留空"
 msgid "Leave this session?"
 msgstr "退出这个球局？"
 
+#. Table heading: player level
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
@@ -2173,6 +2244,16 @@ msgstr "进行中"
 msgid "Live now"
 msgstr "正在进行"
 
+#: src/pages/shuttlekaos/OpenSession.tsx
+#: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Location"
+msgstr "地点"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Location access is off. Allow it in the browser, or pick the hall from the list."
+msgstr "定位已关闭。请在浏览器中允许定位，或从列表中选择场馆。"
+
 #: src/components/auth/LoginModal.tsx
 #: src/components/auth/UserMenu.tsx
 #: src/pages/membership/MyMembershipPage.tsx
@@ -2235,6 +2316,10 @@ msgstr "正在查找账户…"
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Lost"
 msgstr "负场"
+
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Made with Bygdø members in mind, but anyone is welcome to play."
+msgstr "为 Bygdø 会员打造，也欢迎所有人来玩。"
 
 #: src/components/layout/MobileMenu.tsx
 #: src/components/layout/SiteHeader.tsx
@@ -2360,6 +2445,10 @@ msgstr "没打到甜区"
 msgid "Missed!"
 msgstr "没接住！"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Missing a hall?"
+msgstr "缺少场馆？"
+
 #. Table column: calendar month
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/board/visitors/ViewsChart.tsx
@@ -2374,6 +2463,10 @@ msgstr "更多"
 #: src/pages/news/NewsPostPage.tsx
 msgid "More news"
 msgstr "更多新闻"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "More stats"
+msgstr "更多数据"
 
 #: src/pages/board/MembersPage.tsx
 msgid "More ways to add"
@@ -2536,6 +2629,18 @@ msgstr "没有符合筛选条件的活动"
 msgid "No events with shifts yet"
 msgstr "还没有设了班次的活动"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "No hall from the list is close to you. Pick one here."
+msgstr "附近没有列表中的场馆，请在这里选择。"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "No hall matches \"{trimmed}\"."
+msgstr "没有与“{trimmed}”匹配的场馆。"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "No location. Add one so people know where to go."
+msgstr "未设地点。添加一个，大家就知道去哪里。"
+
 #. Badge: this person has no membership in the chosen season
 #. People filter: account without a membership
 #: src/pages/board/MembersPage.tsx
@@ -2594,6 +2699,11 @@ msgstr "这里还没有价格。<0>问问理事会</0>"
 #: src/pages/board/MembersPage.tsx
 msgid "No requests match"
 msgstr "没有符合条件的申请"
+
+#. A match that has no valid score
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "No score"
+msgstr "无比分"
 
 #: src/pages/shuttlekaos/StartPage.tsx
 msgid "No sessions yet. Start one, or join one, and it lands here."
@@ -2837,6 +2947,11 @@ msgstr "可报名"
 msgid "Optional. Usually a parent's account."
 msgstr "选填。通常是家长的账户。"
 
+#. Table heading for the options menu
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Options"
+msgstr "选项"
+
 #: src/pages/shuttlekaos/StartPage.tsx
 msgid "Options for {title}"
 msgstr "{title}的选项"
@@ -2859,7 +2974,10 @@ msgstr "或通过邮件获取链接"
 msgid "Org. no. {0}"
 msgstr "组织编号{0}"
 
+#. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Organizer"
 msgstr "发起人"
 
@@ -2991,6 +3109,10 @@ msgstr "搭档"
 msgid "Past"
 msgstr "往期"
 
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Past sessions"
+msgstr "过往场次"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Pay"
 msgstr "付款"
@@ -3112,6 +3234,7 @@ msgstr "再看一遍回放"
 msgid "Played"
 msgstr "已赛场次"
 
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Player"
 msgstr "球员"
@@ -3121,8 +3244,12 @@ msgstr "球员"
 msgid "Player name"
 msgstr "球员姓名"
 
+#. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/OpenSession.tsx
+#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Players"
 msgstr "球员"
 
@@ -3139,8 +3266,10 @@ msgstr "比赛中"
 msgid "Playing in another session. Add the name instead."
 msgstr "正在另一个球局中，请改为直接添加名字。"
 
+#. Heading for your sessions being played right now
 #. Session status: being played right now
 #: src/pages/shuttlekaos/SessionView.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Playing now"
 msgstr "正在进行"
 
@@ -3162,16 +3291,22 @@ msgstr "得分"
 msgid "Point difference"
 msgstr "净胜分"
 
-#. Stat label: points scored
 #: src/pages/shuttlekaos/StandingsTable.tsx
-#: src/pages/shuttlekaos/WinnerHero.tsx
 msgid "Points"
 msgstr "得分"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "Points conceded"
+msgstr "失分"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Points per match"
 msgstr "每场分数"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "Points scored"
+msgstr "得分"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Points to win a game"
@@ -3257,6 +3392,11 @@ msgstr "对你的数据有疑问？问问理事会，我们会回答你。"
 msgid "Quick start"
 msgstr "快速开始"
 
+#. Short label for a round number, e.g. R3 for Round 3
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "R{number}"
+msgstr "第{number}轮"
+
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Rally"
 msgstr "多拍"
@@ -3314,6 +3454,10 @@ msgstr "移除{playerName}"
 #: src/pages/board/access/RemoveAdminModal.tsx
 msgid "Remove admin?"
 msgstr "移除管理员？"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Remove location"
+msgstr "移除地点"
 
 #: src/pages/shuttlekaos/SessionMenu.tsx
 #: src/pages/shuttlekaos/StartPage.tsx
@@ -3384,9 +3528,15 @@ msgstr "申请"
 msgid "Reset"
 msgstr "重置"
 
+#. Followed by the players who sit out this round
 #: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Resting this round: {resting}"
-msgstr "本轮轮空：{resting}"
+msgid "Resting this round"
+msgstr "本轮轮空"
+
+#. Followed by the names of players who sat out the round
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Resting: {names}"
+msgstr "轮空：{names}"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
@@ -3406,9 +3556,23 @@ msgstr "圆角"
 msgid "Round {next}"
 msgstr "第{next}轮"
 
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Round {number}"
+msgstr "第{number}轮"
+
+#. Card header, e.g. Round 3 · Court 2
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Round {number} · Court {court}"
+msgstr "第{number}轮 · {court}号场地"
+
 #: src/pages/shuttlekaos/RoundBrowser.tsx
 msgid "Round {previous}"
 msgstr "第{previous}轮"
+
+#. Card for a round the chosen player sat out, e.g. Round 2 · Resting
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Round {round} · Resting"
+msgstr "第{round}轮 · 轮空"
 
 #: src/pages/shuttlekaos/RoundDone.tsx
 msgid "Round {round} done"
@@ -3418,24 +3582,16 @@ msgstr "第{round}轮结束"
 msgid "Round {round} done – see standings"
 msgstr "第{round}轮结束 – 查看排名"
 
+#. Round being shown and the planned total, e.g. Round 3 / 11
 #: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Round {viewed} / {last}"
-msgstr "第{viewed}/{last}轮"
-
-#: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Round {viewed} / {limit}"
-msgstr "第{viewed}/{limit}轮"
-
-#. The total is an estimate, e.g. Round 3 / ~11
-#: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Round {viewed} / ~{rough}"
-msgstr "第{viewed}轮 / 约{rough}轮"
+msgid "Round {viewed} / {total}"
+msgstr "第{viewed}/{total}轮"
 
 #: src/pages/shuttlekaos/OpenSession.tsx
 msgid "Round 1 is drawn. Let the chaos begin!"
 msgstr "第1轮已抽签，乱起来吧！"
 
-#: src/pages/shuttlekaos/SessionView.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Rounds"
@@ -3471,11 +3627,6 @@ msgstr "保存照片"
 msgid "Save score"
 msgstr "保存比分"
 
-#. Stat label: points scored minus points conceded
-#: src/pages/shuttlekaos/WinnerHero.tsx
-msgid "Score difference"
-msgstr "净胜分"
-
 #: src/pages/shuttlekaos/CourtCard.tsx
 msgid "Score for {awayName}"
 msgstr "{awayName}的得分"
@@ -3504,6 +3655,10 @@ msgstr "搜索"
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Search accounts"
 msgstr "搜索账号"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Search halls"
+msgstr "搜索场馆"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Search news"
@@ -3611,7 +3766,11 @@ msgstr "发球 · 多拍 · 得分"
 msgid "Service fault: page not found"
 msgstr "发球失误：找不到页面"
 
+#. Table heading
+#. Table heading
+#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Session"
 msgstr "球局"
 
@@ -3623,6 +3782,10 @@ msgstr "球局已删除。"
 #: src/pages/shuttlekaos/OpenSession.tsx
 msgid "Session settings"
 msgstr "球局设置"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Set location"
+msgstr "设置地点"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Set number"
@@ -3657,11 +3820,12 @@ msgstr "分享"
 msgid "Share link"
 msgstr "分享链接"
 
+#: src/pages/shuttlekaos/SessionMenu.tsx
 #: src/pages/shuttlekaos/ShareButton.tsx
 msgid "Share the live scores"
 msgstr "分享实时比分"
 
-#: src/pages/shuttlekaos/WinnerHero.tsx
+#: src/pages/shuttlekaos/Podium.tsx
 msgid "Shared win"
 msgstr "并列冠军"
 
@@ -3844,6 +4008,7 @@ msgstr "拆开{names}"
 msgid "Sponsor the club"
 msgstr "赞助俱乐部"
 
+#: src/pages/shuttlekaos/RoundBrowser.tsx
 #: src/pages/shuttlekaos/SessionView.tsx
 msgid "Standings"
 msgstr "排名"
@@ -3884,10 +4049,6 @@ msgstr "状态"
 #: src/pages/shuttlekaos/SetupSteps.tsx
 msgid "Step {number} of {total} · {name}"
 msgstr "第{number}步，共{total}步 · {name}"
-
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "Streak"
-msgstr "连续"
 
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "Study case"
@@ -4366,6 +4527,10 @@ msgstr "撤销拒绝"
 msgid "Undo round"
 msgstr "撤回本轮"
 
+#: src/pages/shuttlekaos/labels.ts
+msgid "Unleash chaos on court"
+msgstr "在球场上释放混乱"
+
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "取消关联{name}"
@@ -4407,6 +4572,10 @@ msgstr "改为{suggested}"
 #: src/components/auth/LoginModal.tsx
 msgid "Use another email"
 msgstr "换个邮箱"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Use current location"
+msgstr "使用当前位置"
 
 #: src/pages/shuttlekaos/StartPage.tsx
 msgid "Use last setup"
@@ -4485,6 +4654,11 @@ msgstr "胜"
 #: src/components/training/GroupStatusBadge.tsx
 msgid "Waiting list"
 msgstr "候补名单"
+
+#. Heading for your sessions that haven't started
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Waiting to start"
+msgstr "等待开始"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Want a shift?"
@@ -4601,14 +4775,9 @@ msgid "Width"
 msgstr "宽度"
 
 #. Heading above the session winner
-#: src/pages/shuttlekaos/WinnerHero.tsx
+#: src/pages/shuttlekaos/Podium.tsx
 msgid "Winner"
 msgstr "冠军"
-
-#. Stat label: matches won
-#: src/pages/shuttlekaos/WinnerHero.tsx
-msgid "Wins"
-msgstr "胜场"
 
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/training/TrainingPage.tsx
@@ -4644,7 +4813,11 @@ msgid "Yes. Children can start with a trial membership, and adults can drop in. 
 msgstr "可以。孩子可以先办体验会员，成人可以单次参加。价格见上方。"
 
 #. Badge next to your own name in the admin list
+#. Shown instead of your own name in a session
+#. Table heading: your place and points
 #: src/pages/board/access/AccessPage.tsx
+#: src/pages/shuttlekaos/labels.ts
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "You"
 msgstr "你"
 
@@ -4725,10 +4898,6 @@ msgstr "你的账户"
 #: src/pages/join/JoinPage.tsx
 msgid "Your child’s name"
 msgstr "孩子的姓名"
-
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Your current session"
-msgstr "你当前的球局"
 
 #: src/pages/club/sections.tsx
 msgid "Your data"

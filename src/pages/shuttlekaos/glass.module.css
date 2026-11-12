@@ -5,11 +5,11 @@
   background: var(--bk-surface);
 
   @supports (backdrop-filter: blur(1px)) {
-    --paper-border-color: rgb(0 0 0 / 0.07);
+    --paper-border-color: rgb(0 0 0 / 0.1);
 
-    border-color: rgb(0 0 0 / 0.07);
-    background: color-mix(in srgb, var(--mantine-color-brand-0) 66%, transparent);
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.08);
+    border-color: rgb(0 0 0 / 0.1);
+    background: color-mix(in srgb, var(--bk-surface) 93%, transparent);
+    box-shadow: 0 6px 20px rgb(0 0 0 / 0.12);
     backdrop-filter: blur(16px) saturate(140%);
 
     :where([data-mantine-color-scheme='dark']) & {

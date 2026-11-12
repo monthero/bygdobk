@@ -67,14 +67,6 @@ msgstr "{0} per visit"
 msgid "{added, plural, one {Copy # membership} other {Copy # memberships}}"
 msgstr "{added, plural, one {Copy # membership} other {Copy # memberships}}"
 
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "{count, plural, one {# draw in a row} other {# draws in a row}}"
-msgstr "{count, plural, one {# draw in a row} other {# draws in a row}}"
-
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "{count, plural, one {# loss in a row} other {# losses in a row}}"
-msgstr "{count, plural, one {# loss in a row} other {# losses in a row}}"
-
 #: src/pages/board/MarkPaidModal.tsx
 msgid "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
 msgstr "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0> in total."
@@ -82,10 +74,6 @@ msgstr "{count, plural, one {# membership} other {# memberships}}, <0>{total}</0
 #: src/components/auth/RequestCountBadge.tsx
 msgid "{count, plural, one {# open request} other {# open requests}}"
 msgstr "{count, plural, one {# open request} other {# open requests}}"
-
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "{count, plural, one {# win in a row} other {# wins in a row}}"
-msgstr "{count, plural, one {# win in a row} other {# wins in a row}}"
 
 #: src/pages/board/BulkActions.tsx
 msgid "{count, plural, one {Copy # email} other {Copy # emails}}"
@@ -215,17 +203,9 @@ msgstr "{playedRounds, plural, one {Finished after # round} other {Finished afte
 msgid "{playerCount} players"
 msgstr "{playerCount} players"
 
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "{players} players"
-msgstr "{players} players"
-
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{points} points per match"
 msgstr "{points} points per match"
-
-#: src/pages/shuttlekaos/Podium.tsx
-msgid "{points} pts"
-msgstr "{points} pts"
 
 #: src/components/auth/UserMenu.tsx
 msgid "{requestCount, plural, one {# open membership request} other {# open membership requests}}"
@@ -293,9 +273,10 @@ msgstr "{trimmed} is already playing."
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} not paid"
 
-#: src/pages/shuttlekaos/Podium.tsx
-msgid "{won} won"
-msgstr "{won} won"
+#. Your place and points in a table cell, e.g. #2 · 84 pts
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "#{rank} · {points} pts"
+msgstr "#{rank} · {points} pts"
 
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
@@ -372,6 +353,11 @@ msgstr "50–149 points. Regular tournament players."
 #: src/pages/board/visitors/VisitorsPage.tsx
 msgid "7 days"
 msgstr "7 days"
+
+#. Short column heading for points conceded (against)
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "A"
+msgstr "A"
 
 #. The shuttle hit the racket away from the middle
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
@@ -462,6 +448,10 @@ msgstr "A water bottle"
 msgid "A woman looking at her phone, her face covered by a digital grid"
 msgstr "A woman looking at her phone, her face covered by a digital grid"
 
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "About {minutes} minutes"
+msgstr "About {minutes} minutes"
+
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "About {perRound} per round"
 msgstr "About {perRound} per round"
@@ -501,6 +491,11 @@ msgstr "Account menu for {name}"
 #: src/pages/membership/MembershipPage.tsx
 msgid "Account number: {0}"
 msgstr "Account number: {0}"
+
+#. Table heading for the Join or Watch buttons
+#: src/pages/shuttlekaos/PublicSessions.tsx
+msgid "Action"
+msgstr "Action"
 
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/PeopleList.tsx
@@ -623,10 +618,12 @@ msgid "Ages 7–12 try half a season for {0}"
 msgstr "Ages 7–12 try half a season for {0}"
 
 #. Events filter option that shows upcoming and past events
+#. Filter option: show every round
 #. People filter: everyone
 #: src/pages/board/MembersPage.tsx
 #: src/pages/events/EventsPage.tsx
 #: src/pages/news/NewsPage.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "All"
 msgstr "All"
@@ -648,11 +645,19 @@ msgstr "All groups"
 msgid "All levels"
 msgstr "All levels"
 
+#: src/pages/shuttlekaos/SessionView.tsx
+msgid "All matches"
+msgstr "All matches"
+
 #: src/pages/home/HomePage.tsx
 #: src/pages/news/components/ArticleHero.tsx
 #: src/pages/news/NewsPostPage.tsx
 msgid "All news"
 msgstr "All news"
+
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "All players"
+msgstr "All players"
 
 #. Season filter option
 #: src/pages/board/MembersPage.tsx
@@ -715,6 +720,10 @@ msgstr "Ask about a spot"
 msgid "Ask for the code"
 msgstr "Ask for the code"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Ask the board to add it"
+msgstr "Ask the board to add it"
+
 #: src/pages/shuttlekaos/SetupSteps.tsx
 msgid "Back"
 msgstr "Back"
@@ -722,6 +731,11 @@ msgstr "Back"
 #: src/pages/news/components/ClosureNotice.tsx
 msgid "Back on court {back}."
 msgstr "Back on court {back}."
+
+#. Button on a finished session, goes to the ShuttleKaos start page
+#: src/pages/shuttlekaos/PlaySession.tsx
+msgid "Back to lobby"
+msgstr "Back to lobby"
 
 #: src/pages/shuttlekaos/BrandHeader.tsx
 msgid "Back to ShuttleKaos"
@@ -916,6 +930,10 @@ msgstr "Challenge. Checking the replay…"
 msgid "Change"
 msgstr "Change"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Change location"
+msgstr "Change location"
+
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Change since last round"
 msgstr "Change since last round"
@@ -953,6 +971,7 @@ msgstr "Classic games. The first side to reach the target wins."
 
 #. Button: unselect all picked memberships
 #: src/pages/board/BulkActions.tsx
+#: src/pages/shuttlekaos/NumberSheet.tsx
 msgid "Clear"
 msgstr "Clear"
 
@@ -1081,6 +1100,11 @@ msgstr "Contact: <0>{email}</0>"
 msgid "Contained"
 msgstr "Contained"
 
+#. Button on your running session card
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Continue"
+msgstr "Continue"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Continue with Google"
 msgstr "Continue with Google"
@@ -1088,10 +1112,6 @@ msgstr "Continue with Google"
 #: src/components/auth/LoginModal.tsx
 msgid "Continue with Microsoft"
 msgstr "Continue with Microsoft"
-
-#: src/pages/shuttlekaos/labels.ts
-msgid "Controlled chaos on court"
-msgstr "Controlled chaos on court"
 
 #: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Copied"
@@ -1142,6 +1162,10 @@ msgstr "Could not copy"
 msgid "Could not copy the link"
 msgstr "Could not copy the link"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Couldn't find where you are. Pick the hall from the list."
+msgstr "Couldn't find where you are. Pick the hall from the list."
+
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Couldn't load open sessions"
 msgstr "Couldn't load open sessions"
@@ -1157,6 +1181,10 @@ msgstr "Couldn't load that session"
 #: src/pages/board/access/AccessPage.tsx
 msgid "Couldn't load the admins"
 msgstr "Couldn't load the admins"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Couldn't load the halls. Try again."
+msgstr "Couldn't load the halls. Try again."
 
 #: src/pages/board/MembersPage.tsx
 msgid "Couldn't load the memberships"
@@ -1228,6 +1256,7 @@ msgid "Couldn't search accounts. You can still add the name."
 msgstr "Couldn't search accounts. You can still add the name."
 
 #: src/pages/shuttlekaos/CourtCard.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/ScoreSheet.tsx
 msgid "Court {court}"
 msgstr "Court {court}"
@@ -1277,6 +1306,11 @@ msgstr "D"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Dark"
 msgstr "Dark"
+
+#. Table heading
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Date"
+msgstr "Date"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -1419,7 +1453,9 @@ msgid "Drag to move. Pinch to zoom."
 msgstr "Drag to move. Pinch to zoom."
 
 #. A match that ended level
+#. A match that ended level
 #: src/pages/shuttlekaos/CourtCard.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 msgid "Draw"
 msgstr "Draw"
 
@@ -1603,6 +1639,10 @@ msgstr "Event"
 msgid "Events"
 msgstr "Events"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Every hall has its own rules. Some only let in members of the club that rents it, others charge a fee. Only pick a hall you know how to get into."
+msgstr "Every hall has its own rules. Some only let in members of the club that rents it, others charge a fee. Only pick a hall you know how to get into."
+
 #: src/pages/board/volunteers/VolunteersPage.tsx
 msgid "Every spot is filled. Nice work!"
 msgstr "Every spot is filled. Nice work!"
@@ -1637,10 +1677,24 @@ msgstr "Everyone together, ~{planned} rounds"
 msgid "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 msgstr "Everyone who plays is a member. The price for the season is the membership fee plus the training fee for your group."
 
+#: src/pages/shuttlekaos/FocusToggle.tsx
+msgid "Exit focus mode"
+msgstr "Exit focus mode"
+
 #. Table column: kroner the memberships should bring in
 #: src/pages/board/MembersOverview.tsx
 msgid "Expected"
 msgstr "Expected"
+
+#. Tooltip on the flask icon next to ShuttleKaos in menus
+#: src/components/layout/ExperimentalMark.tsx
+msgid "Experimental feature"
+msgstr "Experimental feature"
+
+#. Short column heading for points scored (for)
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "F"
+msgstr "F"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault"
@@ -1649,6 +1703,10 @@ msgstr "Fault"
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Fault!"
 msgstr "Fault!"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "Fewer stats"
+msgstr "Fewer stats"
 
 #: src/components/styles/flight/HowToJoin.tsx
 #: src/pages/membership/MembershipPage.tsx
@@ -1708,6 +1766,10 @@ msgstr "Fixed"
 msgid "Fjord blue"
 msgstr "Fjord blue"
 
+#: src/pages/shuttlekaos/FocusToggle.tsx
+msgid "Focus mode"
+msgstr "Focus mode"
+
 #: src/components/ui/SocialLinks.tsx
 msgid "Follow us"
 msgstr "Follow us"
@@ -1726,6 +1788,7 @@ msgstr "Footer menu"
 msgid "For"
 msgstr "For"
 
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Format"
@@ -1771,10 +1834,6 @@ msgstr "Full"
 #: src/components/training/NextTraining.tsx
 msgid "Full schedule"
 msgstr "Full schedule"
-
-#: src/pages/shuttlekaos/SessionView.tsx
-msgid "Full table"
-msgstr "Full table"
 
 #. Page width: edge to edge
 #: src/components/layout/VariantPanel.tsx
@@ -1842,6 +1901,13 @@ msgstr "Groups"
 msgid "Half price on Beginners your first season"
 msgstr "Half price on Beginners your first season"
 
+#. Table heading: the sports hall
+#. Table heading: the sports hall
+#: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Hall"
+msgstr "Hall"
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Hall scoreboard"
 msgstr "Hall scoreboard"
@@ -1878,6 +1944,10 @@ msgstr "Hi! I'd like to join mid-season. What would the price be?"
 #: src/pages/training/TrainingPage.tsx
 msgid "Hi! Let me know when a spot opens up in a group."
 msgstr "Hi! Let me know when a spot opens up in a group."
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Hi! Please add this hall to ShuttleKaos: "
+msgstr "Hi! Please add this hall to ShuttleKaos: "
 
 #: src/data/contact.ts
 msgid "Hi! We'd like to hear more about sponsoring the club."
@@ -2079,6 +2149,7 @@ msgstr "Leave this empty"
 msgid "Leave this session?"
 msgstr "Leave this session?"
 
+#. Table heading: player level
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
@@ -2173,6 +2244,16 @@ msgstr "Live"
 msgid "Live now"
 msgstr "Live now"
 
+#: src/pages/shuttlekaos/OpenSession.tsx
+#: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "Location"
+msgstr "Location"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Location access is off. Allow it in the browser, or pick the hall from the list."
+msgstr "Location access is off. Allow it in the browser, or pick the hall from the list."
+
 #: src/components/auth/LoginModal.tsx
 #: src/components/auth/UserMenu.tsx
 #: src/pages/membership/MyMembershipPage.tsx
@@ -2235,6 +2316,10 @@ msgstr "Looking for the account…"
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Lost"
 msgstr "Lost"
+
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Made with Bygdø members in mind, but anyone is welcome to play."
+msgstr "Made with Bygdø members in mind, but anyone is welcome to play."
 
 #: src/components/layout/MobileMenu.tsx
 #: src/components/layout/SiteHeader.tsx
@@ -2360,6 +2445,10 @@ msgstr "Missed the sweet spot"
 msgid "Missed!"
 msgstr "Missed!"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Missing a hall?"
+msgstr "Missing a hall?"
+
 #. Table column: calendar month
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/board/visitors/ViewsChart.tsx
@@ -2374,6 +2463,10 @@ msgstr "More"
 #: src/pages/news/NewsPostPage.tsx
 msgid "More news"
 msgstr "More news"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "More stats"
+msgstr "More stats"
 
 #: src/pages/board/MembersPage.tsx
 msgid "More ways to add"
@@ -2536,6 +2629,18 @@ msgstr "No events match this filter"
 msgid "No events with shifts yet"
 msgstr "No events with shifts yet"
 
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "No hall from the list is close to you. Pick one here."
+msgstr "No hall from the list is close to you. Pick one here."
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "No hall matches \"{trimmed}\"."
+msgstr "No hall matches \"{trimmed}\"."
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "No location. Add one so people know where to go."
+msgstr "No location. Add one so people know where to go."
+
 #. Badge: this person has no membership in the chosen season
 #. People filter: account without a membership
 #: src/pages/board/MembersPage.tsx
@@ -2594,6 +2699,11 @@ msgstr "No prices here yet. <0>Ask the board</0>"
 #: src/pages/board/MembersPage.tsx
 msgid "No requests match"
 msgstr "No requests match"
+
+#. A match that has no valid score
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "No score"
+msgstr "No score"
 
 #: src/pages/shuttlekaos/StartPage.tsx
 msgid "No sessions yet. Start one, or join one, and it lands here."
@@ -2837,6 +2947,11 @@ msgstr "Open to join"
 msgid "Optional. Usually a parent's account."
 msgstr "Optional. Usually a parent's account."
 
+#. Table heading for the options menu
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Options"
+msgstr "Options"
+
 #: src/pages/shuttlekaos/StartPage.tsx
 msgid "Options for {title}"
 msgstr "Options for {title}"
@@ -2859,7 +2974,10 @@ msgstr "or get a link by email"
 msgid "Org. no. {0}"
 msgstr "Org. no. {0}"
 
+#. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Organizer"
 msgstr "Organizer"
 
@@ -2991,6 +3109,10 @@ msgstr "Partners"
 msgid "Past"
 msgstr "Past"
 
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Past sessions"
+msgstr "Past sessions"
+
 #: src/pages/membership/MembershipPage.tsx
 msgid "Pay"
 msgstr "Pay"
@@ -3112,6 +3234,7 @@ msgstr "Play the replay again"
 msgid "Played"
 msgstr "Played"
 
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Player"
 msgstr "Player"
@@ -3121,8 +3244,12 @@ msgstr "Player"
 msgid "Player name"
 msgstr "Player name"
 
+#. Table heading
+#. Table heading
 #: src/pages/shuttlekaos/OpenSession.tsx
+#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Players"
 msgstr "Players"
 
@@ -3139,8 +3266,10 @@ msgstr "Playing"
 msgid "Playing in another session. Add the name instead."
 msgstr "Playing in another session. Add the name instead."
 
+#. Heading for your sessions being played right now
 #. Session status: being played right now
 #: src/pages/shuttlekaos/SessionView.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Playing now"
 msgstr "Playing now"
 
@@ -3162,16 +3291,22 @@ msgstr "Point"
 msgid "Point difference"
 msgstr "Point difference"
 
-#. Stat label: points scored
 #: src/pages/shuttlekaos/StandingsTable.tsx
-#: src/pages/shuttlekaos/WinnerHero.tsx
 msgid "Points"
 msgstr "Points"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "Points conceded"
+msgstr "Points conceded"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Points per match"
 msgstr "Points per match"
+
+#: src/pages/shuttlekaos/StandingsTable.tsx
+msgid "Points scored"
+msgstr "Points scored"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Points to win a game"
@@ -3257,6 +3392,11 @@ msgstr "Questions about your data? Ask the board, and we’ll answer."
 msgid "Quick start"
 msgstr "Quick start"
 
+#. Short label for a round number, e.g. R3 for Round 3
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "R{number}"
+msgstr "R{number}"
+
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Rally"
 msgstr "Rally"
@@ -3314,6 +3454,10 @@ msgstr "Remove {playerName}"
 #: src/pages/board/access/RemoveAdminModal.tsx
 msgid "Remove admin?"
 msgstr "Remove admin?"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Remove location"
+msgstr "Remove location"
 
 #: src/pages/shuttlekaos/SessionMenu.tsx
 #: src/pages/shuttlekaos/StartPage.tsx
@@ -3384,9 +3528,15 @@ msgstr "Requests"
 msgid "Reset"
 msgstr "Reset"
 
+#. Followed by the players who sit out this round
 #: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Resting this round: {resting}"
-msgstr "Resting this round: {resting}"
+msgid "Resting this round"
+msgstr "Resting this round"
+
+#. Followed by the names of players who sat out the round
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Resting: {names}"
+msgstr "Resting: {names}"
 
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Reviewing…"
@@ -3406,9 +3556,23 @@ msgstr "Round"
 msgid "Round {next}"
 msgstr "Round {next}"
 
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Round {number}"
+msgstr "Round {number}"
+
+#. Card header, e.g. Round 3 · Court 2
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Round {number} · Court {court}"
+msgstr "Round {number} · Court {court}"
+
 #: src/pages/shuttlekaos/RoundBrowser.tsx
 msgid "Round {previous}"
 msgstr "Round {previous}"
+
+#. Card for a round the chosen player sat out, e.g. Round 2 · Resting
+#: src/pages/shuttlekaos/MatchGrid.tsx
+msgid "Round {round} · Resting"
+msgstr "Round {round} · Resting"
 
 #: src/pages/shuttlekaos/RoundDone.tsx
 msgid "Round {round} done"
@@ -3418,24 +3582,16 @@ msgstr "Round {round} done"
 msgid "Round {round} done – see standings"
 msgstr "Round {round} done – see standings"
 
+#. Round being shown and the planned total, e.g. Round 3 / 11
 #: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Round {viewed} / {last}"
-msgstr "Round {viewed} / {last}"
-
-#: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Round {viewed} / {limit}"
-msgstr "Round {viewed} / {limit}"
-
-#. The total is an estimate, e.g. Round 3 / ~11
-#: src/pages/shuttlekaos/RoundBrowser.tsx
-msgid "Round {viewed} / ~{rough}"
-msgstr "Round {viewed} / ~{rough}"
+msgid "Round {viewed} / {total}"
+msgstr "Round {viewed} / {total}"
 
 #: src/pages/shuttlekaos/OpenSession.tsx
 msgid "Round 1 is drawn. Let the chaos begin!"
 msgstr "Round 1 is drawn. Let the chaos begin!"
 
-#: src/pages/shuttlekaos/SessionView.tsx
+#: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Rounds"
@@ -3471,11 +3627,6 @@ msgstr "Save photo"
 msgid "Save score"
 msgstr "Save score"
 
-#. Stat label: points scored minus points conceded
-#: src/pages/shuttlekaos/WinnerHero.tsx
-msgid "Score difference"
-msgstr "Score difference"
-
 #: src/pages/shuttlekaos/CourtCard.tsx
 msgid "Score for {awayName}"
 msgstr "Score for {awayName}"
@@ -3504,6 +3655,10 @@ msgstr "Search"
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Search accounts"
 msgstr "Search accounts"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Search halls"
+msgstr "Search halls"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Search news"
@@ -3611,7 +3766,11 @@ msgstr "Serve · Rally · Point"
 msgid "Service fault: page not found"
 msgstr "Service fault: page not found"
 
+#. Table heading
+#. Table heading
+#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Session"
 msgstr "Session"
 
@@ -3623,6 +3782,10 @@ msgstr "Session deleted."
 #: src/pages/shuttlekaos/OpenSession.tsx
 msgid "Session settings"
 msgstr "Session settings"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Set location"
+msgstr "Set location"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Set number"
@@ -3657,11 +3820,12 @@ msgstr "Share"
 msgid "Share link"
 msgstr "Share link"
 
+#: src/pages/shuttlekaos/SessionMenu.tsx
 #: src/pages/shuttlekaos/ShareButton.tsx
 msgid "Share the live scores"
 msgstr "Share the live scores"
 
-#: src/pages/shuttlekaos/WinnerHero.tsx
+#: src/pages/shuttlekaos/Podium.tsx
 msgid "Shared win"
 msgstr "Shared win"
 
@@ -3844,6 +4008,7 @@ msgstr "Split up {names}"
 msgid "Sponsor the club"
 msgstr "Sponsor the club"
 
+#: src/pages/shuttlekaos/RoundBrowser.tsx
 #: src/pages/shuttlekaos/SessionView.tsx
 msgid "Standings"
 msgstr "Standings"
@@ -3884,10 +4049,6 @@ msgstr "Status"
 #: src/pages/shuttlekaos/SetupSteps.tsx
 msgid "Step {number} of {total} · {name}"
 msgstr "Step {number} of {total} · {name}"
-
-#: src/pages/shuttlekaos/StandingsTable.tsx
-msgid "Streak"
-msgstr "Streak"
 
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "Study case"
@@ -4366,6 +4527,10 @@ msgstr "Undo decline"
 msgid "Undo round"
 msgstr "Undo round"
 
+#: src/pages/shuttlekaos/labels.ts
+msgid "Unleash chaos on court"
+msgstr "Unleash chaos on court"
+
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "Unlink {name}"
@@ -4407,6 +4572,10 @@ msgstr "Use {suggested}"
 #: src/components/auth/LoginModal.tsx
 msgid "Use another email"
 msgstr "Use another email"
+
+#: src/pages/shuttlekaos/LocationPicker.tsx
+msgid "Use current location"
+msgstr "Use current location"
 
 #: src/pages/shuttlekaos/StartPage.tsx
 msgid "Use last setup"
@@ -4485,6 +4654,11 @@ msgstr "W"
 #: src/components/training/GroupStatusBadge.tsx
 msgid "Waiting list"
 msgstr "Waiting list"
+
+#. Heading for your sessions that haven't started
+#: src/pages/shuttlekaos/StartPage.tsx
+msgid "Waiting to start"
+msgstr "Waiting to start"
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Want a shift?"
@@ -4601,14 +4775,9 @@ msgid "Width"
 msgstr "Width"
 
 #. Heading above the session winner
-#: src/pages/shuttlekaos/WinnerHero.tsx
+#: src/pages/shuttlekaos/Podium.tsx
 msgid "Winner"
 msgstr "Winner"
-
-#. Stat label: matches won
-#: src/pages/shuttlekaos/WinnerHero.tsx
-msgid "Wins"
-msgstr "Wins"
 
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/training/TrainingPage.tsx
@@ -4644,7 +4813,11 @@ msgid "Yes. Children can start with a trial membership, and adults can drop in. 
 msgstr "Yes. Children can start with a trial membership, and adults can drop in. See the prices above."
 
 #. Badge next to your own name in the admin list
+#. Shown instead of your own name in a session
+#. Table heading: your place and points
 #: src/pages/board/access/AccessPage.tsx
+#: src/pages/shuttlekaos/labels.ts
+#: src/pages/shuttlekaos/StartPage.tsx
 msgid "You"
 msgstr "You"
 
@@ -4725,10 +4898,6 @@ msgstr "Your account"
 #: src/pages/join/JoinPage.tsx
 msgid "Your child’s name"
 msgstr "Your child’s name"
-
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Your current session"
-msgstr "Your current session"
 
 #: src/pages/club/sections.tsx
 msgid "Your data"

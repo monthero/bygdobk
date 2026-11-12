@@ -1,9 +1,11 @@
 import { useLingui } from '@lingui/react/macro';
-import { ActionIcon, NativeSelect, NumberInput } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
-import { useMemo, useState, type ChangeEvent, type FC } from 'react';
+import { ActionIcon, NumberInput, UnstyledButton } from '@mantine/core';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { useState, type FC } from 'react';
 
 import { Minus, Plus } from '~/components/ui';
+
+import { NumberSheet } from './NumberSheet';
 
 import classes from './Stepper.module.css';
 
@@ -25,6 +27,7 @@ type Props = {
 export const Stepper: FC<Props> = ({ label, value, min, max, onChange, nullable, large, fullWidth }) => {
   const { t } = useLingui();
   const isTouch = useMediaQuery(TOUCH_QUERY);
+  const [sheet, sheetControls] = useDisclosure(false);
   const [shown, setShown] = useState(value);
   const [draft, setDraft] = useState<number | string>(value ?? EMPTY);
   if (shown !== value) {
@@ -32,23 +35,10 @@ export const Stepper: FC<Props> = ({ label, value, min, max, onChange, nullable,
     setDraft(value ?? EMPTY);
   }
 
-  const options = useMemo(
-    () => [
-      ...(nullable ? [{ value: EMPTY, label: '–' }] : []),
-      ...Array.from({ length: max - min + 1 }, (_, index) => String(min + index)),
-    ],
-    [min, max, nullable],
-  );
-
   const change = (next: number | string) => {
     setDraft(next);
     if (typeof next === 'number') onChange(next);
     else if (nullable) onChange(null);
-  };
-
-  const pick = (event: ChangeEvent<HTMLSelectElement>) => {
-    const next = event.currentTarget.value;
-    onChange(next === EMPTY ? null : Number(next));
   };
 
   const step = (by: number) => onChange(Math.min(max, Math.max(min, (value ?? min - by) + by)));
@@ -66,15 +56,23 @@ export const Stepper: FC<Props> = ({ label, value, min, max, onChange, nullable,
         <Minus />
       </ActionIcon>
       {isTouch ? (
-        <NativeSelect
-          aria-label={label}
-          data={options}
-          value={value === null ? EMPTY : String(value)}
-          onChange={pick}
-          rightSection={null}
-          rightSectionWidth={0}
-          classNames={INPUT_CLASS_NAMES}
-        />
+        <>
+          <UnstyledButton className={classes.tap} aria-label={label} onClick={sheetControls.open}>
+            {value ?? '–'}
+          </UnstyledButton>
+          <NumberSheet
+            opened={sheet}
+            title={label}
+            value={value}
+            min={min}
+            max={max}
+            nullable={nullable}
+            onPick={(next) => {
+              if (next !== null || nullable) onChange(next);
+            }}
+            onClose={sheetControls.close}
+          />
+        </>
       ) : (
         <NumberInput
           aria-label={label}

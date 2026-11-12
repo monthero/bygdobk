@@ -2,13 +2,9 @@ import Fuse, { type FuseResultMatch, type IFuseOptions } from 'fuse.js';
 import { z } from 'zod';
 
 import type { NewsBodies, NewsPost } from '~/cms/content';
+import { AE_CHARS, foldAe as fold } from '~/utils/search';
 
 const SearchKey = z.enum(['title', 'summary', 'body']);
-
-// Fuse's ignoreDiacritics maps ø to o but leaves æ alone.
-const AE = /[æÆ]/g;
-const AE_CHARS = new Set(['æ', 'Æ']);
-const fold = (text: string) => text.replace(AE, 'ae');
 
 const BodyBlock = z.object({
   title: z.string().nullish(),

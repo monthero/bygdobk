@@ -63,7 +63,7 @@
     margin-inline: -8px;
     padding-inline: 8px;
     border-radius: var(--mantine-radius-md);
-    background: var(--bk-accent-soft);
+    background: var(--kaos-me-soft);
     font-weight: 700;
   }
 }

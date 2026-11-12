@@ -2,7 +2,7 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import { Badge, Button, Paper, Text } from '@mantine/core';
 import { memo, useState } from 'react';
 
-import { CheckCircle, PencilSimple, Trophy, Warning } from '~/components/ui';
+import { CheckCircle, PencilSimple, Warning } from '~/components/ui';
 import { gamesProblem, matchWinner } from '~/shuttlekaos/engine';
 import { ScoreMode, type Game, type Match, type Settings } from '~/shuttlekaos/model';
 
@@ -96,6 +96,7 @@ export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdi
               value={draft[0]}
               max={settings.points}
               won={winner === 0}
+              lost={winner === 1}
               onPick={onScore && ((value) => pick(0, value))}
             />
             <span className={classes.dash} aria-hidden>
@@ -106,10 +107,16 @@ export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdi
               value={draft[1]}
               max={settings.points}
               won={winner === 1}
+              lost={winner === 0}
               onPick={onScore && ((value) => pick(1, value))}
             />
           </div>
-          <div className={classes.duelSide} data-won={winner === 1 || undefined} data-lost={winner === 0 || undefined}>
+          <div
+            className={classes.duelSide}
+            data-end
+            data-won={winner === 1 || undefined}
+            data-lost={winner === 0 || undefined}
+          >
             <PlayerNames players={away} size={26} stacked end />
           </div>
         </div>
@@ -146,7 +153,6 @@ export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdi
           >
             <PlayerNames players={playersOf(players, ids)} stacked />
             <span className={classes.score}>
-              {result === true && <Trophy className={classes.trophy} aria-hidden />}
               {match.games.map((game, i) => (
                 <span key={i} className={classes.game}>
                   {game[side]}

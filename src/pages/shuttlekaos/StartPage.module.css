@@ -1,40 +1,10 @@
-.current {
-  composes: glass from './glass.module.css';
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 88px;
-  padding: 14px 16px;
-  color: inherit;
-  text-decoration: none;
-  transition: box-shadow 0.15s;
+.main {
+  padding-block: var(--mantine-spacing-lg) var(--mantine-spacing-xl);
 
-  &:hover {
-    box-shadow: var(--bk-shadow);
+  @media (min-width: $mantine-breakpoint-sm) {
+    min-height: 55dvh;
+    padding-block: 56px 80px;
   }
-
-  &:focus-visible {
-    outline: 2px solid var(--bk-accent-strong);
-    outline-offset: 2px;
-  }
-}
-
-.currentText {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
-  min-width: 0;
-}
-
-.go {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  gap: 6px;
-  font-weight: 700;
-  color: var(--bk-accent-strong);
 }
 
 .title {
@@ -44,56 +14,27 @@
   white-space: nowrap;
 }
 
-.history {
-  composes: glass from './glass.module.css';
-  overflow: hidden;
+.grid {
+  composes: grid from './PublicSessions.module.css';
 }
 
-.rows {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.card {
+  composes: card from './PublicSessions.module.css';
 }
 
-.row {
+.cardHead {
   display: flex;
   align-items: center;
-  padding-inline-end: 4px;
-
-  & + & {
-    border-top: 1px solid var(--bk-border);
-  }
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+  margin-block: -4px;
 }
 
-.rowLink {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  min-height: 64px;
-  padding: 8px 8px 8px 16px;
-  color: inherit;
-
-  &:hover {
-    background: var(--bk-surface-2);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--bk-accent-strong);
-    outline-offset: -2px;
-  }
+.cardLink {
+  composes: cardLink from './PublicSessions.module.css';
 }
 
-.when {
-  flex: none;
-  width: 4.5em;
-  font-variant-numeric: tabular-nums;
-}
-
-.rowMain {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  min-width: 0;
+.action {
+  composes: action from './PublicSessions.module.css';
 }

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/react/macro';
 import { AppShell } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { useDisclosure, useHeadroom, useMediaQuery } from '@mantine/hooks';
 import { Outlet, useRouterState, type RouterState } from '@tanstack/react-router';
 import { lazy, Suspense, useEffect, useState, type FC } from 'react';
 
@@ -24,7 +24,9 @@ import classes from './RootLayout.module.css';
 
 const LoginModal = lazy(() => import('~/components/auth/LoginModal'));
 
-const HEADER = { height: 64 };
+const HEADER_HEIGHT = 64;
+const HEADROOM_FIXED_AT = 64;
+const SMALL_SCREEN = '(max-width: 48em)';
 
 const NO_STRIP_ROUTES = new Set<keyof FileRoutesById>(['/medlemskap/bli-medlem']);
 
@@ -45,6 +47,12 @@ export const RootLayout: FC = () => {
   const style = useSettings((s) => s.style);
   const { PageDecor } = useStyleKit();
   const loginOpened = useUi((s) => s.loginOpened);
+  const smallScreen = useMediaQuery(SMALL_SCREEN);
+  const autoHide = useUi((s) => s.autoHideHeader) && smallScreen;
+  const focus = useUi((s) => s.focusMode);
+  const { pinned } = useHeadroom({ fixedAt: HEADROOM_FIXED_AT });
+  const headerHidden = focus || (autoHide && !pinned);
+  const floating = !standalone && (autoHide || focus);
   const [loginLoaded, setLoginLoaded] = useState(loginOpened);
   if (loginOpened && !loginLoaded) setLoginLoaded(true);
 
@@ -66,7 +74,8 @@ export const RootLayout: FC = () => {
         <Trans>Skip to content</Trans>
       </a>
       <AppShell
-        header={standalone ? undefined : HEADER}
+        header={standalone ? undefined : { height: HEADER_HEIGHT, collapsed: headerHidden, offset: !floating }}
+        __vars={{ '--bk-header-shown': standalone || headerHidden ? '0px' : `${HEADER_HEIGHT}px` }}
         navbar={{ width: 248, breakpoint: 'md', collapsed: { mobile: true, desktop: !side } }}
         padding={0}
       >
@@ -78,14 +87,14 @@ export const RootLayout: FC = () => {
         <AppShell.Navbar p="sm">
           <SiteNavbar standalone={standalone} />
         </AppShell.Navbar>
-        <AppShell.Main id="main" className={classes.main}>
-          {standalone && <ScrollTitleBar />}
-          <SiteNotice />
+        <AppShell.Main id="main" className={classes.main} data-headroom={(floating && !focus) || undefined}>
+          {standalone && !focus && <ScrollTitleBar />}
+          {!focus && <SiteNotice />}
           <div className={classes.content}>
             <Outlet />
           </div>
           {showStrip && <SponsorStrip />}
-          <SiteFooter />
+          {!focus && <SiteFooter />}
         </AppShell.Main>
       </AppShell>
       <MobileMenu opened={opened} onClose={close} />

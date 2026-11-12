@@ -2,8 +2,8 @@ import { roundsLeft } from './engine/coverage.ts';
 import { isFixedPairs } from './engine/entrants.ts';
 import { nextRound } from './engine/rounds.ts';
 import { gamesProblem } from './engine/scores.ts';
-import type { Game, Match, Pair, Player, Round, Session } from './model.ts';
-import { MAX_PLAYERS, MAX_ROUNDS, PlayStyle, SessionStatus, Settings, SetupProblem } from './model.ts';
+import type { Game, Match, Pair, Player, Round, Session, SessionLocation } from './model.ts';
+import { MAX_NAME, MAX_PLAYERS, MAX_ROUNDS, PlayStyle, SessionStatus, Settings, SetupProblem } from './model.ts';
 
 export type { Coverage } from './engine/coverage.ts';
 export { pairCoverage, plannedRounds, roundsLeft } from './engine/coverage.ts';
@@ -12,6 +12,28 @@ export { gamesProblem, matchWinner, standings } from './engine/scores.ts';
 const MAX_TITLE = 80;
 
 const nameKey = (name: string): string => name.trim().toLocaleLowerCase();
+
+export const shortName = (fullName: string, players: Pick<Player, 'name'>[]): string => {
+  const parts = fullName.trim().split(/\s+/);
+  const first = parts.at(0) ?? '';
+  const taken = new Set(players.map((player) => nameKey(player.name)));
+  const initial = parts.length > 1 ? parts.at(-1)?.at(0)?.toLocaleUpperCase() : undefined;
+  const short = taken.has(nameKey(first)) && initial ? `${first} ${initial}.` : first;
+  return short.slice(0, MAX_NAME);
+};
+
+export const shortLinkedNames = (players: Player[]): Player[] => {
+  const result: Player[] = [];
+  for (const [index, player] of players.entries()) {
+    if (!player.profileId || !/\s/.test(player.name.trim())) {
+      result.push(player);
+      continue;
+    }
+    const others = [...result, ...players.slice(index + 1)];
+    result.push({ ...player, name: shortName(player.name, others) });
+  }
+  return result;
+};
 
 export const entrantsNeeded = (settings: Settings): number => (settings.style === PlayStyle.enum.doubles ? 4 : 2);
 
@@ -50,6 +72,7 @@ export const createSession = (
   pairs: Pair[],
   title: string,
   isPublic: boolean,
+  location: SessionLocation | null = null,
 ): Session => {
   const now = new Date().toISOString();
   return {
@@ -66,6 +89,7 @@ export const createSession = (
     settings,
     ...lineup(settings, players, pairs),
     rounds: [],
+    location,
   };
 };
 
@@ -77,7 +101,7 @@ export const startSession = (session: Session): Session => {
     status: SessionStatus.enum.running,
     startedAt: now,
     updatedAt: now,
-    rounds: [nextRound(session)],
+    rounds: [{ ...nextRound(session), startedAt: now }],
   };
 };
 
@@ -110,7 +134,8 @@ export const canAddRound = (session: Session): boolean => {
 
 export const addRound = (session: Session): Session => {
   if (!canAddRound(session)) return session;
-  return { ...session, updatedAt: new Date().toISOString(), rounds: [...session.rounds, nextRound(session)] };
+  const now = new Date().toISOString();
+  return { ...session, updatedAt: now, rounds: [...session.rounds, { ...nextRound(session), startedAt: now }] };
 };
 
 export const canUndoRound = (session: Session): boolean => {
@@ -130,10 +155,15 @@ export const undoRound = (session: Session): Session => {
 export const setScore = (session: Session, matchId: string, games: Game[]): Session => {
   const hasMatch = (round: Round) => round.matches.some((match) => match.id === matchId);
   if (!session.rounds.some(hasMatch)) return session;
-  const updateMatch = (match: Match): Match => (match.id === matchId ? { ...match, games } : match);
+  const now = new Date().toISOString();
+  const updateMatch = (match: Match): Match => {
+    if (match.id !== matchId) return match;
+    const done = games.length > 0 && gamesProblem(session.settings, games) === null;
+    return { ...match, games, endedAt: done ? (match.endedAt ?? now) : undefined };
+  };
   return {
     ...session,
-    updatedAt: new Date().toISOString(),
+    updatedAt: now,
     rounds: session.rounds.map((round) =>
       hasMatch(round) ? { ...round, matches: round.matches.map(updateMatch) } : round,
     ),

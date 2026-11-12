@@ -21,9 +21,10 @@ import { ShuttleKaosProblem } from '~/shuttlekaos/store';
 import { useUi } from '~/stores/ui';
 
 import { BusyAlert } from './BusyAlert';
-import { Section, StickyBar } from './FormParts';
+import { Field, Section, StickyBar } from './FormParts';
 import { InviteCard } from './InviteCard';
 import { BRAND, FORMAT_LABELS, SectionColor, SETUP_PROBLEMS, suggestedCourts } from './labels';
+import { LocationPicker } from './LocationPicker';
 import { PairPicker } from './PairPicker';
 import { PlayerList, PlayerPicker } from './PlayerPicker';
 import { SECTION_ICONS } from './sectionIcons';
@@ -45,13 +46,17 @@ const EditSettings: FC<{ view: SessionData; onClose: () => void }> = ({ view, on
   const { session } = view;
   const [settings, setSettings] = useState(session.settings);
   const [isPublic, setIsPublic] = useState(session.isPublic);
+  const [location, setLocation] = useState(session.location ?? null);
 
-  const submit = () => save.mutate({ ...session, settings, isPublic }, { onSuccess: onClose });
+  const submit = () => save.mutate({ ...session, settings, isPublic, location }, { onSuccess: onClose });
 
   return (
     <ResponsiveModal opened onClose={onClose} title={<Trans>Session settings</Trans>}>
       <Stack gap="md" className={classes.edit}>
         <VisibilityPicker isPublic={isPublic} onChange={setIsPublic} />
+        <Field label={<Trans>Location</Trans>}>
+          <LocationPicker value={location} onChange={setLocation} />
+        </Field>
         <SettingsForm
           settings={settings}
           playerCount={session.players.length}
@@ -296,6 +301,7 @@ export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
         format={i18n._(FORMAT_LABELS[session.settings.format].label)}
         playerCount={session.players.length}
         actions={<SessionMenu view={view} />}
+        location={session.location}
       />
       {view.isOwner ? <OrganizerLobby view={view} /> : <Lobby view={view} />}
     </>

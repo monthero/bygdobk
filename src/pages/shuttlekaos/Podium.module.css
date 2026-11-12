@@ -1,16 +1,196 @@
+.card {
+  --gold: #d9a514;
+  --silver: #a3aebd;
+  --bronze: #b8642d;
+  --boost: 1;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  overflow: hidden;
+  padding: 20px 12px 0;
+  max-width: 560px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid var(--bk-border);
+  border-radius: var(--mantine-radius-lg);
+  text-align: center;
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      color-mix(in srgb, var(--mantine-color-brand-filled) 35%, transparent) 0 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 85% 18%,
+      color-mix(in srgb, var(--mantine-color-teal-filled) 40%, transparent) 0 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 22% 78%,
+      color-mix(in srgb, var(--mantine-color-grape-filled) 40%, transparent) 0 3px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle at 90% 70%,
+      color-mix(in srgb, var(--mantine-color-brand-filled) 35%, transparent) 0 4px,
+      transparent 5px
+    ),
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--mantine-color-brand-filled) 22%, transparent),
+      transparent 70%
+    ),
+    color-mix(in srgb, var(--bk-surface) 85%, transparent);
+  backdrop-filter: blur(14px);
+
+  :where([data-mantine-color-scheme='light']) & {
+    --boost: 2.2;
+  }
+}
+
+.fireworks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.burst {
+  --size: 150px;
+  --color: var(--mantine-color-brand-filled);
+  --ray: 2deg;
+  --step: 18deg;
+  --hole: 22%;
+  --peak: 0.34;
+
+  position: absolute;
+  left: 13%;
+  top: 26%;
+  width: var(--size);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle closest-side, var(--color) 0 4%, transparent 7%),
+    repeating-conic-gradient(var(--color) 0deg var(--ray), transparent var(--ray) var(--step));
+  mask: radial-gradient(
+    circle closest-side,
+    #000 0 6%,
+    transparent 12% var(--hole),
+    #000 calc(var(--hole) + 20%) 74%,
+    transparent 100%
+  );
+  opacity: 0;
+  animation: burst 5.4s ease-out infinite;
+
+  &:nth-child(2) {
+    --size: 64px;
+    --color: var(--mantine-color-teal-filled);
+    --ray: 3deg;
+    --step: 12deg;
+    --peak: 0.22;
+
+    left: 86%;
+    top: 16%;
+    animation-delay: 0.9s;
+  }
+
+  &:nth-child(3) {
+    --size: 120px;
+    --color: var(--mantine-color-grape-filled);
+    --ray: 1.5deg;
+    --step: 10deg;
+    --hole: 48%;
+    --peak: 0.3;
+
+    left: 84%;
+    top: 58%;
+    animation-delay: 1.8s;
+  }
+
+  &:nth-child(4) {
+    --size: 40px;
+    --color: var(--gold);
+    --ray: 4deg;
+    --step: 15deg;
+    --peak: 0.18;
+
+    left: 34%;
+    top: 12%;
+    animation-delay: 2.6s;
+  }
+
+  &:nth-child(5) {
+    --size: 96px;
+    --color: var(--gold);
+    --ray: 2deg;
+    --step: 24deg;
+    --peak: 0.28;
+
+    left: 18%;
+    top: 68%;
+    animation-delay: 3.5s;
+  }
+
+  &:nth-child(6) {
+    --size: 48px;
+    --color: var(--mantine-color-brand-filled);
+    --hole: 52%;
+    --step: 9deg;
+    --peak: 0.2;
+
+    left: 66%;
+    top: 8%;
+    animation-delay: 4.3s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: calc(var(--peak) * var(--boost) * 0.5);
+  }
+}
+
+@keyframes burst {
+  0% {
+    opacity: 0;
+    scale: 0.3;
+  }
+
+  15% {
+    opacity: calc(var(--peak) * var(--boost));
+  }
+
+  60% {
+    opacity: calc(var(--peak) * var(--boost) * 0.35);
+    scale: 1;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 1.08;
+  }
+}
+
+.eyebrow {
+  position: relative;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bk-accent-strong);
+}
+
 .podium {
-  composes: glass from './glass.module.css';
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: end;
   gap: 8px;
-  max-width: 520px;
   width: 100%;
-  margin: 0 auto;
-  padding: 16px 12px 0;
-  border: 1px solid;
-  border-radius: var(--mantine-radius-lg);
-  overflow: hidden;
+  margin: 8px 0 0;
+  padding: 0;
   list-style: none;
 }
 
@@ -34,13 +214,68 @@
   }
 }
 
+.portrait {
+  position: relative;
+  display: inline-flex;
+}
+
 .avatars {
   justify-content: center;
+
+  & :global(.mantine-Avatar-root) {
+    border: 0;
+    background: none;
+  }
+}
+
+.crown {
+  position: absolute;
+  z-index: 1;
+  top: -17px;
+  left: -5px;
+  font-size: 34px;
+  color: var(--gold);
+  rotate: -28deg;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4));
+}
+
+.award {
+  position: absolute;
+  right: -6px;
+  bottom: -4px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bk-surface);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.3);
+  font-size: 16px;
+
+  &[data-rank='1'] {
+    width: 30px;
+    height: 30px;
+    font-size: 19px;
+    color: var(--gold);
+  }
+
+  &[data-rank='2'] {
+    color: var(--silver);
+  }
+
+  &[data-rank='3'] {
+    color: var(--bronze);
+  }
 }
 
 .name {
   max-width: 100%;
   overflow-wrap: anywhere;
+
+  .place[data-winner] & {
+    font-family: var(--bk-font-display);
+    font-size: var(--mantine-font-size-xl);
+  }
 }
 
 .step {

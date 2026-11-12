@@ -10,6 +10,7 @@ import {
   DotsThreeVertical,
   FlagCheckered,
   LinkSimple,
+  ShareNetwork,
   ResponsiveModal,
   SignOut,
   Trash,
@@ -19,6 +20,7 @@ import { SessionStatus } from '~/shuttlekaos/model';
 import { shuttleKaosErrorMessage, useDeleteSession, useLeaveSession, type SessionView } from '~/shuttlekaos/queries';
 
 import { LinkPlayersModal } from './LinkPlayers';
+import { useShareSession } from './useShareSession';
 
 const Confirm = z.enum(['end', 'delete', 'leave', 'link']);
 type Confirm = z.infer<typeof Confirm>;
@@ -31,14 +33,14 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
   const [confirm, setConfirm] = useState<Confirm | null>(null);
   const remove = useDeleteSession();
   const leave = useLeaveSession();
+  const share = useShareSession();
   const { isOwner, myPlayerId, shareCode, session } = view;
   const running = session.status === SessionStatus.enum.running;
   const finished = session.status === SessionStatus.enum.finished;
   const canEnd = isOwner && running && onEnd;
   const canCopy = finished && (isOwner || myPlayerId !== null);
   const canLeave = !isOwner && myPlayerId !== null && !running;
-
-  if (!canEnd && !canCopy && !isOwner && !canLeave) return null;
+  const hasOwnItems = Boolean(canEnd) || canCopy || isOwner || canLeave;
 
   const close = () => {
     setConfirm(null);
@@ -68,11 +70,21 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
     <>
       <Menu position="bottom-end" width={220}>
         <Menu.Target>
-          <ActionIcon variant="subtle" color="gray" radius="xl" size={44} aria-label={t`More`}>
+          <ActionIcon
+            variant="subtle"
+            color="gray"
+            radius="xl"
+            size={44}
+            hiddenFrom={hasOwnItems ? undefined : 'sm'}
+            aria-label={t`More`}
+          >
             <DotsThreeVertical />
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
+          <Menu.Item hiddenFrom="sm" leftSection={<ShareNetwork />} onClick={() => share(shareCode, session.title)}>
+            <Trans>Share the live scores</Trans>
+          </Menu.Item>
           {canEnd && (
             <Menu.Item leftSection={<FlagCheckered />} onClick={() => setConfirm(Confirm.enum.end)}>
               <Trans>End session now</Trans>

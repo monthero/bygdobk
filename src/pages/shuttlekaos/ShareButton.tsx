@@ -12,7 +12,14 @@ export const ShareButton: FC<{ code: string; title: string }> = ({ code, title }
   const label = t`Share the live scores`;
   return (
     <Tooltip label={label}>
-      <ActionIcon variant="default" radius="xl" size={44} aria-label={label} onClick={() => share(code, title)}>
+      <ActionIcon
+        variant="default"
+        radius="xl"
+        size={44}
+        visibleFrom="sm"
+        aria-label={label}
+        onClick={() => share(code, title)}
+      >
         <ShareNetwork />
       </ActionIcon>
     </Tooltip>

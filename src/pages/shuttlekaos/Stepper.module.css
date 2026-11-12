@@ -18,7 +18,8 @@
       display: flex;
       width: 100%;
 
-      & .field {
+      & .field,
+      & .tap {
         flex: 1;
       }
     }
@@ -50,4 +51,22 @@
 .input:focus-within {
   border-color: var(--mantine-color-brand-filled);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--mantine-color-brand-filled) 35%, transparent);
+}
+
+.tap {
+  display: grid;
+  place-items: center;
+  width: var(--stepper-field);
+  height: var(--stepper-button);
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-sm);
+  background: var(--mantine-color-default);
+  font-size: var(--stepper-font);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+
+  &:focus-visible {
+    outline: 2px solid var(--mantine-color-brand-filled);
+    outline-offset: 2px;
+  }
 }

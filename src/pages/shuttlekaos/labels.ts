@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
 import { clamp } from '@mantine/hooks';
+import type { MouseEvent } from 'react';
 import { z } from 'zod';
 
 import { currentLocale, listFormat, numberFormat, unitListFormat } from '~/i18n/current';
@@ -17,7 +18,9 @@ import {
   SessionStatus,
   SetupProblem,
   MAX_COURTS,
+  type Match,
   type Player,
+  type Round,
   type Session,
   type Settings,
 } from '~/shuttlekaos/model';
@@ -26,7 +29,11 @@ import { dayjs } from '~/utils/dates';
 
 export const BRAND = 'ShuttleKaos';
 
-export const TAGLINE = msg`Controlled chaos on court`;
+export const TABLE_QUERY = '(min-width: 62em)';
+
+export const stop = (event: MouseEvent) => event.stopPropagation();
+
+export const TAGLINE = msg`Unleash chaos on court`;
 
 export const FORMAT_LABELS: Record<Format, { label: MessageDescriptor; hint: MessageDescriptor }> = {
   [Format.enum.americano]: {
@@ -124,9 +131,17 @@ export const GAMES_PROBLEMS: Record<GamesProblem, MessageDescriptor> = {
   [GamesProblem.enum.alreadyDecided]: msg`The match was already won. Drop the last game.`,
 };
 
-export type PlayerMap = ReadonlyMap<string, Player>;
+export type ShownPlayer = Player & { realName?: string };
+export type PlayerMap = ReadonlyMap<string, ShownPlayer>;
 
-export const playerMap = (players: Player[]): PlayerMap => new Map(players.map((p) => [p.id, p]));
+export const YOU = msg({ message: 'You', comment: 'Shown instead of your own name in a session' });
+
+export const asMe = (player: Player, you: string): ShownPlayer => ({ ...player, name: you, realName: player.name });
+
+export const isMe = (player: Pick<ShownPlayer, 'realName'>) => player.realName !== undefined;
+
+export const playerMap = (players: Player[], myId: string | null, you: string): PlayerMap =>
+  new Map(players.map((p) => [p.id, p.id === myId ? asMe(p, you) : p]));
 
 export const playersOf = (players: PlayerMap, ids: string[]) =>
   ids.flatMap((id) => {
@@ -181,7 +196,8 @@ export const rankMoves = (session: Session, roundNumber: number): ReadonlyMap<st
 export const suggestedCourts = (settings: Settings, playerCount: number) =>
   clamp(Math.floor(playerCount / entrantsNeeded(settings)), 1, MAX_COURTS);
 
-export const namesOf = (players: Pick<Player, 'name'>[]) => listFormat().format(players.map((p) => p.name));
+export const namesOf = (players: Pick<ShownPlayer, 'name' | 'realName'>[]) =>
+  listFormat().format(players.toSorted((a, b) => Number(isMe(b)) - Number(isMe(a))).map((p) => p.name));
 
 export const DEFAULT_POINTS: Record<ScoreMode, number> = {
   [ScoreMode.enum.total]: 21,
@@ -206,7 +222,6 @@ export type Form = {
   played: number;
   average: number;
   last: MatchResult[];
-  streak: { result: MatchResult; count: number } | null;
 };
 
 const FORM_LENGTH = 5;
@@ -223,17 +238,10 @@ export const formOf = (session: Session, playerIds: string[]): Form => {
     else results.push(winner === side ? MatchResult.enum.win : MatchResult.enum.loss);
     points += match.games.reduce((sum, game) => sum + (game[side] ?? 0), 0);
   }
-  const latest = results.at(-1);
-  let count = 0;
-  for (const result of results.toReversed()) {
-    if (result !== latest) break;
-    count += 1;
-  }
   return {
     played: results.length,
     average: results.length > 0 ? points / results.length : 0,
     last: results.slice(-FORM_LENGTH),
-    streak: latest ? { result: latest, count } : null,
   };
 };
 
@@ -255,3 +263,9 @@ export const durationText = (minutes: number) => {
 
 export const SummaryPart = z.enum(['format', 'play', 'courts', 'scoring', 'rounds', 'levels', 'visibility']);
 export type SummaryPart = z.infer<typeof SummaryPart>;
+
+export const matchMinutes = (round: Round, match: Match): number | null =>
+  round.startedAt && match.endedAt ? Math.max(1, dayjs(match.endedAt).diff(round.startedAt, 'minute')) : null;
+
+export const sessionMinutes = (session: Session): number | null =>
+  session.startedAt && session.finishedAt ? dayjs(session.finishedAt).diff(session.startedAt, 'minute') : null;

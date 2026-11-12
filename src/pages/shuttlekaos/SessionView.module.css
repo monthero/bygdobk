@@ -1,17 +1,44 @@
+.root {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
 .body {
+  flex: 1;
+  width: 100%;
   min-height: 50dvh;
+}
+
+.summary {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
 }
 
 .roundLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
+  grid-template-columns: minmax(0, 1fr) 480px;
   align-items: start;
   gap: var(--mantine-spacing-lg);
 }
 
+.sentinel {
+  height: 1px;
+  margin-bottom: -1px;
+}
+
+.top {
+  position: sticky;
+  top: var(--bk-header-shown, 0px);
+  z-index: 6;
+  transition: top 200ms ease;
+}
+
 .aside {
   position: sticky;
-  top: calc(var(--app-shell-header-offset, 0px) + 16px);
+  top: calc(var(--bk-header-shown, 0px) + var(--session-top, 0px) + 16px);
+  transition: top 200ms ease;
 }
 
 .panel {

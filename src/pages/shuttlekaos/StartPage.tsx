@@ -6,13 +6,16 @@ import {
   Container,
   Group,
   Menu,
+  Pagination,
   Paper,
   Skeleton,
   Stack,
+  Table,
   Text,
   Title,
-  UnstyledButton,
+  VisuallyHidden,
 } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { memo, useCallback, useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
@@ -21,6 +24,7 @@ import { useAuthReady, useSessionUserId } from '~/components/auth/hooks';
 import {
   ArrowCounterClockwise,
   ArrowRight,
+  Play,
   ConfirmActions,
   DotsThreeVertical,
   ResponsiveModal,
@@ -31,16 +35,25 @@ import { usePageTitle } from '~/hooks/usePageTitle';
 import { formatWhen, notifyDone } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
 import { SessionStatus, type SessionSummary } from '~/shuttlekaos/model';
-import { shuttleKaosErrorMessage, useDeleteSession, useLeaveSession, useMySessions } from '~/shuttlekaos/queries';
+import {
+  PAGE_SIZE,
+  shuttleKaosErrorMessage,
+  useDeleteSession,
+  useLeaveSession,
+  useMyActiveSessions,
+  useMySessionHistory,
+} from '~/shuttlekaos/queries';
 
 import { BrandHeader } from './BrandHeader';
-import { BRAND, TAGLINE } from './labels';
+import { LiveBadge } from './Fallbacks';
+import { BRAND, stop, TABLE_QUERY, TAGLINE } from './labels';
 import { LoginPrompt } from './LoginPrompt';
 import { NewSessionButton } from './NewSessionButton';
 import { PublicSessions } from './PublicSessions';
 import { VisibilityBadge } from './SettingsSummary';
 import { useSetupPrefs, type PrefsState } from './setupPrefs';
 
+import tables from './SessionTables.module.css';
 import classes from './StartPage.module.css';
 
 const Action = z.enum(['leave', 'delete']);
@@ -70,9 +83,9 @@ const StatusBadge: FC<{ status: SessionStatus }> = ({ status }) => {
   }
   if (status === SessionStatus.enum.running) {
     return (
-      <Badge color="red" variant="light">
+      <LiveBadge>
         <Trans comment="Session status: being played right now">Live</Trans>
-      </Badge>
+      </LiveBadge>
     );
   }
   return (
@@ -82,25 +95,35 @@ const StatusBadge: FC<{ status: SessionStatus }> = ({ status }) => {
   );
 };
 
-const CurrentCard: FC<{ summary: SessionSummary }> = ({ summary }) => {
+type CardProps = { summary: SessionSummary; onAction: (a: Action, s: SessionSummary) => void };
+
+const SessionCard = memo<CardProps>(({ summary, onAction }) => {
+  const navigate = useNavigate();
+  const title = summary.title || BRAND;
   const players = summary.playerCount;
   const organizer = summary.organizerName;
+  const rank = summary.myResult?.rank;
+  const points = summary.myResult?.pointsFor;
+  const finished = summary.status === SessionStatus.enum.finished;
+  const running = summary.status === SessionStatus.enum.running;
+  const go = () => void navigate({ to: '/shuttlekaos/$code', params: { code: summary.shareCode } });
+
   return (
-    <Paper
-      withBorder
-      radius="lg"
-      className={classes.current}
-      renderRoot={(props) => <Link {...props} to="/shuttlekaos/$code" params={{ code: summary.shareCode }} />}
-    >
-      <div className={classes.currentText}>
+    <Paper withBorder radius="lg" className={classes.card}>
+      <div className={classes.cardHead}>
         <Group gap={6}>
           <StatusBadge status={summary.status} />
           {!summary.isPublic && <VisibilityBadge isPublic={false} />}
         </Group>
+        {finished && <PastMenu summary={summary} onAction={onAction} />}
+      </div>
+      <Link to="/shuttlekaos/$code" params={{ code: summary.shareCode }} className={classes.cardLink}>
         <Text fw={700} size="lg" className={classes.title}>
-          {summary.title || BRAND}
+          {title}
         </Text>
         <Text size="sm" c="dimmed">
+          {formatWhen(summary.createdAt)}
+          {' · '}
           {summary.isOwner ? (
             <Trans>You organize · {players} players</Trans>
           ) : (
@@ -109,78 +132,27 @@ const CurrentCard: FC<{ summary: SessionSummary }> = ({ summary }) => {
             </Trans>
           )}
         </Text>
-      </div>
-      <span className={classes.go}>
-        <Trans>Open</Trans>
-        <ArrowRight />
-      </span>
+        {finished && rank !== undefined && (
+          <Text size="sm" fw={700}>
+            <Trans comment="Your place and points, e.g. You: #2, 84 pts">
+              You: #{rank}, {points} pts
+            </Trans>
+          </Text>
+        )}
+      </Link>
+      {running && (
+        <Button size="md" leftSection={<Play />} onClick={go} className={classes.action}>
+          <Trans comment="Button on your running session card">Continue</Trans>
+        </Button>
+      )}
+      {summary.status === SessionStatus.enum.open && (
+        <Button size="md" variant="default" rightSection={<ArrowRight />} onClick={go} className={classes.action}>
+          <Trans>Open</Trans>
+        </Button>
+      )}
     </Paper>
   );
-};
-
-const HistoryRow = memo<{ summary: SessionSummary; onAction: (a: Action, s: SessionSummary) => void }>(
-  ({ summary, onAction }) => {
-    const { t } = useLingui();
-    const navigate = useNavigate();
-    const title = summary.title || BRAND;
-    const players = summary.playerCount;
-    const rank = summary.myResult?.rank;
-    const points = summary.myResult?.pointsFor;
-    return (
-      <li className={classes.row}>
-        <UnstyledButton
-          className={classes.rowLink}
-          renderRoot={(props) => <Link {...props} to="/shuttlekaos/$code" params={{ code: summary.shareCode }} />}
-        >
-          <Text size="sm" c="dimmed" className={classes.when}>
-            {formatWhen(summary.createdAt)}
-          </Text>
-          <span className={classes.rowMain}>
-            <Text fw={700} className={classes.title}>
-              {title}
-            </Text>
-            <Text size="sm" c="dimmed">
-              <Trans>{players} players</Trans>
-              {rank !== undefined && (
-                <>
-                  {' · '}
-                  <Trans comment="Your place and points, e.g. You: #2, 84 pts">
-                    You: #{rank}, {points} pts
-                  </Trans>
-                </>
-              )}
-            </Text>
-          </span>
-          <StatusBadge status={summary.status} />
-        </UnstyledButton>
-        <Menu position="bottom-end" width={200}>
-          <Menu.Target>
-            <ActionIcon variant="subtle" color="gray" radius="xl" size={44} aria-label={t`Options for ${title}`}>
-              <DotsThreeVertical />
-            </ActionIcon>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item
-              leftSection={<ArrowCounterClockwise />}
-              onClick={() => void navigate({ to: '/shuttlekaos/ny', search: { fra: summary.shareCode } })}
-            >
-              <Trans>Set up again</Trans>
-            </Menu.Item>
-            {summary.isOwner ? (
-              <Menu.Item color="red" leftSection={<Trash />} onClick={() => onAction(Action.enum.delete, summary)}>
-                <Trans>Delete session</Trans>
-              </Menu.Item>
-            ) : (
-              <Menu.Item leftSection={<SignOut />} onClick={() => onAction(Action.enum.leave, summary)}>
-                <Trans>Remove me</Trans>
-              </Menu.Item>
-            )}
-          </Menu.Dropdown>
-        </Menu>
-      </li>
-    );
-  },
-);
+});
 
 const ActionModal: FC<{ action: Action; summary: SessionSummary; onClose: () => void }> = ({
   action,
@@ -230,65 +202,192 @@ const ActionModal: FC<{ action: Action; summary: SessionSummary; onClose: () => 
   );
 };
 
-const History: FC<{ summaries: SessionSummary[]; pending: boolean; error: ReactNode }> = ({
-  summaries,
-  pending,
-  error,
-}) => {
-  const [asked, setAsked] = useState<{ action: Action; summary: SessionSummary } | null>(null);
-  const ask = useCallback((action: Action, summary: SessionSummary) => setAsked({ action, summary }), []);
-
-  let body: ReactNode;
-  if (pending) {
-    body = (
-      <Stack gap={8} aria-busy>
-        {HISTORY_SKELETONS.map((i) => (
-          <Skeleton key={i} height={64} radius="md" />
-        ))}
-      </Stack>
-    );
-  } else if (error) {
-    body = error;
-  } else if (summaries.length === 0) {
-    body = (
-      <Text c="dimmed">
-        <Trans>No sessions yet. Start one, or join one, and it lands here.</Trans>
-      </Text>
-    );
-  } else {
-    body = (
-      <Paper withBorder radius="lg" className={classes.history}>
-        <ul className={classes.rows}>
-          {summaries.map((summary) => (
-            <HistoryRow key={summary.id} summary={summary} onAction={ask} />
-          ))}
-        </ul>
-      </Paper>
-    );
-  }
-
+const PastMenu: FC<CardProps> = ({ summary, onAction }) => {
+  const { t } = useLingui();
+  const navigate = useNavigate();
+  const title = summary.title || BRAND;
   return (
-    <Section title={<Trans>My sessions</Trans>}>
-      {body}
-      {asked && <ActionModal action={asked.action} summary={asked.summary} onClose={() => setAsked(null)} />}
-    </Section>
+    <Menu position="bottom-end" width={200}>
+      <Menu.Target>
+        <ActionIcon
+          variant="subtle"
+          color="gray"
+          radius="xl"
+          size={36}
+          aria-label={t`Options for ${title}`}
+          onClick={stop}
+        >
+          <DotsThreeVertical />
+        </ActionIcon>
+      </Menu.Target>
+      <Menu.Dropdown onClick={stop}>
+        <Menu.Item
+          leftSection={<ArrowCounterClockwise />}
+          onClick={() => void navigate({ to: '/shuttlekaos/ny', search: { fra: summary.shareCode } })}
+        >
+          <Trans>Set up again</Trans>
+        </Menu.Item>
+        {summary.isOwner ? (
+          <Menu.Item color="red" leftSection={<Trash />} onClick={() => onAction(Action.enum.delete, summary)}>
+            <Trans>Delete session</Trans>
+          </Menu.Item>
+        ) : (
+          <Menu.Item leftSection={<SignOut />} onClick={() => onAction(Action.enum.leave, summary)}>
+            <Trans>Remove me</Trans>
+          </Menu.Item>
+        )}
+      </Menu.Dropdown>
+    </Menu>
   );
 };
+
+const PastTable: FC<{ summaries: SessionSummary[]; onAction: CardProps['onAction'] }> = ({ summaries, onAction }) => {
+  const navigate = useNavigate();
+  return (
+    <Paper withBorder radius="lg" className={tables.panel}>
+      <Table className={tables.table} verticalSpacing="sm" horizontalSpacing="md">
+        <Table.Thead>
+          <Table.Tr>
+            <Table.Th>
+              <Trans comment="Table heading">Date</Trans>
+            </Table.Th>
+            <Table.Th>
+              <Trans comment="Table heading">Session</Trans>
+            </Table.Th>
+            <Table.Th>
+              <Trans comment="Table heading: the sports hall">Hall</Trans>
+            </Table.Th>
+            <Table.Th>
+              <Trans comment="Table heading">Organizer</Trans>
+            </Table.Th>
+            <Table.Th className={tables.num}>
+              <Trans comment="Table heading">Players</Trans>
+            </Table.Th>
+            <Table.Th className={tables.num}>
+              <Trans comment="Table heading: your place and points">You</Trans>
+            </Table.Th>
+            <Table.Th className={tables.num}>
+              <VisuallyHidden>
+                <Trans comment="Table heading for the options menu">Options</Trans>
+              </VisuallyHidden>
+            </Table.Th>
+          </Table.Tr>
+        </Table.Thead>
+        <Table.Tbody>
+          {summaries.map((summary) => {
+            const rank = summary.myResult?.rank;
+            const points = summary.myResult?.pointsFor;
+            return (
+              <Table.Tr
+                key={summary.id}
+                className={tables.row}
+                onClick={() => void navigate({ to: '/shuttlekaos/$code', params: { code: summary.shareCode } })}
+              >
+                <Table.Td className={tables.num}>{formatWhen(summary.createdAt)}</Table.Td>
+                <Table.Td className={tables.main}>
+                  <Group gap={8} wrap="nowrap">
+                    <Link
+                      to="/shuttlekaos/$code"
+                      params={{ code: summary.shareCode }}
+                      className={tables.title}
+                      onClick={stop}
+                    >
+                      {summary.title || BRAND}
+                    </Link>
+                    {!summary.isPublic && <VisibilityBadge isPublic={false} />}
+                  </Group>
+                </Table.Td>
+                <Table.Td>{summary.location?.name ?? '–'}</Table.Td>
+                <Table.Td>{summary.isOwner ? <Trans>You</Trans> : summary.organizerName}</Table.Td>
+                <Table.Td className={tables.num}>{summary.playerCount}</Table.Td>
+                <Table.Td className={tables.num} fw={700}>
+                  {rank !== undefined && (
+                    <Trans comment="Your place and points in a table cell, e.g. #2 · 84 pts">
+                      #{rank} · {points} pts
+                    </Trans>
+                  )}
+                </Table.Td>
+                <Table.Td className={tables.num}>
+                  <PastMenu summary={summary} onAction={onAction} />
+                </Table.Td>
+              </Table.Tr>
+            );
+          })}
+        </Table.Tbody>
+      </Table>
+    </Paper>
+  );
+};
+
+const SessionGrid: FC<{ summaries: SessionSummary[]; onAction: CardProps['onAction'] }> = ({ summaries, onAction }) => (
+  <div className={classes.grid}>
+    {summaries.map((summary) => (
+      <SessionCard key={summary.id} summary={summary} onAction={onAction} />
+    ))}
+  </div>
+);
 
 export const StartPage: FC = () => {
   const { t, i18n } = useLingui();
   usePageTitle(i18n._(TAGLINE), BRAND);
   const ready = useAuthReady();
   const userId = useSessionUserId();
-  const mine = useMySessions();
-  const summaries = mine.data ?? EMPTY_SUMMARIES;
-  const active = summaries.find((s) => s.isActive);
-  const past = summaries.filter((s) => s !== active);
+  const wide = useMediaQuery(TABLE_QUERY);
+  const [page, setPage] = useState(1);
+  const active = useMyActiveSessions();
+  const history = useMySessionHistory(page);
+  const mine = active.data ?? EMPTY_SUMMARIES;
+  const running = mine.filter((s) => s.status === SessionStatus.enum.running);
+  const waiting = mine.filter((s) => s.status === SessionStatus.enum.open);
+  const past = history.data?.items ?? EMPTY_SUMMARIES;
+  const pages = Math.ceil((history.data?.total ?? 0) / PAGE_SIZE);
   const hasLastSetup = useSetupPrefs(selectHasLineup);
+  const [asked, setAsked] = useState<{ action: Action; summary: SessionSummary } | null>(null);
+  const ask = useCallback((action: Action, summary: SessionSummary) => setAsked({ action, summary }), []);
+
+  let historySection: ReactNode = null;
+  if (userId && history.isPending) {
+    historySection = (
+      <Section title={<Trans>Past sessions</Trans>}>
+        <div className={classes.grid} aria-busy>
+          {HISTORY_SKELETONS.map((i) => (
+            <Skeleton key={i} height={120} radius="lg" />
+          ))}
+        </div>
+      </Section>
+    );
+  } else if (userId && history.isError) {
+    historySection = (
+      <Section title={<Trans>Past sessions</Trans>}>
+        <LoadError
+          title={t`Couldn't load your sessions`}
+          error={history.error}
+          retrying={history.isRefetching}
+          onRetry={() => void history.refetch()}
+        />
+      </Section>
+    );
+  } else if (userId && past.length === 0 && mine.length === 0 && !active.isPending) {
+    historySection = (
+      <Section title={<Trans>My sessions</Trans>}>
+        <Text c="dimmed">
+          <Trans>No sessions yet. Start one, or join one, and it lands here.</Trans>
+        </Text>
+      </Section>
+    );
+  } else if (past.length > 0) {
+    historySection = (
+      <Section title={<Trans>Past sessions</Trans>}>
+        {wide ? <PastTable summaries={past} onAction={ask} /> : <SessionGrid summaries={past} onAction={ask} />}
+        {pages > 1 && <Pagination total={pages} value={page} onChange={setPage} className={tables.pager} />}
+      </Section>
+    );
+  }
 
   return (
     <>
       <BrandHeader
+        lede={<Trans>Made with Bygdø members in mind, but anyone is welcome to play.</Trans>}
         actions={
           <>
             <NewSessionButton />
@@ -304,32 +403,22 @@ export const StartPage: FC = () => {
           </>
         }
       />
-      <Container size="md" py="lg">
+      <Container className={classes.main}>
         <Stack gap="xl">
-          {active && (
-            <Section title={<Trans>Your current session</Trans>}>
-              <CurrentCard summary={active} />
+          {running.length > 0 && (
+            <Section title={<Trans comment="Heading for your sessions being played right now">Playing now</Trans>}>
+              <SessionGrid summaries={running} onAction={ask} />
+            </Section>
+          )}
+          {waiting.length > 0 && (
+            <Section title={<Trans comment="Heading for your sessions that haven't started">Waiting to start</Trans>}>
+              <SessionGrid summaries={waiting} onAction={ask} />
             </Section>
           )}
           <Section title={<Trans>Open sessions</Trans>}>
             <PublicSessions />
           </Section>
-          {userId && (
-            <History
-              summaries={past}
-              pending={mine.isPending}
-              error={
-                mine.isError && (
-                  <LoadError
-                    title={t`Couldn't load your sessions`}
-                    error={mine.error}
-                    retrying={mine.isRefetching}
-                    onRetry={() => void mine.refetch()}
-                  />
-                )
-              }
-            />
-          )}
+          {historySection}
           {ready && !userId && (
             <LoginPrompt>
               <Trans>Log in to start or join sessions and keep your history. Watching works without it.</Trans>
@@ -337,6 +426,7 @@ export const StartPage: FC = () => {
           )}
         </Stack>
       </Container>
+      {asked && <ActionModal action={asked.action} summary={asked.summary} onClose={() => setAsked(null)} />}
     </>
   );
 };

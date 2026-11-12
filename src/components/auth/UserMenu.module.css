@@ -1,3 +1,12 @@
 .account {
   overflow: visible;
 }
+
+.findableBody {
+  justify-content: space-between;
+  gap: var(--mantine-spacing-md);
+}
+
+.findableLabel {
+  flex: 1;
+}

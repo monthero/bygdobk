@@ -1,6 +1,18 @@
 .table {
   font-variant-numeric: tabular-nums;
   table-layout: auto;
+
+  & tbody tr:last-child {
+    border-bottom: 0;
+  }
+
+  & :is(th, td):first-child {
+    padding-inline-start: 12px;
+  }
+
+  & :is(th, td):last-child {
+    padding-inline-end: 12px;
+  }
 }
 
 .rank {
@@ -27,18 +39,30 @@
 }
 
 .row {
+  &:has(+ .detailsRow) {
+    border-bottom: 0;
+  }
+
   &[data-podium] {
     background: var(--bk-surface-2);
     font-weight: 600;
   }
 
-  &[data-me] td {
-    box-shadow: inset 0 -2px 0 var(--bk-accent-strong);
-  }
-
   &[data-leader] {
     background: var(--bk-accent-soft);
     font-weight: 700;
+  }
+
+  &[data-me] {
+    background: var(--kaos-me-soft);
+    font-weight: 700;
+  }
+
+  &:hover {
+    background-image: linear-gradient(
+      color-mix(in srgb, var(--mantine-color-text) 6%, transparent),
+      color-mix(in srgb, var(--mantine-color-text) 6%, transparent)
+    );
   }
 }
 
@@ -49,9 +73,23 @@
   color: var(--bk-accent-strong);
 }
 
+.name :global(.mantine-AvatarGroup-group) {
+  gap: 2px;
+  padding-inline-start: 0;
+
+  & :global(.mantine-Avatar-root) {
+    margin-inline-start: 0;
+    border: 0;
+    background: none;
+  }
+}
+
 .move {
-  font-size: var(--mantine-font-size-xs);
-  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 2ch;
+  vertical-align: middle;
   color: var(--mantine-color-dimmed);
 
   &[data-up] {
@@ -59,8 +97,29 @@
   }
 
   &[data-down] {
-    color: var(--bk-danger);
+    color: color-mix(in srgb, var(--bk-danger) 85%, transparent);
   }
+}
+
+.moveMark {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+
+  & svg {
+    font-size: 10px;
+  }
+}
+
+.still {
+  width: 8px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  opacity: 0.4;
 }
 
 .expand {
@@ -102,9 +161,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   gap: 12px;
-  margin: 0 8px 10px;
   padding: 12px;
-  border-radius: var(--mantine-radius-md);
   background: var(--bk-surface-2);
 }
 
@@ -127,4 +184,9 @@
     background: var(--bk-danger-soft);
     color: var(--bk-danger);
   }
+}
+
+:global(.mantine-Modal-title):has(> .statsTitle) {
+  flex: 1;
+  margin-inline-end: var(--mantine-spacing-sm);
 }

@@ -1,5 +1,5 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Anchor, Button, Drawer, Text } from '@mantine/core';
+import { Anchor, Button, Drawer, getDefaultZIndex, Text } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { memo, type CSSProperties } from 'react';
 
@@ -7,6 +7,7 @@ import { useClub } from '~/cms/siteData';
 import { AddressLink, ClubLogo, Shuttle, SocialLinks, UserPlus } from '~/components/ui';
 import { useOffers } from '~/pages/join/offers';
 
+import { ExperimentalMark } from './ExperimentalMark';
 import { InstallApp, InstallLook } from './InstallApp';
 import { NAV } from './nav';
 
@@ -14,6 +15,7 @@ import classes from './MobileMenu.module.css';
 
 const ACTIVE_PROPS = { 'data-active': true };
 const CLASS_NAMES = { inner: classes.inner, content: classes.panel, body: classes.body, overlay: classes.overlay };
+const Z_INDEX = getDefaultZIndex('modal') - 1;
 const TRANSITION = {
   transition: 'slide-left',
   duration: 260,
@@ -38,6 +40,7 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
       classNames={CLASS_NAMES}
       transitionProps={TRANSITION}
       hiddenFrom="md"
+      zIndex={Z_INDEX}
     >
       <nav aria-label={t`Main menu`} className={classes.grid}>
         {NAV.map((item, index) => (
@@ -52,7 +55,10 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
             <span className={classes.icon}>
               <item.Icon />
             </span>
-            <span className={classes.label}>{i18n._(item.label)}</span>
+            <span className={classes.label}>
+              {i18n._(item.label)}
+              {item.experimental && <ExperimentalMark />}
+            </span>
           </Link>
         ))}
       </nav>

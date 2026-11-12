@@ -5,12 +5,12 @@ import {
   Alert,
   Avatar,
   Button,
+  Checkbox,
   Divider,
   Group,
   Indicator,
   Skeleton,
   Stack,
-  Switch,
   Text,
   VisuallyHidden,
   type FloatingPosition,
@@ -83,16 +83,18 @@ const LoggedOut: FC<{ close: () => void }> = ({ close }) => {
   );
 };
 
-const FindableSwitch: FC = () => {
+const FindableCheckbox: FC = () => {
   const { i18n } = useLingui();
   const findable = useFindable();
   const change = useSetFindable();
   const checked = change.isPending ? change.variables : (findable.data ?? true);
   return (
     <Stack gap={4}>
-      <Switch
+      <Checkbox
         label={<Trans>Others can add me to ShuttleKaos</Trans>}
         description={<Trans>Organizers can find you by name when they set up a session.</Trans>}
+        labelPosition="left"
+        classNames={{ body: classes.findableBody, labelWrapper: classes.findableLabel }}
         checked={checked}
         disabled={findable.isPending}
         onChange={(e) => change.mutate(e.currentTarget.checked)}
@@ -131,7 +133,7 @@ const LoggedIn: FC<{ close: () => void; onPickPhoto: (file: File) => void }> = (
         />
       )}
       <MyMemberships memberships={memberships} />
-      {user && <FindableSwitch />}
+      {user && <FindableCheckbox />}
       {profile.isPending && (
         <Group gap="sm" wrap="nowrap" aria-busy>
           <Skeleton circle height={56} />

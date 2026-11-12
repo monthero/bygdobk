@@ -1,5 +1,16 @@
 import { Trans } from '@lingui/react/macro';
-import { Badge, Button, Container, Paper, SimpleGrid, Skeleton, Stack, Text, Title } from '@mantine/core';
+import {
+  Badge,
+  Button,
+  Container,
+  Paper,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+  Text,
+  Title,
+  type MantineSize,
+} from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { FC, ReactNode } from 'react';
 
@@ -48,8 +59,8 @@ export const EmptySession: FC<{ title: ReactNode; text: ReactNode }> = ({ title,
   </Container>
 );
 
-export const LiveBadge: FC = () => (
-  <Badge color="red" variant="light" size="lg" leftSection={<span className={classes.dot} />}>
-    <Trans comment="Badge on a shared session that updates by itself">Live</Trans>
+export const LiveBadge: FC<{ size?: MantineSize; children?: ReactNode }> = ({ size = 'md', children }) => (
+  <Badge color="green" variant="light" size={size} leftSection={<span className={classes.dot} />}>
+    {children ?? <Trans comment="Badge on a shared session that updates by itself">Live</Trans>}
   </Badge>
 );

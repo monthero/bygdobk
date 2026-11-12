@@ -11,8 +11,8 @@ import { useIsMobile } from '~/hooks/useIsMobile';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { notifyFailed } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
-import { createSession, setupProblem } from '~/shuttlekaos/engine';
-import { Partners, PlayStyle, Settings, type Pair, type Player } from '~/shuttlekaos/model';
+import { createSession, setupProblem, shortName } from '~/shuttlekaos/engine';
+import { Partners, PlayStyle, Settings, type Pair, type Player, type SessionLocation } from '~/shuttlekaos/model';
 import {
   ShuttleKaosError,
   shuttleKaosErrorMessage,
@@ -24,8 +24,9 @@ import { ShuttleKaosProblem } from '~/shuttlekaos/store';
 
 import { BrandHeader } from './BrandHeader';
 import { BusyAlert } from './BusyAlert';
-import { Section } from './FormParts';
+import { Field, Section } from './FormParts';
 import { BRAND, SectionColor, suggestedCourts, SummaryPart } from './labels';
+import { LocationPicker } from './LocationPicker';
 import { LoginPrompt } from './LoginPrompt';
 import { PairPicker } from './PairPicker';
 import { PlayerPicker } from './PlayerPicker';
@@ -60,17 +61,24 @@ const PART_STEP: Record<SummaryPart, StepName> = {
   [SummaryPart.enum.visibility]: StepName.enum.details,
 };
 
-type Draft = { settings: Settings; isPublic: boolean; players: Player[]; pairs: Pair[] };
+type Draft = {
+  settings: Settings;
+  isPublic: boolean;
+  players: Player[];
+  pairs: Pair[];
+  location: SessionLocation | null;
+};
 
 const selectSettings = (s: PrefsState) => s.settings;
 const selectIsPublic = (s: PrefsState) => s.isPublic;
 const selectRemember = (s: PrefsState) => s.remember;
 const selectLineup = (s: PrefsState) => s.lineup;
 
-const freshIds = ({ players, pairs }: Lineup): Lineup => {
+const freshIds = ({ players, pairs, location }: Lineup): Lineup => {
   const ids = new Map(players.map((p) => [p.id, crypto.randomUUID()]));
   const idOf = (id: string) => ids.get(id) ?? id;
   return {
+    location,
     players: players.map((p) => ({ ...p, id: idOf(p.id) })),
     pairs: pairs.map(([first, second]): Pair => [idOf(first), idOf(second)]),
   };
@@ -83,7 +91,7 @@ type Me = { userId: string; name: string; avatarUrl: string | null };
 
 const meAsPlayer = (me: Me): Player => ({
   id: crypto.randomUUID(),
-  name: me.name,
+  name: shortName(me.name, []),
   profileId: me.userId,
   avatarUrl: me.avatarUrl,
 });
@@ -117,6 +125,7 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
   const [isPublic, setIsPublic] = useState(initial.isPublic);
   const [players, setPlayers] = useState(initial.players);
   const [pairs, setPairs] = useState(initial.pairs);
+  const [location, setLocation] = useState(initial.location);
   const [courtsByHand, setCourtsByHand] = useState(false);
   const [active, setActive] = useState(0);
 
@@ -161,8 +170,8 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
     if (!valid) return;
     setStartingNow(withStart);
     confirmControls.close();
-    remember({ settings: effective, isPublic, lineup: { players, pairs: sessionPairs } });
-    const session = createSession(effective, players, sessionPairs, title.trim() || defaultTitle, isPublic);
+    remember({ settings: effective, isPublic, lineup: { players, pairs: sessionPairs, location } });
+    const session = createSession(effective, players, sessionPairs, title.trim() || defaultTitle, isPublic, location);
     create.mutate(session, {
       onSuccess: ({ shareCode, session: created }) => {
         if (!withStart) {
@@ -195,6 +204,9 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
         onChange={(e) => setTitle(e.currentTarget.value)}
       />
       <VisibilityPicker isPublic={isPublic} onChange={setIsPublic} />
+      <Field label={<Trans>Location</Trans>}>
+        <LocationPicker value={location} onChange={setLocation} />
+      </Field>
     </>
   );
 
@@ -468,6 +480,7 @@ const CopiedSetup: FC<{ code: string; me: Me }> = ({ code, me }) => {
     isPublic: session.isPublic,
     players: session.players,
     pairs: session.pairs,
+    location: session.location ?? null,
   };
   return <SetupForm initial={initial} me={me} prefilled />;
 };
@@ -483,7 +496,13 @@ const LastSetup: FC<{ me: Me }> = ({ me }) => {
 const FreshSetup: FC<{ me: Me }> = ({ me }) => {
   const settings = useSetupPrefs(selectSettings);
   const isPublic = useSetupPrefs(selectIsPublic);
-  const [initial] = useState<Draft>(() => ({ settings, isPublic, players: [meAsPlayer(me)], pairs: [] }));
+  const [initial] = useState<Draft>(() => ({
+    settings,
+    isPublic,
+    players: [meAsPlayer(me)],
+    pairs: [],
+    location: null,
+  }));
   return <SetupForm initial={initial} me={me} prefilled={false} />;
 };
 

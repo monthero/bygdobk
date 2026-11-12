@@ -69,3 +69,15 @@
 .action {
   align-self: stretch;
 }
+
+.where {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  color: var(--bk-accent-strong);
+
+  & svg {
+    flex: none;
+  }
+}

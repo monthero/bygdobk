@@ -14,7 +14,7 @@ export const ShuttleKaosLayout: FC = () => (
         <img src={shuttlesCourt} alt="" className={classes.image} loading="eager" decoding="async" />
       </picture>
     </div>
-    <div className={classes.kaos}>
+    <div className={classes.kaos} data-fill>
       <Outlet />
     </div>
   </>

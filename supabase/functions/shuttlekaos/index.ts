@@ -1,7 +1,14 @@
 import { withSupabase, type SupabaseContext } from '@supabase/server';
 import { z } from 'zod';
 
-import { gamesProblem, setPlayers, setupProblem, standings, startSession } from '../../../src/shuttlekaos/engine.ts';
+import {
+  gamesProblem,
+  setPlayers,
+  setupProblem,
+  shortName,
+  standings,
+  startSession,
+} from '../../../src/shuttlekaos/engine.ts';
 import {
   MAX_NAME,
   MAX_PLAYERS,
@@ -9,6 +16,7 @@ import {
   Session,
   SessionStatus,
   type Player,
+  type SessionLocation,
   type Settings,
 } from '../../../src/shuttlekaos/model.ts';
 import {
@@ -74,6 +82,13 @@ type Outcome = { shareCode: string; session: Session | null; nudge: Nudge | null
 const DbError = z.object({ code: z.string(), details: z.string().nullish() });
 const Names = z.array(z.string()).catch([]);
 const Profile = z.object({ name: z.string(), avatar_url: z.string().nullable() });
+const LocationRow = z.object({
+  id: z.uuid(),
+  name: z.string(),
+  address: z.string().nullable(),
+  lat: z.number(),
+  lng: z.number(),
+});
 const LinkTarget = z.object({ avatar_url: z.string().nullable(), shuttlekaos_findable: z.boolean() });
 
 class Rejection extends Error {
@@ -238,6 +253,20 @@ const withCurrent = async (admin: Admin, sessionId: string, attempt: () => Promi
   }
 };
 
+const officialLocation = async (admin: Admin, location: SessionLocation | null | undefined) => {
+  if (!location) return null;
+  const { data, error } = await admin
+    .from('shuttlekaos_locations')
+    .select('id, name, address, lat, lng')
+    .eq('id', location.locationId)
+    .eq('is_active', true)
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) throw new Rejection(ShuttleKaosProblem.enum.invalid);
+  const row = LocationRow.parse(data);
+  return { locationId: row.id, name: row.name, address: row.address, lat: row.lat, lng: row.lng };
+};
+
 const create = async (admin: Admin, userId: string, session: Session) => {
   const now = nowIso();
   const next = validated({
@@ -250,6 +279,7 @@ const create = async (admin: Admin, userId: string, session: Session) => {
     startedAt: null,
     finishedAt: null,
     rounds: [],
+    location: await officialLocation(admin, session.location),
   });
   return changed(await write(admin, userId, next, null, []));
 };
@@ -261,6 +291,10 @@ const save = async (admin: Admin, userId: string, session: Session) => {
   if (!canMoveTo(current, session.status)) throw new Rejection(ShuttleKaosProblem.enum.locked);
   if (current.startedAt !== null && !sameLineup(current, session)) throw new Rejection(ShuttleKaosProblem.enum.locked);
   const finishing = session.status === SessionStatus.enum.finished;
+  const location =
+    session.location?.locationId === current.location?.locationId
+      ? (current.location ?? null)
+      : await officialLocation(admin, session.location);
   const next = validated({
     ...session,
     version: 1,
@@ -271,6 +305,7 @@ const save = async (admin: Admin, userId: string, session: Session) => {
     finishedAt: finishing ? (current.finishedAt ?? nowIso()) : null,
     rounds: current.status === SessionStatus.enum.open ? [] : session.rounds,
     players: unlinkRemoved(session.players, row.removed_profile_ids),
+    location,
   });
   return changed(
     await withCurrent(admin, row.id, () => write(admin, userId, next, row.revision, row.removed_profile_ids)),
@@ -302,7 +337,7 @@ const join = (admin: Admin, userId: string, code: string) =>
     const profile = Profile.parse(data);
     const me: Player = {
       id: crypto.randomUUID(),
-      name: freeName(profile.name, current.players),
+      name: freeName(shortName(profile.name, current.players), current.players),
       profileId: userId,
       avatarUrl: profile.avatar_url,
     };

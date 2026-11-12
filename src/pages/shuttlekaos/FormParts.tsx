@@ -66,7 +66,7 @@ export const StickyBar: FC<{ reason?: ReactNode; warn?: boolean; children: React
 }) => (
   <>
     <div className={classes.spacer} data-reason={reason ? true : undefined} aria-hidden />
-    <div className={classes.bar}>
+    <div className={classes.bar} data-bottom-bar>
       <Container className={classes.barInner}>
         {reason && (
           <Text size="sm" c={warn ? undefined : 'dimmed'} className={classes.reason} data-warn={warn || undefined}>

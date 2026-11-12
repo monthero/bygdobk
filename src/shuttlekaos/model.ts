@@ -25,6 +25,15 @@ export const MAX_PLAYERS = 64;
 export const MAX_ROUNDS = 40;
 export const MAX_NAME = 40;
 
+export const SessionLocation = z.object({
+  locationId: z.uuid(),
+  name: z.string().trim().min(1).max(80),
+  address: z.string().trim().max(160).nullable(),
+  lat: z.number().min(-90).max(90),
+  lng: z.number().min(-180).max(180),
+});
+export type SessionLocation = z.infer<typeof SessionLocation>;
+
 export const Settings = z.object({
   format: Format,
   style: PlayStyle,
@@ -57,6 +66,7 @@ export const Match = z.object({
   court: z.number().int().min(1),
   sides: z.tuple([z.array(z.string()).min(1).max(2), z.array(z.string()).min(1).max(2)]),
   games: z.array(Game).max(3),
+  endedAt: z.iso.datetime({ offset: true }).optional(),
 });
 export type Match = z.infer<typeof Match>;
 
@@ -64,6 +74,7 @@ export const Round = z.object({
   number: z.number().int().min(1),
   matches: z.array(Match),
   resting: z.array(z.string()),
+  startedAt: z.iso.datetime({ offset: true }).optional(),
 });
 export type Round = z.infer<typeof Round>;
 
@@ -82,6 +93,7 @@ export const Session = z.object({
   players: z.array(Player).max(MAX_PLAYERS),
   pairs: z.array(Pair),
   rounds: z.array(Round),
+  location: SessionLocation.nullable().optional(),
 });
 export type Session = z.infer<typeof Session>;
 
@@ -113,8 +125,11 @@ export type SessionSummary = {
   finishedAt: string | null;
   isOwner: boolean;
   isActive: boolean;
+  location: SessionLocation | null;
   myResult: Pick<Standing, 'rank' | 'played' | 'won' | 'pointsFor'> | null;
 };
+
+export type SessionSummaryPage = { total: number; items: SessionSummary[] };
 
 export type PublicSession = Omit<SessionSummary, 'isOwner' | 'isActive' | 'myResult'> & {
   format: Format;

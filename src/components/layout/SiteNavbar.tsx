@@ -6,6 +6,7 @@ import { memo } from 'react';
 import { AccountButton } from '~/components/auth';
 import { ClubLogo, UserPlus } from '~/components/ui';
 
+import { ExperimentalMark } from './ExperimentalMark';
 import { LanguageSwitch } from './LanguageSwitch';
 import { NAV } from './nav';
 import { ThemeSwitch } from './ThemeSwitch';
@@ -33,7 +34,12 @@ export const SiteNavbar = memo<{ standalone: boolean }>(({ standalone }) => {
               key={item.to}
               component={Link}
               to={item.to}
-              label={i18n._(item.label)}
+              label={
+                <>
+                  {i18n._(item.label)}
+                  {item.experimental && <ExperimentalMark />}
+                </>
+              }
               leftSection={<item.Icon />}
               activeProps={ACTIVE_PROPS}
               variant="light"

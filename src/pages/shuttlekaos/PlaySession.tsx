@@ -1,9 +1,10 @@
-import { Plural, Trans } from '@lingui/react/macro';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { Alert, Button, CloseButton, Group, Stack, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { Link } from '@tanstack/react-router';
 import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 
-import { ArrowRight, ArrowUUpLeft, FlagCheckered, Play, ResponsiveModal, Trophy } from '~/components/ui';
+import { ArrowLeft, ArrowRight, ArrowUUpLeft, FlagCheckered, Play, ResponsiveModal, Trophy } from '~/components/ui';
 import { numberFormat } from '~/i18n/current';
 import {
   addRound,
@@ -19,10 +20,12 @@ import {
 import { SessionStatus, type Game, type Match, type Session } from '~/shuttlekaos/model';
 import type { SessionView as SessionData } from '~/shuttlekaos/queries';
 import { SESSION_IDLE_MINUTES } from '~/shuttlekaos/store';
+import { useUi } from '~/stores/ui';
 
 import { LiveBadge } from './Fallbacks';
+import { FocusToggle } from './FocusToggle';
 import { StickyBar } from './FormParts';
-import { endedAutomatically, playerMap, resume, shownSession } from './labels';
+import { endedAutomatically, playerMap, resume, shownSession, YOU } from './labels';
 import { ClaimNotice } from './LinkPlayers';
 import { RoundDone } from './RoundDone';
 import { ScoreSheet } from './ScoreSheet';
@@ -151,17 +154,40 @@ const RoundBar: FC<{
   );
 };
 
+const selectSetAutoHide = (s: ReturnType<typeof useUi.getState>) => s.setAutoHideHeader;
+const selectSetFocus = (s: ReturnType<typeof useUi.getState>) => s.setFocusMode;
+
+const LobbyBar: FC = () => (
+  <StickyBar>
+    <Button component={Link} to="/shuttlekaos" size="lg" fullWidth leftSection={<ArrowLeft />}>
+      <Trans comment="Button on a finished session, goes to the ShuttleKaos start page">Back to lobby</Trans>
+    </Button>
+  </StickyBar>
+);
+
 export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
   const { isOwner, myPlayerId, shareCode, session: stored } = view;
   const save = useSessionSave();
   const session = shownSession(stored);
-  const players = useMemo(() => playerMap(session.players), [session.players]);
+  const { i18n } = useLingui();
+  const you = i18n._(YOU);
+  const players = useMemo(() => playerMap(session.players, myPlayerId, you), [session.players, myPlayerId, you]);
   const running = session.status === SessionStatus.enum.running;
   const [editing, setEditing] = useState<string | null>(null);
   const [doneRound, setDoneRound] = useState<number | null>(null);
   const latestDone = lastDoneRound(session);
   const [seenRound, setSeenRound] = useState(latestDone);
   const autoFinished = useRef(false);
+  const setAutoHideHeader = useUi(selectSetAutoHide);
+  const setFocusMode = useUi(selectSetFocus);
+
+  useEffect(() => {
+    setAutoHideHeader(true);
+    return () => {
+      setAutoHideHeader(false);
+      setFocusMode(false);
+    };
+  }, [setAutoHideHeader, setFocusMode]);
 
   useEffect(() => {
     if (!isOwner || session === stored || autoFinished.current) return;
@@ -205,7 +231,8 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
         onEdit={isOwner && running ? setEditing : undefined}
         actions={
           <>
-            {!isOwner && running && <LiveBadge />}
+            {!isOwner && running && <LiveBadge size="lg" />}
+            <FocusToggle />
             <ShareButton code={shareCode} title={session.title} />
             <SessionMenu view={view} hasOpenCourts={openCourts(session) > 0} onEnd={isOwner ? finish : undefined} />
           </>
@@ -226,9 +253,12 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
           </>
         }
         footer={
-          isOwner &&
-          running && (
-            <RoundBar session={session} pending={save.isPending} onNext={next} onFinish={finish} onUndo={undo} />
+          running ? (
+            isOwner && (
+              <RoundBar session={session} pending={save.isPending} onNext={next} onFinish={finish} onUndo={undo} />
+            )
+          ) : (
+            <LobbyBar />
           )
         }
       />

@@ -4,32 +4,66 @@
   border-style: solid;
   border-radius: 0;
   box-shadow: none;
-  padding-block: 12px 8px;
+  padding-block: 16px 14px;
+  transition: padding 150ms ease;
+
+  &[data-compact] {
+    padding-block: 8px;
+  }
 }
 
 .inner {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .heading {
+  display: flex;
   flex: 1;
+  flex-direction: column;
+  gap: 6px;
   min-width: 0;
 }
 
 .title {
   font-size: clamp(1.3rem, 5vw, 1.75rem);
   line-height: 1.2;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    -webkit-line-clamp: 2;
+  }
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    .top[data-compact] & {
+      font-size: var(--mantine-font-size-lg);
+    }
+  }
 }
 
 .meta {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    white-space: normal;
+  }
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    .top[data-compact] & {
+      display: none;
+    }
+  }
+}
+
+.dot {
+  margin-inline: 6px;
+  opacity: 0.7;
 }
 
 .progress {
+  white-space: nowrap;
   font-weight: 700;
   color: var(--mantine-color-text);
 }
@@ -39,4 +73,29 @@
   flex: none;
   align-items: center;
   gap: 4px;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    & :global(.mantine-ActionIcon-root) {
+      width: 36px;
+      min-width: 36px;
+      height: 36px;
+      min-height: 36px;
+    }
+  }
+}
+
+.where {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    .top[data-compact] & {
+      display: none;
+    }
+  }
+}
+
+.below {
+  padding-top: 8px;
 }

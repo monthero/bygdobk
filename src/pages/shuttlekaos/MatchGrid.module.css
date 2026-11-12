@@ -1,0 +1,183 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-lg);
+  container-type: inline-size;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+
+  @container (max-width: 600px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}
+
+.rounds {
+  display: flex;
+  flex: 1;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  padding: 2px 0;
+  border: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  @container (max-width: 600px) {
+    margin-inline: calc(var(--mantine-spacing-md) * -1);
+    padding-inline: var(--mantine-spacing-md);
+  }
+}
+
+.chip {
+  flex: none;
+  padding-inline: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.player {
+  flex: none;
+  width: 240px;
+
+  @container (max-width: 600px) {
+    width: 100%;
+  }
+}
+
+.playerInput {
+  &::placeholder {
+    color: var(--mantine-color-dimmed);
+    opacity: 1;
+  }
+}
+
+.playerSection {
+  color: var(--mantine-color-text);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-xs);
+}
+
+.groupHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding-inline: 4px;
+}
+
+.resting {
+  max-width: 100%;
+  font-weight: 600;
+}
+
+.restIcon {
+  flex: none;
+  font-size: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mantine-spacing-sm);
+
+  @container (min-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @container (min-width: 1000px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @container (min-width: 1400px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.card {
+  composes: glass from './glass.module.css';
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px 10px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 6px 4px;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.minutes {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-variant-numeric: tabular-nums;
+}
+
+.side {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px;
+  border-radius: var(--mantine-radius-sm);
+  font-size: var(--mantine-font-size-sm);
+
+  &[data-won] {
+    background: var(--bk-ok-soft);
+    color: var(--bk-ok);
+    font-weight: 700;
+  }
+
+  &[data-lost] {
+    opacity: 0.6;
+
+    :where([data-mantine-color-scheme='light']) & {
+      opacity: 0.75;
+    }
+  }
+}
+
+.score {
+  display: flex;
+  flex: none;
+  gap: 4px;
+  font-size: var(--mantine-font-size-md);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.game {
+  width: 2.5ch;
+  text-align: end;
+}
+
+.rest {
+  composes: glass from './glass.module.css';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 72px;
+  padding: 10px;
+  border: 1px dashed var(--bk-border);
+  color: var(--mantine-color-dimmed);
+}

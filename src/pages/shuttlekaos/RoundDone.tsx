@@ -6,7 +6,7 @@ import { ArrowRight, FlagCheckered, ResponsiveModal } from '~/components/ui';
 import type { Session } from '~/shuttlekaos/model';
 
 import { rankMoves, standingsUpTo, type PlayerMap } from './labels';
-import { StandingsTable } from './StandingsTable';
+import { StandingsTable, StatsTitle } from './StandingsTable';
 
 import classes from './RoundDone.module.css';
 
@@ -27,10 +27,18 @@ export const RoundDone: FC<Props> = ({ session, round, players, last, pending, o
   const action = last ? onFinish : onNext;
 
   return (
-    <ResponsiveModal opened onClose={onClose} title={<Trans>Round {round} done</Trans>}>
+    <ResponsiveModal
+      opened
+      onClose={onClose}
+      title={
+        <StatsTitle>
+          <Trans>Round {round} done</Trans>
+        </StatsTitle>
+      }
+    >
       <Stack gap="md">
         <div className={classes.table}>
-          <StandingsTable rows={rows} session={session} players={players} moves={moves} podium />
+          <StandingsTable rows={rows} session={session} players={players} moves={moves} podium adjustable />
         </div>
         <Group justify="flex-end" gap="sm" grow={Boolean(action)}>
           <Button variant="default" size="md" onClick={onClose}>

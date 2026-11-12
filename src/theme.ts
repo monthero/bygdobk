@@ -222,6 +222,13 @@ export const buildTheme = ({ palette, shape, density, width, font }: ThemeOption
 
 const INITIALS_COLORS = ['blue', 'cyan', 'grape', 'green', 'indigo', 'orange', 'pink', 'red', 'teal', 'violet'];
 
+const ME_COLORS: Record<Palette, string> = {
+  [Palette.enum.fjord]: 'grape',
+  [Palette.enum.club]: 'blue',
+  [Palette.enum.glacier]: 'violet',
+  [Palette.enum.lavender]: 'cyan',
+};
+
 const SOFT_DARK_COLORS = ['brand', 'teal', 'blue', 'orange', 'grape', 'green', 'red', 'yellow', 'gray'];
 
 const softDarkLight = (colors: Record<string, MantineColorsTuple>) =>
@@ -255,6 +262,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const brand = theme.colors.brand ?? PALETTES.fjord;
   const light = LIGHT_NEUTRALS[palette];
   const dark = DARK_NEUTRALS[palette];
+  const me = theme.colors[ME_COLORS[palette]] ?? theme.colors.blue;
   return {
     variables: {
       '--bk-font-display': HEADING_FONTS[font].family,
@@ -287,6 +295,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--bk-warn-soft': '#f8ebd2',
       '--bk-danger': '#b03a2e',
       '--bk-danger-soft': '#f7dfdb',
+      '--bk-me': me?.[6] ?? '',
       '--bk-shadow': '0 1px 2px rgb(26 39 54 / 0.05), 0 10px 30px rgb(26 39 54 / 0.06)',
     },
     dark: {
@@ -313,6 +322,7 @@ export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
       '--bk-warn-soft': '#3a2c12',
       '--bk-danger': '#f0968b',
       '--bk-danger-soft': '#3d1c18',
+      '--bk-me': me?.[4] ?? '',
       '--bk-shadow': '0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px rgb(0 0 0 / 0.25)',
     },
   };

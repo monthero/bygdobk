@@ -22,7 +22,15 @@
 
   &[data-won] {
     border-color: var(--bk-ok);
-    background: var(--bk-ok-soft);
+    background: var(--bk-ok);
+    color: var(--bk-ok-soft);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--bk-ok) 25%, transparent),
+      0 6px 18px color-mix(in srgb, var(--bk-ok) 35%, transparent);
+  }
+
+  &[data-lost] {
+    opacity: 0.6;
   }
 
   &:is(button):hover {
@@ -33,33 +41,4 @@
     outline: 2px solid var(--bk-accent-strong);
     outline-offset: 2px;
   }
-}
-
-.selectRoot {
-  width: 56px;
-
-  &[data-won] .select {
-    border-color: var(--bk-ok);
-    background: var(--bk-ok-soft);
-  }
-
-  &[data-empty] .select {
-    border-style: dashed;
-    border-color: var(--bk-accent-line);
-    color: var(--mantine-color-dimmed);
-  }
-}
-
-.select {
-  width: 56px;
-  height: 56px;
-  padding: 0;
-  border: 2px solid var(--bk-border);
-  border-radius: var(--mantine-radius-md);
-  background: var(--kaos-field, var(--bk-surface));
-  font-size: 1.6rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  text-align: center;
-  text-align-last: center;
 }

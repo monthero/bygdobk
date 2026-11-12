@@ -2,19 +2,25 @@ import { Avatar, type MantineSize } from '@mantine/core';
 import { memo, type FC } from 'react';
 
 import { AVATAR_IMAGE_PROPS } from '~/components/auth';
-import type { Player } from '~/shuttlekaos/model';
 
-import { namesOf } from './labels';
+import { isMe, namesOf, type ShownPlayer } from './labels';
 
 import classes from './People.module.css';
 
-type AvatarProps = { player: Pick<Player, 'name' | 'avatarUrl'>; size?: MantineSize | number };
+type AvatarProps = { player: Pick<ShownPlayer, 'name' | 'avatarUrl' | 'realName'>; size?: MantineSize | number };
 
 export const PlayerAvatar: FC<AvatarProps> = ({ player, size = 'md' }) => (
-  <Avatar src={player.avatarUrl} name={player.name} color="initials" size={size} imageProps={AVATAR_IMAGE_PROPS} />
+  <Avatar
+    src={player.avatarUrl}
+    name={player.realName ?? player.name}
+    color="initials"
+    size={size}
+    imageProps={AVATAR_IMAGE_PROPS}
+    data-me={isMe(player) || undefined}
+  />
 );
 
-type Props = { players: Player[]; size?: MantineSize | number; stacked?: boolean; end?: boolean };
+type Props = { players: ShownPlayer[]; size?: MantineSize | number; stacked?: boolean; end?: boolean };
 
 export const PlayerNames = memo<Props>(({ players, size = 'sm', stacked, end }) => {
   if (stacked) {
@@ -23,7 +29,9 @@ export const PlayerNames = memo<Props>(({ players, size = 'sm', stacked, end }) 
         {players.map((p) => (
           <span key={p.id} className={classes.entrant}>
             <PlayerAvatar player={p} size={size} />
-            <span className={classes.name}>{p.name}</span>
+            <span className={classes.name} data-me={isMe(p) || undefined}>
+              {p.name}
+            </span>
           </span>
         ))}
       </span>
@@ -36,7 +44,9 @@ export const PlayerNames = memo<Props>(({ players, size = 'sm', stacked, end }) 
           <PlayerAvatar key={p.id} player={p} size={size} />
         ))}
       </Avatar.Group>
-      <span className={classes.name}>{namesOf(players)}</span>
+      <span className={classes.name} data-me={players.some(isMe) || undefined}>
+        {namesOf(players)}
+      </span>
     </span>
   );
 });

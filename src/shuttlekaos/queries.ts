@@ -9,15 +9,18 @@ import { queryClient } from '~/cms/queryClient';
 import { useSessionUserId } from '~/components/auth/hooks';
 import { getSupabase } from '~/supabase/client';
 
+import { shortLinkedNames } from './engine';
 import {
   Format,
   Level,
   PlayStyle,
   Session,
+  SessionLocation,
   SessionStatus,
   type AccountMatch,
   type PublicSession,
   type SessionSummary,
+  type SessionSummaryPage,
   type SetupProblem,
 } from './model';
 import {
@@ -34,6 +37,7 @@ import {
 const SESSION_KEY = 'shuttlekaos-session';
 const PUBLIC_KEY = 'shuttlekaos-public';
 const MY_SESSIONS_KEY = 'shuttlekaos-mine';
+export const PAGE_SIZE = 10;
 const ACCOUNTS_KEY = 'shuttlekaos-accounts';
 const FINDABLE_KEY = 'shuttlekaos-findable';
 const FUNCTION_NAME = 'shuttlekaos';
@@ -128,7 +132,13 @@ const SummaryFields = {
 };
 
 const PublicList = z.array(
-  z.object({ ...SummaryFields, format: Format, style: PlayStyle, organizerId: z.uuid() }),
+  z.object({
+    ...SummaryFields,
+    format: Format,
+    style: PlayStyle,
+    organizerId: z.uuid(),
+    location: SessionLocation.nullable().catch(null),
+  }),
 ) satisfies z.ZodType<PublicSession[]>;
 
 const SummaryList = z.array(
@@ -136,11 +146,14 @@ const SummaryList = z.array(
     ...SummaryFields,
     isOwner: z.boolean(),
     isActive: z.boolean(),
+    location: SessionLocation.nullable().catch(null),
     myResult: z
       .object({ rank: z.number().int(), played: z.number().int(), won: z.number().int(), pointsFor: z.number().int() })
       .nullable(),
   }),
 ) satisfies z.ZodType<SessionSummary[]>;
+
+const SummaryPage = z.object({ total: z.number().int(), items: SummaryList }) satisfies z.ZodType<SessionSummaryPage>;
 
 const AccountList = z.array(
   z.object({ profileId: z.uuid(), name: z.string(), avatarUrl: z.string().nullable(), busy: z.boolean() }),
@@ -150,7 +163,8 @@ const Findable = z.boolean();
 
 type SessionKey = readonly [typeof SESSION_KEY, string, string | undefined];
 type PublicKey = readonly [typeof PUBLIC_KEY, string];
-type MySessionsKey = readonly [typeof MY_SESSIONS_KEY, string | undefined];
+type MyActiveKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'active'];
+type MyHistoryKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'history', number];
 type AccountsKey = readonly [typeof ACCOUNTS_KEY, string | undefined, string];
 type FindableKey = readonly [typeof FINDABLE_KEY, string | undefined];
 type QueryOptions<TData, T, TKey extends readonly unknown[]> = Omit<
@@ -193,13 +207,18 @@ const refreshLists = () =>
 
 const refreshAll = () => Promise.all([refreshLists(), queryClient.invalidateQueries({ queryKey: [SESSION_KEY] })]);
 
-const fetchSession = async (code: string) =>
-  MaybeSessionView.parse(await callRpc('shuttlekaos_session', { p_code: code }));
+const fetchSession = async (code: string) => {
+  const view = MaybeSessionView.parse(await callRpc('shuttlekaos_session', { p_code: code }));
+  return view && { ...view, session: { ...view.session, players: shortLinkedNames(view.session.players) } };
+};
 
 const fetchPublic = async (levels: string[]) =>
   PublicList.parse(await callRpc('public_shuttlekaos_sessions', { p_levels: levels }));
 
-const fetchMySessions = async () => SummaryList.parse(await callRpc('my_shuttlekaos_sessions'));
+const fetchMyActive = async () => SummaryList.parse(await callRpc('my_shuttlekaos_active'));
+
+const fetchMyHistory = async (page: number) =>
+  SummaryPage.parse(await callRpc('my_shuttlekaos_history', { p_offset: (page - 1) * PAGE_SIZE, p_limit: PAGE_SIZE }));
 
 const searchAccounts = async (query: string) =>
   AccountList.parse(await callRpc('search_shuttlekaos_accounts', { p_query: query }));
@@ -358,11 +377,23 @@ export const usePublicSessions = <T = PublicSession[]>(
   });
 };
 
-export const useMySessions = <T = SessionSummary[]>(options?: QueryOptions<SessionSummary[], T, MySessionsKey>) => {
+export const useMyActiveSessions = <T = SessionSummary[]>(options?: QueryOptions<SessionSummary[], T, MyActiveKey>) => {
   const userId = useSessionUserId();
   return useQuery({
-    queryKey: [MY_SESSIONS_KEY, userId] as const,
-    queryFn: userId ? fetchMySessions : skipToken,
+    queryKey: [MY_SESSIONS_KEY, userId, 'active'] as const,
+    queryFn: userId ? fetchMyActive : skipToken,
+    ...options,
+  });
+};
+
+export const useMySessionHistory = <T = SessionSummaryPage>(
+  page: number,
+  options?: QueryOptions<SessionSummaryPage, T, MyHistoryKey>,
+) => {
+  const userId = useSessionUserId();
+  return useQuery({
+    queryKey: [MY_SESSIONS_KEY, userId, 'history', page] as const,
+    queryFn: userId ? () => fetchMyHistory(page) : skipToken,
     ...options,
   });
 };

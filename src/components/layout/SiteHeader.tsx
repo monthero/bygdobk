@@ -7,8 +7,9 @@ import { AccountButton } from '~/components/auth';
 import { ClubLogo } from '~/components/ui';
 import { CLUB } from '~/data/club';
 
+import { ExperimentalMark } from './ExperimentalMark';
 import { LanguageSwitch } from './LanguageSwitch';
-import { NAV } from './nav';
+import { CLUB_NAV, TOOL_NAV } from './nav';
 import { ThemeSwitch } from './ThemeSwitch';
 
 import classes from './SiteHeader.module.css';
@@ -36,9 +37,16 @@ export const SiteHeader = memo<Props>(({ menuOpened, onToggleMenu, showLinks }) 
 
       {showLinks && (
         <nav className={classes.nav} aria-label={t`Main menu`}>
-          {NAV.map((item) => (
+          {CLUB_NAV.map((item) => (
             <Link key={item.to} to={item.to} className={classes.link}>
               {i18n._(item.label)}
+            </Link>
+          ))}
+          <span className={classes.divider} aria-hidden />
+          {TOOL_NAV.map((item) => (
+            <Link key={item.to} to={item.to} className={classes.link}>
+              {i18n._(item.label)}
+              {item.experimental && <ExperimentalMark />}
             </Link>
           ))}
         </nav>
