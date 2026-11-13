@@ -23,7 +23,7 @@ import {
 } from './src/i18n/locales.ts';
 
 const RESPONSIVE_PHOTO = new URLSearchParams({
-  w: '640;960;1400;2048',
+  w: '640;960;1200;1400;2048',
   format: 'webp',
   // Close to the source photos, so the full-width copy is no bigger than the original.
   quality: '75',
@@ -130,7 +130,7 @@ export default defineConfig({
       'react/exhaustive-deps': 'warn',
       'react/only-export-components': ['warn', { allowConstantExport: true }],
       'react/react-in-jsx-scope': 'off',
-      'import/no-unassigned-import': ['warn', { allow: ['**/*.css'] }],
+      'import/no-unassigned-import': ['warn', { allow: ['**/*.css', '@fontsource-variable/*'] }],
       'typescript/require-array-sort-compare': ['error', { ignoreStringArrays: false }],
       'unicorn/prefer-at': 'error',
       'eslint/no-nested-ternary': 'error',

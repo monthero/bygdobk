@@ -1,0 +1,48 @@
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 100%;
+  padding-inline: max(var(--mantine-spacing-md), env(safe-area-inset-left))
+    max(var(--mantine-spacing-md), env(safe-area-inset-right));
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--mantine-color-brand-filled);
+  color: var(--mantine-color-brand-contrast, var(--bk-accent-ink));
+  font-size: 21px;
+  transform: rotate(-18deg);
+}
+
+.name {
+  overflow: hidden;
+  font-family: var(--bk-font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}

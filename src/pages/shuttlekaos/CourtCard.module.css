@@ -12,6 +12,11 @@
   &[data-done] {
     border-color: color-mix(in srgb, var(--bk-ok) 45%, var(--bk-border));
   }
+
+  &[data-big] {
+    gap: 6px;
+    padding: 14px 16px 16px;
+  }
 }
 
 .head {
@@ -27,6 +32,10 @@
   font-size: 1.1rem;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+
+  .card[data-big] & {
+    font-size: 1.4rem;
+  }
 }
 
 .side {
@@ -49,6 +58,11 @@
   &[data-lost] {
     opacity: 0.7;
   }
+
+  .card[data-big] & {
+    min-height: 0;
+    font-size: 1.3rem;
+  }
 }
 
 .score {
@@ -59,6 +73,10 @@
   font-size: 1.5rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+
+  .card[data-big] & {
+    font-size: 2.4rem;
+  }
 }
 
 .game {

@@ -79,6 +79,15 @@
   color: var(--mantine-color-dimmed);
 }
 
+.install {
+  margin-top: 6px;
+  color: var(--bk-accent-strong);
+
+  &:empty {
+    display: none;
+  }
+}
+
 .lede {
   max-width: 46ch;
   margin-top: 6px;

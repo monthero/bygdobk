@@ -28,7 +28,7 @@ const holderKey = (m: Pick<Membership, 'profileId' | 'playerName' | 'planId'>) =
 
 type Renewals = { rows: MembershipInput[]; skipped: number; oneOff: number };
 
-export const renewalsOf = (
+const renewalsOf = (
   previous: readonly AdminMembership[],
   target: readonly AdminMembership[],
   plans: ReadonlyMap<string, Plan>,

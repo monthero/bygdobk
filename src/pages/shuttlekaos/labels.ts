@@ -278,3 +278,15 @@ export const formatStart = (iso: string) => {
 
 export const sessionMinutes = ({ startedAt, finishedAt }: Pick<SessionSummary, 'startedAt' | 'finishedAt'>) =>
   startedAt && finishedAt ? dayjs(finishedAt).diff(startedAt, 'minute') : null;
+
+export const SCAN_LABELS: Record<SessionStatus, MessageDescriptor> = {
+  [SessionStatus.enum.open]: msg({ message: 'Scan to join', comment: 'Next to a QR code that opens the session' }),
+  [SessionStatus.enum.running]: msg({
+    message: 'Scan to follow',
+    comment: 'Next to a QR code that opens the live scores',
+  }),
+  [SessionStatus.enum.finished]: msg({
+    message: 'Scan for the results',
+    comment: 'Next to a QR code that opens the final standings',
+  }),
+};

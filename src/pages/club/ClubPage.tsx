@@ -39,17 +39,17 @@ export const ClubPage: FC = () => {
       />
       <Container py={40}>
         <Stack gap={56}>
-          <section id={ClubSection.enum.kontakt} aria-labelledby="kontakt-title" className={classes.section}>
-            <Title order={2} id="kontakt-title" className={classes.title}>
-              <Trans>Contact us</Trans>
-            </Title>
-            <ContactSection key={`${emne}:${melding}`} initialTopic={emne} draft={melding} />
-          </section>
           <section id={ClubSection.enum.styret} aria-labelledby="styret-title" className={classes.section}>
             <Title order={2} id="styret-title" className={classes.title}>
               <Trans>The board</Trans>
             </Title>
             <BoardSection />
+          </section>
+          <section id={ClubSection.enum.kontakt} aria-labelledby="kontakt-title" className={classes.section}>
+            <Title order={2} id="kontakt-title" className={classes.title}>
+              <Trans>Contact us</Trans>
+            </Title>
+            <ContactSection key={`${emne}:${melding}`} initialTopic={emne} draft={melding} />
           </section>
           <section id={ClubSection.enum.varsling} aria-labelledby="varsling-title" className={classes.section}>
             <Title order={2} id="varsling-title" className={classes.title}>

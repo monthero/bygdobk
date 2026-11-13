@@ -1,7 +1,8 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { z } from 'zod';
 
-import { isAppleMobile } from '~/utils/device';
+import { AppKind, appForPath } from '~/utils/apps';
+import { isAppleMobile, isStandalone } from '~/utils/device';
 
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -11,9 +12,17 @@ type InstallPromptEvent = Event & {
 export const InstallMode = z.enum(['prompt', 'ios']);
 export type InstallMode = z.infer<typeof InstallMode>;
 
-const STANDALONE = '(display-mode: standalone)';
+const APP_HEAD: Record<AppKind, { manifest: string; title: string; icon: string }> = {
+  [AppKind.enum.club]: { manifest: '/manifest.webmanifest', title: 'Bygdø BK', icon: '/apple-touch-icon.png' },
+  [AppKind.enum.shuttlekaos]: {
+    manifest: '/shuttlekaos.webmanifest',
+    title: 'ShuttleKaos',
+    icon: '/shuttlekaos-apple-touch-icon.png',
+  },
+};
 
 let deferred: InstallPromptEvent | undefined;
+let shownApp: AppKind = AppKind.enum.club;
 const listeners = new Set<() => void>();
 
 const notify = () => {
@@ -33,14 +42,30 @@ addEventListener('appinstalled', () => {
   notify();
 });
 
-const isStandalone = () =>
-  matchMedia(STANDALONE).matches || ('standalone' in navigator && navigator.standalone === true);
+const showApp = (app: AppKind) => {
+  if (app === shownApp) return;
+  shownApp = app;
+  const { manifest, title, icon } = APP_HEAD[app];
+  document.querySelector('link[rel="manifest"]')?.setAttribute('href', manifest);
+  document.querySelector('link[rel="apple-touch-icon"]')?.setAttribute('href', icon);
+  document.querySelector('meta[name="apple-mobile-web-app-title"]')?.setAttribute('content', title);
+  deferred = undefined;
+  notify();
+};
+
+showApp(appForPath(location.pathname));
+
+export const useAppManifest = (app: AppKind) => {
+  useEffect(() => showApp(app), [app]);
+};
 
 const modeOf = (): InstallMode | undefined => {
   if (isStandalone()) return undefined;
   if (deferred) return InstallMode.enum.prompt;
   return isAppleMobile() ? InstallMode.enum.ios : undefined;
 };
+
+const appOf = () => shownApp;
 
 const subscribe = (listener: () => void) => {
   listeners.add(listener);
@@ -61,4 +86,8 @@ const install = async () => {
   }
 };
 
-export const useInstallApp = () => ({ mode: useSyncExternalStore(subscribe, modeOf), install });
+export const useInstallApp = () => ({
+  mode: useSyncExternalStore(subscribe, modeOf),
+  app: useSyncExternalStore(subscribe, appOf),
+  install,
+});

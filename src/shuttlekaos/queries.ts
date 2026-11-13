@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
-import { FunctionsFetchError, FunctionsHttpError, REALTIME_SUBSCRIBE_STATES } from '@supabase/supabase-js';
+import { FunctionsFetchError, FunctionsHttpError, type REALTIME_SUBSCRIBE_STATES } from '@supabase/supabase-js';
 import { skipToken, useMutation, useQuery, type UseMutationOptions, type UseQueryOptions } from '@tanstack/react-query';
 import { useCallback, useSyncExternalStore } from 'react';
 import { z } from 'zod';
@@ -163,10 +163,52 @@ const AccountList = z.array(
 
 const Findable = z.boolean();
 
+const Count = z.number().int();
+
+const MyStats = z.object({
+  totals: z.object({
+    sessions: Count,
+    played: Count,
+    won: Count,
+    lost: Count,
+    drawn: Count,
+    pointsFor: Count,
+    pointsAgainst: Count,
+    averagePlace: z.number().nullable(),
+    bestPlace: Count.nullable(),
+    wins: Count,
+    podiums: Count,
+  }),
+  form: z.array(
+    z.object({
+      shareCode: z.string(),
+      title: z.string(),
+      startedAt: z.string(),
+      rank: Count,
+      entrants: Count,
+      played: Count,
+      won: Count,
+      pointsFor: Count,
+      pointsAgainst: Count,
+    }),
+  ),
+  partners: z.array(
+    z.object({
+      name: z.string(),
+      profileId: z.uuid().nullable(),
+      avatarUrl: z.string().nullable(),
+      played: Count,
+      won: Count,
+    }),
+  ),
+});
+export type MyStats = z.infer<typeof MyStats>;
+
 type SessionKey = readonly [typeof SESSION_KEY, string, string | undefined];
 type PublicKey = readonly [typeof PUBLIC_KEY, string];
 type MyActiveKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'active'];
 type MyHistoryKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'history', number];
+type MyStatsKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'stats'];
 type AccountsKey = readonly [typeof ACCOUNTS_KEY, string | undefined, string];
 type FindableKey = readonly [typeof FINDABLE_KEY, string | undefined];
 type QueryOptions<TData, T, TKey extends readonly unknown[]> = Omit<
@@ -221,6 +263,8 @@ const fetchMyActive = async () => SummaryList.parse(await callRpc('my_shuttlekao
 
 const fetchMyHistory = async (page: number) =>
   SummaryPage.parse(await callRpc('my_shuttlekaos_history', { p_offset: (page - 1) * PAGE_SIZE, p_limit: PAGE_SIZE }));
+
+const fetchMyStats = async () => MyStats.parse(await callRpc('my_shuttlekaos_stats'));
 
 const searchAccounts = async (query: string) =>
   AccountList.parse(await callRpc('search_shuttlekaos_accounts', { p_query: query }));
@@ -310,6 +354,9 @@ type Watch = {
 
 const watches = new Map<string, Watch>();
 
+// Not the enum value: importing it puts all of realtime-js in the entry bundle.
+const isJoined = (status: `${REALTIME_SUBSCRIBE_STATES}`) => status === 'SUBSCRIBED';
+
 const openWatch = (shareCode: string) => {
   let stopped = false;
   const watch: Watch = { subscribed: false, listeners: new Set(), stop: () => (stopped = true) };
@@ -319,7 +366,7 @@ const openWatch = (shareCode: string) => {
       .channel(sessionTopic(shareCode))
       .on('broadcast', { event: NUDGE_EVENT }, ({ payload }) => onNudge(shareCode, payload))
       .subscribe((status) => {
-        watch.subscribed = status === REALTIME_SUBSCRIBE_STATES.SUBSCRIBED;
+        watch.subscribed = isJoined(status);
         for (const listener of watch.listeners) listener();
       });
     watch.stop = () => void supabase.removeChannel(channel);
@@ -396,6 +443,15 @@ export const useMySessionHistory = <T = SessionSummaryPage>(
   return useQuery({
     queryKey: [MY_SESSIONS_KEY, userId, 'history', page] as const,
     queryFn: userId ? () => fetchMyHistory(page) : skipToken,
+    ...options,
+  });
+};
+
+export const useMyStats = <T = MyStats>(options?: QueryOptions<MyStats, T, MyStatsKey>) => {
+  const userId = useSessionUserId();
+  return useQuery({
+    queryKey: [MY_SESSIONS_KEY, userId, 'stats'] as const,
+    queryFn: userId ? fetchMyStats : skipToken,
     ...options,
   });
 };

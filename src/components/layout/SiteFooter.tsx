@@ -11,7 +11,8 @@ import { FooterMark, useSettings } from '~/stores/settings';
 import { DarkScopeStyles } from './DarkScope';
 import { DARK_SCOPE } from './darkScopeProps';
 import { ExperimentalMark } from './ExperimentalMark';
-import { InstallApp, InstallLook } from './InstallApp';
+import { InstallApp } from './InstallApp';
+import { InstallLook } from './installLook';
 import { NAV } from './nav';
 import { VariantMenu } from './VariantMenu';
 

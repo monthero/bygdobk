@@ -8,14 +8,14 @@ import { EVERYONE_ONCE, SessionStatus, type Game, type Session } from '~/shuttle
 
 import { CourtCard } from './CourtCard';
 import { LiveBadge } from './Fallbacks';
-import { isMe, playersOf, type PlayerMap } from './labels';
+import { isMe, playersOf, type PlayerMap, type ShownPlayer } from './labels';
 import { PlayerAvatar } from './People';
 
 import classes from './RoundBrowser.module.css';
 
 const PERCENT = 100;
 
-const ProgressLine: FC<{ session: Session }> = ({ session }) => {
+export const ProgressLine: FC<{ session: Session }> = ({ session }) => {
   const { t } = useLingui();
   const { rounds } = session.settings;
   if (rounds === EVERYONE_ONCE) {
@@ -60,18 +60,45 @@ type NavProps = {
   onStandings?: () => void;
 };
 
-export const RoundNav: FC<NavProps> = ({ session, viewed, onView, compact, onStandings }) => {
-  const { t } = useLingui();
+export const RoundCount: FC<{ session: Session; viewed: number }> = ({ session, viewed }) => {
   const last = session.rounds.at(-1)?.number ?? 0;
-  const live = session.status === SessionStatus.enum.running && viewed === last;
   const limit = session.settings.rounds;
-  const previous = viewed - 1;
-  const next = viewed + 1;
-
   let total = last;
   if (limit === EVERYONE_ONCE && session.status === SessionStatus.enum.running) {
     total = last + (roundsLeft(session) ?? 0);
   } else if (typeof limit === 'number') total = limit;
+  return (
+    <Trans comment="Round being shown and the planned total, e.g. Round 3 / 11">
+      Round {viewed} / {total}
+    </Trans>
+  );
+};
+
+export const RestingPlayers: FC<{ players: ShownPlayer[] }> = ({ players }) => (
+  <Paper radius="lg" p="sm" className={classes.resting}>
+    <Coffee aria-hidden className={classes.restingIcon} />
+    <Text size="sm" c="dimmed">
+      <Trans comment="Followed by the players who sit out this round">Resting this round</Trans>
+    </Text>
+    <ul className={classes.restingPlayers}>
+      {players.map((player) => (
+        <li key={player.id} className={classes.restingPlayer}>
+          <PlayerAvatar player={player} size={26} />
+          <Text fw={isMe(player) ? 800 : 700} size="sm">
+            {player.name}
+          </Text>
+        </li>
+      ))}
+    </ul>
+  </Paper>
+);
+
+export const RoundNav: FC<NavProps> = ({ session, viewed, onView, compact, onStandings }) => {
+  const { t } = useLingui();
+  const last = session.rounds.at(-1)?.number ?? 0;
+  const live = session.status === SessionStatus.enum.running && viewed === last;
+  const previous = viewed - 1;
+  const next = viewed + 1;
 
   return (
     <div className={classes.navBox} data-compact={compact || undefined}>
@@ -91,9 +118,7 @@ export const RoundNav: FC<NavProps> = ({ session, viewed, onView, compact, onSta
         </ActionIcon>
         <div className={classes.label}>
           <Text fw={800} className={classes.round}>
-            <Trans comment="Round being shown and the planned total, e.g. Round 3 / 11">
-              Round {viewed} / {total}
-            </Trans>
+            <RoundCount session={session} viewed={viewed} />
           </Text>
           {live && (
             <LiveBadge>
@@ -164,24 +189,7 @@ export const RoundBrowser: FC<Props> = ({
       <Paper ref={headRef} withBorder radius="lg" p="sm" className={classes.head}>
         <RoundNav session={session} viewed={viewed} onView={onView} onStandings={onStandings} />
       </Paper>
-      {round && round.resting.length > 0 && (
-        <Paper radius="lg" p="sm" className={classes.resting}>
-          <Coffee aria-hidden className={classes.restingIcon} />
-          <Text size="sm" c="dimmed">
-            <Trans comment="Followed by the players who sit out this round">Resting this round</Trans>
-          </Text>
-          <ul className={classes.restingPlayers}>
-            {resting.map((player) => (
-              <li key={player.id} className={classes.restingPlayer}>
-                <PlayerAvatar player={player} size={26} />
-                <Text fw={isMe(player) ? 800 : 700} size="sm">
-                  {player.name}
-                </Text>
-              </li>
-            ))}
-          </ul>
-        </Paper>
-      )}
+      {resting.length > 0 && <RestingPlayers players={resting} />}
       {round && (
         <div className={classes.courts}>
           {round.matches.map((match) => (

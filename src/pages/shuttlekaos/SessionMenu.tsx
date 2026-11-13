@@ -1,6 +1,6 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { ActionIcon, Button, Group, Menu, Stack, Text } from '@mantine/core';
-import { useNavigate } from '@tanstack/react-router';
+import { ActionIcon, Box, Button, Group, Menu, Stack, Text } from '@mantine/core';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useState, type FC } from 'react';
 import { z } from 'zod';
 
@@ -10,19 +10,24 @@ import {
   DotsThreeVertical,
   FlagCheckered,
   LinkSimple,
+  QrCode,
   ShareNetwork,
   ResponsiveModal,
   SignOut,
+  TelevisionSimple,
   Trash,
 } from '~/components/ui';
 import { notifyDone } from '~/pages/board/format';
 import { SessionStatus } from '~/shuttlekaos/model';
 import { shuttleKaosErrorMessage, useDeleteSession, useLeaveSession, type SessionView } from '~/shuttlekaos/queries';
 
+import { InviteLink } from './InviteCard';
+import { BRAND, SCAN_LABELS, sessionUrl } from './labels';
 import { LinkPlayersModal } from './LinkPlayers';
+import { QrImage } from './QrImage';
 import { useShareSession } from './useShareSession';
 
-const Confirm = z.enum(['end', 'delete', 'leave', 'link']);
+const Confirm = z.enum(['end', 'delete', 'leave', 'link', 'qr']);
 type Confirm = z.infer<typeof Confirm>;
 
 type Props = { view: SessionView; hasOpenCourts?: boolean; onEnd?: () => void };
@@ -40,7 +45,7 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
   const canEnd = isOwner && running && onEnd;
   const canCopy = finished && (isOwner || myPlayerId !== null);
   const canLeave = !isOwner && myPlayerId !== null && !running;
-  const hasOwnItems = Boolean(canEnd) || canCopy || isOwner || canLeave;
+  const url = sessionUrl(shareCode);
 
   const close = () => {
     setConfirm(null);
@@ -70,14 +75,7 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
     <>
       <Menu position="bottom-end" width={220}>
         <Menu.Target>
-          <ActionIcon
-            variant="subtle"
-            color="gray"
-            radius="xl"
-            size={44}
-            hiddenFrom={hasOwnItems ? undefined : 'sm'}
-            aria-label={t`More`}
-          >
+          <ActionIcon variant="subtle" color="gray" radius="xl" size={44} aria-label={t`More`}>
             <DotsThreeVertical />
           </ActionIcon>
         </Menu.Target>
@@ -85,6 +83,21 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
           <Menu.Item hiddenFrom="sm" leftSection={<ShareNetwork />} onClick={() => share(shareCode, session.title)}>
             <Trans>Share the live scores</Trans>
           </Menu.Item>
+          <Menu.Item leftSection={<QrCode />} onClick={() => setConfirm(Confirm.enum.qr)}>
+            <Trans>Show QR code</Trans>
+          </Menu.Item>
+          {isOwner && (
+            <Menu.Item
+              leftSection={<TelevisionSimple />}
+              renderRoot={(props) => (
+                <Link {...props} to="/shuttlekaos/$code/skjerm" params={{ code: shareCode }} target="_blank" />
+              )}
+            >
+              <Trans comment="Menu item: opens a big-screen view of the session for a TV at the hall">
+                Hall screen
+              </Trans>
+            </Menu.Item>
+          )}
           {canEnd && (
             <Menu.Item leftSection={<FlagCheckered />} onClick={() => setConfirm(Confirm.enum.end)}>
               <Trans>End session now</Trans>
@@ -115,6 +128,18 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
           )}
         </Menu.Dropdown>
       </Menu>
+
+      <ResponsiveModal opened={confirm === Confirm.enum.qr} onClose={close} title={i18n._(SCAN_LABELS[session.status])}>
+        <Stack gap="sm" align="center">
+          <Box w="min(100%, 400px)">
+            <QrImage value={url} label={t`QR code with the session link`} />
+          </Box>
+          <Text fw={700} ta="center">
+            {session.title || BRAND}
+          </Text>
+          <InviteLink url={url} />
+        </Stack>
+      </ResponsiveModal>
 
       {isOwner && finished && <LinkPlayersModal view={view} opened={confirm === Confirm.enum.link} onClose={close} />}
 

@@ -550,9 +550,11 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Endre «Title» og «Text» på norsk og engelsk.',
         'Sett «Last updated» til datoen for endringen.',
         'Trykk «Publish».',
-        'Use the same email you log in to the Studio with. Then you show as the author with your photo and role. Two people can’t have the same email.',
       ],
-      tips: ['Siden finnes bare én gang, så den kan ikke slettes.'],
+      tips: [
+        'Siden finnes bare én gang, så den kan ikke slettes.',
+        'Endrer du teksten, må du også endre de andre språkene under «Translations». De oppdateres ikke av seg selv.',
+      ],
     },
     en: {
       title: 'Privacy',
@@ -563,7 +565,10 @@ export const HELP_TOPICS: Record<TopicId, HelpTopic> = {
         'Set “Last updated” to the date of the change.',
         'Click “Publish”.',
       ],
-      tips: ['There is only one privacy page, so it can’t be deleted.'],
+      tips: [
+        'There is only one privacy page, so it can’t be deleted.',
+        'When you change the text, also change the other languages under “Translations”. They don’t update on their own.',
+      ],
     },
   },
   [TopicId.enum.club]: {

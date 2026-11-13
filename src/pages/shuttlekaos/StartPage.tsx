@@ -48,6 +48,7 @@ import { BrandHeader } from './BrandHeader';
 import { LiveBadge } from './Fallbacks';
 import { BRAND, durationText, formatStart, sessionMinutes, stop, TABLE_QUERY } from './labels';
 import { LoginPrompt } from './LoginPrompt';
+import { StatsTeaser } from './MyStats';
 import { NewSessionButton } from './NewSessionButton';
 import { PublicSessions } from './PublicSessions';
 import { FormatCell, VisibilityBadge, VisibilityIcon } from './SettingsSummary';
@@ -424,6 +425,9 @@ export const StartPage: FC = () => {
           <Section title={<Trans>Open sessions</Trans>}>
             <PublicSessions />
           </Section>
+          <StatsTeaser hasHistory={past.length > 0}>
+            {(content) => <Section title={<Trans>Your stats</Trans>}>{content}</Section>}
+          </StatsTeaser>
           {historySection}
           {ready && !userId && (
             <LoginPrompt>

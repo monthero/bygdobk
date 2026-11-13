@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Container } from '@mantine/core';
 import { Link, useRouterState, type LinkProps, type RouterState } from '@tanstack/react-router';
-import { useEffect, useRef, type FC, type ReactNode } from 'react';
+import { useEffect, useRef, type FC, type ReactNode, type RefObject } from 'react';
 
 import { RequestCountBadge } from '~/components/auth/RequestCountBadge';
 import { ChartLineUp, FolderSimpleLock, HandHeart, IdentificationCard, ShieldCheck } from '~/components/ui';
@@ -18,17 +18,20 @@ const NavLink: FC<{ to: LinkProps['to']; icon: ReactNode; children: ReactNode }>
   </Link>
 );
 
+const CenterActiveLink: FC<{ barRef: RefObject<HTMLDivElement | null> }> = ({ barRef }) => {
+  useEffect(() => {
+    const inner = barRef.current;
+    const active = inner?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!inner || !active) return;
+    inner.scrollLeft = active.offsetLeft - (inner.clientWidth - active.offsetWidth) / 2;
+  }, [barRef]);
+  return null;
+};
+
 export const BoardNav: FC = () => {
   const { t } = useLingui();
   const pathname = useRouterState({ select: selectPathname });
   const innerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const inner = innerRef.current;
-    const active = inner?.querySelector<HTMLElement>('[aria-current="page"]');
-    if (!inner || !active) return;
-    inner.scrollLeft = active.offsetLeft - (inner.clientWidth - active.offsetWidth) / 2;
-  }, [pathname]);
 
   return (
     <nav aria-label={t`Board pages`} className={classes.bar}>
@@ -51,6 +54,7 @@ export const BoardNav: FC = () => {
           <Trans comment="Board screen with website visitor numbers">Visitors</Trans>
         </NavLink>
       </Container>
+      <CenterActiveLink key={pathname} barRef={innerRef} />
     </nav>
   );
 };

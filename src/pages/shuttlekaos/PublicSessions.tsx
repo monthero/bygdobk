@@ -26,7 +26,7 @@ import { PAGE_SIZE, shuttleKaosErrorMessage, useJoinSession, usePublicSessions }
 import { useUi } from '~/stores/ui';
 
 import { LiveBadge } from './Fallbacks';
-import { BRAND, FORMAT_LABELS, stop, STYLE_LABELS, TABLE_QUERY } from './labels';
+import { BRAND, FORMAT_LABELS, formatStart, stop, STYLE_LABELS, TABLE_QUERY } from './labels';
 import { LevelsText } from './Levels';
 import { NewSessionButton } from './NewSessionButton';
 import { FormatCell } from './SettingsSummary';
@@ -340,6 +340,11 @@ const OpenTable: FC<{ sessions: PublicSession[] }> = ({ sessions }) => {
         <Table.Thead>
           <Table.Tr>
             <Table.Th>
+              <Trans context="table heading" comment="Table heading: when the session started, in Oslo time">
+                Start
+              </Trans>
+            </Table.Th>
+            <Table.Th>
               <Trans comment="Table heading">Session</Trans>
             </Table.Th>
             <Table.Th className={tables.location}>
@@ -368,6 +373,15 @@ const OpenTable: FC<{ sessions: PublicSession[] }> = ({ sessions }) => {
               className={tables.row}
               onClick={() => void navigate({ to: '/shuttlekaos/$code', params: { code: session.shareCode } })}
             >
+              <Table.Td>
+                {session.startedAt ? (
+                  formatStart(session.startedAt)
+                ) : (
+                  <Text span size="sm" c="dimmed">
+                    <Trans comment="Start column for a session that hasn't started yet">Not started</Trans>
+                  </Text>
+                )}
+              </Table.Td>
               <Table.Td className={tables.main}>
                 <Group gap={8} wrap="nowrap">
                   <StatusTag status={session.status} />

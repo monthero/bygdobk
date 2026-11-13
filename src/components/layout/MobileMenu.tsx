@@ -8,7 +8,8 @@ import { AddressLink, ClubLogo, Shuttle, SocialLinks, UserPlus } from '~/compone
 import { useOffers } from '~/pages/join/offers';
 
 import { ExperimentalMark } from './ExperimentalMark';
-import { InstallApp, InstallLook } from './InstallApp';
+import { InstallApp } from './InstallApp';
+import { InstallLook } from './installLook';
 import { NAV } from './nav';
 
 import classes from './MobileMenu.module.css';

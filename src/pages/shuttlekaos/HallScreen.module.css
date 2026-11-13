@@ -1,0 +1,272 @@
+.hall {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  contain: size;
+
+  &[data-idle] {
+    cursor: none;
+  }
+}
+
+.stage {
+  zoom: var(--hall-scale);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
+  padding: 14px 20px 16px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--mantine-color-brand-filled);
+  color: var(--mantine-color-brand-contrast, var(--bk-accent-ink));
+  font-size: 28px;
+  transform: rotate(-18deg);
+}
+
+.heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mantine-color-dimmed);
+}
+
+.title {
+  font-size: 2.2rem;
+  line-height: 1.1;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 340px;
+
+  & p {
+    font-size: var(--mantine-font-size-md);
+  }
+}
+
+.roundLine {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.roundCount {
+  font-family: var(--bk-font-display);
+  font-size: 1.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.fullscreen {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  transition: opacity 0.3s;
+
+  .hall[data-idle] & {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  min-height: 0;
+
+  &[data-status='open'] {
+    grid-template-columns: minmax(0, 1fr) 400px;
+  }
+
+  &[data-status='finished'] {
+    grid-template-columns: minmax(0, 1fr) 440px;
+  }
+}
+
+.round {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.resting {
+  zoom: 1.15;
+}
+
+.courts {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(var(--hall-cols), minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 14px;
+  min-height: 0;
+
+  & > * {
+    zoom: var(--hall-card);
+  }
+}
+
+.panel {
+  composes: glass from './glass.module.css';
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 12px;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px 8px;
+}
+
+.panelIcon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--bk-accent-soft);
+  color: var(--bk-accent-strong);
+  font-size: 18px;
+}
+
+.panelTitle {
+  font-size: 1.35rem;
+}
+
+.panelBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(#000 calc(100% - 40px), transparent);
+}
+
+.table {
+  zoom: 1.15;
+}
+
+.count {
+  margin-inline-start: auto;
+  font-size: 1.5rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--mantine-color-dimmed);
+}
+
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px 18px;
+  margin: 0;
+  padding: 6px 16px 16px;
+  list-style: none;
+}
+
+.person {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.personName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  padding: 6px 16px;
+  font-size: 1.3rem;
+  color: var(--mantine-color-dimmed);
+}
+
+.scan {
+  composes: glass from './glass.module.css';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.corner {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 14px;
+}
+
+.qr {
+  flex: none;
+  width: 92px;
+
+  .scan & {
+    width: min(100%, 300px);
+  }
+}
+
+.scanLabel {
+  max-width: 9em;
+  font-family: var(--bk-font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: end;
+
+  .scan & {
+    max-width: none;
+    font-size: 2.2rem;
+    text-align: center;
+  }
+}
+
+.podium {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+
+  & > * {
+    zoom: 1.4;
+  }
+}

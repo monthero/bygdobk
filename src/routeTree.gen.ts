@@ -26,6 +26,7 @@ import { Route as NyheterSlugRouteImport } from './routes/nyheter.$slug'
 import { Route as ShuttlekaosIndexRouteImport } from './routes/shuttlekaos.index'
 import { Route as ShuttlekaosCodeRouteImport } from './routes/shuttlekaos.$code'
 import { Route as ShuttlekaosNyRouteImport } from './routes/shuttlekaos.ny'
+import { Route as ShuttlekaosStatistikkRouteImport } from './routes/shuttlekaos.statistikk'
 import { Route as Studie404RouteImport } from './routes/studie_.404'
 import { Route as StyretIndexRouteImport } from './routes/styret.index'
 import { Route as StyretBesokendeRouteImport } from './routes/styret.besokende'
@@ -34,6 +35,7 @@ import { Route as StyretMedlemmerRouteImport } from './routes/styret.medlemmer'
 import { Route as StyretTilgangRouteImport } from './routes/styret.tilgang'
 import { Route as TreningIndexRouteImport } from './routes/trening.index'
 import { Route as TreningSesongRouteImport } from './routes/trening.$sesong'
+import { Route as ShuttlekaosCodeSkjermRouteImport } from './routes/shuttlekaos.$code_.skjerm'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -120,6 +122,11 @@ const ShuttlekaosNyRoute = ShuttlekaosNyRouteImport.update({
   path: '/ny',
   getParentRoute: () => ShuttlekaosRoute,
 } as any)
+const ShuttlekaosStatistikkRoute = ShuttlekaosStatistikkRouteImport.update({
+  id: '/statistikk',
+  path: '/statistikk',
+  getParentRoute: () => ShuttlekaosRoute,
+} as any)
 const Studie404Route = Studie404RouteImport.update({
   id: '/studie_/404',
   path: '/studie/404',
@@ -160,6 +167,11 @@ const TreningSesongRoute = TreningSesongRouteImport.update({
   path: '/trening/$sesong',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShuttlekaosCodeSkjermRoute = ShuttlekaosCodeSkjermRouteImport.update({
+  id: '/$code_/skjerm',
+  path: '/$code/skjerm',
+  getParentRoute: () => ShuttlekaosRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -174,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/nyheter/$slug': typeof NyheterSlugRoute
   '/shuttlekaos/$code': typeof ShuttlekaosCodeRoute
   '/shuttlekaos/ny': typeof ShuttlekaosNyRoute
+  '/shuttlekaos/statistikk': typeof ShuttlekaosStatistikkRoute
   '/studie/404': typeof Studie404Route
   '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
@@ -187,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/shuttlekaos/': typeof ShuttlekaosIndexRoute
   '/styret/': typeof StyretIndexRoute
   '/trening/': typeof TreningIndexRoute
+  '/shuttlekaos/$code/skjerm': typeof ShuttlekaosCodeSkjermRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -199,6 +213,7 @@ export interface FileRoutesByTo {
   '/nyheter/$slug': typeof NyheterSlugRoute
   '/shuttlekaos/$code': typeof ShuttlekaosCodeRoute
   '/shuttlekaos/ny': typeof ShuttlekaosNyRoute
+  '/shuttlekaos/statistikk': typeof ShuttlekaosStatistikkRoute
   '/studie/404': typeof Studie404Route
   '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
@@ -212,6 +227,7 @@ export interface FileRoutesByTo {
   '/shuttlekaos': typeof ShuttlekaosIndexRoute
   '/styret': typeof StyretIndexRoute
   '/trening': typeof TreningIndexRoute
+  '/shuttlekaos/$code/skjerm': typeof ShuttlekaosCodeSkjermRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -227,6 +243,7 @@ export interface FileRoutesById {
   '/nyheter/$slug': typeof NyheterSlugRoute
   '/shuttlekaos/$code': typeof ShuttlekaosCodeRoute
   '/shuttlekaos/ny': typeof ShuttlekaosNyRoute
+  '/shuttlekaos/statistikk': typeof ShuttlekaosStatistikkRoute
   '/studie_/404': typeof Studie404Route
   '/styret/besokende': typeof StyretBesokendeRoute
   '/styret/dugnad': typeof StyretDugnadRoute
@@ -240,6 +257,7 @@ export interface FileRoutesById {
   '/shuttlekaos/': typeof ShuttlekaosIndexRoute
   '/styret/': typeof StyretIndexRoute
   '/trening/': typeof TreningIndexRoute
+  '/shuttlekaos/$code_/skjerm': typeof ShuttlekaosCodeSkjermRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -256,6 +274,7 @@ export interface FileRouteTypes {
     | '/nyheter/$slug'
     | '/shuttlekaos/$code'
     | '/shuttlekaos/ny'
+    | '/shuttlekaos/statistikk'
     | '/studie/404'
     | '/styret/besokende'
     | '/styret/dugnad'
@@ -269,6 +288,7 @@ export interface FileRouteTypes {
     | '/shuttlekaos/'
     | '/styret/'
     | '/trening/'
+    | '/shuttlekaos/$code/skjerm'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -281,6 +301,7 @@ export interface FileRouteTypes {
     | '/nyheter/$slug'
     | '/shuttlekaos/$code'
     | '/shuttlekaos/ny'
+    | '/shuttlekaos/statistikk'
     | '/studie/404'
     | '/styret/besokende'
     | '/styret/dugnad'
@@ -294,6 +315,7 @@ export interface FileRouteTypes {
     | '/shuttlekaos'
     | '/styret'
     | '/trening'
+    | '/shuttlekaos/$code/skjerm'
   id:
     | '__root__'
     | '/'
@@ -308,6 +330,7 @@ export interface FileRouteTypes {
     | '/nyheter/$slug'
     | '/shuttlekaos/$code'
     | '/shuttlekaos/ny'
+    | '/shuttlekaos/statistikk'
     | '/studie_/404'
     | '/styret/besokende'
     | '/styret/dugnad'
@@ -321,6 +344,7 @@ export interface FileRouteTypes {
     | '/shuttlekaos/'
     | '/styret/'
     | '/trening/'
+    | '/shuttlekaos/$code_/skjerm'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -464,6 +488,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShuttlekaosNyRouteImport
       parentRoute: typeof ShuttlekaosRoute
     }
+    '/shuttlekaos/statistikk': {
+      id: '/shuttlekaos/statistikk'
+      path: '/statistikk'
+      fullPath: '/shuttlekaos/statistikk'
+      preLoaderRoute: typeof ShuttlekaosStatistikkRouteImport
+      parentRoute: typeof ShuttlekaosRoute
+    }
     '/studie_/404': {
       id: '/studie_/404'
       path: '/studie/404'
@@ -520,19 +551,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TreningSesongRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shuttlekaos/$code_/skjerm': {
+      id: '/shuttlekaos/$code_/skjerm'
+      path: '/$code/skjerm'
+      fullPath: '/shuttlekaos/$code/skjerm'
+      preLoaderRoute: typeof ShuttlekaosCodeSkjermRouteImport
+      parentRoute: typeof ShuttlekaosRoute
+    }
   }
 }
 
 interface ShuttlekaosRouteChildren {
   ShuttlekaosCodeRoute: typeof ShuttlekaosCodeRoute
   ShuttlekaosNyRoute: typeof ShuttlekaosNyRoute
+  ShuttlekaosStatistikkRoute: typeof ShuttlekaosStatistikkRoute
   ShuttlekaosIndexRoute: typeof ShuttlekaosIndexRoute
+  ShuttlekaosCodeSkjermRoute: typeof ShuttlekaosCodeSkjermRoute
 }
 
 const ShuttlekaosRouteChildren: ShuttlekaosRouteChildren = {
   ShuttlekaosCodeRoute: ShuttlekaosCodeRoute,
   ShuttlekaosNyRoute: ShuttlekaosNyRoute,
+  ShuttlekaosStatistikkRoute: ShuttlekaosStatistikkRoute,
   ShuttlekaosIndexRoute: ShuttlekaosIndexRoute,
+  ShuttlekaosCodeSkjermRoute: ShuttlekaosCodeSkjermRoute,
 }
 
 const ShuttlekaosRouteWithChildren = ShuttlekaosRoute._addFileChildren(

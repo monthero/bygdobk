@@ -14,11 +14,12 @@ import { I18nProvider } from '@lingui/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { App, router } from './App';
+import { App } from './App';
 import { IS_PREVIEW, startPreview } from './cms/preview/mode';
 import { activateLocale } from './i18n/activate';
 import { DEFAULT_LOCALE, localeInPath, withLocale } from './i18n/locales';
 import { readLocation, replaceLocation } from './i18n/url';
+import { router } from './router';
 import { useLocaleStore } from './stores/locale';
 
 const initialLocale = () => {

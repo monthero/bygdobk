@@ -35,14 +35,15 @@ type Props = {
   players: PlayerMap;
   onScore?: (matchId: string, games: Game[]) => void;
   onEdit?: (matchId: string) => void;
+  big?: boolean;
 };
 
-export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdit }) => {
+export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdit, big }) => {
   const { t, i18n } = useLingui();
   const done = gamesProblem(settings, match.games) === null;
   const winner = done ? matchWinner(settings, match) : null;
   const court = match.court;
-  const inline = settings.scoreMode === ScoreMode.enum.total || settings.sets === 1;
+  const inline = !big && (settings.scoreMode === ScoreMode.enum.total || settings.sets === 1);
   const [saved, setSaved] = useState(match.games);
   const [draft, setDraft] = useState(() => draftOf(match));
   if (saved !== match.games) {
@@ -65,11 +66,11 @@ export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdi
   };
 
   const status = done ? (
-    <Badge color="teal" variant="light" leftSection={<CheckCircle />}>
+    <Badge color="teal" variant="light" size={big ? 'lg' : undefined} leftSection={<CheckCircle />}>
       <Trans comment="A court whose score is entered">Done</Trans>
     </Badge>
   ) : (
-    <Badge color="brand" variant="light">
+    <Badge color="brand" variant="light" size={big ? 'lg' : undefined}>
       <Trans comment="A court still playing, no score yet">Playing</Trans>
     </Badge>
   );
@@ -135,7 +136,7 @@ export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdi
   }
 
   return (
-    <Paper withBorder radius="lg" className={classes.card} data-done={done || undefined}>
+    <Paper withBorder radius="lg" className={classes.card} data-done={done || undefined} data-big={big || undefined}>
       <div className={classes.head}>
         <Text fw={700} className={classes.court}>
           <Trans>Court {court}</Trans>
@@ -151,7 +152,7 @@ export const CourtCard = memo<Props>(({ match, settings, players, onScore, onEdi
             data-won={result === true || undefined}
             data-lost={result === false || undefined}
           >
-            <PlayerNames players={playersOf(players, ids)} stacked />
+            <PlayerNames players={playersOf(players, ids)} size={big ? 34 : undefined} stacked />
             <span className={classes.score}>
               {match.games.map((game, i) => (
                 <span key={i} className={classes.game}>

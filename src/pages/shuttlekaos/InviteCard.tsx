@@ -1,15 +1,19 @@
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import { Button, CopyButton, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import type { FC } from 'react';
 
 import { Check, LinkSimple, ShareNetwork, UserPlus } from '~/components/ui';
 
 import { sessionUrl } from './labels';
+import { QrImage } from './QrImage';
 import { useShareSession } from './useShareSession';
 
 import classes from './InviteCard.module.css';
 
+export const InviteLink: FC<{ url: string }> = ({ url }) => <Text className={classes.url}>{url}</Text>;
+
 export const InviteCard: FC<{ code: string; title: string }> = ({ code, title }) => {
+  const { t } = useLingui();
   const share = useShareSession();
   const url = sessionUrl(code);
   return (
@@ -23,10 +27,19 @@ export const InviteCard: FC<{ code: string; title: string }> = ({ code, title })
             <Trans>Invite players</Trans>
           </Title>
         </Group>
-        <Text size="sm">
-          <Trans>Send the link. People join from their own phone and show up below.</Trans>
-        </Text>
-        <Text className={classes.url}>{url}</Text>
+        <div className={classes.body}>
+          <Stack gap="sm">
+            <Text size="sm">
+              <Trans>
+                Send the link or let people scan the code. They join from their own phone and show up below.
+              </Trans>
+            </Text>
+            <InviteLink url={url} />
+          </Stack>
+          <div className={classes.qr}>
+            <QrImage value={url} label={t`QR code with the session link`} />
+          </div>
+        </div>
         <Group gap="sm" grow>
           <Button size="md" leftSection={<ShareNetwork />} onClick={() => share(code, title)}>
             <Trans>Share link</Trans>

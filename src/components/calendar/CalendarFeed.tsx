@@ -3,20 +3,13 @@ import { ActionIcon, Button, Text, TextInput } from '@mantine/core';
 import type { ComponentProps, FC, FocusEvent, ReactNode } from 'react';
 
 import { CalendarDots, CalendarPlus, CopyLinkButton, ResponsivePanel } from '~/components/ui';
-import { GROUP_SLUGS, type Group } from '~/data/club';
 import { useIsMobile } from '~/hooks/useIsMobile';
-import { currentLocale } from '~/i18n/current';
+
+import { calendarFeedUrl } from './feedUrl';
 
 const HTTP = /^https?:/;
 
 const selectAll = (e: FocusEvent<HTMLInputElement>) => e.currentTarget.select();
-
-export const calendarFeedUrl = (group?: Group) => {
-  const url = new URL('/kalender.ics', window.location.origin);
-  if (group) url.searchParams.set('gruppe', GROUP_SLUGS.toSlug(group));
-  url.searchParams.set('lang', currentLocale());
-  return url.href;
-};
 
 type Props = Pick<ComponentProps<typeof ResponsivePanel>, 'title' | 'renderTarget'> & {
   url: string;

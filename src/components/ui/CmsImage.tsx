@@ -4,7 +4,7 @@ import { memo, useMemo } from 'react';
 import type { CmsImageData } from '~/cms/content';
 import { hotspotPosition, imageUrl } from '~/cms/images';
 
-const WIDTHS = [320, 640, 960, 1440, 2048];
+const WIDTHS = [320, 640, 960, 1200, 1440, 2048];
 const FALLBACK_WIDTH = 960;
 
 type Props = Omit<ImageProps, 'src' | 'alt'> & {

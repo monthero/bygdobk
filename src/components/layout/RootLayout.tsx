@@ -6,11 +6,15 @@ import { lazy, Suspense, useEffect, useState, type FC } from 'react';
 
 import { usePreferenceSync } from '~/components/auth/preferences';
 import { useStyleKit } from '~/components/styles';
+import { useAppManifest } from '~/hooks/useInstallApp';
+import { useLinksOutsideApp } from '~/hooks/useLinksOutsideApp';
 import { useScrollLinkedHeader } from '~/hooks/useScrollLinkedHeader';
 import { useStandaloneNav } from '~/hooks/useStandaloneNav';
+import { AppHeader } from '~/pages/shuttlekaos/AppHeader';
 import type { FileRoutesById } from '~/routeTree.gen';
 import { HeadingFont, NavLayout, Style, useSettings } from '~/stores/settings';
 import { useUi } from '~/stores/ui';
+import { AppKind, appForPath, INSTALLED_APP, isShuttleKaosPath } from '~/utils/apps';
 import { loadVariantFonts } from '~/utils/variantFonts';
 
 import { MobileMenu } from './MobileMenu';
@@ -29,6 +33,7 @@ const HEADER_HEIGHT = 64;
 const SMALL_SCREEN = '(max-width: 48em)';
 
 const NO_STRIP_ROUTES = new Set<keyof FileRoutesById>(['/medlemskap/bli-medlem']);
+const IN_SHUTTLEKAOS_APP = INSTALLED_APP === AppKind.enum.shuttlekaos;
 
 const selectPathname = (s: RouterState) => s.location.pathname;
 const selectShowStrip = (s: RouterState) =>
@@ -41,8 +46,11 @@ export const RootLayout: FC = () => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const pathname = useRouterState({ select: selectPathname });
   const showStrip = useRouterState({ select: selectShowStrip });
-  const side = navLayout === NavLayout.enum.side;
-  const standalone = useStandaloneNav();
+  const kaosApp = IN_SHUTTLEKAOS_APP && isShuttleKaosPath(pathname);
+  const side = navLayout === NavLayout.enum.side && !kaosApp;
+  const standalone = useStandaloneNav() && !kaosApp;
+  useAppManifest(appForPath(pathname));
+  useLinksOutsideApp(IN_SHUTTLEKAOS_APP);
   usePreferenceSync();
   const style = useSettings((s) => s.style);
   const { PageDecor } = useStyleKit();
@@ -85,20 +93,25 @@ export const RootLayout: FC = () => {
       >
         {!standalone && (
           <AppShell.Header className={classes.header} data-linked={linked || undefined}>
-            <SiteHeader menuOpened={opened} onToggleMenu={toggle} showLinks={!side} />
+            {kaosApp ? <AppHeader /> : <SiteHeader menuOpened={opened} onToggleMenu={toggle} showLinks={!side} />}
           </AppShell.Header>
         )}
         <AppShell.Navbar p="sm">
           <SiteNavbar standalone={standalone} />
         </AppShell.Navbar>
-        <AppShell.Main id="main" className={classes.main} data-headroom={(floating && !focus) || undefined}>
+        <AppShell.Main
+          id="main"
+          className={classes.main}
+          data-headroom={(floating && !focus) || undefined}
+          data-app={kaosApp || undefined}
+        >
           {standalone && !focus && <ScrollTitleBar />}
-          {!focus && <SiteNotice />}
+          {!focus && !kaosApp && <SiteNotice />}
           <div className={classes.content}>
             <Outlet />
           </div>
-          {showStrip && <SponsorStrip />}
-          {!focus && <SiteFooter />}
+          {showStrip && !kaosApp && <SponsorStrip />}
+          {!focus && !kaosApp && <SiteFooter />}
         </AppShell.Main>
       </AppShell>
       <MobileMenu opened={opened} onClose={close} />

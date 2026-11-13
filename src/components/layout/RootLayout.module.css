@@ -31,6 +31,10 @@
   &[data-headroom] {
     padding-top: 64px;
   }
+
+  &[data-app] {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 .content {

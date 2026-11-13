@@ -1,1 +1,2 @@
-export { CalendarFeed, calendarFeedUrl, SubscribeButton } from './CalendarFeed';
+export { CalendarFeed, SubscribeButton } from './CalendarFeed';
+export { calendarFeedUrl } from './feedUrl';

@@ -1,0 +1,35 @@
+import { z } from 'zod';
+
+import { stripLocale } from '~/i18n/locales';
+
+import { isStandalone } from './device';
+
+export const AppKind = z.enum(['club', 'shuttlekaos']);
+export type AppKind = z.infer<typeof AppKind>;
+
+const SHUTTLEKAOS_PATH = '/shuttlekaos';
+const LAUNCHED_KEY = 'bygdo-launched-app';
+
+export const isShuttleKaosPath = (pathname: string) => {
+  const bare = stripLocale(pathname);
+  return bare === SHUTTLEKAOS_PATH || bare.startsWith(`${SHUTTLEKAOS_PATH}/`);
+};
+
+export const appForPath = (pathname: string) =>
+  isShuttleKaosPath(pathname) ? AppKind.enum.shuttlekaos : AppKind.enum.club;
+
+// Both manifests use scope "/", so the page a window opened on tells which app it is.
+const launchedApp = () => {
+  if (!isStandalone()) return undefined;
+  const launched = appForPath(location.pathname);
+  try {
+    const stored = AppKind.safeParse(sessionStorage.getItem(LAUNCHED_KEY));
+    if (stored.success) return stored.data;
+    sessionStorage.setItem(LAUNCHED_KEY, launched);
+  } catch {
+    return launched;
+  }
+  return launched;
+};
+
+export const INSTALLED_APP = launchedApp();
