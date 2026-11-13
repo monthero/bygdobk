@@ -17,6 +17,18 @@
 
     --watermark-size: 72px;
   }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    &,
+    &[data-compact] {
+      flex-direction: row;
+      gap: 32px;
+      padding: 32px 40px;
+      text-align: start;
+
+      --watermark-size: 120px;
+    }
+  }
 }
 
 .text {
@@ -31,6 +43,16 @@
   font-size: 19px;
   font-weight: var(--bk-font-display-weight);
   font-stretch: var(--bk-font-display-stretch);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    font-size: 26px;
+  }
+}
+
+.lede {
+  @media (min-width: $mantine-breakpoint-md) {
+    font-size: var(--mantine-font-size-md);
+  }
 }
 
 .court {
@@ -41,6 +63,13 @@
 
   .empty[data-compact] & {
     width: 104px;
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    .empty &,
+    .empty[data-compact] & {
+      width: 240px;
+    }
   }
 }
 
@@ -82,5 +111,14 @@
     width: 28px;
     height: 28px;
     font-size: 17px;
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    .empty &,
+    .empty[data-compact] & {
+      width: 52px;
+      height: 52px;
+      font-size: 30px;
+    }
   }
 }

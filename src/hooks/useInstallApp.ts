@@ -12,12 +12,22 @@ type InstallPromptEvent = Event & {
 export const InstallMode = z.enum(['prompt', 'ios', 'firefox']);
 export type InstallMode = z.infer<typeof InstallMode>;
 
-const APP_HEAD: Record<AppKind, { manifest: string; title: string; icon: string }> = {
-  [AppKind.enum.club]: { manifest: '/manifest.webmanifest', title: 'Bygdø BK', icon: '/apple-touch-icon.png' },
+type AppHead = { manifest: string; title: string; icon: string; favicon: string; faviconType: string };
+
+const APP_HEAD: Record<AppKind, AppHead> = {
+  [AppKind.enum.club]: {
+    manifest: '/manifest.webmanifest',
+    title: 'Bygdø BK',
+    icon: '/apple-touch-icon.png',
+    favicon: '/favicon.svg',
+    faviconType: 'image/svg+xml',
+  },
   [AppKind.enum.shuttlekaos]: {
     manifest: '/shuttlekaos.webmanifest',
     title: 'ShuttleKaos',
     icon: '/shuttlekaos-apple-touch-icon.png',
+    favicon: '/shuttlekaos-192.png',
+    faviconType: 'image/png',
   },
 };
 
@@ -46,8 +56,10 @@ addEventListener('appinstalled', () => {
 const showApp = (app: AppKind) => {
   if (app === shownApp) return;
   shownApp = app;
-  const { manifest, title, icon } = APP_HEAD[app];
+  const { manifest, title, icon, favicon, faviconType } = APP_HEAD[app];
   document.querySelector('link[rel="manifest"]')?.setAttribute('href', manifest);
+  document.querySelector('link[rel="icon"]')?.setAttribute('href', favicon);
+  document.querySelector('link[rel="icon"]')?.setAttribute('type', faviconType);
   document.querySelector('link[rel="apple-touch-icon"]')?.setAttribute('href', icon);
   document.querySelector('meta[name="apple-mobile-web-app-title"]')?.setAttribute('content', title);
   deferred = undefined;

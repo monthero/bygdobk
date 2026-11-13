@@ -5,7 +5,6 @@ import { getRouteApi } from '@tanstack/react-router';
 import { useEffect, useMemo, type FC, type ReactNode } from 'react';
 
 import { ArrowsIn, ArrowsOut, ListNumbers, Shuttle, Trophy } from '~/components/ui';
-import { usePageTitle } from '~/hooks/usePageTitle';
 import { standings } from '~/shuttlekaos/engine';
 import { SessionStatus, type Session } from '~/shuttlekaos/model';
 import { useShuttleKaosSession } from '~/shuttlekaos/queries';
@@ -33,6 +32,7 @@ import { QrImage } from './QrImage';
 import { ProgressLine, RestingPlayers, RoundCount } from './RoundBrowser';
 import { SECTION_ICONS } from './sectionIcons';
 import { StandingsTable } from './StandingsTable';
+import { useKaosTitle } from './useKaosTitle';
 
 import classes from './HallScreen.module.css';
 
@@ -214,7 +214,7 @@ const STATUS_TEXT: Record<SessionStatus, ReactNode> = {
 
 const Board: FC<{ session: Session; shareCode: string }> = ({ session, shareCode }) => {
   const { i18n } = useLingui();
-  usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
+  useKaosTitle(session.title);
   const you = i18n._(YOU);
   const players = useMemo(() => playerMap(session.players, null, you), [session.players, you]);
   const url = sessionUrl(shareCode);

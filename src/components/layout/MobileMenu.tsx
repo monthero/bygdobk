@@ -7,10 +7,9 @@ import { useClub } from '~/cms/siteData';
 import { AddressLink, ClubLogo, Shuttle, SocialLinks, UserPlus } from '~/components/ui';
 import { useOffers } from '~/pages/join/offers';
 
-import { ExperimentalMark } from './ExperimentalMark';
 import { InstallLook } from './install';
 import { InstallApp } from './InstallApp';
-import { NAV } from './nav';
+import { CLUB_NAV } from './nav';
 
 import classes from './MobileMenu.module.css';
 
@@ -44,7 +43,7 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
       zIndex={Z_INDEX}
     >
       <nav aria-label={t`Main menu`} className={classes.grid}>
-        {NAV.map((item, index) => (
+        {CLUB_NAV.map((item, index) => (
           <Link
             key={item.to}
             to={item.to}
@@ -56,10 +55,7 @@ export const MobileMenu = memo<Props>(({ opened, onClose }) => {
             <span className={classes.icon}>
               <item.Icon />
             </span>
-            <span className={classes.label}>
-              {i18n._(item.label)}
-              {item.experimental && <ExperimentalMark />}
-            </span>
+            <span className={classes.label}>{i18n._(item.label)}</span>
           </Link>
         ))}
       </nav>

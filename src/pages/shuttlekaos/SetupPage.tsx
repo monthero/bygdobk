@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { useAuthReady, useProfile, useSessionUserId } from '~/components/auth/hooks';
 import { Play, Plus, ResponsiveModal } from '~/components/ui';
 import { useIsMobile } from '~/hooks/useIsMobile';
-import { usePageTitle } from '~/hooks/usePageTitle';
 import { notifyFailed } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
 import { createSession, setupProblem, shortName } from '~/shuttlekaos/engine';
@@ -58,6 +57,7 @@ import {
 import { SessionEstimate, SettingsSummary } from './SettingsSummary';
 import { useSetupPrefs, type Lineup, type PrefsState } from './setupPrefs';
 import { SetupSteps, type SetupStep } from './SetupSteps';
+import { useKaosTitle } from './useKaosTitle';
 import { useSettingsEditor } from './useSettingsEditor';
 
 import classes from './SetupPage.module.css';
@@ -541,7 +541,7 @@ const FreshSetup: FC<{ me: Me }> = ({ me }) => {
 
 export const SetupPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(t({ message: 'Creating new session', comment: 'Browser tab title while setting up a session' }), BRAND);
+  useKaosTitle(t({ message: 'Creating new session', comment: 'Browser tab title while setting up a session' }));
   const { fra, siste } = route.useSearch();
   const ready = useAuthReady();
   const userId = useSessionUserId();

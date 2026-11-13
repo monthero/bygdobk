@@ -1,18 +1,11 @@
 import { useLingui } from '@lingui/react/macro';
-import { ActionIcon, Container, Text, Title, VisuallyHidden } from '@mantine/core';
+import { ActionIcon, Container, Text, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { FC, ReactNode } from 'react';
 
-import { InstallLook } from '~/components/layout/install';
-import { InstallApp } from '~/components/layout/InstallApp';
-import { ArrowLeft, Shuttle } from '~/components/ui';
-import { AppKind, INSTALLED_APP } from '~/utils/apps';
-
-import { TAGLINE } from './labels';
+import { ArrowLeft } from '~/components/ui';
 
 import classes from './BrandHeader.module.css';
-
-const IN_APP = INSTALLED_APP === AppKind.enum.shuttlekaos;
 
 export const Wordmark: FC = () => (
   <>
@@ -20,16 +13,15 @@ export const Wordmark: FC = () => (
   </>
 );
 
-type Props = { title?: ReactNode; eyebrow?: ReactNode; back?: boolean; actions?: ReactNode };
+type Props = { title: ReactNode; eyebrow?: ReactNode; back?: boolean; actions?: ReactNode };
 
 export const BrandHeader: FC<Props> = ({ title, eyebrow, back, actions }) => {
-  const { t, i18n } = useLingui();
-  const brandInBar = IN_APP && !title;
+  const { t } = useLingui();
   return (
-    <header className={classes.header} data-compact={title ? true : undefined}>
+    <header className={classes.header} data-compact>
       <Container className={classes.inner}>
         <div className={classes.row}>
-          {back ? (
+          {back && (
             <ActionIcon
               variant="default"
               radius="xl"
@@ -39,30 +31,12 @@ export const BrandHeader: FC<Props> = ({ title, eyebrow, back, actions }) => {
             >
               <ArrowLeft />
             </ActionIcon>
-          ) : (
-            !brandInBar && (
-              <span className={classes.mark} aria-hidden>
-                <Shuttle />
-              </span>
-            )
           )}
           <div className={classes.text}>
-            {title && <Text className={classes.eyebrow}>{eyebrow ?? <Wordmark />}</Text>}
-            {brandInBar ? (
-              <VisuallyHidden component="h1">
-                <Wordmark />
-              </VisuallyHidden>
-            ) : (
-              <Title order={1} className={classes.title}>
-                {title ?? <Wordmark />}
-              </Title>
-            )}
-            {!title && <Text className={classes.tagline}>{i18n._(TAGLINE)}</Text>}
-            {!title && (
-              <div className={classes.install}>
-                <InstallApp look={InstallLook.enum.link} />
-              </div>
-            )}
+            <Text className={classes.eyebrow}>{eyebrow ?? <Wordmark />}</Text>
+            <Title order={1} className={classes.title}>
+              {title}
+            </Title>
           </div>
         </div>
         {actions && <div className={classes.actions}>{actions}</div>}

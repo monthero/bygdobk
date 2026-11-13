@@ -1405,8 +1405,8 @@ msgid "Dark"
 msgstr "深色"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Date"
-msgstr "日期"
+msgid "Date and time"
+msgstr "日期和时间"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -4798,10 +4798,6 @@ msgstr "用羽毛球的方式说“找不到页面”，一共三种。都试试
 msgid "Thwack!"
 msgstr "砰！"
 
-#: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Time"
-msgstr "时间"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Time slot"
 msgstr "时间段"
@@ -4967,10 +4963,6 @@ msgstr "撤销拒绝"
 msgid "Undo round"
 msgstr "撤回本轮"
 
-#: src/pages/shuttlekaos/labels.ts
-msgid "Unleash chaos on court"
-msgstr "在球场上释放混乱"
-
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "取消关联{name}"
@@ -5016,6 +5008,10 @@ msgstr "换个邮箱"
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Use current location"
 msgstr "使用当前位置"
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Use last setup"
+msgstr "沿用上次设置"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Use other details"

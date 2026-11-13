@@ -2,7 +2,6 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  min-height: calc(100dvh - var(--bk-header-height, 0px) - 120px);
 
   @media (min-width: $mantine-breakpoint-md) {
     display: grid;
@@ -14,7 +13,12 @@
 }
 
 .side {
+  composes: glass from '../glass.module.css';
   display: none;
+  padding: 14px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: var(--mantine-radius-lg);
 
   @media (min-width: $mantine-breakpoint-md) {
     position: sticky;
@@ -78,7 +82,7 @@
   flex-direction: column;
   gap: 24px;
   min-width: 0;
-  padding-block: 20px 28px;
+  padding-block: 20px 88px;
 
   @media (min-width: $mantine-breakpoint-md) {
     padding-block: 0;
@@ -86,14 +90,19 @@
 }
 
 .dock {
-  position: sticky;
+  position: fixed;
+  inset-inline: 0;
   bottom: 0;
-  z-index: 60;
-  margin-inline: calc(var(--mantine-spacing-md) * -1);
-  margin-top: auto;
+  z-index: 150;
 
   @media (min-width: $mantine-breakpoint-md) {
     display: none;
+  }
+}
+
+:global(body):has(.dock) {
+  @media (max-width: $mantine-breakpoint-md) {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
   }
 }
 
@@ -111,18 +120,36 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3px;
-  padding-block: 4px;
+  gap: 2px;
+  margin-inline: 6px;
+  padding-block: 6px;
+  border-radius: 16px;
   color: var(--mantine-color-dimmed);
   font-size: 12px;
   font-weight: 600;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
-  transition: color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s,
+    transform 0.15s;
 
   &[aria-current='page'] {
-    color: var(--mantine-color-text);
+    background: linear-gradient(
+      180deg,
+      var(--mantine-color-brand-filled),
+      color-mix(in srgb, var(--mantine-color-brand-filled) 78%, var(--mantine-color-brand-9))
+    );
+    box-shadow:
+      0 6px 16px color-mix(in srgb, var(--mantine-color-brand-filled) 35%, transparent),
+      inset 0 1px 0 rgb(255 255 255 / 0.25);
+    color: var(--mantine-color-brand-contrast, var(--bk-accent-ink));
     font-weight: 800;
+  }
+
+  &:active {
+    transform: scale(0.96);
   }
 }
 
@@ -130,18 +157,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 60px;
-  height: 32px;
-  border-radius: 999px;
+  height: 28px;
   font-size: 22px;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
-
-  .tab[aria-current='page'] & {
-    background: var(--bk-accent-soft);
-    color: var(--bk-accent-strong);
-  }
 }
 
 .liveDot {
@@ -182,5 +199,15 @@
     width: 58px;
     padding: 0;
     font-size: 24px;
+  }
+}
+
+.install {
+  display: flex;
+  justify-content: center;
+  color: var(--bk-accent-strong);
+
+  &:empty {
+    display: none;
   }
 }

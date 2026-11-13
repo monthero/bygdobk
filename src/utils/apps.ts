@@ -16,6 +16,9 @@ export const isShuttleKaosPath = (pathname: string) => {
   return bare === SHUTTLEKAOS_PATH || bare.startsWith(`${SHUTTLEKAOS_PATH}/`);
 };
 
+export const selectIsShuttleKaos = (state: { location: { pathname: string } }) =>
+  isShuttleKaosPath(state.location.pathname);
+
 export const appForPath = (pathname: string) =>
   isShuttleKaosPath(pathname) ? AppKind.enum.shuttlekaos : AppKind.enum.club;
 

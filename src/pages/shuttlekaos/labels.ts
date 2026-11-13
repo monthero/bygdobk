@@ -51,8 +51,6 @@ export const TABLE_QUERY = '(min-width: 62em)';
 
 export const stop = (event: MouseEvent) => event.stopPropagation();
 
-export const TAGLINE = msg`Unleash chaos on court`;
-
 export const FORMAT_LABELS: Record<Format, { label: MessageDescriptor; hint: MessageDescriptor }> = {
   [Format.enum.americano]: {
     label: msg({ message: 'Americano', comment: 'Name of a social game format from padel. Usually not translated' }),

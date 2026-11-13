@@ -1405,8 +1405,8 @@ msgid "Dark"
 msgstr "Dark"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Date"
-msgstr "Date"
+msgid "Date and time"
+msgstr "Date and time"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -4798,10 +4798,6 @@ msgstr "Three ways to say “page not found” in badminton. Try them, then pick
 msgid "Thwack!"
 msgstr "Thwack!"
 
-#: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Time"
-msgstr "Time"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Time slot"
 msgstr "Time slot"
@@ -4967,10 +4963,6 @@ msgstr "Undo decline"
 msgid "Undo round"
 msgstr "Undo round"
 
-#: src/pages/shuttlekaos/labels.ts
-msgid "Unleash chaos on court"
-msgstr "Unleash chaos on court"
-
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "Unlink {name}"
@@ -5016,6 +5008,10 @@ msgstr "Use another email"
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Use current location"
 msgstr "Use current location"
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Use last setup"
+msgstr "Use last setup"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Use other details"

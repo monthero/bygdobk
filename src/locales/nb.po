@@ -1405,8 +1405,8 @@ msgid "Dark"
 msgstr "Mørk"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Date"
-msgstr "Dato"
+msgid "Date and time"
+msgstr "Dato og klokkeslett"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -4798,10 +4798,6 @@ msgstr "Tre måter å si «siden finnes ikke» på i badminton. Prøv dem, og ve
 msgid "Thwack!"
 msgstr "Smell!"
 
-#: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Time"
-msgstr "Klokkeslett"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Time slot"
 msgstr "Tidsluke"
@@ -4967,10 +4963,6 @@ msgstr "Angre avslag"
 msgid "Undo round"
 msgstr "Angre runde"
 
-#: src/pages/shuttlekaos/labels.ts
-msgid "Unleash chaos on court"
-msgstr "Slipp løs kaoset på banen"
-
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "Koble fra {name}"
@@ -5016,6 +5008,10 @@ msgstr "Bruk en annen e-post"
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Use current location"
 msgstr "Bruk min posisjon"
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Use last setup"
+msgstr "Bruk forrige oppsett"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Use other details"

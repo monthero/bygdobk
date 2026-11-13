@@ -7,12 +7,12 @@ import { lazy, Suspense, useEffect, useState, type FC } from 'react';
 import { usePreferenceSync } from '~/components/auth/preferences';
 import { useStyleKit } from '~/components/styles';
 import { useAppManifest } from '~/hooks/useInstallApp';
-import { useLinksOutsideApp } from '~/hooks/useLinksOutsideApp';
+import { useLinksAcrossApps } from '~/hooks/useLinksAcrossApps';
 import { useScrollLinkedHeader } from '~/hooks/useScrollLinkedHeader';
 import { useStandaloneNav } from '~/hooks/useStandaloneNav';
 import { AppHeader } from '~/pages/shuttlekaos/AppHeader';
 import type { FileRoutesById } from '~/routeTree.gen';
-import { HeadingFont, NavLayout, Style, useSettings } from '~/stores/settings';
+import { HeadingFont, NavLayout, Style, useDesign, useSettings } from '~/stores/settings';
 import { useUi } from '~/stores/ui';
 import { AppKind, appForPath, INSTALLED_APP, isShuttleKaosPath } from '~/utils/apps';
 import { loadVariantFonts } from '~/utils/variantFonts';
@@ -46,13 +46,13 @@ export const RootLayout: FC = () => {
   const [opened, { toggle, close }] = useDisclosure(false);
   const pathname = useRouterState({ select: selectPathname });
   const showStrip = useRouterState({ select: selectShowStrip });
-  const kaosApp = IN_SHUTTLEKAOS_APP && isShuttleKaosPath(pathname);
+  const kaosApp = isShuttleKaosPath(pathname);
   const side = navLayout === NavLayout.enum.side && !kaosApp;
   const standalone = useStandaloneNav() && !kaosApp;
   useAppManifest(appForPath(pathname));
-  useLinksOutsideApp(IN_SHUTTLEKAOS_APP);
+  useLinksAcrossApps(INSTALLED_APP ?? appForPath(pathname), IN_SHUTTLEKAOS_APP);
   usePreferenceSync();
-  const style = useSettings((s) => s.style);
+  const { style, font } = useDesign(kaosApp);
   const { PageDecor } = useStyleKit();
   const loginOpened = useUi((s) => s.loginOpened);
   const smallScreen = useMediaQuery(SMALL_SCREEN);
@@ -67,8 +67,6 @@ export const RootLayout: FC = () => {
   else if (linked) headerShown = `calc(${HEADER_HEIGHT}px - var(--bk-header-offset, 0px))`;
   const [loginLoaded, setLoginLoaded] = useState(loginOpened);
   if (loginOpened && !loginLoaded) setLoginLoaded(true);
-
-  const font = useSettings((s) => s.font);
 
   useEffect(() => {
     document.documentElement.dataset.style = style;

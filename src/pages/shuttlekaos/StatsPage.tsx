@@ -2,16 +2,15 @@ import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import type { FC, ReactNode } from 'react';
 
 import { useAuthReady, useSessionUserId } from '~/components/auth/hooks';
-import { usePageTitle } from '~/hooks/usePageTitle';
 import { LoadError } from '~/pages/board/LoadError';
 import { useMyStats, type MyStats } from '~/shuttlekaos/queries';
 import { formatDate, wallTime } from '~/utils/dates';
 
 import { PageHead } from './home/PageHead';
 import { HomeSection, SessionHistory } from './home/SessionCards';
-import { BRAND } from './labels';
 import { LoginPrompt } from './LoginPrompt';
 import { EmptyStats, PartnerList, StatsOverview, StatsSkeleton, StatTiles } from './MyStats';
+import { useKaosTitle } from './useKaosTitle';
 
 const SINCE: Intl.DateTimeFormatOptions = { month: 'long', year: 'numeric' };
 
@@ -46,7 +45,7 @@ const StatsBody: FC<{ stats: MyStats }> = ({ stats }) => {
 
 export const StatsPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(t({ message: 'Your stats', comment: 'Browser tab title for your ShuttleKaos stats' }), BRAND);
+  useKaosTitle(t({ message: 'Your stats', comment: 'Browser tab title for your ShuttleKaos stats' }));
   const ready = useAuthReady();
   const userId = useSessionUserId();
   const stats = useMyStats();

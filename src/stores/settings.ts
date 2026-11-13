@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useShallow } from 'zustand/react/shallow';
 
 import { mergeParsed, safeJSONStorage } from './persistence';
 
@@ -62,6 +63,17 @@ interface SettingsState extends SettingsData {
 
 const DEFAULTS: SettingsData = SettingsData.parse({});
 
+export type Design = Pick<SettingsData, 'palette' | 'shape' | 'density' | 'width' | 'font' | 'style'>;
+
+const DESIGN_DEFAULTS: Design = {
+  palette: DEFAULTS.palette,
+  shape: DEFAULTS.shape,
+  density: DEFAULTS.density,
+  width: DEFAULTS.width,
+  font: DEFAULTS.font,
+  style: DEFAULTS.style,
+};
+
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
@@ -102,3 +114,17 @@ export const useSettings = create<SettingsState>()(
     },
   ),
 );
+
+const selectDesign = (s: SettingsState): Design => ({
+  palette: s.palette,
+  shape: s.shape,
+  density: s.density,
+  width: s.width,
+  font: s.font,
+  style: s.style,
+});
+
+export const useDesign = (fixed: boolean): Design => {
+  const chosen = useSettings(useShallow(selectDesign));
+  return fixed ? DESIGN_DEFAULTS : chosen;
+};

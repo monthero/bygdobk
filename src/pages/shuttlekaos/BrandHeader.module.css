@@ -33,19 +33,6 @@
   gap: 14px;
 }
 
-.mark {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--mantine-color-brand-filled);
-  color: var(--mantine-color-brand-contrast, var(--bk-accent-ink));
-  font-size: 30px;
-  transform: rotate(-18deg);
-}
-
 .text {
   min-width: 0;
 }
@@ -71,19 +58,4 @@
 
 .kaos {
   color: var(--bk-accent-strong);
-}
-
-.tagline {
-  margin-top: 2px;
-  font-size: 1.05rem;
-  color: var(--mantine-color-dimmed);
-}
-
-.install {
-  margin-top: 6px;
-  color: var(--bk-accent-strong);
-
-  &:empty {
-    display: none;
-  }
 }

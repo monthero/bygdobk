@@ -6,9 +6,8 @@ import { memo } from 'react';
 import { AccountButton } from '~/components/auth';
 import { ClubLogo, UserPlus } from '~/components/ui';
 
-import { ExperimentalMark } from './ExperimentalMark';
 import { LanguageSwitch } from './LanguageSwitch';
-import { NAV } from './nav';
+import { CLUB_NAV } from './nav';
 import { ThemeSwitch } from './ThemeSwitch';
 
 import classes from './SiteNavbar.module.css';
@@ -29,17 +28,12 @@ export const SiteNavbar = memo<{ standalone: boolean }>(({ standalone }) => {
       )}
       <AppShell.Section grow>
         <Stack gap={2}>
-          {NAV.map((item) => (
+          {CLUB_NAV.map((item) => (
             <NavLink
               key={item.to}
               component={Link}
               to={item.to}
-              label={
-                <>
-                  {i18n._(item.label)}
-                  {item.experimental && <ExperimentalMark />}
-                </>
-              }
+              label={<>{i18n._(item.label)}</>}
               leftSection={<item.Icon />}
               activeProps={ACTIVE_PROPS}
               variant="light"

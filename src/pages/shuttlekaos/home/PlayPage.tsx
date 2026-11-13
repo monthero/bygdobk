@@ -1,19 +1,20 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { Anchor, Group, Skeleton } from '@mantine/core';
+import { Anchor, Button, Group, Skeleton } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
 import { useAuthReady, useProfile, useSessionUserId } from '~/components/auth/hooks';
-import { ArrowRight } from '~/components/ui';
-import { usePageTitle } from '~/hooks/usePageTitle';
+import { ArrowCounterClockwise, ArrowRight } from '~/components/ui';
 import { LoadError } from '~/pages/board/LoadError';
 import { SessionStatus, type Level, type PublicSession, type SessionSummary } from '~/shuttlekaos/model';
 import { useMyActiveSessions, usePublicSessions } from '~/shuttlekaos/queries';
 import type { User } from '~/stores/auth';
 
-import { BRAND, firstName } from '../labels';
+import { firstName } from '../labels';
 import { LoginPrompt } from '../LoginPrompt';
 import { NearestButton, PublicCard } from '../PublicSessions';
+import { useSetupPrefs, type PrefsState } from '../setupPrefs';
+import { useKaosTitle } from '../useKaosTitle';
 import { HowItWorks } from './HowItWorks';
 import { JoinCode } from './JoinCode';
 import { PageHead } from './PageHead';
@@ -31,11 +32,13 @@ const ROW_LIMIT = 6;
 const ROW_SKELETONS = [0, 1, 2];
 
 const selectFirstName = (user: User) => firstName(user.name);
+const selectHasLineup = (s: PrefsState) => s.lineup !== null;
 const byStatus = (sessions: SessionSummary[]) => Map.groupBy(sessions, (s) => s.status);
 
 const Greeting: FC = () => {
   const userId = useSessionUserId();
   const name = useProfile({ select: selectFirstName }).data;
+  const hasLastSetup = useSetupPrefs(selectHasLineup);
   return (
     <PageHead
       eyebrow={
@@ -46,7 +49,18 @@ const Greeting: FC = () => {
         )
       }
       title={<Trans>Ready for chaos?</Trans>}
-    />
+    >
+      {userId && hasLastSetup && (
+        <Button
+          variant="default"
+          radius="xl"
+          leftSection={<ArrowCounterClockwise />}
+          renderRoot={(props) => <Link {...props} to="/shuttlekaos/ny" search={{ siste: true }} />}
+        >
+          <Trans>Use last setup</Trans>
+        </Button>
+      )}
+    </PageHead>
   );
 };
 
@@ -146,9 +160,8 @@ const OpenSessions: FC = () => {
 
 export const PlayPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(
+  useKaosTitle(
     t({ message: 'Play', context: 'ShuttleKaos: play games', comment: 'Browser tab title for the ShuttleKaos home' }),
-    BRAND,
   );
   const ready = useAuthReady();
   const userId = useSessionUserId();

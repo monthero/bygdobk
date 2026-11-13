@@ -1,4 +1,7 @@
-import { Style, useSettings } from '~/stores/settings';
+import { useRouterState } from '@tanstack/react-router';
+
+import { Style, useDesign } from '~/stores/settings';
+import { selectIsShuttleKaos } from '~/utils/apps';
 
 import { classicKit } from './classic';
 import { courtKit } from './court';
@@ -11,7 +14,7 @@ const KITS: Record<Style, StyleKit> = {
   [Style.enum.flight]: { ...classicKit, ...flightKit },
 };
 
-export const useStyleKit = () => KITS[useSettings((s) => s.style)];
+export const useStyleKit = () => KITS[useDesign(useRouterState({ select: selectIsShuttleKaos })).style];
 
 export type { StyleKit } from './types';
 export { PageIntro } from './PageIntro';

@@ -22,7 +22,7 @@ export const QuietCourt: FC<{ compact?: boolean }> = ({ compact }) => (
       <Text fw={800} className={classes.title}>
         <Trans comment="Empty state when no public sessions are open">Quiet on court.</Trans>
       </Text>
-      <Text size="sm" c="dimmed">
+      <Text size="sm" c="dimmed" className={classes.lede}>
         <Trans>Public sessions show up here the moment someone opens one.</Trans>
       </Text>
     </div>

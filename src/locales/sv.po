@@ -1405,8 +1405,8 @@ msgid "Dark"
 msgstr "Mörkt"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Date"
-msgstr "Datum"
+msgid "Date and time"
+msgstr "Datum och tid"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -4798,10 +4798,6 @@ msgstr "Tre sätt att säga ”sidan finns inte” på badmintonvis. Testa dem o
 msgid "Thwack!"
 msgstr "Smack!"
 
-#: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Time"
-msgstr "Tid"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Time slot"
 msgstr "Tidslucka"
@@ -4967,10 +4963,6 @@ msgstr "Ångra avslag"
 msgid "Undo round"
 msgstr "Ångra omgång"
 
-#: src/pages/shuttlekaos/labels.ts
-msgid "Unleash chaos on court"
-msgstr "Släpp lös kaoset på banan"
-
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "Koppla bort {name}"
@@ -5016,6 +5008,10 @@ msgstr "Använd en annan e-postadress"
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Use current location"
 msgstr "Använd min plats"
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Use last setup"
+msgstr "Använd förra inställningarna"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Use other details"

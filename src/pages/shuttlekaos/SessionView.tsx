@@ -4,17 +4,17 @@ import { useDisclosure, useIntersection, useMediaQuery } from '@mantine/hooks';
 import { useCallback, useMemo, useState, type FC, type ReactNode } from 'react';
 
 import { ListNumbers, Racket, ResponsiveModal, Trophy } from '~/components/ui';
-import { usePageTitle } from '~/hooks/usePageTitle';
 import { gamesProblem, standings } from '~/shuttlekaos/engine';
 import { SessionStatus, type Game, type Session } from '~/shuttlekaos/model';
 
-import { BRAND, durationText, formatStart, playerMap, rankMoves, sessionMinutes, TableVariant, YOU } from './labels';
+import { durationText, formatStart, playerMap, rankMoves, sessionMinutes, TableVariant, YOU } from './labels';
 import { MatchGrid } from './MatchGrid';
 import { Podium } from './Podium';
 import { RoundBrowser, RoundNav } from './RoundBrowser';
 import { SessionTop } from './SessionTop';
 import { SettingsSummary } from './SettingsSummary';
 import { StandingsTable, StatsTitle, StatsToggle } from './StandingsTable';
+import { useKaosTitle } from './useKaosTitle';
 
 import classes from './SessionView.module.css';
 
@@ -50,7 +50,7 @@ type Props = {
 
 export const SessionView: FC<Props> = ({ session, actions, notice, footer, onScore, onEdit, highlight }) => {
   const { i18n } = useLingui();
-  usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
+  useKaosTitle(session.title);
   const wide = useMediaQuery(WIDE_QUERY);
   const [full, fullControls] = useDisclosure(false);
   const [picked, setPicked] = useState<number | null>(null);

@@ -1405,8 +1405,8 @@ msgid "Dark"
 msgstr "Tumma"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Date"
-msgstr "Päivä"
+msgid "Date and time"
+msgstr "Päivä ja kellonaika"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -4798,10 +4798,6 @@ msgstr "Kolme tapaa sanoa ”sivua ei löydy” sulkapallon kielellä. Kokeile n
 msgid "Thwack!"
 msgstr "Pläts!"
 
-#: src/pages/shuttlekaos/SettingsForm.tsx
-msgid "Time"
-msgstr "Kellonaika"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "Time slot"
 msgstr "Aikaväli"
@@ -4967,10 +4963,6 @@ msgstr "Peru hylkäys"
 msgid "Undo round"
 msgstr "Peru kierros"
 
-#: src/pages/shuttlekaos/labels.ts
-msgid "Unleash chaos on court"
-msgstr "Päästä kaaos valloilleen kentällä"
-
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Unlink {name}"
 msgstr "Irrota {name}"
@@ -5016,6 +5008,10 @@ msgstr "Käytä toista sähköpostia"
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Use current location"
 msgstr "Käytä sijaintiani"
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Use last setup"
+msgstr "Käytä edellisiä asetuksia"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Use other details"

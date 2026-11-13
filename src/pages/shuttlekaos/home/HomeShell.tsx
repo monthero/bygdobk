@@ -12,10 +12,11 @@ import PlayCircleFill from '~icons/ph/play-circle-fill';
 import UsersThree from '~icons/ph/users-three';
 import UsersThreeFill from '~icons/ph/users-three-fill';
 
+import { InstallLook } from '~/components/layout/install';
+import { InstallApp } from '~/components/layout/InstallApp';
 import { SessionStatus, type SessionSummary } from '~/shuttlekaos/model';
 import { useMyActiveSessions } from '~/shuttlekaos/queries';
 
-import { BrandHeader } from '../BrandHeader';
 import { NewSessionButton } from '../NewSessionButton';
 import { useFreshPlayer } from './useFreshPlayer';
 
@@ -86,7 +87,6 @@ export const HomeShell: FC = () => {
 
   return (
     <>
-      <BrandHeader />
       <Container className={classes.shell}>
         <aside className={classes.side}>
           <NewSessionButton size="md" radius="xl" fullWidth className={classes.sideButton} />
@@ -96,6 +96,9 @@ export const HomeShell: FC = () => {
         </aside>
         <main className={classes.main}>
           <Outlet />
+          <div className={classes.install}>
+            <InstallApp look={InstallLook.enum.link} />
+          </div>
         </main>
         <div className={classes.dock}>
           <NewSessionButton size="lg" radius="xl" iconOnly={!fresh} className={classes.fab} />

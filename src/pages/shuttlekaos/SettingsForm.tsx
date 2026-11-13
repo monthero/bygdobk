@@ -11,13 +11,12 @@ import {
   Switch,
   Text,
 } from '@mantine/core';
-import { DatePickerInput, TimeInput } from '@mantine/dates';
+import { DatePickerInput, DateTimePicker } from '@mantine/dates';
 import { useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
 
 import {
   CalendarBlank,
-  Clock,
   Globe,
   Hash,
   Infinity as InfinityIcon,
@@ -43,7 +42,7 @@ import {
   type Pair,
   type Settings,
 } from '~/shuttlekaos/model';
-import { date, ISO_DAY, today, todayIso } from '~/utils/dates';
+import { date, fromWall, ISO_DAY, today, todayIso } from '~/utils/dates';
 
 import { Field, Section } from './FormParts';
 import {
@@ -53,6 +52,7 @@ import {
   PARTNER_HINTS,
   PARTNER_LABELS,
   REPEAT_LABELS,
+  formatScheduled,
   REPEAT_WEEKS,
   repeatsLabel,
   RoundsChoice,
@@ -151,6 +151,13 @@ export const VisibilityPicker: FC<{ isPublic: boolean; onChange: (isPublic: bool
   );
 };
 
+const DAY_LENGTH = 10;
+const TIME_LENGTH = 5;
+const TIME_PICKER = { format: '24h', withDropdown: true, minutesStep: 5 } as const;
+
+const formatPicked = (value: string) =>
+  formatScheduled(fromWall(value.slice(0, DAY_LENGTH), value.slice(DAY_LENGTH + 1, DAY_LENGTH + 1 + TIME_LENGTH)));
+
 const ScheduleFields: FC<{ schedule: Schedule; onChange: (schedule: Schedule) => void }> = ({ schedule, onChange }) => {
   const { t, i18n } = useLingui();
   const { day, repeat } = schedule;
@@ -158,31 +165,29 @@ const ScheduleFields: FC<{ schedule: Schedule; onChange: (schedule: Schedule) =>
   const every = REPEAT_WEEKS[repeat];
   const patch = (next: Partial<Schedule>) => onChange({ ...schedule, ...next });
 
-  const pickDay = (next: string | null) =>
-    patch({ day: next, endsOn: next && schedule.endsOn && schedule.endsOn < next ? null : schedule.endsOn });
+  const pickMoment = (next: string | null) => {
+    const nextDay = next?.slice(0, DAY_LENGTH) ?? null;
+    patch({
+      day: nextDay,
+      time: next?.slice(DAY_LENGTH + 1, DAY_LENGTH + 1 + TIME_LENGTH) ?? schedule.time,
+      endsOn: nextDay && schedule.endsOn && schedule.endsOn < nextDay ? null : schedule.endsOn,
+    });
+  };
 
   return (
     <BoardDatesProvider>
       <Stack gap="sm">
-        <SimpleGrid cols={2} spacing="sm">
-          <DatePickerInput
-            size="md"
-            label={t`Date`}
-            leftSection={<CalendarBlank />}
-            valueFormatter={DAY_FORMATTER}
-            minDate={todayIso()}
-            maxDate={lastScheduleDay()}
-            value={day}
-            onChange={pickDay}
-          />
-          <TimeInput
-            size="md"
-            label={t`Time`}
-            leftSection={<Clock />}
-            value={schedule.time}
-            onChange={(e) => patch({ time: e.currentTarget.value })}
-          />
-        </SimpleGrid>
+        <DateTimePicker
+          size="md"
+          label={t`Date and time`}
+          leftSection={<CalendarBlank />}
+          valueFormat={formatPicked}
+          minDate={todayIso()}
+          maxDate={lastScheduleDay()}
+          timePickerProps={TIME_PICKER}
+          value={day && `${day} ${schedule.time}:00`}
+          onChange={pickMoment}
+        />
         {problem && (
           <Text size="sm" c="red">
             {i18n._(scheduleMessage(problem))}

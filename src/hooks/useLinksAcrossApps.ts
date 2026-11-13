@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 
-import { isShuttleKaosPath } from '~/utils/apps';
+import { appForPath, type AppKind } from '~/utils/apps';
 
-const openInBrowser = (event: MouseEvent) => {
+const linkedApp = (url: URL) => (url.origin === location.origin ? appForPath(url.pathname) : null);
+
+const opener = (current: AppKind, externalToo: boolean) => (event: MouseEvent) => {
   if (
     event.defaultPrevented ||
     event.button !== 0 ||
@@ -17,7 +19,8 @@ const openInBrowser = (event: MouseEvent) => {
   if (!(link instanceof HTMLAnchorElement) || link.target === '_blank' || link.hasAttribute('download')) return;
   const url = new URL(link.href);
   if (!url.protocol.startsWith('http')) return;
-  if (url.origin === location.origin && isShuttleKaosPath(url.pathname)) return;
+  const app = linkedApp(url);
+  if (app === current || (app === null && !externalToo)) return;
   const { target, rel } = link;
   link.target = '_blank';
   link.rel = 'noopener';
@@ -27,10 +30,10 @@ const openInBrowser = (event: MouseEvent) => {
   });
 };
 
-export const useLinksOutsideApp = (enabled: boolean) => {
+export const useLinksAcrossApps = (current: AppKind, externalToo: boolean) => {
   useEffect(() => {
-    if (!enabled) return;
-    document.addEventListener('click', openInBrowser, true);
-    return () => document.removeEventListener('click', openInBrowser, true);
-  }, [enabled]);
+    const open = opener(current, externalToo);
+    document.addEventListener('click', open, true);
+    return () => document.removeEventListener('click', open, true);
+  }, [current, externalToo]);
 };

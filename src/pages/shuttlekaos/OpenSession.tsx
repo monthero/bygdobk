@@ -5,7 +5,6 @@ import { useState, type FC } from 'react';
 
 import { useSessionUserId } from '~/components/auth/hooks';
 import { Clock, PencilSimple, Play, ResponsiveModal, SignIn, SignOut, UserPlus } from '~/components/ui';
-import { usePageTitle } from '~/hooks/usePageTitle';
 import { notifyDone, notifyFailed } from '~/pages/board/format';
 import { entrantsNeeded, setPlayers, setupProblem } from '~/shuttlekaos/engine';
 import { Partners, PlayStyle, type Pair, type Player, type Settings } from '~/shuttlekaos/model';
@@ -25,7 +24,6 @@ import { BusyAlert } from './BusyAlert';
 import { Field, Section, StickyBar } from './FormParts';
 import { InviteCard } from './InviteCard';
 import {
-  BRAND,
   formatScheduled,
   isFull,
   playerLimitOf,
@@ -44,6 +42,7 @@ import { SessionMenu } from './SessionMenu';
 import { SessionTop } from './SessionTop';
 import { PlayerLimitField, SettingsForm, VisibilityPicker } from './SettingsForm';
 import { PlayerCount, SettingsSummary } from './SettingsSummary';
+import { useKaosTitle } from './useKaosTitle';
 import { useReached } from './useReached';
 import { busyNamesOf, useSessionSave } from './useSessionSave';
 
@@ -312,7 +311,7 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
 export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
   const { i18n } = useLingui();
   const { session, series } = view;
-  usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
+  useKaosTitle(session.title);
   return (
     <>
       <SessionTop

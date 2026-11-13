@@ -1,18 +1,13 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import type { FC } from 'react';
 
-import { usePageTitle } from '~/hooks/usePageTitle';
-
-import { BRAND } from '../labels';
 import { PublicSessions } from '../PublicSessions';
+import { useKaosTitle } from '../useKaosTitle';
 import { PageHead } from './PageHead';
 
 export const LobbyPage: FC = () => {
   const { t } = useLingui();
-  usePageTitle(
-    t({ message: 'Lobby', comment: 'Browser tab title for the list of public ShuttleKaos sessions' }),
-    BRAND,
-  );
+  useKaosTitle(t({ message: 'Lobby', comment: 'Browser tab title for the list of public ShuttleKaos sessions' }));
   return (
     <>
       <PageHead
