@@ -8,6 +8,7 @@ import {
   Pair,
   Partners,
   Player,
+  PlayerLimit,
   PlayStyle,
   ScoreMode,
   SessionLocation,
@@ -39,6 +40,7 @@ export type Lineup = z.infer<typeof Lineup>;
 const PrefsData = z.object({
   settings: Settings.catch(DEFAULT_SETTINGS),
   isPublic: z.boolean().catch(true),
+  maxPlayers: PlayerLimit.nullable().catch(null),
   lineup: Lineup.nullable().catch(null),
 });
 type PrefsData = z.infer<typeof PrefsData>;
@@ -47,7 +49,7 @@ export interface PrefsState extends PrefsData {
   remember: (prefs: PrefsData) => void;
 }
 
-const DEFAULTS: PrefsData = { settings: DEFAULT_SETTINGS, isPublic: true, lineup: null };
+const DEFAULTS: PrefsData = { settings: DEFAULT_SETTINGS, isPublic: true, maxPlayers: null, lineup: null };
 
 export const useSetupPrefs = create<PrefsState>()(
   persist(
@@ -59,7 +61,12 @@ export const useSetupPrefs = create<PrefsState>()(
       name: STORAGE_KEY,
       version: 2,
       storage: safeJSONStorage<PrefsData>(),
-      partialize: ({ settings, isPublic, lineup }): PrefsData => ({ settings, isPublic, lineup }),
+      partialize: ({ settings, isPublic, maxPlayers, lineup }): PrefsData => ({
+        settings,
+        isPublic,
+        maxPlayers,
+        lineup,
+      }),
       migrate: () => DEFAULTS,
       merge: mergeParsed(PrefsData, () => DEFAULTS),
     },

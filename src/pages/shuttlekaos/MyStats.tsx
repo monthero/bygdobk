@@ -1,42 +1,58 @@
 import type { MessageDescriptor } from '@lingui/core';
 import { msg } from '@lingui/core/macro';
-import { Plural, SelectOrdinal, Trans, useLingui } from '@lingui/react/macro';
-import { LineChart, type LineChartSeries } from '@mantine/charts';
-import { Button, Paper, Skeleton, Text } from '@mantine/core';
+import { Plural, Trans, useLingui } from '@lingui/react/macro';
+import { Progress, Skeleton, Text, Tooltip } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { useMemo, type FC, type ReactNode } from 'react';
-import type { TooltipContentProps } from 'recharts';
+import { useState, type FC, type ReactNode } from 'react';
+import { z } from 'zod';
+import ChartBar from '~icons/ph/chart-bar';
+import PlusMinus from '~icons/ph/plus-minus';
 
-import { ArrowRight } from '~/components/ui';
+import { CalendarCheck, CrownSimple, MedalFill, Trophy } from '~/components/ui';
 import { numberFormat } from '~/i18n/current';
-import { LoadError } from '~/pages/board/LoadError';
-import { useMyStats, type MyStats } from '~/shuttlekaos/queries';
-import { formatDate, wallTime } from '~/utils/dates';
+import type { MyStats } from '~/shuttlekaos/queries';
 
-import { BRAND, formatStart } from './labels';
+import { BRAND, formatStart, RESULT_LABELS } from './labels';
 import { PlayerAvatar } from './People';
+import { Place, PlaceChip } from './PlaceChip';
 
 import classes from './MyStats.module.css';
 
 type Totals = MyStats['totals'];
 type FormItem = MyStats['form'][number];
+type MatchItem = MyStats['recentMatches'][number];
 type Partner = MyStats['partners'][number];
 
-const TILE_SKELETONS = [0, 1, 2, 3];
-const FULL_SKELETONS = [0, 1, 2, 3, 4, 5];
-const CHART_HEIGHT = 220;
-const FINISH_TICKS = [0, 50, 100];
-const AXIS_DATE: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short' };
-const X_AXIS = { minTickGap: 16 };
-const DOT = { r: 4, strokeWidth: 2 };
-const ACTIVE_DOT = { r: 6, strokeWidth: 2 };
-const SERIES: LineChartSeries[] = [{ name: 'finish', color: 'var(--bk-accent-strong)' }];
+const FORM_SHOWN = 5;
+const TOP_SKELETONS = [0, 1];
 
-const FINISH_LABELS: Record<number, MessageDescriptor> = {
-  0: msg({ message: 'Last', comment: 'Form chart axis: finished last in a session' }),
-  50: msg({ message: 'Middle', comment: 'Form chart axis: finished in the middle of the field' }),
-  100: msg({ message: 'Top', comment: 'Form chart axis: finished first in a session' }),
+const StatTile = z.enum(['sessions', 'wins', 'podiums', 'matches', 'points']);
+type StatTile = z.infer<typeof StatTile>;
+
+const TILE_INFO: Record<StatTile, { icon: ReactNode; label: MessageDescriptor }> = {
+  [StatTile.enum.sessions]: {
+    icon: <CalendarCheck />,
+    label: msg({ message: 'Sessions', comment: 'Stats tile: finished sessions you played' }),
+  },
+  [StatTile.enum.wins]: {
+    icon: <CrownSimple />,
+    label: msg({ message: 'Wins', comment: 'Stats tile: sessions you finished first' }),
+  },
+  [StatTile.enum.podiums]: {
+    icon: <MedalFill />,
+    label: msg({ message: 'Podiums', comment: 'Stats tile: sessions where you finished in the top 3' }),
+  },
+  [StatTile.enum.matches]: {
+    icon: <Trophy />,
+    label: msg({ message: 'Matches won', comment: 'Stats tile: share of matches you won' }),
+  },
+  [StatTile.enum.points]: {
+    icon: <PlusMinus />,
+    label: msg({ message: 'Point difference', comment: 'Stats tile: points scored minus points conceded' }),
+  },
 };
+
+const count = (n: number) => numberFormat().format(n);
 
 const percent = (part: number, whole: number) =>
   whole > 0 ? numberFormat({ style: 'percent' }).format(part / whole) : '–';
@@ -45,208 +61,203 @@ const decimal = (n: number) => numberFormat({ maximumFractionDigits: 1 }).format
 
 const signed = (n: number) => numberFormat({ signDisplay: 'exceptZero' }).format(n);
 
-const finishOf = ({ rank, entrants }: FormItem) => (entrants > 1 ? ((entrants - rank) / (entrants - 1)) * 100 : 100);
+type TileProps = { tile: StatTile; value: ReactNode; detail?: ReactNode; ghost?: boolean };
 
-const Place: FC<{ rank: number }> = ({ rank }) => (
-  <SelectOrdinal value={rank} one="#st" two="#nd" few="#rd" other="#th" comment="A place in a session, e.g. 3rd" />
-);
-
-const PlaceOf: FC<{ item: FormItem }> = ({ item }) => {
-  const { entrants } = item;
+const Tile: FC<TileProps> = ({ tile, value, detail, ghost }) => {
+  const { i18n } = useLingui();
+  const { icon, label } = TILE_INFO[tile];
   return (
-    <Trans comment="Your place out of all players or pairs, e.g. 3rd of 13">
-      <Place rank={item.rank} /> of {entrants}
-    </Trans>
-  );
-};
-
-const WonOf: FC<{ won: number; played: number }> = ({ won, played }) => (
-  <Trans comment="Matches won out of matches played, e.g. 3 of 5 won">
-    {won} of {played} won
-  </Trans>
-);
-
-type TileProps = { label: ReactNode; value: ReactNode; detail?: ReactNode };
-
-const StatTile: FC<TileProps> = ({ label, value, detail }) => (
-  <Paper withBorder radius="lg" className={classes.tile}>
-    <Text size="sm" c="dimmed" className={classes.tile__label}>
-      {label}
-    </Text>
-    <span className={classes.tile__value}>{value}</span>
-    {detail && (
-      <Text size="xs" c="dimmed">
-        {detail}
-      </Text>
-    )}
-  </Paper>
-);
-
-export const StatTiles: FC<{ totals: Totals; full?: boolean }> = ({ totals, full }) => {
-  const { played, won, lost, drawn, bestPlace, wins, pointsFor, pointsAgainst } = totals;
-  return (
-    <div className={classes.tiles} data-full={full || undefined}>
-      <StatTile
-        label={<Trans comment="Stats tile: finished sessions you played">Sessions</Trans>}
-        value={totals.sessions}
-        detail={
-          full ? undefined : (
-            <Plural value={played} one="# match" other="# matches" comment="Stats tile detail: matches played" />
-          )
-        }
-      />
-      {full && (
-        <StatTile
-          label={<Trans comment="Stats tile: matches you played">Matches</Trans>}
-          value={played}
-          detail={
-            drawn > 0 ? (
-              <Trans comment="Stats tile detail">
-                {won} won · {lost} lost · {drawn} drawn
-              </Trans>
-            ) : (
-              <Trans comment="Stats tile detail">
-                {won} won · {lost} lost
-              </Trans>
-            )
-          }
-        />
-      )}
-      <StatTile
-        label={<Trans comment="Stats tile: share of matches you won">Matches won</Trans>}
-        value={percent(won, played)}
-        detail={
-          <Trans comment="Stats tile detail: matches won out of played, e.g. 7 of 12">
-            {won} of {played}
-          </Trans>
-        }
-      />
-      <StatTile
-        label={<Trans comment="Stats tile: your average place in sessions">Average place</Trans>}
-        value={totals.averagePlace === null ? '–' : decimal(totals.averagePlace)}
-        detail={
-          bestPlace !== null && (
-            <Trans comment="Stats tile detail: your best place, e.g. Best: 1st">
-              Best: <Place rank={bestPlace} />
-            </Trans>
-          )
-        }
-      />
-      <StatTile
-        label={<Trans comment="Stats tile: sessions where you finished in the top 3">Podiums</Trans>}
-        value={totals.podiums}
-        detail={
-          <Plural
-            value={wins}
-            one="Won # session"
-            other="Won # sessions"
-            comment="Stats tile detail: sessions you finished first"
-          />
-        }
-      />
-      {full && (
-        <StatTile
-          label={<Trans comment="Stats tile: points scored minus points conceded">Point difference</Trans>}
-          value={signed(pointsFor - pointsAgainst)}
-          detail={
-            <Trans comment="Stats tile detail: points scored and conceded">
-              {pointsFor} for · {pointsAgainst} against
-            </Trans>
-          }
-        />
-      )}
+    <div className={classes.tile} data-ghost={ghost || undefined}>
+      <span className={classes.tile__icon} aria-hidden>
+        {icon}
+      </span>
+      <span className={classes.tile__value}>{value}</span>
+      <span className={classes.tile__label}>{i18n._(label)}</span>
+      {detail && <span className={classes.sub}>{detail}</span>}
     </div>
   );
 };
 
-export const StatTilesSkeleton: FC<{ full?: boolean }> = ({ full }) => (
-  <div className={classes.tiles} data-full={full || undefined} aria-busy>
-    {(full ? FULL_SKELETONS : TILE_SKELETONS).map((i) => (
-      <Skeleton key={i} height={96} radius="lg" />
-    ))}
-  </div>
+export const StatTiles: FC<{ totals: Totals }> = ({ totals }) => {
+  const { sessions, played, won, wins, podiums } = totals;
+  const pointsFor = count(totals.pointsFor);
+  const pointsAgainst = count(totals.pointsAgainst);
+  const winShare = percent(wins, sessions);
+  const podiumShare = percent(podiums, sessions);
+  const tiles: Record<StatTile, Omit<TileProps, 'tile'>> = {
+    [StatTile.enum.sessions]: {
+      value: count(sessions),
+      detail: <Plural value={played} one="# match" other="# matches" comment="Stats tile detail: matches played" />,
+    },
+    [StatTile.enum.wins]: {
+      value: count(wins),
+      detail: (
+        <Trans comment="Stats tile detail: share of sessions you won, e.g. 22% of sessions">
+          {winShare} of sessions
+        </Trans>
+      ),
+    },
+    [StatTile.enum.podiums]: {
+      value: count(podiums),
+      detail: (
+        <Trans comment="Stats tile detail: share of sessions you finished top 3, e.g. Top 3 in 48%">
+          Top 3 in {podiumShare}
+        </Trans>
+      ),
+    },
+    [StatTile.enum.matches]: {
+      value: percent(won, played),
+      detail: (
+        <>
+          <Trans comment="Stats tile detail: matches won out of played, e.g. 7 of 12">
+            {won} of {played}
+          </Trans>
+          <Progress
+            value={played > 0 ? (won / played) * 100 : 0}
+            size={6}
+            radius="xl"
+            className={classes.tile__bar}
+            aria-hidden
+          />
+        </>
+      ),
+    },
+    [StatTile.enum.points]: {
+      value: signed(totals.pointsFor - totals.pointsAgainst),
+      detail: (
+        <Trans comment="Stats tile detail: points scored and conceded">
+          {pointsFor} for · {pointsAgainst} against
+        </Trans>
+      ),
+    },
+  };
+  return (
+    <div className={classes.tiles}>
+      {StatTile.options.map((tile) => (
+        <Tile key={tile} tile={tile} {...tiles[tile]} />
+      ))}
+    </div>
+  );
+};
+
+export const EmptyStats: FC = () => (
+  <>
+    <div className={classes.empty}>
+      <span className={classes.empty__art} aria-hidden>
+        <ChartBar />
+      </span>
+      <h2 className={classes.empty__title}>
+        <Trans comment="Title when you have no stats yet">Your stats start here</Trans>
+      </h2>
+      <p className={classes.empty__text}>
+        <Trans>Finish one session and we'll keep score of your wins, podiums and form.</Trans>
+      </p>
+    </div>
+    <div className={classes.tiles}>
+      {StatTile.options.map((tile) => (
+        <Tile key={tile} tile={tile} value="–" ghost />
+      ))}
+    </div>
+  </>
 );
 
-type Point = FormItem & { label: string; finish: number };
+const FormChip: FC<{ item: FormItem }> = ({ item }) => (
+  <Tooltip label={`${item.title || BRAND} · ${formatStart(item.startedAt)}`} withArrow>
+    <Link to="/shuttlekaos/$code" params={{ code: item.shareCode }} className={classes.formLink}>
+      <PlaceChip rank={item.rank} />
+    </Link>
+  </Tooltip>
+);
 
-const FormTooltip: FC<TooltipContentProps<number, string>> = ({ active, payload }) => {
-  const point: Point | undefined = payload?.at(0)?.payload;
-  if (!active || !point) return null;
+const StatsSummary: FC<{ totals: Totals; form: FormItem[] }> = ({ totals, form }) => {
+  const { averagePlace, bestPlace } = totals;
   return (
-    <Paper withBorder radius="md" shadow="md" className={classes.tooltip}>
-      <Text size="sm" fw={700} className={classes.ellipsis}>
-        {point.title || BRAND}
-      </Text>
-      <Text size="xs" c="dimmed">
-        {formatStart(point.startedAt)}
-      </Text>
-      <Text size="sm" fw={600}>
-        <PlaceOf item={point} />
-      </Text>
-      <Text size="xs">
-        <WonOf won={point.won} played={point.played} />
-      </Text>
-    </Paper>
+    <div className={classes.summary}>
+      <div className={classes.stack}>
+        <span className={classes.label}>
+          <Trans comment="Your average place in sessions">Average place</Trans>
+        </span>
+        <span className={classes.big}>{averagePlace === null ? '–' : decimal(averagePlace)}</span>
+        {bestPlace !== null && (
+          <span className={classes.sub}>
+            <Trans comment="Your best place, e.g. Best: 1st">
+              Best: <Place rank={bestPlace} />
+            </Trans>
+          </span>
+        )}
+      </div>
+      <div className={classes.stack}>
+        <span className={classes.label}>
+          <Trans comment="Heading for your places in your latest sessions">Form</Trans>
+        </span>
+        <ol className={classes.chips}>
+          {form.slice(-FORM_SHOWN).map((item) => (
+            <li key={item.shareCode}>
+              <FormChip item={item} />
+            </li>
+          ))}
+        </ol>
+        <span className={classes.sub}>
+          <Trans comment="Under your places in your latest sessions">Last 5, newest on the right</Trans>
+        </span>
+      </div>
+    </div>
   );
 };
 
-const renderTooltip = (props: TooltipContentProps<number, string>) => <FormTooltip {...props} />;
-
-const TOOLTIP_PROPS = { content: renderTooltip };
-
-export const FormChart: FC<{ form: FormItem[] }> = ({ form }) => {
-  const { i18n } = useLingui();
-  const data = useMemo<Point[]>(
-    () =>
-      form.map((item) => ({
-        ...item,
-        label: formatDate(wallTime(item.startedAt), AXIS_DATE),
-        finish: finishOf(item),
-      })),
-    [form],
-  );
-  const yAxis = useMemo(
-    () => ({
-      domain: [0, 100],
-      ticks: FINISH_TICKS,
-      width: 64,
-      tickFormatter: (value: number) => {
-        const label = FINISH_LABELS[value];
-        return label ? i18n._(label) : '';
-      },
-    }),
-    [i18n],
-  );
-
-  if (form.length < 2) {
-    return (
-      <Text c="dimmed">
-        <Trans>Play one more session to see your form.</Trans>
-      </Text>
-    );
-  }
-
+const RecentMatches: FC<{ matches: MatchItem[] }> = ({ matches }) => {
+  const { t, i18n } = useLingui();
+  const [picked, setPicked] = useState<number | null>(null);
+  const shown = matches.at(picked ?? -1);
+  if (!shown) return null;
+  const matchText = (match: MatchItem) => {
+    const result = i18n._(RESULT_LABELS[match.result].label);
+    const score = `${match.pointsFor}–${match.pointsAgainst}`;
+    return t({ message: `${result} ${score}`, comment: 'A match result and its score, e.g. Won 21–15' });
+  };
+  const roundText = (number: number) => t`Round ${number}`;
   return (
-    <LineChart
-      h={CHART_HEIGHT}
-      data={data}
-      dataKey="label"
-      series={SERIES}
-      curveType="monotone"
-      gridAxis="x"
-      tickLine="none"
-      strokeDasharray="0"
-      strokeWidth={2}
-      dotProps={DOT}
-      activeDotProps={ACTIVE_DOT}
-      yAxisProps={yAxis}
-      xAxisProps={X_AXIS}
-      tooltipProps={TOOLTIP_PROPS}
-      tooltipAnimationDuration={150}
-      className={classes.chart}
-    />
+    <div className={classes.card}>
+      <span className={classes.label}>
+        <Plural
+          value={matches.length}
+          one="Last match"
+          other="Last # matches"
+          comment="Heading for your latest match results"
+        />
+      </span>
+      <ol className={classes.matches}>
+        {matches.map((match, index) => (
+          <li key={`${match.shareCode}:${match.round}`}>
+            <button
+              type="button"
+              className={classes.result}
+              data-result={match.result}
+              aria-pressed={match === shown}
+              aria-label={`${matchText(match)} · ${roundText(match.round)}`}
+              onClick={() => setPicked(index)}
+            >
+              {i18n._(RESULT_LABELS[match.result].short)}
+            </button>
+          </li>
+        ))}
+      </ol>
+      <div className={classes.stack}>
+        <Text fw={700}>{matchText(shown)}</Text>
+        <Link to="/shuttlekaos/$code" params={{ code: shown.shareCode }} className={classes.matchLink}>
+          {shown.title || BRAND} · {roundText(shown.round)}
+        </Link>
+      </div>
+    </div>
   );
 };
+
+export const StatsOverview: FC<{ stats: MyStats }> = ({ stats }) => (
+  <div className={classes.top}>
+    <StatsSummary totals={stats.totals} form={stats.form} />
+    <RecentMatches matches={stats.recentMatches} />
+  </div>
+);
 
 export const PartnerList: FC<{ partners: Partner[] }> = ({ partners }) => {
   if (partners.length === 0) {
@@ -257,30 +268,32 @@ export const PartnerList: FC<{ partners: Partner[] }> = ({ partners }) => {
     );
   }
   return (
-    <ol className={classes.list}>
+    <ol className={classes.partners}>
       {partners.map((partner) => {
-        const { played } = partner;
+        const { played, won } = partner;
         return (
-          <li key={partner.profileId ?? `name:${partner.name.toLocaleLowerCase()}`} className={classes.row}>
-            <PlayerAvatar player={partner} />
-            <div className={classes.row__text}>
+          <li key={partner.profileId ?? `name:${partner.name.toLocaleLowerCase()}`} className={classes.partner}>
+            <PlayerAvatar player={partner} size={44} />
+            <div className={classes.stack}>
               <Text fw={700} className={classes.ellipsis}>
                 {partner.name}
               </Text>
-              <Text size="sm" c="dimmed">
+              <span className={classes.sub}>
                 <Plural
                   value={played}
                   one="# match together"
                   other="# matches together"
                   comment="Matches you played on the same side as this partner"
                 />
-              </Text>
+              </span>
             </div>
-            <div className={classes.row__score}>
-              <Text fw={700}>{percent(partner.won, played)}</Text>
-              <Text size="xs" c="dimmed">
-                <WonOf won={partner.won} played={played} />
-              </Text>
+            <div className={classes.score}>
+              <span className={classes.score__value}>{percent(won, played)}</span>
+              <span className={classes.sub}>
+                <Trans comment="Matches won out of matches played, e.g. 3 of 5 won">
+                  {won} of {played} won
+                </Trans>
+              </span>
             </div>
           </li>
         );
@@ -289,68 +302,17 @@ export const PartnerList: FC<{ partners: Partner[] }> = ({ partners }) => {
   );
 };
 
-export const SessionResults: FC<{ form: FormItem[] }> = ({ form }) => (
-  <ol className={classes.list}>
-    {form.toReversed().map((item) => (
-      <li key={item.shareCode}>
-        <Link to="/shuttlekaos/$code" params={{ code: item.shareCode }} className={classes.link}>
-          <span className={classes.place} data-podium={item.rank <= 3 || undefined}>
-            <Place rank={item.rank} />
-          </span>
-          <div className={classes.row__text}>
-            <Text fw={700} className={classes.ellipsis}>
-              {item.title || BRAND}
-            </Text>
-            <Text size="sm" c="dimmed">
-              {formatStart(item.startedAt)}
-            </Text>
-          </div>
-          <div className={classes.row__score}>
-            <Text size="sm" fw={600}>
-              <PlaceOf item={item} />
-            </Text>
-            <Text size="xs" c="dimmed">
-              <WonOf won={item.won} played={item.played} />
-            </Text>
-          </div>
-        </Link>
-      </li>
-    ))}
-  </ol>
+export const StatsSkeleton: FC = () => (
+  <>
+    <div className={classes.top} aria-busy>
+      {TOP_SKELETONS.map((i) => (
+        <Skeleton key={i} height={128} radius={18} />
+      ))}
+    </div>
+    <div className={classes.tiles} aria-busy>
+      {StatTile.options.map((tile) => (
+        <Skeleton key={tile} height={132} radius={16} />
+      ))}
+    </div>
+  </>
 );
-
-const StatsLink: FC = () => (
-  <Button
-    variant="light"
-    rightSection={<ArrowRight />}
-    className={classes.more}
-    renderRoot={(props) => <Link {...props} to="/shuttlekaos/statistikk" />}
-  >
-    <Trans>See all your stats</Trans>
-  </Button>
-);
-
-type TeaserProps = { hasHistory: boolean; children: (content: ReactNode) => ReactNode };
-
-export const StatsTeaser: FC<TeaserProps> = ({ hasHistory, children }) => {
-  const { t } = useLingui();
-  const stats = useMyStats();
-  if (stats.isPending) return hasHistory ? children(<StatTilesSkeleton />) : null;
-  if (stats.isError) {
-    return children(
-      <LoadError
-        title={t`Couldn't load your stats`}
-        error={stats.error}
-        retrying={stats.isRefetching}
-        onRetry={() => void stats.refetch()}
-      />,
-    );
-  }
-  if (stats.data.totals.sessions === 0) return null;
-  return children(
-    <>
-      <StatTiles totals={stats.data.totals} />
-      <StatsLink />
-    </>,
-  );
-};

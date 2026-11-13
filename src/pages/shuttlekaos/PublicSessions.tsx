@@ -2,7 +2,6 @@ import { Trans, useLingui } from '@lingui/react/macro';
 import {
   Badge,
   Button,
-  Group,
   Menu,
   Pagination,
   Paper,
@@ -11,6 +10,7 @@ import {
   Table,
   Text,
   VisuallyHidden,
+  type MantineSize,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { Link, useNavigate } from '@tanstack/react-router';
@@ -18,18 +18,31 @@ import { memo, useMemo, useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
 
 import { useSessionUserId } from '~/components/auth/hooks';
-import { CaretDown, Check, Eye, MapPin, UserPlus, X } from '~/components/ui';
+import { CaretDown, Check, Crosshair, Eye, MapPin, UserPlus, Users, X } from '~/components/ui';
 import { notifyFailed } from '~/pages/board/format';
 import { LoadError } from '~/pages/board/LoadError';
-import { Format, Level, PlayStyle, SessionStatus, type PublicSession } from '~/shuttlekaos/model';
+import { Format, Level, PlayStyle, SessionStatus, type PublicSession, type SessionLocation } from '~/shuttlekaos/model';
 import { PAGE_SIZE, shuttleKaosErrorMessage, useJoinSession, usePublicSessions } from '~/shuttlekaos/queries';
 import { useUi } from '~/stores/ui';
 
 import { LiveBadge } from './Fallbacks';
-import { BRAND, FORMAT_LABELS, formatStart, stop, STYLE_LABELS, TABLE_QUERY } from './labels';
+import { QuietCourt } from './home/QuietCourt';
+import { useNearestFirst, type NearestFirst } from './home/useNearestFirst';
+import {
+  BRAND,
+  distanceText,
+  FORMAT_LABELS,
+  FULL,
+  isFull,
+  playerCountText,
+  sessionTimeText,
+  stop,
+  STYLE_LABELS,
+  TABLE_QUERY,
+} from './labels';
 import { LevelsText } from './Levels';
-import { NewSessionButton } from './NewSessionButton';
-import { FormatCell } from './SettingsSummary';
+import { SessionLink, SessionRow, SessionTable } from './SessionTable';
+import { FormatCell, SessionChips } from './SettingsSummary';
 
 import classes from './PublicSessions.module.css';
 import tables from './SessionTables.module.css';
@@ -145,7 +158,8 @@ const FilterRow: FC<{
   organizers: Option[];
   locations: Option[];
   onChange: (f: Filters) => void;
-}> = ({ filters, organizers, locations, onChange }) => {
+  children: ReactNode;
+}> = ({ filters, organizers, locations, onChange, children }) => {
   const { t, i18n } = useLingui();
   const set = (patch: Partial<Filters>) => onChange({ ...filters, ...patch });
   const toggleLevel = (level: Level) =>
@@ -161,6 +175,7 @@ const FilterRow: FC<{
 
   return (
     <div className={classes.row}>
+      {children}
       <FilterPill
         name={t`Level`}
         multiple
@@ -228,14 +243,13 @@ const FilterRow: FC<{
   );
 };
 
-const SessionAction: FC<{ session: PublicSession; compact?: boolean }> = ({ session, compact }) => {
+const SessionAction: FC<{ session: PublicSession }> = ({ session }) => {
   const { i18n } = useLingui();
   const navigate = useNavigate();
   const userId = useSessionUserId();
   const openLogin = useUi(selectOpenLogin);
   const join = useJoinSession();
   const go = () => void navigate({ to: '/shuttlekaos/$code', params: { code: session.shareCode } });
-  const size = compact ? 'sm' : 'md';
 
   const joinNow = () => {
     if (!userId) {
@@ -248,27 +262,22 @@ const SessionAction: FC<{ session: PublicSession; compact?: boolean }> = ({ sess
     });
   };
 
+  if (session.status === SessionStatus.enum.open && isFull(session)) {
+    return (
+      <Button size="sm" variant="default" disabled>
+        {i18n._(FULL)}
+      </Button>
+    );
+  }
   if (session.status === SessionStatus.enum.open) {
     return (
-      <Button
-        size={size}
-        leftSection={<UserPlus />}
-        loading={join.isPending}
-        onClick={joinNow}
-        className={compact ? undefined : classes.action}
-      >
-        <Trans>Join</Trans>
+      <Button size="sm" leftSection={<UserPlus />} loading={join.isPending} onClick={joinNow}>
+        <Trans context="ShuttleKaos: join a session">Join</Trans>
       </Button>
     );
   }
   return (
-    <Button
-      size={size}
-      variant="default"
-      leftSection={<Eye />}
-      onClick={go}
-      className={compact ? undefined : classes.action}
-    >
+    <Button size="sm" variant="default" leftSection={<Eye />} onClick={go}>
       <Trans>Watch</Trans>
     </Button>
   );
@@ -285,132 +294,132 @@ const StatusTag: FC<{ status: SessionStatus }> = ({ status }) =>
     </LiveBadge>
   );
 
-const SessionCard = memo<{ session: PublicSession }>(({ session }) => {
-  const { i18n } = useLingui();
-  const players = session.playerCount;
+export const Place: FC<{ location: SessionLocation | null; km?: number }> = ({ location, km }) =>
+  location && (
+    <Text size="sm" className={classes.where}>
+      <MapPin aria-hidden />
+      <span className={classes.whereName}>{location.name}</span>
+      {km !== undefined && (
+        <Text span size="sm" c="dimmed" className={classes.distance}>
+          {distanceText(km)}
+        </Text>
+      )}
+    </Text>
+  );
+
+export const NearestButton: FC<{ sort: NearestFirst; size?: MantineSize; h?: number }> = ({ sort, size, h }) =>
+  sort.canLocate && (
+    <Button
+      size={size}
+      h={h}
+      radius="xl"
+      variant={sort.nearest ? 'light' : 'default'}
+      color={sort.nearest ? 'brand' : undefined}
+      leftSection={sort.nearest ? <Check /> : <Crosshair />}
+      loading={sort.locating}
+      aria-pressed={sort.nearest}
+      onClick={() => void sort.toggle()}
+      className={classes.pill}
+    >
+      <Trans comment="Toggle that sorts sessions by distance from you">Nearest first</Trans>
+    </Button>
+  );
+
+export const PublicCard = memo<{ session: PublicSession; km?: number }>(({ session, km }) => {
   const organizer = session.organizerName;
-  const format = i18n._(FORMAT_LABELS[session.format].label);
-  const style = i18n._(STYLE_LABELS[session.style]);
+  const playerCount = playerCountText(session);
+  const when = sessionTimeText(session);
 
   return (
-    <Paper
-      withBorder
-      radius="lg"
-      className={classes.card}
-      data-live={session.status !== SessionStatus.enum.open || undefined}
-    >
+    <Paper withBorder radius="lg" className={classes.card}>
+      <div className={classes.cardTop}>
+        <StatusTag status={session.status} />
+        {when && (
+          <Text size="sm" c="dimmed">
+            {when}
+          </Text>
+        )}
+      </div>
       <Link to="/shuttlekaos/$code" params={{ code: session.shareCode }} className={classes.cardLink}>
-        <Group gap={6}>
-          <StatusTag status={session.status} />
-          <Badge variant="light" color="blue" tt="none">
-            <LevelsText levels={session.levels} />
-          </Badge>
-          <Badge variant="light" color="blue" tt="none">
-            {format}
-          </Badge>
-          <Badge variant="light" color="blue" tt="none">
-            {style}
-          </Badge>
-        </Group>
         <Text fw={700} size="lg" className={classes.title}>
           {session.title || BRAND}
         </Text>
-        <Text size="sm" c="dimmed">
-          <Trans>
-            By {organizer} · {players} players
-          </Trans>
+        <Text size="sm" c="dimmed" className={classes.title}>
+          <Trans comment="Who organizes a session">By {organizer}</Trans>
         </Text>
-        {session.location && (
-          <Text size="sm" className={classes.where}>
-            <MapPin aria-hidden />
-            {session.location.name}
-          </Text>
-        )}
+        <Place location={session.location} km={km} />
       </Link>
-      <SessionAction session={session} />
+      <SessionChips format={session.format} style={session.style} levels={session.levels} size="sm" />
+      <div className={classes.cardFoot}>
+        <span className={classes.players}>
+          <Users aria-hidden />
+          <Trans>{playerCount} players</Trans>
+        </span>
+        <SessionAction session={session} />
+      </div>
     </Paper>
   );
 });
 
-const OpenTable: FC<{ sessions: PublicSession[] }> = ({ sessions }) => {
-  const navigate = useNavigate();
-  return (
-    <Paper withBorder radius="lg" className={tables.panel}>
-      <Table className={tables.table} verticalSpacing="sm" horizontalSpacing="md">
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>
-              <Trans context="table heading" comment="Table heading: when the session started, in Oslo time">
-                Start
-              </Trans>
-            </Table.Th>
-            <Table.Th>
-              <Trans comment="Table heading">Session</Trans>
-            </Table.Th>
-            <Table.Th className={tables.location}>
-              <Trans comment="Table heading: where the session is played">Location</Trans>
-            </Table.Th>
-            <Table.Th>
-              <Trans comment="Table heading">Format</Trans>
-            </Table.Th>
-            <Table.Th className={tables.num}>
-              <Trans comment="Table heading">Players</Trans>
-            </Table.Th>
-            <Table.Th>
-              <Trans comment="Table heading">Organizer</Trans>
-            </Table.Th>
-            <Table.Th className={tables.num}>
-              <VisuallyHidden>
-                <Trans comment="Table heading for the Join or Watch buttons">Action</Trans>
-              </VisuallyHidden>
-            </Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {sessions.map((session) => (
-            <Table.Tr
-              key={session.id}
-              className={tables.row}
-              onClick={() => void navigate({ to: '/shuttlekaos/$code', params: { code: session.shareCode } })}
-            >
-              <Table.Td>
-                {session.startedAt ? (
-                  formatStart(session.startedAt)
-                ) : (
-                  <Text span size="sm" c="dimmed">
-                    <Trans comment="Start column for a session that hasn't started yet">Not started</Trans>
-                  </Text>
-                )}
-              </Table.Td>
-              <Table.Td className={tables.main}>
-                <Group gap={8} wrap="nowrap">
-                  <StatusTag status={session.status} />
-                  <Link
-                    to="/shuttlekaos/$code"
-                    params={{ code: session.shareCode }}
-                    className={tables.title}
-                    onClick={stop}
-                  >
-                    {session.title || BRAND}
-                  </Link>
-                </Group>
-              </Table.Td>
-              <Table.Td>{session.location?.name ?? '–'}</Table.Td>
-              <Table.Td>
-                <FormatCell format={session.format} style={session.style} levels={session.levels} />
-              </Table.Td>
-              <Table.Td className={tables.num}>{session.playerCount}</Table.Td>
-              <Table.Td>{session.organizerName}</Table.Td>
-              <Table.Td className={tables.num} onClick={stop}>
-                <SessionAction session={session} compact />
-              </Table.Td>
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
-    </Paper>
-  );
-};
+const OpenTable: FC<{ sessions: PublicSession[]; distances: ReadonlyMap<string, number> }> = ({
+  sessions,
+  distances,
+}) => (
+  <SessionTable
+    head={
+      <>
+        <Table.Th className={tables.num}>
+          <Trans comment="Table heading">Players</Trans>
+        </Table.Th>
+        <Table.Th>
+          <Trans comment="Table heading">Organizer</Trans>
+        </Table.Th>
+        <Table.Th className={tables.num}>
+          <VisuallyHidden>
+            <Trans comment="Table heading for the Join or Watch buttons">Action</Trans>
+          </VisuallyHidden>
+        </Table.Th>
+      </>
+    }
+  >
+    {sessions.map((session) => {
+      const km = distances.get(session.id);
+      return (
+        <SessionRow key={session.id} code={session.shareCode}>
+          <Table.Td>
+            <div className={classes.start}>
+              <StatusTag status={session.status} />
+              <Text span size="xs" c="dimmed">
+                {sessionTimeText(session)}
+              </Text>
+            </div>
+          </Table.Td>
+          <Table.Td className={tables.main}>
+            <SessionLink code={session.shareCode} title={session.title} />
+          </Table.Td>
+          <Table.Td>
+            <div className={tables.stacked}>
+              {session.location?.name ?? '–'}
+              {km !== undefined && (
+                <Text size="xs" c="dimmed">
+                  {distanceText(km)}
+                </Text>
+              )}
+            </div>
+          </Table.Td>
+          <Table.Td>
+            <FormatCell format={session.format} style={session.style} levels={session.levels} />
+          </Table.Td>
+          <Table.Td className={tables.num}>{playerCountText(session)}</Table.Td>
+          <Table.Td>{session.organizerName}</Table.Td>
+          <Table.Td className={tables.num} onClick={stop}>
+            <SessionAction session={session} />
+          </Table.Td>
+        </SessionRow>
+      );
+    })}
+  </SessionTable>
+);
 
 export const PublicSessions: FC = () => {
   const { t } = useLingui();
@@ -431,7 +440,8 @@ export const PublicSessions: FC = () => {
       ).sort((a, b) => a.label.localeCompare(b.label, 'nb')),
     [all],
   );
-  const shown = all.filter((s) => matches(s, filters));
+  const sort = useNearestFirst(all);
+  const shown = sort.sessions.filter((s) => matches(s, filters));
   const filtering = activeCount(filters) > 0;
   const pages = Math.ceil(shown.length / PAGE_SIZE);
   const current = Math.min(page, Math.max(pages, 1));
@@ -462,29 +472,24 @@ export const PublicSessions: FC = () => {
     );
   }
   if (all.length === 0 && !filtering) {
-    return (
-      <Paper withBorder radius="lg" p="lg" className={classes.empty}>
-        <Text>
-          <Trans>No open sessions right now. Start one and get the chaos going!</Trans>
-        </Text>
-        <NewSessionButton size="sm" />
-      </Paper>
-    );
+    return <QuietCourt />;
   }
 
   return (
     <Stack gap="sm">
-      <FilterRow filters={filters} organizers={organizers} locations={locations} onChange={filter} />
+      <FilterRow filters={filters} organizers={organizers} locations={locations} onChange={filter}>
+        <NearestButton sort={sort} h={44} />
+      </FilterRow>
       {shown.length === 0 && (
         <Text c="dimmed">
           <Trans>Nothing matches these filters.</Trans>
         </Text>
       )}
-      {shown.length > 0 && wide && <OpenTable sessions={visible} />}
+      {shown.length > 0 && wide && <OpenTable sessions={visible} distances={sort.distances} />}
       {shown.length > 0 && !wide && (
         <div className={classes.grid}>
           {visible.map((session) => (
-            <SessionCard key={session.id} session={session} />
+            <PublicCard key={session.id} session={session} km={sort.distances.get(session.id)} />
           ))}
         </div>
       )}

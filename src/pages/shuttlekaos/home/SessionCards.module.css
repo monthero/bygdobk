@@ -1,0 +1,62 @@
+.title {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sectionHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  min-height: 30px;
+}
+
+.grid {
+  composes: grid from '../PublicSessions.module.css';
+}
+
+.card {
+  composes: card from '../PublicSessions.module.css';
+
+  &[data-status='running'] {
+    --watermark-size: 140px;
+    --watermark-opacity: 0.09;
+
+    gap: 14px;
+    padding: 18px;
+    border-color: var(--bk-accent-line);
+    background-image: radial-gradient(
+      120% 90% at 100% 0%,
+      color-mix(in srgb, var(--bk-accent) 30%, transparent),
+      transparent 62%
+    );
+
+    & .title {
+      font-family: var(--bk-font-display);
+      font-size: 24px;
+      font-weight: var(--bk-font-display-weight);
+      font-stretch: var(--bk-font-display-stretch);
+      line-height: 1.15;
+    }
+  }
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+  margin-block: -4px;
+}
+
+.cardLink {
+  composes: cardLink from '../PublicSessions.module.css';
+}
+
+.action {
+  composes: action from '../PublicSessions.module.css';
+}

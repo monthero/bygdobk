@@ -1,5 +1,5 @@
-import { Trans } from '@lingui/react/macro';
-import { Button, type MantineSize } from '@mantine/core';
+import { useLingui } from '@lingui/react/macro';
+import { Button, type ButtonProps } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import type { FC } from 'react';
 
@@ -9,16 +9,22 @@ import { useUi } from '~/stores/ui';
 
 const selectOpenLogin = (s: ReturnType<typeof useUi.getState>) => s.openLogin;
 
-export const NewSessionButton: FC<{ size?: MantineSize }> = ({ size }) => {
+type Props = Pick<ButtonProps, 'size' | 'radius' | 'fullWidth' | 'className'> & { iconOnly?: boolean };
+
+export const NewSessionButton: FC<Props> = ({ iconOnly, ...props }) => {
+  const { t } = useLingui();
   const userId = useSessionUserId();
   const openLogin = useUi(selectOpenLogin);
+  const label = t`New session`;
+  const shared = { ...props, leftSection: iconOnly ? undefined : <Plus />, 'aria-label': iconOnly ? label : undefined };
+  const content = iconOnly ? <Plus /> : label;
   return userId ? (
-    <Button size={size} leftSection={<Plus />} renderRoot={(props) => <Link {...props} to="/shuttlekaos/ny" />}>
-      <Trans>New session</Trans>
+    <Button {...shared} renderRoot={(root) => <Link {...root} to="/shuttlekaos/ny" />}>
+      {content}
     </Button>
   ) : (
-    <Button size={size} leftSection={<Plus />} onClick={openLogin}>
-      <Trans>New session</Trans>
+    <Button {...shared} onClick={openLogin}>
+      {content}
     </Button>
   );
 };

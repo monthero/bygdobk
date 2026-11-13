@@ -63,6 +63,7 @@
 }
 
 .part {
+  display: inline-block;
   white-space: nowrap;
 }
 
@@ -83,6 +84,8 @@
 }
 
 .progress {
+  display: inline-block;
+  white-space: nowrap;
   font-weight: 700;
   color: var(--mantine-color-text);
 }

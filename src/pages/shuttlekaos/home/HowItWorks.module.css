@@ -1,0 +1,237 @@
+.card {
+  composes: glass from '../glass.module.css';
+  composes: watermark from '../watermark.module.css';
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px 16px;
+  background-image: radial-gradient(
+    110% 70% at 0% 0%,
+    color-mix(in srgb, var(--bk-accent) 26%, transparent),
+    transparent 65%
+  );
+
+  --watermark-size: 130px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding: 22px 24px;
+  }
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-family: var(--bk-font-display);
+  font-size: 21px;
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+  text-shadow: none;
+}
+
+.steps {
+  --step-gap: 18px;
+  --step-line: color-mix(in srgb, var(--bk-accent-strong) 50%, transparent);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--step-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    --step-gap: 28px;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.art {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 68px;
+  border: 1px solid var(--kaos-field-border);
+  border-radius: var(--mantine-radius-lg);
+  background: var(--kaos-field);
+
+  &::after {
+    content: attr(data-step);
+    position: absolute;
+    top: -7px;
+    left: -7px;
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bk-accent-strong);
+    color: var(--mantine-color-body);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .step:not(:last-child) &::before {
+    content: '';
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 50%;
+    height: calc(var(--step-gap) - 8px);
+    border-left: 2px dashed var(--step-line);
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    height: 104px;
+
+    .step:not(:last-child) &::before {
+      top: 50%;
+      left: calc(100% + 4px);
+      width: calc(var(--step-gap) - 8px);
+      height: 0;
+      border-top: 2px dashed var(--step-line);
+      border-left: 0;
+    }
+  }
+}
+
+.fab {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--mantine-color-brand-filled);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--mantine-color-brand-filled) 45%, transparent);
+  color: var(--mantine-color-brand-contrast, var(--bk-accent-ink));
+  font-size: 20px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    width: 52px;
+    height: 52px;
+    font-size: 26px;
+  }
+}
+
+.qr {
+  color: var(--mantine-color-text);
+  font-size: 30px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    font-size: 44px;
+  }
+}
+
+.code {
+  color: var(--bk-accent-strong);
+  font-family: var(--mantine-font-family-monospace);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: pre;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    font-size: 12px;
+  }
+}
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 64px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    gap: 8px;
+    width: 120px;
+  }
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rank {
+  width: 8px;
+  color: var(--mantine-color-dimmed);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.fill {
+  height: 7px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--mantine-color-text) 22%, transparent);
+
+  .bar:first-child & {
+    background: var(--bk-accent-strong);
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    height: 10px;
+  }
+}
+
+.up {
+  flex: none;
+  color: var(--mantine-color-green-6);
+  font-size: 11px;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  color: var(--bk-accent-strong);
+  font-size: 13px;
+  font-weight: 700;
+
+  &::after {
+    content: '↘';
+    font-size: 16px;
+    animation: nudge 1.4s ease-in-out infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    display: none;
+  }
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateY(3px);
+  }
+}

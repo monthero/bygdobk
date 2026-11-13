@@ -1,10 +1,10 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Button, Container, Group, Stack, Text } from '@mantine/core';
+import { Alert, Button, Container, Group, Stack, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState, type FC } from 'react';
 
 import { useSessionUserId } from '~/components/auth/hooks';
-import { PencilSimple, Play, ResponsiveModal, SignIn, SignOut, UserPlus } from '~/components/ui';
+import { Clock, PencilSimple, Play, ResponsiveModal, SignIn, SignOut, UserPlus } from '~/components/ui';
 import { usePageTitle } from '~/hooks/usePageTitle';
 import { notifyDone, notifyFailed } from '~/pages/board/format';
 import { entrantsNeeded, setPlayers, setupProblem } from '~/shuttlekaos/engine';
@@ -12,6 +12,7 @@ import { Partners, PlayStyle, type Pair, type Player, type Settings } from '~/sh
 import {
   ShuttleKaosError,
   shuttleKaosErrorMessage,
+  shuttleKaosProblemMessage,
   useJoinSession,
   useLeaveSession,
   useStartSession,
@@ -23,15 +24,27 @@ import { useUi } from '~/stores/ui';
 import { BusyAlert } from './BusyAlert';
 import { Field, Section, StickyBar } from './FormParts';
 import { InviteCard } from './InviteCard';
-import { BRAND, SectionColor, SETUP_PROBLEMS, suggestedCourts } from './labels';
+import {
+  BRAND,
+  formatScheduled,
+  isFull,
+  playerLimitOf,
+  repeatsLabel,
+  SectionColor,
+  SETUP_PROBLEMS,
+  startCueAt,
+  suggestedCourts,
+  suggestedLimit,
+} from './labels';
 import { LocationPicker } from './LocationPicker';
 import { PairPicker } from './PairPicker';
 import { PlayerList, PlayerPicker } from './PlayerPicker';
 import { SECTION_ICONS } from './sectionIcons';
 import { SessionMenu } from './SessionMenu';
 import { SessionTop } from './SessionTop';
-import { SettingsForm, VisibilityPicker } from './SettingsForm';
-import { SettingsSummary } from './SettingsSummary';
+import { PlayerLimitField, SettingsForm, VisibilityPicker } from './SettingsForm';
+import { PlayerCount, SettingsSummary } from './SettingsSummary';
+import { useReached } from './useReached';
 import { busyNamesOf, useSessionSave } from './useSessionSave';
 
 import classes from './OpenSession.module.css';
@@ -47,8 +60,9 @@ const EditSettings: FC<{ view: SessionData; onClose: () => void }> = ({ view, on
   const [settings, setSettings] = useState(session.settings);
   const [isPublic, setIsPublic] = useState(session.isPublic);
   const [location, setLocation] = useState(session.location ?? null);
+  const [maxPlayers, setMaxPlayers] = useState(session.maxPlayers ?? null);
 
-  const submit = () => save.mutate({ ...session, settings, isPublic, location }, { onSuccess: onClose });
+  const submit = () => save.mutate({ ...session, settings, isPublic, location, maxPlayers }, { onSuccess: onClose });
 
   return (
     <ResponsiveModal opened onClose={onClose} title={<Trans>Session settings</Trans>}>
@@ -62,6 +76,11 @@ const EditSettings: FC<{ view: SessionData; onClose: () => void }> = ({ view, on
           playerCount={session.players.length}
           pairs={session.pairs}
           onChange={(patch) => setSettings((s) => ({ ...s, ...patch }))}
+        />
+        <PlayerLimitField
+          value={maxPlayers}
+          suggested={suggestedLimit(settings, session.players.length)}
+          onChange={setMaxPlayers}
         />
         <Group justify="flex-end">
           <Button variant="default" onClick={onClose}>
@@ -91,6 +110,7 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
   const suggested = suggestedCourts(session.settings, session.players.length);
   const courts = session.settings.courts;
   const busy = busyNamesOf(save.error);
+  const due = useReached(session.scheduledAt && startCueAt(session.scheduledAt));
 
   const changeLineup = (players: Player[], pairs: Pair[]) => save.mutate(setPlayers(session, players, pairs));
 
@@ -113,6 +133,11 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
       <Container py="md">
         <div className={classes.grid}>
           <Stack gap="md">
+            {due && (
+              <Alert variant="light" color="brand" icon={<Clock />} title={<Trans>It's time</Trans>}>
+                <Trans>Start when everyone's here.</Trans>
+              </Alert>
+            )}
             <InviteCard code={shareCode} title={session.title} />
             <Section
               title={<Trans>Settings</Trans>}
@@ -155,11 +180,7 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
               title={<Trans>Players</Trans>}
               icon={SECTION_ICONS.players}
               color={SectionColor.enum.blue}
-              aside={
-                <Text c="dimmed" className="tabular">
-                  {session.players.length}
-                </Text>
-              }
+              aside={<PlayerCount {...playerLimitOf(session)} />}
             >
               <PlayerPicker players={session.players} signedIn onChange={changePlayers} />
             </Section>
@@ -210,11 +231,13 @@ const JoinBar: FC<{ view: SessionData }> = ({ view }) => {
   const join = useJoinSession();
   const leave = useLeaveSession();
   const joined = view.myPlayerId !== null;
+  const full = !joined && isFull(playerLimitOf(view.session));
   const failed = join.error ?? leave.error;
   let reason: string | null = null;
   if (failed instanceof ShuttleKaosError && failed.problem === ShuttleKaosProblem.enum.busy) {
     reason = t`You're already playing in another session. Leave that one first.`;
   } else if (failed) reason = i18n._(shuttleKaosErrorMessage(failed));
+  else if (full) reason = i18n._(shuttleKaosProblemMessage(ShuttleKaosProblem.enum.full));
 
   if (!userId) {
     return (
@@ -246,10 +269,11 @@ const JoinBar: FC<{ view: SessionData }> = ({ view }) => {
           size="lg"
           fullWidth
           leftSection={<UserPlus />}
+          disabled={full}
           loading={join.isPending}
           onClick={() => join.mutate(view.shareCode, { onSuccess: () => leave.reset() })}
         >
-          <Trans>Join</Trans>
+          <Trans context="ShuttleKaos: join a session">Join</Trans>
         </Button>
       )}
     </StickyBar>
@@ -274,11 +298,7 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
             title={<Trans>Who's in</Trans>}
             icon={SECTION_ICONS.players}
             color={SectionColor.enum.blue}
-            aside={
-              <Text c="dimmed" className="tabular">
-                {session.players.length}
-              </Text>
-            }
+            aside={<PlayerCount {...playerLimitOf(session)} />}
           >
             <PlayerList players={session.players} highlight={view.myPlayerId} />
           </Section>
@@ -290,18 +310,21 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
 };
 
 export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
-  const { session } = view;
+  const { i18n } = useLingui();
+  const { session, series } = view;
   usePageTitle(session.title || BRAND, session.title ? BRAND : undefined);
   return (
     <>
       <SessionTop
         title={session.title}
         progress={<Trans comment="Session status: people can still join">Open to join</Trans>}
+        parts={[session.scheduledAt && formatScheduled(session.scheduledAt), series && i18n._(repeatsLabel(series))]}
         details={
           <SettingsSummary
             settings={session.settings}
             isPublic={session.isPublic}
             playerCount={session.players.length}
+            maxPlayers={session.maxPlayers}
             pairs={session.pairs}
             inSession
           />

@@ -14,6 +14,7 @@ import {
   Format,
   Level,
   PlayStyle,
+  SeriesInfo,
   Session,
   SessionLocation,
   SessionStatus,
@@ -31,6 +32,7 @@ import {
   ShuttleKaosFailure,
   ShuttleKaosProblem,
   ShuttleKaosReply,
+  type SeriesPlan,
   type ShuttleKaosRequest,
 } from './store';
 
@@ -84,8 +86,10 @@ export class ShuttleKaosError extends Error {
   }
 }
 
+export const shuttleKaosProblemMessage = (problem: ShuttleKaosProblem) => MESSAGES[problem];
+
 export const shuttleKaosErrorMessage = (error: unknown) =>
-  MESSAGES[error instanceof ShuttleKaosError ? error.problem : ShuttleKaosProblem.enum.failed];
+  shuttleKaosProblemMessage(error instanceof ShuttleKaosError ? error.problem : ShuttleKaosProblem.enum.failed);
 
 const RpcError = z.object({ code: z.string() });
 
@@ -111,6 +115,7 @@ const SessionView = z.object({
   isOwner: z.boolean(),
   myPlayerId: z.string().nullable(),
   shareCode: z.string(),
+  series: SeriesInfo.nullable().catch(null),
   session: Session,
 });
 export type SessionView = z.infer<typeof SessionView>;
@@ -126,9 +131,12 @@ const SummaryFields = {
   levels: z.array(Level),
   organizerName: z.string(),
   playerCount: z.number().int(),
+  maxPlayers: z.number().int().nullable().catch(null),
   createdAt: z.string(),
+  scheduledAt: z.string().nullable().catch(null),
   startedAt: z.string().nullable(),
   finishedAt: z.string().nullable(),
+  series: SeriesInfo.nullable().catch(null),
 };
 
 const PublicList = z.array(
@@ -165,6 +173,9 @@ const Findable = z.boolean();
 
 const Count = z.number().int();
 
+export const MatchResult = z.enum(['won', 'lost', 'drawn']);
+export type MatchResult = z.infer<typeof MatchResult>;
+
 const MyStats = z.object({
   totals: z.object({
     sessions: Count,
@@ -188,6 +199,16 @@ const MyStats = z.object({
       entrants: Count,
       played: Count,
       won: Count,
+      pointsFor: Count,
+      pointsAgainst: Count,
+    }),
+  ),
+  recentMatches: z.array(
+    z.object({
+      shareCode: z.string(),
+      title: z.string(),
+      round: Count,
+      result: MatchResult,
       pointsFor: Count,
       pointsAgainst: Count,
     }),
@@ -218,6 +239,7 @@ type QueryOptions<TData, T, TKey extends readonly unknown[]> = Omit<
 type MutationOptions<TData, TVariables> = Omit<UseMutationOptions<TData, Error, TVariables>, 'mutationFn'>;
 type StartVariables = { code: string; revision: number };
 type LinkVariables = { code: string; playerId: string; profileId: string | null };
+type CreateVariables = { session: Session; series?: SeriesPlan | null };
 
 const callRpc = async (name: string, args?: Record<string, unknown>): Promise<unknown> => {
   const supabase = await getSupabase();
@@ -275,7 +297,12 @@ const setFindable = async (findable: boolean) => {
   await callRpc('set_shuttlekaos_findable', { p_findable: findable });
 };
 
-const createSession = (session: Session) => callFunction({ action: ShuttleKaosAction.enum.create, session });
+const createSession = ({ session, series }: CreateVariables) =>
+  callFunction({ action: ShuttleKaosAction.enum.create, session, series });
+
+const endSeries = async (seriesId: string) => {
+  await callRpc('end_shuttlekaos_series', { p_series: seriesId });
+};
 
 const saveSession = async (session: Session) => {
   const previous = queryClient.getQueriesData<SessionView | null>({ queryKey: [SESSION_KEY] });
@@ -485,8 +512,11 @@ export const useSetFindable = (options?: MutationOptions<void, boolean>) =>
     ...options,
   });
 
-export const useCreateSession = (options?: MutationOptions<ShuttleKaosReply, Session>) =>
+export const useCreateSession = (options?: MutationOptions<ShuttleKaosReply, CreateVariables>) =>
   useMutation({ mutationFn: createSession, onSettled: refreshLists, ...options });
+
+export const useEndSeries = (options?: MutationOptions<void, string>) =>
+  useMutation({ mutationFn: endSeries, onSettled: refreshAll, ...options });
 
 export const useSaveSession = (options?: MutationOptions<ShuttleKaosReply, Session>) =>
   useMutation({ mutationFn: saveSession, onSettled: refreshLists, ...options });

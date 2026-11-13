@@ -14,19 +14,36 @@ import {
   Level,
   Partners,
   PlayStyle,
+  Repeat,
   ScoreMode,
   SessionStatus,
   SetupProblem,
   MAX_COURTS,
+  MAX_PLAYERS,
+  MIN_PLAYER_LIMIT,
   type Match,
   type Player,
   type Round,
+  type SeriesInfo,
   type Session,
   type SessionSummary,
   type Settings,
+  type WeeksBetween,
 } from '~/shuttlekaos/model';
-import { isStale, SESSION_IDLE_MINUTES } from '~/shuttlekaos/store';
-import { CLOCK, dayjs, formatDate, today, wallTime } from '~/utils/dates';
+import { MatchResult } from '~/shuttlekaos/queries';
+import { canSchedule, isStale, MAX_DAYS_AHEAD, SESSION_IDLE_MINUTES, type SeriesPlan } from '~/shuttlekaos/store';
+import {
+  CLOCK,
+  date,
+  dayjs,
+  formatDate,
+  fromWall,
+  ISO_DAY,
+  SHORT_DATE,
+  today,
+  wallTime,
+  weekdayName,
+} from '~/utils/dates';
 
 export const BRAND = 'ShuttleKaos';
 
@@ -176,6 +193,8 @@ export const resume = (session: Session): Session => ({
 export const sessionUrl = (code: string) =>
   `${window.location.origin}${withLocale(`/shuttlekaos/${encodeURIComponent(code)}`, currentLocale())}`;
 
+export const firstName = (name: string) => name.trim().split(' ').at(0) ?? name;
+
 export const sameName = (a: string, b: string) => a.trim().toLocaleLowerCase() === b.trim().toLocaleLowerCase();
 
 export const unlinkPlayers = (players: Player[], names: string[]) =>
@@ -197,6 +216,9 @@ export const rankMoves = (session: Session, roundNumber: number): ReadonlyMap<st
 export const suggestedCourts = (settings: Settings, playerCount: number) =>
   clamp(Math.floor(playerCount / entrantsNeeded(settings)), 1, MAX_COURTS);
 
+export const suggestedLimit = (settings: Settings, playerCount: number) =>
+  clamp(Math.max(playerCount, settings.courts * entrantsNeeded(settings)), MIN_PLAYER_LIMIT, MAX_PLAYERS);
+
 export const namesOf = (players: Pick<ShownPlayer, 'name' | 'realName'>[]) =>
   listFormat().format(players.toSorted((a, b) => Number(isMe(b)) - Number(isMe(a))).map((p) => p.name));
 
@@ -216,8 +238,20 @@ export const roundsChoice = (rounds: Settings['rounds']): RoundsChoice => {
 export const SectionColor = z.enum(['brand', 'teal', 'blue', 'grape']);
 export type SectionColor = z.infer<typeof SectionColor>;
 
-export const MatchResult = z.enum(['win', 'draw', 'loss']);
-export type MatchResult = z.infer<typeof MatchResult>;
+export const RESULT_LABELS: Record<MatchResult, { label: MessageDescriptor; short: MessageDescriptor }> = {
+  [MatchResult.enum.won]: {
+    label: msg`Won`,
+    short: msg({ message: 'W', comment: 'Short for won: a column heading or a match result' }),
+  },
+  [MatchResult.enum.drawn]: {
+    label: msg`Drawn`,
+    short: msg({ message: 'D', comment: 'Short for drawn: a column heading or a match result' }),
+  },
+  [MatchResult.enum.lost]: {
+    label: msg`Lost`,
+    short: msg({ message: 'L', comment: 'Short for lost: a column heading or a match result' }),
+  },
+};
 
 export type Form = {
   played: number;
@@ -235,8 +269,8 @@ export const formOf = (session: Session, playerIds: string[]): Form => {
     const side = match.sides.findIndex((ids) => key !== undefined && ids.includes(key));
     if (side < 0 || gamesProblem(session.settings, match.games) !== null) continue;
     const winner = matchWinner(session.settings, match);
-    if (winner === null) results.push(MatchResult.enum.draw);
-    else results.push(winner === side ? MatchResult.enum.win : MatchResult.enum.loss);
+    if (winner === null) results.push(MatchResult.enum.drawn);
+    else results.push(winner === side ? MatchResult.enum.won : MatchResult.enum.lost);
     points += match.games.reduce((sum, game) => sum + (game[side] ?? 0), 0);
   }
   return {
@@ -253,6 +287,16 @@ const MINUTES_PER_HOUR = 60;
 
 export const minutesText = (minutes: number) =>
   numberFormat({ style: 'unit', unit: 'minute', unitDisplay: 'short' }).format(minutes);
+
+const KM_DECIMALS_BELOW = 10;
+
+export const distanceText = (km: number) =>
+  numberFormat({
+    style: 'unit',
+    unit: 'kilometer',
+    unitDisplay: 'short',
+    maximumFractionDigits: km < KM_DECIMALS_BELOW ? 1 : 0,
+  }).format(km);
 
 export const durationText = (minutes: number) => {
   const hours = Math.floor(minutes / MINUTES_PER_HOUR);
@@ -271,10 +315,122 @@ export const matchMinutes = (round: Round, match: Match): number | null =>
 const START: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', ...CLOCK };
 const START_OTHER_YEAR: Intl.DateTimeFormatOptions = { ...START, year: 'numeric' };
 
-export const formatStart = (iso: string) => {
-  const start = wallTime(iso);
-  return formatDate(start, start.isSame(today(), 'year') ? START : START_OTHER_YEAR);
+const SCHEDULED: Intl.DateTimeFormatOptions = { weekday: 'short', ...START };
+const SCHEDULED_OTHER_YEAR: Intl.DateTimeFormatOptions = { ...SCHEDULED, year: 'numeric' };
+
+const formatWall = (iso: string, thisYear: Intl.DateTimeFormatOptions, otherYear: Intl.DateTimeFormatOptions) => {
+  const at = wallTime(iso);
+  return formatDate(at, at.isSame(today(), 'year') ? thisYear : otherYear);
 };
+
+export const formatStart = (iso: string) => formatWall(iso, START, START_OTHER_YEAR);
+
+export const formatScheduled = (iso: string) => formatWall(iso, SCHEDULED, SCHEDULED_OTHER_YEAR);
+
+export const sessionTimeText = ({ startedAt, scheduledAt }: Pick<SessionSummary, 'startedAt' | 'scheduledAt'>) => {
+  if (startedAt) return formatStart(startedAt);
+  if (scheduledAt) return formatScheduled(scheduledAt);
+  return null;
+};
+
+const START_CUE_MINUTES = 10;
+
+export const startCueAt = (scheduledAt: string) =>
+  dayjs(scheduledAt).subtract(START_CUE_MINUTES, 'minute').toISOString();
+
+export const REPEAT_WEEKS: Record<Repeat, WeeksBetween | null> = {
+  [Repeat.enum.none]: null,
+  [Repeat.enum.weekly]: 1,
+  [Repeat.enum.biweekly]: 2,
+};
+
+const REPEATS: Record<WeeksBetween, { open: MessageDescriptor; until: MessageDescriptor }> = {
+  1: {
+    open: msg({ message: 'Repeats every {weekday}', comment: 'weekday is a day name, e.g. Thursday' }),
+    until: msg({
+      message: 'Repeats every {weekday} until {date}',
+      comment: 'weekday is a day name, e.g. Thursday. date is the last date',
+    }),
+  },
+  2: {
+    open: msg({ message: 'Repeats every other {weekday}', comment: 'weekday is a day name, e.g. Thursday' }),
+    until: msg({
+      message: 'Repeats every other {weekday} until {date}',
+      comment: 'weekday is a day name, e.g. Thursday. date is the last date',
+    }),
+  },
+};
+
+export const repeatsLabel = ({ weekday, every, endsOn }: Pick<SeriesInfo, 'weekday' | 'every' | 'endsOn'>) => {
+  const messages = REPEATS[every];
+  const values = { weekday: weekdayName(weekday) };
+  if (!endsOn) return { ...messages.open, values };
+  return { ...messages.until, values: { ...values, date: formatDate(date(endsOn), SHORT_DATE) } };
+};
+
+export const When = z.enum(['now', 'later']);
+export type When = z.infer<typeof When>;
+
+export const WHEN_LABELS: Record<When, MessageDescriptor> = {
+  [When.enum.now]: msg({ message: 'Now', comment: 'Session start option: start right away' }),
+  [When.enum.later]: msg({ message: 'Later', comment: 'Session start option: pick a date and time' }),
+};
+
+export const REPEAT_LABELS: Record<Repeat, MessageDescriptor> = {
+  [Repeat.enum.none]: msg({ message: 'Once', comment: 'Session repeat option: no repeat' }),
+  [Repeat.enum.weekly]: msg({ message: 'Weekly', comment: 'Session repeat option' }),
+  [Repeat.enum.biweekly]: msg({ message: 'Every 2 weeks', comment: 'Session repeat option' }),
+};
+
+export type Schedule = { when: When; day: string | null; time: string; repeat: Repeat; endsOn: string | null };
+
+export const NOW: Schedule = { when: When.enum.now, day: null, time: '18:00', repeat: Repeat.enum.none, endsOn: null };
+
+export const lastScheduleDay = () => today().add(MAX_DAYS_AHEAD, 'day').format(ISO_DAY);
+
+export const scheduledAtOf = ({ when, day, time }: Schedule) =>
+  when === When.enum.later && day && time ? fromWall(day, time) : null;
+
+export const seriesPlanOf = (schedule: Schedule): SeriesPlan | null => {
+  const every = REPEAT_WEEKS[schedule.repeat];
+  return schedule.when === When.enum.later && every ? { every, endsOn: schedule.endsOn } : null;
+};
+
+export const ScheduleProblem = z.enum(['missing', 'past', 'tooFar']);
+export type ScheduleProblem = z.infer<typeof ScheduleProblem>;
+
+export const SCHEDULE_PROBLEMS: Record<ScheduleProblem, MessageDescriptor> = {
+  [ScheduleProblem.enum.missing]: msg`Pick a date and a time.`,
+  [ScheduleProblem.enum.past]: msg`That time has passed. Pick a later one.`,
+  [ScheduleProblem.enum.tooFar]: msg({ message: 'Pick a date in the next {days} days.', comment: 'days is a number' }),
+};
+
+export const scheduleProblem = (schedule: Schedule): ScheduleProblem | null => {
+  if (schedule.when === When.enum.now) return null;
+  const at = scheduledAtOf(schedule);
+  if (!at) return ScheduleProblem.enum.missing;
+  if (!dayjs(at).isAfter(dayjs())) return ScheduleProblem.enum.past;
+  return canSchedule(at) ? null : ScheduleProblem.enum.tooFar;
+};
+
+export const scheduleMessage = (problem: ScheduleProblem): MessageDescriptor => ({
+  ...SCHEDULE_PROBLEMS[problem],
+  values: { days: MAX_DAYS_AHEAD },
+});
+
+export const FULL = msg({ message: 'Full', comment: 'A session that has reached its player limit' });
+
+type PlayerLimit = Pick<SessionSummary, 'playerCount' | 'maxPlayers'>;
+
+export const isFull = ({ playerCount, maxPlayers }: PlayerLimit) => maxPlayers !== null && playerCount >= maxPlayers;
+
+export const playerCountText = ({ playerCount, maxPlayers }: PlayerLimit) =>
+  maxPlayers === null ? String(playerCount) : `${playerCount}/${maxPlayers}`;
+
+export const playerLimitOf = (session: Pick<Session, 'players' | 'maxPlayers'>): PlayerLimit => ({
+  playerCount: session.players.length,
+  maxPlayers: session.maxPlayers ?? null,
+});
 
 export const sessionMinutes = ({ startedAt, finishedAt }: Pick<SessionSummary, 'startedAt' | 'finishedAt'>) =>
   startedAt && finishedAt ? dayjs(finishedAt).diff(startedAt, 'minute') : null;

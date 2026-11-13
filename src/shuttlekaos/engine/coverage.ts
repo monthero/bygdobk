@@ -1,6 +1,6 @@
 import type { Pair, Session, Settings } from '../model.ts';
 import { EVERYONE_ONCE, Format, MAX_ROUNDS, SessionStatus } from '../model.ts';
-import { entrantsOf, entrantsPerMatch, isFixedPairs, sideResolver } from './entrants.ts';
+import { entrantsOf, entrantsPerMatch, isFixedPairs, sideIndexer } from './entrants.ts';
 
 export type Coverage = { covered: number; total: number };
 
@@ -24,13 +24,7 @@ export const plannedRounds = (settings: Settings, playerCount: number, pairs: Pa
 export const pairCoverage = (session: Session): Coverage => {
   const entrants = entrantsOf(session);
   const indexById = new Map(entrants.map((entrant, index) => [entrant.id, index]));
-  const resolveSide = sideResolver(entrants);
-  const toIndexes = (side: string[]) =>
-    resolveSide(side)
-      .values()
-      .map((id) => indexById.get(id))
-      .filter((index): index is number => index !== undefined)
-      .toArray();
+  const toIndexes = sideIndexer(entrants, indexById);
   const rotating = entrantsPerMatch(session.settings) === 4;
   const covered = new Set<number>();
   const cover = (first: number, second: number) =>

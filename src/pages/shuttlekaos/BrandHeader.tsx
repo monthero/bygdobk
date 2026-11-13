@@ -3,8 +3,8 @@ import { ActionIcon, Container, Text, Title, VisuallyHidden } from '@mantine/cor
 import { Link } from '@tanstack/react-router';
 import type { FC, ReactNode } from 'react';
 
+import { InstallLook } from '~/components/layout/install';
 import { InstallApp } from '~/components/layout/InstallApp';
-import { InstallLook } from '~/components/layout/installLook';
 import { ArrowLeft, Shuttle } from '~/components/ui';
 import { AppKind, INSTALLED_APP } from '~/utils/apps';
 
@@ -20,9 +20,9 @@ export const Wordmark: FC = () => (
   </>
 );
 
-type Props = { title?: ReactNode; eyebrow?: ReactNode; lede?: ReactNode; back?: boolean; actions?: ReactNode };
+type Props = { title?: ReactNode; eyebrow?: ReactNode; back?: boolean; actions?: ReactNode };
 
-export const BrandHeader: FC<Props> = ({ title, eyebrow, lede, back, actions }) => {
+export const BrandHeader: FC<Props> = ({ title, eyebrow, back, actions }) => {
   const { t, i18n } = useLingui();
   const brandInBar = IN_APP && !title;
   return (
@@ -58,7 +58,6 @@ export const BrandHeader: FC<Props> = ({ title, eyebrow, lede, back, actions }) 
               </Title>
             )}
             {!title && <Text className={classes.tagline}>{i18n._(TAGLINE)}</Text>}
-            {lede && <Text className={classes.lede}>{lede}</Text>}
             {!title && (
               <div className={classes.install}>
                 <InstallApp look={InstallLook.enum.link} />

@@ -1,4 +1,4 @@
-import { Container, Text, Title } from '@mantine/core';
+import { Container, Text, Title, type TitleOrder } from '@mantine/core';
 import type { FC, ReactNode } from 'react';
 
 import type { SitePhoto } from '~/cms/siteData';
@@ -15,16 +15,17 @@ export type PageIntroProps = {
 
 type IntroClasses = { eyebrow?: string; title?: string; lede?: string };
 
-export const IntroText: FC<Omit<PageIntroProps, 'photo'> & { classes: IntroClasses }> = ({
+export const IntroText: FC<Omit<PageIntroProps, 'photo'> & { classes: IntroClasses; order?: TitleOrder }> = ({
   eyebrow,
   title,
   lede,
   children,
   classes: names,
+  order = 1,
 }) => (
   <>
     {eyebrow && <Text className={names.eyebrow}>{eyebrow}</Text>}
-    <Title order={1} className={names.title}>
+    <Title order={order} className={names.title}>
       {title}
     </Title>
     {lede && <Text className={names.lede}>{lede}</Text>}

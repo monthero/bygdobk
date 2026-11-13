@@ -20,6 +20,8 @@ import {
   type Settings,
 } from '../../../src/shuttlekaos/model.ts';
 import {
+  canSchedule,
+  idleSince,
   isStale,
   ShuttleKaosAction,
   ShuttleKaosProblem,
@@ -27,6 +29,7 @@ import {
   sessionTopic,
   NUDGE_EVENT,
   type Nudge,
+  type SeriesPlan,
   type ShuttleKaosFailure,
 } from '../../../src/shuttlekaos/store.ts';
 import { reply, withCors } from '../_shared/http.ts';
@@ -62,6 +65,7 @@ const DB_PROBLEMS: Record<string, ShuttleKaosProblem> = {
   '22007': ShuttleKaosProblem.enum.invalid,
   '22P02': ShuttleKaosProblem.enum.invalid,
   '23505': ShuttleKaosProblem.enum.invalid,
+  '23514': ShuttleKaosProblem.enum.invalid,
 };
 
 const Row = z.object({
@@ -134,7 +138,11 @@ const unchanged = (shareCode: string): Outcome => ({ shareCode, session: null, n
 
 const nowIso = () => new Date().toISOString();
 
-const isIdle = (row: Row) => isStale({ status: row.status, updatedAt: row.updated_at });
+const idleClock = (row: Row) => ({ ...row.data, status: row.status, updatedAt: row.updated_at });
+
+const isIdle = (row: Row) => isStale(idleClock(row));
+
+const idleIso = (row: Row) => new Date(idleSince(idleClock(row))).toISOString();
 
 const loadRow = async (admin: Admin, column: 'id' | 'share_code', value: string) => {
   const { data, error } = await admin.from('shuttlekaos_sessions').select(ROW_COLUMNS).eq(column, value).maybeSingle();
@@ -164,17 +172,28 @@ const resultsOf = (session: Session) => {
   );
 };
 
-const write = async (admin: Admin, owner: string, session: Session, expected: number | null, removed: string[]) => {
-  const { data, error } = await admin.rpc('shuttlekaos_write', {
+const callWrite = async (admin: Admin, fn: string, args: Record<string, unknown>) => {
+  const { data, error } = await admin.rpc(fn, args);
+  if (error) throw rejectionOf(error);
+  return Written.parse(data);
+};
+
+const write = (admin: Admin, owner: string, session: Session, expected: number | null, removed: string[]) =>
+  callWrite(admin, 'shuttlekaos_write', {
     p_owner: owner,
     p_data: session,
     p_expected: expected,
     p_removed: removed,
     p_results: resultsOf(session),
   });
-  if (error) throw rejectionOf(error);
-  return Written.parse(data);
-};
+
+const writeSeries = (admin: Admin, owner: string, session: Session, series: SeriesPlan) =>
+  callWrite(admin, 'shuttlekaos_create_series', {
+    p_owner: owner,
+    p_data: session,
+    p_every: series.every,
+    p_ends_on: series.endsOn,
+  });
 
 const unlinkRemoved = (players: Player[], removed: string[]) => {
   const gone = new Set(removed);
@@ -267,7 +286,11 @@ const officialLocation = async (admin: Admin, location: SessionLocation | null |
   return { locationId: row.id, name: row.name, address: row.address, lat: row.lat, lng: row.lng };
 };
 
-const create = async (admin: Admin, userId: string, session: Session) => {
+const create = async (admin: Admin, userId: string, session: Session, series: SeriesPlan | null | undefined) => {
+  const scheduledAt = session.scheduledAt ?? null;
+  if ((series && !scheduledAt) || (scheduledAt && !canSchedule(scheduledAt))) {
+    throw new Rejection(ShuttleKaosProblem.enum.invalid);
+  }
   const now = nowIso();
   const next = validated({
     ...session,
@@ -280,8 +303,10 @@ const create = async (admin: Admin, userId: string, session: Session) => {
     finishedAt: null,
     rounds: [],
     location: await officialLocation(admin, session.location),
+    scheduledAt,
+    seriesId: null,
   });
-  return changed(await write(admin, userId, next, null, []));
+  return changed(await (series ? writeSeries(admin, userId, next, series) : write(admin, userId, next, null, [])));
 };
 
 const save = async (admin: Admin, userId: string, session: Session) => {
@@ -306,6 +331,8 @@ const save = async (admin: Admin, userId: string, session: Session) => {
     rounds: current.status === SessionStatus.enum.open ? [] : session.rounds,
     players: unlinkRemoved(session.players, row.removed_profile_ids),
     location,
+    scheduledAt: current.scheduledAt ?? null,
+    seriesId: current.seriesId ?? null,
   });
   return changed(
     await withCurrent(admin, row.id, () => write(admin, userId, next, row.revision, row.removed_profile_ids)),
@@ -331,7 +358,8 @@ const join = (admin: Admin, userId: string, code: string) =>
     const current = row.data;
     if (current.players.some((player) => player.profileId === userId)) return unchanged(row.share_code);
     if (row.status !== SessionStatus.enum.open || isIdle(row)) throw new Rejection(ShuttleKaosProblem.enum.locked);
-    if (current.players.length >= MAX_PLAYERS) throw new Rejection(ShuttleKaosProblem.enum.full);
+    if (current.players.length >= (current.maxPlayers ?? MAX_PLAYERS))
+      throw new Rejection(ShuttleKaosProblem.enum.full);
     const { data, error } = await admin.from('profiles').select('name, avatar_url').eq('id', userId).single();
     if (error) throw error;
     const profile = Profile.parse(data);
@@ -354,7 +382,7 @@ const leave = (admin: Admin, userId: string, code: string) =>
     if (!me) return unchanged(row.share_code);
     const idle = isIdle(row);
     const settled: Session = idle
-      ? { ...current, status: SessionStatus.enum.finished, finishedAt: new Date(row.updated_at).toISOString() }
+      ? { ...current, status: SessionStatus.enum.finished, finishedAt: idleIso(row) }
       : current;
     const next =
       settled.status === SessionStatus.enum.open
@@ -371,7 +399,7 @@ const leave = (admin: Admin, userId: string, code: string) =>
 const settledFinished = (row: Row): Session | null => {
   if (row.data.status === SessionStatus.enum.finished) return row.data;
   if (row.data.status !== SessionStatus.enum.running || !isIdle(row)) return null;
-  return { ...row.data, status: SessionStatus.enum.finished, finishedAt: new Date(row.updated_at).toISOString() };
+  return { ...row.data, status: SessionStatus.enum.finished, finishedAt: idleIso(row) };
 };
 
 const link = (admin: Admin, userId: string, code: string, playerId: string, profileId: string | null) =>
@@ -441,7 +469,7 @@ const sendNudge = async (admin: Admin, shareCode: string, nudge: Nudge) => {
 const perform = (admin: Admin, userId: string, request: ShuttleKaosRequest): Promise<Outcome> => {
   switch (request.action) {
     case ShuttleKaosAction.enum.create:
-      return create(admin, userId, request.session);
+      return create(admin, userId, request.session, request.series);
     case ShuttleKaosAction.enum.save:
       return save(admin, userId, request.session);
     case ShuttleKaosAction.enum.start:

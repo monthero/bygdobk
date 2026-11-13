@@ -167,24 +167,10 @@
 }
 
 .dot {
-  display: grid;
-  place-items: center;
+  composes: result from './results.module.css';
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  background: var(--bk-border);
   font-size: 12px;
-  font-weight: 800;
-
-  &[data-result='win'] {
-    background: var(--bk-ok-soft);
-    color: var(--bk-ok);
-  }
-
-  &[data-result='loss'] {
-    background: var(--bk-danger-soft);
-    color: var(--bk-danger);
-  }
 }
 
 :global(.mantine-Modal-title):has(> .statsTitle) {

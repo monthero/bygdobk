@@ -1,12 +1,25 @@
 import dayjs from 'dayjs';
 import { z } from 'zod';
 
-import { Session, SessionStatus, SetupProblem } from './model.ts';
+import { Session, SessionStatus, SetupProblem, WeeksBetween } from './model.ts';
 
 export const SESSION_IDLE_MINUTES = 60;
+export const MAX_DAYS_AHEAD = 60;
 
-export const isStale = (session: Pick<Session, 'status' | 'updatedAt'>) =>
-  session.status !== SessionStatus.enum.finished && dayjs().diff(session.updatedAt, 'minute') >= SESSION_IDLE_MINUTES;
+type IdleClock = Pick<Session, 'status' | 'updatedAt' | 'scheduledAt'>;
+
+export const idleSince = ({ status, updatedAt, scheduledAt }: IdleClock) => {
+  if (status !== SessionStatus.enum.open || !scheduledAt) return updatedAt;
+  return dayjs(scheduledAt).isAfter(updatedAt) ? scheduledAt : updatedAt;
+};
+
+export const isStale = (session: IdleClock) =>
+  session.status !== SessionStatus.enum.finished && dayjs().diff(idleSince(session), 'minute') >= SESSION_IDLE_MINUTES;
+
+export const canSchedule = (iso: string) => {
+  const at = dayjs(iso);
+  return at.isAfter(dayjs()) && !at.isAfter(dayjs().add(MAX_DAYS_AHEAD, 'day'));
+};
 
 export const ShuttleKaosProblem = z.enum([
   'offline',
@@ -39,8 +52,11 @@ export type Nudge = z.infer<typeof Nudge>;
 export const ShuttleKaosAction = z.enum(['create', 'save', 'start', 'join', 'leave', 'delete', 'link']);
 export type ShuttleKaosAction = z.infer<typeof ShuttleKaosAction>;
 
+export const SeriesPlan = z.object({ every: WeeksBetween, endsOn: z.iso.date().nullable() });
+export type SeriesPlan = z.infer<typeof SeriesPlan>;
+
 export const ShuttleKaosRequest = z.discriminatedUnion('action', [
-  z.object({ action: z.literal(ShuttleKaosAction.enum.create), session: Session }),
+  z.object({ action: z.literal(ShuttleKaosAction.enum.create), session: Session, series: SeriesPlan.nullish() }),
   z.object({ action: z.literal(ShuttleKaosAction.enum.save), session: Session }),
   z.object({ action: z.literal(ShuttleKaosAction.enum.start), code: ShareCode, revision: z.number().int().min(1) }),
   z.object({ action: z.literal(ShuttleKaosAction.enum.join), code: ShareCode }),

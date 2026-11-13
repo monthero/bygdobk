@@ -1,15 +1,15 @@
 import { useEffect, useSyncExternalStore } from 'react';
 import { z } from 'zod';
 
-import { AppKind, appForPath } from '~/utils/apps';
-import { isAppleMobile, isStandalone } from '~/utils/device';
+import { AppKind, appForPath, isMarkedInstalled, markInstalled } from '~/utils/apps';
+import { isAppleMobile, isFirefoxAndroid, isStandalone } from '~/utils/device';
 
 type InstallPromptEvent = Event & {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 };
 
-export const InstallMode = z.enum(['prompt', 'ios']);
+export const InstallMode = z.enum(['prompt', 'ios', 'firefox']);
 export type InstallMode = z.infer<typeof InstallMode>;
 
 const APP_HEAD: Record<AppKind, { manifest: string; title: string; icon: string }> = {
@@ -38,6 +38,7 @@ addEventListener('beforeinstallprompt', (event) => {
 });
 
 addEventListener('appinstalled', () => {
+  markInstalled(shownApp);
   deferred = undefined;
   notify();
 });
@@ -62,7 +63,9 @@ export const useAppManifest = (app: AppKind) => {
 const modeOf = (): InstallMode | undefined => {
   if (isStandalone()) return undefined;
   if (deferred) return InstallMode.enum.prompt;
-  return isAppleMobile() ? InstallMode.enum.ios : undefined;
+  if (isMarkedInstalled(shownApp)) return undefined;
+  if (isAppleMobile()) return InstallMode.enum.ios;
+  return isFirefoxAndroid() ? InstallMode.enum.firefox : undefined;
 };
 
 const appOf = () => shownApp;

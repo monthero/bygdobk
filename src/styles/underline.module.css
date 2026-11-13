@@ -1,0 +1,10 @@
+.underline::after {
+  content: '';
+  position: absolute;
+  inset-inline: 12px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--bk-accent-strong);
+  opacity: 0;
+}

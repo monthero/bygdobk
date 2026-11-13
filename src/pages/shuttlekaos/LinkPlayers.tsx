@@ -123,7 +123,7 @@ export const LinkPlayersModal: FC<{ view: SessionView; opened: boolean; onClose:
     <ResponsiveModal opened={opened} onClose={close} title={<Trans>Link players</Trans>}>
       <Stack gap="md">
         <Text size="sm" c="dimmed">
-          <Trans>Link a name to a club account. The session then shows up in that person's history.</Trans>
+          <Trans>Link a name to an account. The session then shows up in that person's history.</Trans>
         </Text>
         {link.error && (
           <Alert color="red" variant="light">
@@ -141,7 +141,7 @@ export const LinkPlayersModal: FC<{ view: SessionView; opened: boolean; onClose:
                   {player.profileId ? (
                     <>
                       <Badge variant="light" color="blue" size="sm" leftSection={<LinkSimple />}>
-                        <Trans comment="Badge on a player that is linked to a club account">Account</Trans>
+                        <Trans comment="Badge on a player that is linked to a ShuttleKaos account">Account</Trans>
                       </Badge>
                       <ActionIcon
                         variant="subtle"
@@ -169,7 +169,7 @@ export const LinkPlayersModal: FC<{ view: SessionView; opened: boolean; onClose:
                           setPicking(player.id);
                         }}
                       >
-                        <Trans comment="Button: link this player name to a club account">Link</Trans>
+                        <Trans comment="Button: link this player name to a ShuttleKaos account">Link</Trans>
                       </Button>
                     )
                   )}

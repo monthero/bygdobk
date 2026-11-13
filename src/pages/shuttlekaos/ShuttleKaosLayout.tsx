@@ -1,10 +1,13 @@
 import { Outlet } from '@tanstack/react-router';
-import type { FC } from 'react';
+import type { CSSProperties, FC } from 'react';
 
+import shuttleMark from '~/assets/icons/shuttle.svg?url';
 import shuttlesCourtWide from '~/assets/photos/shuttles-court-wide.webp?responsive';
 import shuttlesCourt from '~/assets/photos/shuttles-court.webp?responsive';
 
 import classes from './ShuttleKaosLayout.module.css';
+
+const MARK_STYLE = { '--sk-shuttle-mask': `url("${shuttleMark}")` } as CSSProperties;
 
 export const ShuttleKaosLayout: FC = () => (
   <>
@@ -26,7 +29,7 @@ export const ShuttleKaosLayout: FC = () => (
         />
       </picture>
     </div>
-    <div className={classes.kaos} data-fill>
+    <div className={classes.kaos} style={MARK_STYLE} data-fill>
       <Outlet />
     </div>
   </>

@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/react/macro';
+import { Trans, useLingui } from '@lingui/react/macro';
 import {
   Badge,
   Button,
@@ -11,16 +11,19 @@ import {
   Title,
   type MantineSize,
 } from '@mantine/core';
+import type { UseQueryResult } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import type { FC, ReactNode } from 'react';
 
 import { ArrowLeft, Shuttle } from '~/components/ui';
+import { LoadError } from '~/pages/board/LoadError';
+import type { SessionView } from '~/shuttlekaos/queries';
 
 import classes from './Fallbacks.module.css';
 
 const SKELETON_COURTS = [0, 1];
 
-export const SessionSkeleton: FC = () => (
+const SessionSkeleton: FC = () => (
   <Container py="md" aria-busy>
     <Stack gap="md">
       <Skeleton height={28} width="60%" />
@@ -35,7 +38,7 @@ export const SessionSkeleton: FC = () => (
   </Container>
 );
 
-export const EmptySession: FC<{ title: ReactNode; text: ReactNode }> = ({ title, text }) => (
+const EmptySession: FC<{ title: ReactNode; text: ReactNode }> = ({ title, text }) => (
   <Container size="xs" py={48}>
     <Paper withBorder radius="lg" p="xl" className={classes.empty}>
       <Stack gap="sm" align="center" ta="center">
@@ -64,3 +67,31 @@ export const LiveBadge: FC<{ size?: MantineSize; children?: ReactNode }> = ({ si
     {children ?? <Trans comment="Badge on a shared session that updates by itself">Live</Trans>}
   </Badge>
 );
+
+type GateProps = { view: UseQueryResult<SessionView | null>; children: (data: SessionView) => ReactNode };
+
+export const SessionGate: FC<GateProps> = ({ view, children }) => {
+  const { t } = useLingui();
+  if (view.isPending) return <SessionSkeleton />;
+  if (view.isError) {
+    return (
+      <Container py="xl">
+        <LoadError
+          title={t`Couldn't load this session`}
+          error={view.error}
+          retrying={view.isRefetching}
+          onRetry={() => void view.refetch()}
+        />
+      </Container>
+    );
+  }
+  if (!view.data) {
+    return (
+      <EmptySession
+        title={<Trans>This session doesn't exist anymore</Trans>}
+        text={<Trans>The organizer may have deleted it. Start your own instead!</Trans>}
+      />
+    );
+  }
+  return children(view.data);
+};

@@ -59,6 +59,19 @@ export const Field: FC<{ label?: ReactNode; hint?: ReactNode; children: ReactNod
   </Stack>
 );
 
+const BOTTOM_BAR_VAR = '--sk-bottom-bar';
+
+const trackBarHeight = (node: HTMLDivElement | null) => {
+  if (!node) return undefined;
+  const root = document.documentElement;
+  const observer = new ResizeObserver(() => root.style.setProperty(BOTTOM_BAR_VAR, `${node.offsetHeight}px`));
+  observer.observe(node);
+  return () => {
+    observer.disconnect();
+    root.style.removeProperty(BOTTOM_BAR_VAR);
+  };
+};
+
 export const StickyBar: FC<{ reason?: ReactNode; warn?: boolean; children: ReactNode }> = ({
   reason,
   warn,
@@ -66,7 +79,7 @@ export const StickyBar: FC<{ reason?: ReactNode; warn?: boolean; children: React
 }) => (
   <>
     <div className={classes.spacer} data-reason={reason ? true : undefined} aria-hidden />
-    <div className={classes.bar} data-bottom-bar>
+    <div ref={trackBarHeight} className={classes.bar} data-bottom-bar>
       <Container className={classes.barInner}>
         {reason && (
           <Text size="sm" c={warn ? undefined : 'dimmed'} className={classes.reason} data-warn={warn || undefined}>

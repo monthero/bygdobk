@@ -1,7 +1,7 @@
 import type { Match, Round, Session } from '../model.ts';
 import { Format } from '../model.ts';
 import type { Entrant } from './entrants.ts';
-import { entrantsOf, entrantsPerMatch, sideResolver } from './entrants.ts';
+import { entrantsOf, entrantsPerMatch, sideIndexer } from './entrants.ts';
 import { gamesProblem, pointTotals, standings } from './scores.ts';
 
 // Tiers: new partners (singles and teams: new opponents until all have met) > balance > new opponents.
@@ -68,13 +68,7 @@ const buildHistory = (session: Session): History => {
     rating: 0.5,
   }));
   const indexById = new Map(contenders.map((contender) => [contender.id, contender.index]));
-  const resolveSide = sideResolver(entrants);
-  const toIndexes = (side: string[]) =>
-    resolveSide(side)
-      .values()
-      .map((id) => indexById.get(id))
-      .filter((index): index is number => index !== undefined)
-      .toArray();
+  const toIndexes = sideIndexer(entrants, indexById);
   const partners = pairTable(contenders.length);
   const opponents = pairTable(contenders.length);
   let scoredMatches = 0;

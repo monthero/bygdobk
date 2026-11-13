@@ -1,0 +1,31 @@
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.eyebrow,
+.lede {
+  text-shadow: var(--kaos-halo);
+}
+
+.eyebrow {
+  color: var(--bk-accent-strong);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.title {
+  font-family: var(--bk-font-display);
+  font-size: clamp(30px, 4vw, 38px);
+  font-weight: var(--bk-font-display-weight);
+  font-stretch: var(--bk-font-display-stretch);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.lede {
+  color: color-mix(in srgb, var(--mantine-color-text) 82%, transparent);
+  font-size: 15px;
+  font-weight: 600;
+}

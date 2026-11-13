@@ -32,3 +32,13 @@ export const sideResolver = (entrants: Entrant[]): ((side: string[]) => string[]
       ),
     );
 };
+
+export const sideIndexer = (entrants: Entrant[], indexById: Map<string, number>): ((side: string[]) => number[]) => {
+  const resolveSide = sideResolver(entrants);
+  return (side) =>
+    resolveSide(side)
+      .values()
+      .map((id) => indexById.get(id))
+      .filter((index): index is number => index !== undefined)
+      .toArray();
+};

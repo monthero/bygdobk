@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 import {
   ArrowCounterClockwise,
+  CalendarX,
   ConfirmActions,
   DotsThreeVertical,
   FlagCheckered,
@@ -19,7 +20,13 @@ import {
 } from '~/components/ui';
 import { notifyDone } from '~/pages/board/format';
 import { SessionStatus } from '~/shuttlekaos/model';
-import { shuttleKaosErrorMessage, useDeleteSession, useLeaveSession, type SessionView } from '~/shuttlekaos/queries';
+import {
+  shuttleKaosErrorMessage,
+  useDeleteSession,
+  useEndSeries,
+  useLeaveSession,
+  type SessionView,
+} from '~/shuttlekaos/queries';
 
 import { InviteLink } from './InviteCard';
 import { BRAND, SCAN_LABELS, sessionUrl } from './labels';
@@ -27,7 +34,7 @@ import { LinkPlayersModal } from './LinkPlayers';
 import { QrImage } from './QrImage';
 import { useShareSession } from './useShareSession';
 
-const Confirm = z.enum(['end', 'delete', 'leave', 'link', 'qr']);
+const Confirm = z.enum(['end', 'endSeries', 'delete', 'leave', 'link', 'qr']);
 type Confirm = z.infer<typeof Confirm>;
 
 type Props = { view: SessionView; hasOpenCourts?: boolean; onEnd?: () => void };
@@ -38,8 +45,9 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
   const [confirm, setConfirm] = useState<Confirm | null>(null);
   const remove = useDeleteSession();
   const leave = useLeaveSession();
+  const endSeries = useEndSeries();
   const share = useShareSession();
-  const { isOwner, myPlayerId, shareCode, session } = view;
+  const { isOwner, myPlayerId, shareCode, session, series } = view;
   const running = session.status === SessionStatus.enum.running;
   const finished = session.status === SessionStatus.enum.finished;
   const canEnd = isOwner && running && onEnd;
@@ -51,6 +59,7 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
     setConfirm(null);
     remove.reset();
     leave.reset();
+    endSeries.reset();
   };
 
   const destroy = () =>
@@ -68,6 +77,16 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
         close();
       },
     });
+
+  const stopRepeating = () => {
+    if (!series) return;
+    endSeries.mutate(series.id, {
+      onSuccess: () => {
+        notifyDone(t`No new dates will be added.`);
+        close();
+      },
+    });
+  };
 
   const errorOf = (error: Error | null) => (error ? i18n._(shuttleKaosErrorMessage(error)) : null);
 
@@ -121,6 +140,11 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
               {finished ? <Trans>Remove me</Trans> : <Trans>Leave session</Trans>}
             </Menu.Item>
           )}
+          {isOwner && series && (
+            <Menu.Item leftSection={<CalendarX />} onClick={() => setConfirm(Confirm.enum.endSeries)}>
+              <Trans>Stop repeating</Trans>
+            </Menu.Item>
+          )}
           {isOwner && (
             <Menu.Item color="red" leftSection={<Trash />} onClick={() => setConfirm(Confirm.enum.delete)}>
               <Trans>Delete session</Trans>
@@ -163,6 +187,26 @@ export const SessionMenu: FC<Props> = ({ view, hasOpenCourts, onEnd }) => {
               <Trans>End session</Trans>
             </Button>
           </Group>
+        </Stack>
+      </ResponsiveModal>
+
+      <ResponsiveModal
+        opened={confirm === Confirm.enum.endSeries}
+        onClose={close}
+        title={<Trans>Stop repeating?</Trans>}
+      >
+        <Stack gap="md">
+          <Text>
+            <Trans>No new dates get added. Dates already planned stay. Delete them one by one if you need to.</Trans>
+          </Text>
+          <ConfirmActions
+            confirmLabel={<Trans>Stop repeating</Trans>}
+            icon={<CalendarX />}
+            pending={endSeries.isPending}
+            error={errorOf(endSeries.error)}
+            onCancel={close}
+            onConfirm={stopRepeating}
+          />
         </Stack>
       </ResponsiveModal>
 

@@ -18,12 +18,16 @@ export type SessionStatus = z.infer<typeof SessionStatus>;
 export const Level = z.enum(['E', 'A', 'B', 'C', 'D']);
 export type Level = z.infer<typeof Level>;
 
+export const Repeat = z.enum(['none', 'weekly', 'biweekly']);
+export type Repeat = z.infer<typeof Repeat>;
+
 export const EVERYONE_ONCE = 'everyone';
 
 export const MAX_COURTS = 12;
 export const MAX_PLAYERS = 64;
 export const MAX_ROUNDS = 40;
 export const MAX_NAME = 40;
+export const MIN_PLAYER_LIMIT = 2;
 
 export const SessionLocation = z.object({
   locationId: z.uuid(),
@@ -33,6 +37,8 @@ export const SessionLocation = z.object({
   lng: z.number().min(-180).max(180),
 });
 export type SessionLocation = z.infer<typeof SessionLocation>;
+
+export const PlayerLimit = z.number().int().min(MIN_PLAYER_LIMIT).max(MAX_PLAYERS);
 
 export const Settings = z.object({
   format: Format,
@@ -94,8 +100,22 @@ export const Session = z.object({
   pairs: z.array(Pair),
   rounds: z.array(Round),
   location: SessionLocation.nullable().optional(),
+  scheduledAt: z.iso.datetime({ offset: true }).nullable().optional(),
+  maxPlayers: PlayerLimit.nullable().optional(),
+  seriesId: z.uuid().nullable().optional(),
 });
 export type Session = z.infer<typeof Session>;
+
+export const WeeksBetween = z.union([z.literal(1), z.literal(2)]);
+export type WeeksBetween = z.infer<typeof WeeksBetween>;
+
+export const SeriesInfo = z.object({
+  id: z.uuid(),
+  weekday: z.number().int().min(1).max(7),
+  every: WeeksBetween,
+  endsOn: z.iso.date().nullable(),
+});
+export type SeriesInfo = z.infer<typeof SeriesInfo>;
 
 export type Standing = {
   entrantId: string;
@@ -120,9 +140,12 @@ export type SessionSummary = {
   levels: Level[];
   organizerName: string;
   playerCount: number;
+  maxPlayers: number | null;
   createdAt: string;
+  scheduledAt: string | null;
   startedAt: string | null;
   finishedAt: string | null;
+  series: SeriesInfo | null;
   isOwner: boolean;
   isActive: boolean;
   location: SessionLocation | null;

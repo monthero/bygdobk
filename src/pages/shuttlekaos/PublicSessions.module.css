@@ -11,20 +11,13 @@
 
 .pill {
   flex: none;
+  border-radius: 999px;
+  backdrop-filter: blur(12px) saturate(140%);
 }
 
 .noCheck {
   display: inline-block;
   width: 1em;
-}
-
-.empty {
-  composes: glass from './glass.module.css';
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
 }
 
 .grid {
@@ -35,14 +28,49 @@
 
 .card {
   composes: glass from './glass.module.css';
+  composes: watermark from './watermark.module.css';
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-width: 0;
   padding: 14px 16px;
   transition: border-color 0.15s;
 
   &:hover {
     border-color: var(--bk-accent-line);
+  }
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 28px;
+  margin-block: -4px;
+}
+
+.cardFoot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--bk-border);
+}
+
+.players {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+
+  & svg {
+    color: var(--bk-accent-strong);
+    font-size: 18px;
   }
 }
 
@@ -75,9 +103,34 @@
   align-items: center;
   gap: 4px;
   min-width: 0;
-  color: var(--bk-accent-strong);
 
   & svg {
     flex: none;
+    color: var(--bk-accent-strong);
+  }
+}
+
+.whereName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.distance {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+
+  &::before {
+    content: '·';
+    margin-inline: 2px 6px;
+  }
+}
+
+.start {
+  composes: stacked from './SessionTables.module.css';
+  align-items: flex-start;
+
+  & > * {
+    min-width: max-content;
   }
 }

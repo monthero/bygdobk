@@ -193,7 +193,7 @@ export const SessionView: FC<Props> = ({ session, actions, notice, footer, onSco
           <SessionTop
             title={session.title}
             progress={progress}
-            started={started}
+            parts={[started]}
             details={
               <SettingsSummary
                 settings={session.settings}

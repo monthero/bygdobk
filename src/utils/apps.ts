@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { stripLocale } from '~/i18n/locales';
+import { safeLocalStorage } from '~/stores/persistence';
 
 import { isStandalone } from './device';
 
@@ -32,4 +33,17 @@ const launchedApp = () => {
   return launched;
 };
 
+const installedKey = (app: AppKind) => `bygdo-installed-${app}`;
+
+const installed = new Set(AppKind.options.filter((app) => safeLocalStorage.getItem(installedKey(app)) !== null));
+
+export const markInstalled = (app: AppKind) => {
+  installed.add(app);
+  safeLocalStorage.setItem(installedKey(app), '1');
+};
+
+export const isMarkedInstalled = (app: AppKind) => installed.has(app);
+
 export const INSTALLED_APP = launchedApp();
+
+if (INSTALLED_APP) markInstalled(INSTALLED_APP);

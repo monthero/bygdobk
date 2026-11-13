@@ -8,9 +8,10 @@ import { persist } from 'zustand/middleware';
 import { CaretDown, CaretDownBold, CaretUpBold, CrownSimple, Minus, Plus } from '~/components/ui';
 import { numberFormat } from '~/i18n/current';
 import { Partners, PlayStyle, ScoreMode, type Session, type Standing } from '~/shuttlekaos/model';
+import { MatchResult } from '~/shuttlekaos/queries';
 import { mergeParsed, safeJSONStorage } from '~/stores/persistence';
 
-import { formOf, MatchResult, playersOf, TableVariant, type PlayerMap } from './labels';
+import { formOf, playersOf, RESULT_LABELS, TableVariant, type PlayerMap } from './labels';
 import { PlayerNames } from './People';
 
 import classes from './StandingsTable.module.css';
@@ -18,9 +19,9 @@ import classes from './StandingsTable.module.css';
 const SIGNED: Intl.NumberFormatOptions = { signDisplay: 'exceptZero' };
 const AVERAGE: Intl.NumberFormatOptions = { maximumFractionDigits: 1 };
 const RESULT_MARKS: Record<MatchResult, string> = {
-  [MatchResult.enum.win]: '✓',
-  [MatchResult.enum.draw]: '–',
-  [MatchResult.enum.loss]: '✗',
+  [MatchResult.enum.won]: '✓',
+  [MatchResult.enum.drawn]: '–',
+  [MatchResult.enum.lost]: '✗',
 };
 
 const DETAIL_STORAGE_KEY = 'bygdo-shuttlekaos-standings';
@@ -79,6 +80,12 @@ export const StatsToggle: FC = () => {
 const signed = (n: number) => numberFormat(SIGNED).format(n);
 
 const Abbr: FC<{ title: string; short: string }> = ({ title, short }) => <abbr title={title}>{short}</abbr>;
+
+const ResultAbbr: FC<{ result: MatchResult }> = ({ result }) => {
+  const { i18n } = useLingui();
+  const { label, short } = RESULT_LABELS[result];
+  return <Abbr title={i18n._(label)} short={i18n._(short)} />;
+};
 
 type Column = {
   key: string;
@@ -207,7 +214,7 @@ export const StandingsTable = memo<Props>(
     };
     const won: Column = {
       key: 'won',
-      header: <Abbr title={t`Won`} short={t({ message: 'W', comment: 'Short column heading for matches won' })} />,
+      header: <ResultAbbr result={MatchResult.enum.won} />,
       cell: (row) => row.won,
       strong: !total,
     };
@@ -219,17 +226,13 @@ export const StandingsTable = memo<Props>(
         won,
         {
           key: 'drawn',
-          header: (
-            <Abbr title={t`Drawn`} short={t({ message: 'D', comment: 'Short column heading for matches drawn' })} />
-          ),
+          header: <ResultAbbr result={MatchResult.enum.drawn} />,
           cell: (row) => row.drawn,
           wide: true,
         },
         {
           key: 'lost',
-          header: (
-            <Abbr title={t`Lost`} short={t({ message: 'L', comment: 'Short column heading for matches lost' })} />
-          ),
+          header: <ResultAbbr result={MatchResult.enum.lost} />,
           cell: (row) => row.lost,
         },
         points,

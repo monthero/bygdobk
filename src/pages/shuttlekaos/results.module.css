@@ -1,0 +1,17 @@
+.result {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bk-border);
+  font-weight: 800;
+
+  &[data-result='won'] {
+    background: var(--bk-ok-soft);
+    color: var(--bk-ok);
+  }
+
+  &[data-result='lost'] {
+    background: var(--bk-danger-soft);
+    color: var(--bk-danger);
+  }
+}

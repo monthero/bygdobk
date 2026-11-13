@@ -10,34 +10,7 @@
 }
 
 .photo {
-  position: absolute;
-  inset: 0;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--mantine-color-body) 50%, transparent) 0%,
-        color-mix(in srgb, var(--mantine-color-body) 82%, transparent) 55%,
-        var(--mantine-color-body) 100%
-      ),
-      linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade));
-
-    @media (min-width: $mantine-breakpoint-md) {
-      background:
-        linear-gradient(
-          90deg,
-          color-mix(in srgb, var(--mantine-color-body) 86%, transparent) 0%,
-          color-mix(in srgb, var(--mantine-color-body) 62%, transparent) 36%,
-          color-mix(in srgb, var(--mantine-color-body) 8%, transparent) 62%,
-          transparent 100%
-        ),
-        linear-gradient(var(--bk-photo-shade), var(--bk-photo-shade));
-    }
-  }
+  composes: photoFade from '../../../styles/media.module.css';
 }
 
 .image {

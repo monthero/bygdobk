@@ -6,12 +6,10 @@ import { Clock, Coffee, Users } from '~/components/ui';
 import { gamesProblem, matchWinner } from '~/shuttlekaos/engine';
 import type { Match, Round, Session, Settings } from '~/shuttlekaos/model';
 
-import { isMe, matchMinutes, namesOf, playersOf, type PlayerMap } from './labels';
+import { firstName, isMe, matchMinutes, namesOf, playersOf, type PlayerMap } from './labels';
 import { PlayerAvatar, PlayerNames } from './People';
 
 import classes from './MatchGrid.module.css';
-
-const firstName = (name: string) => name.split(' ').at(0) ?? name;
 
 type FilterButtonProps = { active: boolean; label?: string; onClick: () => void; children: ReactNode };
 

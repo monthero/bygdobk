@@ -25,14 +25,36 @@ import { ShuttleKaosProblem } from '~/shuttlekaos/store';
 import { BrandHeader } from './BrandHeader';
 import { BusyAlert } from './BusyAlert';
 import { Field, Section } from './FormParts';
-import { BRAND, SectionColor, suggestedCourts, SummaryPart } from './labels';
+import {
+  BRAND,
+  firstName,
+  NOW,
+  scheduledAtOf,
+  scheduleMessage,
+  scheduleProblem,
+  seriesPlanOf,
+  SectionColor,
+  suggestedCourts,
+  suggestedLimit,
+  SummaryPart,
+  When,
+} from './labels';
 import { LocationPicker } from './LocationPicker';
 import { LoginPrompt } from './LoginPrompt';
 import { PairPicker } from './PairPicker';
 import { PlayerPicker } from './PlayerPicker';
 import { QuickStart } from './QuickStart';
 import { SECTION_ICONS } from './sectionIcons';
-import { CourtsField, GameFields, LevelPicker, RoundsFields, ScoringFields, VisibilityPicker } from './SettingsForm';
+import {
+  CourtsField,
+  GameSection,
+  LevelSection,
+  PlayerLimitField,
+  RoundsSection,
+  ScoringSection,
+  VisibilityPicker,
+  WhenPicker,
+} from './SettingsForm';
 import { SessionEstimate, SettingsSummary } from './SettingsSummary';
 import { useSetupPrefs, type Lineup, type PrefsState } from './setupPrefs';
 import { SetupSteps, type SetupStep } from './SetupSteps';
@@ -64,6 +86,7 @@ const PART_STEP: Record<SummaryPart, StepName> = {
 type Draft = {
   settings: Settings;
   isPublic: boolean;
+  maxPlayers: number | null;
   players: Player[];
   pairs: Pair[];
   location: SessionLocation | null;
@@ -71,6 +94,7 @@ type Draft = {
 
 const selectSettings = (s: PrefsState) => s.settings;
 const selectIsPublic = (s: PrefsState) => s.isPublic;
+const selectMaxPlayers = (s: PrefsState) => s.maxPlayers;
 const selectRemember = (s: PrefsState) => s.remember;
 const selectLineup = (s: PrefsState) => s.lineup;
 
@@ -118,11 +142,15 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
   const [confirming, confirmControls] = useDisclosure(false);
   const [startingNow, setStartingNow] = useState(false);
 
-  const firstName = me.name.split(' ').at(0) ?? '';
-  const [defaultTitle] = useState(() => (firstName ? t`${firstName}'s session` : BRAND));
+  const [defaultTitle] = useState(() => {
+    const name = firstName(me.name);
+    return name ? t`${name}'s session` : BRAND;
+  });
   const [title, setTitle] = useState(defaultTitle);
   const [settings, setSettings] = useState(initial.settings);
   const [isPublic, setIsPublic] = useState(initial.isPublic);
+  const [maxPlayers, setMaxPlayers] = useState(initial.maxPlayers);
+  const [schedule, setSchedule] = useState(NOW);
   const [players, setPlayers] = useState(initial.players);
   const [pairs, setPairs] = useState(initial.pairs);
   const [location, setLocation] = useState(initial.location);
@@ -143,6 +171,9 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
       ? create.error.busyNames
       : null;
   const error = create.error && !busy ? i18n._(shuttleKaosErrorMessage(create.error)) : null;
+  const later = schedule.when === When.enum.later;
+  const timing = scheduleProblem(schedule);
+  const timingReason = timing && i18n._(scheduleMessage(timing));
 
   const changeSettings = (patch: Partial<Settings>) => {
     if (patch.courts !== undefined) setCourtsByHand(true);
@@ -161,7 +192,7 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
     changePlayers(notPlaying ? players.filter((p) => p.profileId !== me.userId) : [meAsPlayer(me), ...players]);
 
   const sessionPairs = fixedPairs ? pairs : EMPTY_PAIRS;
-  const canStart = valid && setupProblem(effective, players, sessionPairs) === null;
+  const canStart = valid && !later && setupProblem(effective, players, sessionPairs) === null;
   const pending = create.isPending || start.isPending;
 
   const open = (code: string) => void navigate({ to: '/shuttlekaos/$code', params: { code } });
@@ -170,27 +201,34 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
     if (!valid) return;
     setStartingNow(withStart);
     confirmControls.close();
-    remember({ settings: effective, isPublic, lineup: { players, pairs: sessionPairs, location } });
-    const session = createSession(effective, players, sessionPairs, title.trim() || defaultTitle, isPublic, location);
-    create.mutate(session, {
-      onSuccess: ({ shareCode, session: created }) => {
-        if (!withStart) {
-          open(shareCode);
-          return;
-        }
-        start.mutate(
-          { code: shareCode, revision: created?.revision ?? session.revision },
-          {
-            onSuccess: () => open(shareCode),
-            onError: (startError) => {
-              const detail = i18n._(shuttleKaosErrorMessage(startError));
-              notifyFailed(t`The session is created, but it didn't start. ${detail}`);
-              open(shareCode);
+    remember({ settings: effective, isPublic, maxPlayers, lineup: { players, pairs: sessionPairs, location } });
+    const session = {
+      ...createSession(effective, players, sessionPairs, title.trim() || defaultTitle, isPublic, location),
+      scheduledAt: scheduledAtOf(schedule),
+      maxPlayers,
+    };
+    create.mutate(
+      { session, series: seriesPlanOf(schedule) },
+      {
+        onSuccess: ({ shareCode, session: created }) => {
+          if (!withStart) {
+            open(shareCode);
+            return;
+          }
+          start.mutate(
+            { code: shareCode, revision: created?.revision ?? session.revision },
+            {
+              onSuccess: () => open(shareCode),
+              onError: (startError) => {
+                const detail = i18n._(shuttleKaosErrorMessage(startError));
+                notifyFailed(t`The session is created, but it didn't start. ${detail}`);
+                open(shareCode);
+              },
             },
-          },
-        );
+          );
+        },
       },
-    });
+    );
   };
 
   const sessionFields = (
@@ -203,6 +241,9 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
         placeholder={defaultTitle}
         onChange={(e) => setTitle(e.currentTarget.value)}
       />
+      <Field label={<Trans>When</Trans>}>
+        <WhenPicker schedule={schedule} onChange={setSchedule} />
+      </Field>
       <VisibilityPicker isPublic={isPublic} onChange={setIsPublic} />
       <Field label={<Trans>Location</Trans>}>
         <LocationPicker value={location} onChange={setLocation} />
@@ -232,6 +273,11 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
         <Trans>Add people now, or let them join with the link once the session exists.</Trans>
       </Text>
       <PlayerPicker players={players} signedIn onChange={changePlayers} />
+      <PlayerLimitField
+        value={maxPlayers}
+        suggested={suggestedLimit(settings, players.length)}
+        onChange={setMaxPlayers}
+      />
     </Section>
   );
 
@@ -273,9 +319,9 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
   );
 
   const busyAlert = busy && <BusyAlert players={players} names={busy} onUnlink={changePlayers} />;
-  const reason = error ?? (valid ? null : t`Some settings don't add up. Check them again.`);
+  const reason = error ?? (valid ? null : t`Some settings don't add up. Check them again.`) ?? timingReason;
 
-  const blocked = !valid || busy !== null;
+  const blocked = !valid || busy !== null || timing !== null;
 
   const finalActions = (size: 'md' | 'lg') => (
     <>
@@ -343,15 +389,14 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
     {
       title: t`Details`,
       icon: SECTION_ICONS.details,
+      invalid: timingReason,
       content: (
         <>
           {quickStartSection}
           <Section title={<Trans>Details</Trans>} icon={SECTION_ICONS.details} color={SectionColor.enum.grape}>
             {sessionFields}
           </Section>
-          <Section title={<Trans>Level</Trans>} icon={SECTION_ICONS.level} color={SectionColor.enum.grape}>
-            <LevelPicker levels={settings.levels} onChange={(levels) => changeSettings({ levels })} />
-          </Section>
+          <LevelSection levels={settings.levels} onChange={(levels) => changeSettings({ levels })} />
           {busyAlert}
         </>
       ),
@@ -359,11 +404,7 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
     {
       title: t`Game`,
       icon: SECTION_ICONS.game,
-      content: (
-        <Section title={<Trans>Game</Trans>} icon={SECTION_ICONS.game} color={SectionColor.enum.brand}>
-          <GameFields editor={editor} />
-        </Section>
-      ),
+      content: <GameSection editor={editor} />,
     },
     {
       title: t`Scoring`,
@@ -371,12 +412,8 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
       invalid: valid ? null : t`Some settings don't add up. Check them again.`,
       content: (
         <>
-          <Section title={<Trans>Scoring</Trans>} icon={SECTION_ICONS.scoring} color={SectionColor.enum.teal}>
-            <ScoringFields editor={editor} />
-          </Section>
-          <Section title={<Trans>Rounds</Trans>} icon={SECTION_ICONS.rounds} color={SectionColor.enum.blue}>
-            <RoundsFields editor={editor} playerCount={players.length} pairs={pairs} />
-          </Section>
+          <ScoringSection editor={editor} />
+          <RoundsSection editor={editor} playerCount={players.length} pairs={pairs} />
         </>
       ),
     },
@@ -425,18 +462,10 @@ const SetupForm: FC<{ initial: Draft; me: Me; prefilled: boolean }> = ({ initial
             <Section title={<Trans>Session</Trans>} icon={SECTION_ICONS.details} color={SectionColor.enum.grape}>
               {sessionFields}
             </Section>
-            <Section title={<Trans>Game</Trans>} icon={SECTION_ICONS.game} color={SectionColor.enum.brand}>
-              <GameFields editor={editor} />
-            </Section>
-            <Section title={<Trans>Scoring</Trans>} icon={SECTION_ICONS.scoring} color={SectionColor.enum.teal}>
-              <ScoringFields editor={editor} />
-            </Section>
-            <Section title={<Trans>Rounds</Trans>} icon={SECTION_ICONS.rounds} color={SectionColor.enum.blue}>
-              <RoundsFields editor={editor} playerCount={players.length} pairs={pairs} />
-            </Section>
-            <Section title={<Trans>Level</Trans>} icon={SECTION_ICONS.level} color={SectionColor.enum.grape}>
-              <LevelPicker levels={settings.levels} onChange={(levels) => changeSettings({ levels })} />
-            </Section>
+            <GameSection editor={editor} />
+            <ScoringSection editor={editor} />
+            <RoundsSection editor={editor} playerCount={players.length} pairs={pairs} />
+            <LevelSection levels={settings.levels} onChange={(levels) => changeSettings({ levels })} />
           </Stack>
           <Stack gap="md" className={classes.people}>
             {playersSection}
@@ -478,6 +507,7 @@ const CopiedSetup: FC<{ code: string; me: Me }> = ({ code, me }) => {
   const initial: Draft = {
     settings: session.settings,
     isPublic: session.isPublic,
+    maxPlayers: session.maxPlayers ?? null,
     players: session.players,
     pairs: session.pairs,
     location: session.location ?? null,
@@ -488,17 +518,20 @@ const CopiedSetup: FC<{ code: string; me: Me }> = ({ code, me }) => {
 const LastSetup: FC<{ me: Me }> = ({ me }) => {
   const settings = useSetupPrefs(selectSettings);
   const isPublic = useSetupPrefs(selectIsPublic);
+  const maxPlayers = useSetupPrefs(selectMaxPlayers);
   const lineup = useSetupPrefs(selectLineup);
-  const [initial] = useState<Draft | null>(() => lineup && { settings, isPublic, ...freshIds(lineup) });
+  const [initial] = useState<Draft | null>(() => lineup && { settings, isPublic, maxPlayers, ...freshIds(lineup) });
   return initial ? <SetupForm initial={initial} me={me} prefilled /> : <FreshSetup me={me} />;
 };
 
 const FreshSetup: FC<{ me: Me }> = ({ me }) => {
   const settings = useSetupPrefs(selectSettings);
   const isPublic = useSetupPrefs(selectIsPublic);
+  const maxPlayers = useSetupPrefs(selectMaxPlayers);
   const [initial] = useState<Draft>(() => ({
     settings,
     isPublic,
+    maxPlayers,
     players: [meAsPlayer(me)],
     pairs: [],
     location: null,

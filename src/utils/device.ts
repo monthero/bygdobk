@@ -1,5 +1,8 @@
 const APPLE_MOBILE = /iPad|iPhone|iPod/;
+const FIREFOX_ANDROID = /Android.*Firefox\//;
 const STANDALONE = '(display-mode: standalone)';
+
+export const isFirefoxAndroid = () => FIREFOX_ANDROID.test(navigator.userAgent);
 
 export const isAppleMobile = () => {
   const { userAgent, maxTouchPoints } = navigator;

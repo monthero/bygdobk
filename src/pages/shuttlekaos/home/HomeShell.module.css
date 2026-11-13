@@ -1,0 +1,186 @@
+.shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: calc(100dvh - var(--bk-header-height, 0px) - 120px);
+
+  @media (min-width: $mantine-breakpoint-md) {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+    padding-block: 28px 56px;
+  }
+}
+
+.side {
+  display: none;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    position: sticky;
+    top: calc(var(--bk-header-height, 0px) + 20px);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+}
+
+.sideButton {
+  composes: watermark from '../watermark.module.css';
+
+  --watermark-size: 64px;
+  --watermark-opacity: 0.14;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 44px;
+  padding-inline: 12px;
+  border-radius: var(--mantine-radius-md);
+  color: var(--mantine-color-dimmed);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+
+  &:hover {
+    background: color-mix(in srgb, var(--mantine-color-text) 6%, transparent);
+    color: var(--mantine-color-text);
+  }
+
+  &[aria-current='page'] {
+    background: var(--bk-accent-soft);
+    color: var(--bk-accent-strong);
+    font-weight: 800;
+  }
+}
+
+.navIcon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  padding-block: 20px 28px;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    padding-block: 0;
+  }
+}
+
+.dock {
+  position: sticky;
+  bottom: 0;
+  z-index: 60;
+  margin-inline: calc(var(--mantine-spacing-md) * -1);
+  margin-top: auto;
+
+  @media (min-width: $mantine-breakpoint-md) {
+    display: none;
+  }
+}
+
+.tabbar {
+  composes: glass from '../glass.module.css';
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 6px 8px calc(8px + env(safe-area-inset-bottom));
+  border-width: 1px 0 0;
+  border-style: solid;
+  border-radius: 0;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding-block: 4px;
+  color: var(--mantine-color-dimmed);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s;
+
+  &[aria-current='page'] {
+    color: var(--mantine-color-text);
+    font-weight: 800;
+  }
+}
+
+.tabPill {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 32px;
+  border-radius: 999px;
+  font-size: 22px;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+
+  .tab[aria-current='page'] & {
+    background: var(--bk-accent-soft);
+    color: var(--bk-accent-strong);
+  }
+}
+
+.liveDot {
+  composes: dot from '../Fallbacks.module.css';
+  position: absolute;
+  top: 3px;
+  right: 13px;
+  width: 9px;
+  height: 9px;
+  color: var(--mantine-color-green-6);
+  box-shadow: 0 0 0 2px var(--bk-surface);
+
+  .navIcon & {
+    top: 0;
+    right: -2px;
+  }
+}
+
+.fab {
+  composes: watermark from '../watermark.module.css';
+  right: var(--mantine-spacing-md);
+  bottom: calc(100% + 14px);
+  min-width: 58px;
+  height: 58px;
+  padding-inline: 18px 22px;
+  box-shadow:
+    0 10px 24px color-mix(in srgb, var(--mantine-color-brand-filled) 45%, transparent),
+    0 2px 6px rgb(0 0 0 / 0.25);
+
+  --watermark-size: 52px;
+  --watermark-opacity: 0.16;
+
+  .dock & {
+    position: absolute;
+  }
+
+  &[aria-label] {
+    width: 58px;
+    padding: 0;
+    font-size: 24px;
+  }
+}

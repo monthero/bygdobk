@@ -27,6 +27,8 @@ export const wallNow = () => toWall(dayjs());
 
 export const wallTime = (iso: string) => toWall(dayjs(iso));
 
+export const fromWall = (day: string, time: string) => dayjs.tz(`${day}T${time}`, CLUB_TIME_ZONE).toISOString();
+
 export const today = () => wallNow().startOf('day');
 
 export const todayIso = () => today().format(ISO_DAY);

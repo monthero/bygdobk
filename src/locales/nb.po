@@ -36,6 +36,12 @@ msgstr "{0, plural, one {# forespørsel} other {# forespørsler}}"
 msgid "{0, plural, one {# round} other {# rounds}}, about {perRound} each"
 msgstr "{0, plural, one {# runde} other {# runder}}, ca. {perRound} hver"
 
+#. Heading for your latest match results
+#. placeholder {0}: matches.length
+#: src/pages/shuttlekaos/MyStats.tsx
+msgid "{0, plural, one {Last match} other {Last # matches}}"
+msgstr "{0, plural, one {Siste kamp} other {Siste # kamper}}"
+
 #. placeholder {0}: deals.length
 #: src/pages/membership/MembershipPage.tsx
 msgid "{0, plural, one {Member deal} other {Member deals}}"
@@ -113,10 +119,6 @@ msgstr "E-postadressen til {firstName} er kopiert"
 msgid "{firstName}'s phone number was copied to the clipboard"
 msgstr "Telefonnummeret til {firstName} er kopiert"
 
-#: src/pages/shuttlekaos/SetupPage.tsx
-msgid "{firstName}'s session"
-msgstr "Økta til {firstName}"
-
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "{hits, plural, one {# hit} other {# hits}}: {callout}"
 msgstr "{hits, plural, one {# slag} other {# slag}}: {callout}"
@@ -169,6 +171,10 @@ msgstr "{name} er koblet fra."
 msgid "{name} paid <0>{total}</0>."
 msgstr "{name} betalte <0>{total}</0>."
 
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "{name}'s session"
+msgstr "Økta til {name}"
+
 #: src/components/events/EventCard.tsx
 msgid "{needed, plural, one {# volunteer needed} other {# volunteers needed}}"
 msgstr "{needed, plural, one {# frivillig trengs} other {# frivillige trengs}}"
@@ -213,6 +219,7 @@ msgstr "{playedRounds, plural, one {# runde, ferdig etter {duration}} other {# r
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Ferdig etter # runde} other {Ferdig etter # runder}}"
 
+#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{playerCount} players"
 msgstr "{playerCount} spillere"
@@ -227,7 +234,7 @@ msgid "{pointsFor} for · {pointsAgainst} against"
 msgstr "{pointsFor} for · {pointsAgainst} mot"
 
 #. A place in a session, e.g. 3rd
-#: src/pages/shuttlekaos/MyStats.tsx
+#: src/pages/shuttlekaos/PlaceChip.tsx
 msgid "{rank, selectordinal, one {#st} two {#nd} few {#rd} other {#th}}"
 msgstr "{rank, selectordinal, other {#.}}"
 
@@ -244,9 +251,18 @@ msgstr "{requestCount} åpne"
 msgid "{requested} requested"
 msgstr "{requested} venter"
 
+#. A match result and its score, e.g. Won 21–15
+#: src/pages/shuttlekaos/MyStats.tsx
+msgid "{result} {score}"
+msgstr "{result} {score}"
+
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{rounds, plural, one {# round} other {# rounds}}"
 msgstr "{rounds, plural, one {# runde} other {# runder}}"
+
+#: src/pages/shuttlekaos/StatsPage.tsx
+msgid "{sessions, plural, one {# session played} other {# sessions played}}"
+msgstr "{sessions, plural, one {# økt spilt} other {# økter spilt}}"
 
 #. Below the number of views that came from links on other websites, e.g. 12% of all views
 #: src/pages/board/visitors/VisitorsPage.tsx
@@ -285,7 +301,7 @@ msgstr "{taken} av {spots}"
 msgid "{taken} of {spots} spots taken"
 msgstr "{taken} av {spots} plasser tatt"
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/ActionModal.tsx
 msgid "{title} disappears from your history. The organizer keeps the scores."
 msgstr "{title} forsvinner fra historikken din. Arrangøren beholder resultatene."
 
@@ -297,10 +313,10 @@ msgstr "{trimmed} er allerede med."
 msgid "{unpaidCount} not paid"
 msgstr "{unpaidCount} ikke betalt"
 
-#. Stats tile detail: sessions you finished first
+#. Stats tile detail: share of sessions you won, e.g. 22% of sessions
 #: src/pages/shuttlekaos/MyStats.tsx
-msgid "{wins, plural, one {Won # session} other {Won # sessions}}"
-msgstr "{wins, plural, one {Vant # økt} other {Vant # økter}}"
+msgid "{winShare} of sessions"
+msgstr "{winShare} av øktene"
 
 #. Stats tile detail: matches won out of played, e.g. 7 of 12
 #: src/pages/shuttlekaos/MyStats.tsx
@@ -312,24 +328,9 @@ msgstr "{won} av {played}"
 msgid "{won} of {played} won"
 msgstr "{won} av {played} vunnet"
 
-#. Stats tile detail
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "{won} won · {lost} lost"
-msgstr "{won} vunnet · {lost} tapt"
-
-#. Stats tile detail
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "{won} won · {lost} lost · {drawn} drawn"
-msgstr "{won} vunnet · {lost} tapt · {drawn} uavgjort"
-
 #: src/components/training/TrainingSchedule.tsx
 msgid "+{count} more"
 msgstr "+{count} flere"
-
-#. Your place out of all players or pairs, e.g. 3rd of 13
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "<0/> of {entrants}"
-msgstr "<0/> av {entrants}"
 
 #: src/pages/board/access/RemoveAdminModal.tsx
 msgid "<0>{name}</0> can no longer open the board pages or edit the website. Their account and memberships stay."
@@ -517,8 +518,8 @@ msgstr "Ca. {total}"
 msgid "About the club"
 msgstr "Om klubben"
 
-#. Badge on a player that is linked to a club account
-#. Badge on a player that is linked to a club account
+#. Badge on a player that is linked to a ShuttleKaos account
+#. Badge on a player that is linked to a ShuttleKaos account
 #. Table column: the user account linked to the membership
 #: src/components/auth/UserMenu.tsx
 #: src/pages/board/MembershipList.tsx
@@ -589,7 +590,7 @@ msgstr "Legg til likevel"
 msgid "Add at least {min} players."
 msgstr "Legg til minst {min} spillere."
 
-#: src/components/layout/InstallApp.tsx
+#: src/components/layout/install.ts
 msgid "Add Bygdø BK to your Home Screen"
 msgstr "Legg Bygdø BK på Hjem-skjermen"
 
@@ -618,8 +619,8 @@ msgstr "Legg til spillere for å se hvor lang tid det tar."
 msgid "Add shifts to an event in Sanity, and they show up here."
 msgstr "Legg til vakter på et arrangement i Sanity, så dukker de opp her."
 
-#. iPhone and iPad: title above the steps to add the ShuttleKaos app to the Home Screen
-#: src/components/layout/InstallApp.tsx
+#. Title above the steps or button that add the ShuttleKaos app to the phone Home Screen
+#: src/components/layout/install.ts
 msgid "Add ShuttleKaos to your Home Screen"
 msgstr "Legg ShuttleKaos på Hjem-skjermen"
 
@@ -627,6 +628,11 @@ msgstr "Legg ShuttleKaos på Hjem-skjermen"
 #: src/pages/training/TrainingPage.tsx
 msgid "Add to calendar"
 msgstr "Legg til i kalenderen"
+
+#. Phone banner button that adds the ShuttleKaos app to the Android Home screen
+#: src/pages/shuttlekaos/AddToHome.tsx
+msgid "Add to Home screen"
+msgstr "Legg til på startskjermen"
 
 #: src/pages/board/NewSeasonModal.tsx
 msgid "Added {count, plural, one {# membership} other {# memberships}} to {toLabel}"
@@ -740,6 +746,10 @@ msgstr "Allerede sendt. Styret kommer tilbake til deg."
 msgid "Americano"
 msgstr "Americano"
 
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+msgid "Americano and Mexicano, without the paper and pens."
+msgstr "Americano og Mexicano, uten penn og papir."
+
 #: src/pages/board/MembershipForm.tsx
 msgid "An account holder"
 msgstr "Noen med konto"
@@ -778,7 +788,7 @@ msgstr "Be om koden"
 msgid "Ask the board to add it"
 msgstr "Be styret legge den til"
 
-#. Stats tile: your average place in sessions
+#. Your average place in sessions
 #: src/pages/shuttlekaos/MyStats.tsx
 msgid "Average place"
 msgstr "Snittplass"
@@ -837,7 +847,7 @@ msgstr "Best av 3"
 msgid "Best of 3 to {points}"
 msgstr "Best av 3 til {points}"
 
-#. Stats tile detail: your best place, e.g. Best: 1st
+#. Your best place, e.g. Best: 1st
 #: src/pages/shuttlekaos/MyStats.tsx
 msgid "Best: <0/>"
 msgstr "Best: <0/>"
@@ -887,8 +897,12 @@ msgstr "Ta med innesko."
 msgid "BWF standard: 15 (21 before 2027)"
 msgstr "BWF-standard: 15 (21 før 2027)"
 
+#. Who organizes a session
 #: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
+msgid "By {organizer}"
+msgstr "Av {organizer}"
+
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "By {organizer} · {players} players"
 msgstr "Av {organizer} · {players} spillere"
 
@@ -1119,6 +1133,10 @@ msgstr "Med trener"
 msgid "Coached training for kids and teens"
 msgstr "Trening med trener for barn og ungdom"
 
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "Code looks right"
+msgstr "Koden ser riktig ut"
+
 #: src/components/layout/VariantPanel.tsx
 msgid "Color"
 msgstr "Farge"
@@ -1165,7 +1183,7 @@ msgid "Contained"
 msgstr "Sentrert"
 
 #. Button on your running session card
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Continue"
 msgstr "Fortsett"
 
@@ -1230,6 +1248,11 @@ msgstr "Kunne ikke kopiere lenken"
 msgid "Couldn't find where you are. Pick the hall from the list."
 msgstr "Fant ikke hvor du er. Velg hallen fra lista."
 
+#: src/pages/shuttlekaos/home/useNearestFirst.ts
+msgid "Couldn't find where you are. Try again."
+msgstr "Fant ikke hvor du er. Prøv igjen."
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Couldn't load open sessions"
 msgstr "Kunne ikke laste åpne økter"
@@ -1266,8 +1289,7 @@ msgstr "Kunne ikke laste besøkstallene"
 msgid "Couldn't load the volunteers"
 msgstr "Kunne ikke laste de frivillige"
 
-#: src/pages/shuttlekaos/HallScreen.tsx
-#: src/pages/shuttlekaos/SessionPage.tsx
+#: src/pages/shuttlekaos/Fallbacks.tsx
 msgid "Couldn't load this session"
 msgstr "Kunne ikke laste denne økta"
 
@@ -1275,7 +1297,8 @@ msgstr "Kunne ikke laste denne økta"
 msgid "Couldn't load your membership"
 msgstr "Kunne ikke laste medlemskapet ditt"
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Couldn't load your sessions"
 msgstr "Kunne ikke laste øktene dine"
 
@@ -1283,7 +1306,6 @@ msgstr "Kunne ikke laste øktene dine"
 msgid "Couldn't load your shifts"
 msgstr "Kunne ikke laste vaktene dine"
 
-#: src/pages/shuttlekaos/MyStats.tsx
 #: src/pages/shuttlekaos/StatsPage.tsx
 msgid "Couldn't load your stats"
 msgstr "Kunne ikke laste statistikken din"
@@ -1372,8 +1394,8 @@ msgstr "Beskjær bildet"
 msgid "Cropped stamp"
 msgstr "Beskåret stempel"
 
-#. Short column heading for matches drawn
-#: src/pages/shuttlekaos/StandingsTable.tsx
+#. Short for drawn: a column heading or a match result
+#: src/pages/shuttlekaos/labels.ts
 msgid "D"
 msgstr "U"
 
@@ -1381,6 +1403,10 @@ msgstr "U"
 #: src/components/layout/ThemeSwitch.tsx
 msgid "Dark"
 msgstr "Mørk"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Date"
+msgstr "Dato"
 
 #. Table column: calendar day
 #: src/components/training/TrainingSchedule.tsx
@@ -1426,8 +1452,9 @@ msgstr "Slett {name}"
 msgid "Delete membership?"
 msgstr "Slette medlemskapet?"
 
+#: src/pages/shuttlekaos/home/ActionModal.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Delete session"
 msgstr "Slett økt"
 
@@ -1435,8 +1462,8 @@ msgstr "Slett økt"
 msgid "Delete the membership for <0>{name}</0> in season {season}? You can't undo this."
 msgstr "Slette medlemskapet til <0>{name}</0> for sesong {season}? Dette kan ikke angres."
 
+#: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Delete this session?"
 msgstr "Slette denne økta?"
 
@@ -1529,7 +1556,7 @@ msgstr "Trekk på nytt"
 msgid "Draw pairs"
 msgstr "Trekk par"
 
-#: src/pages/shuttlekaos/StandingsTable.tsx
+#: src/pages/shuttlekaos/labels.ts
 msgid "Drawn"
 msgstr "Uavgjort"
 
@@ -1701,6 +1728,11 @@ msgstr "Arrangement"
 msgid "Events"
 msgstr "Arrangementer"
 
+#. Session repeat option
+#: src/pages/shuttlekaos/labels.ts
+msgid "Every 2 weeks"
+msgstr "Annenhver uke"
+
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Every hall has its own rules. Some only let in members of the club that rents it, others charge a fee. Only pick a hall you know how to get into."
 msgstr "Hver hall har sine egne regler. Noen slipper bare inn medlemmer av klubben som leier den, andre tar betalt. Velg bare en hall du vet hvordan du kommer inn i."
@@ -1805,6 +1837,10 @@ msgstr "Finn oss"
 msgid "Finish"
 msgstr "Avslutt"
 
+#: src/pages/shuttlekaos/MyStats.tsx
+msgid "Finish one session and we'll keep score of your wins, podiums and form."
+msgstr "Spill ferdig én økt, så holder vi styr på seire, pallplasser og form."
+
 #: src/pages/shuttlekaos/PlaySession.tsx
 msgid "Finish session"
 msgstr "Avslutt økta"
@@ -1812,7 +1848,7 @@ msgstr "Avslutt økta"
 #. Session status
 #. Session status: the session is over
 #: src/pages/shuttlekaos/HallScreen.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Finished"
 msgstr "Ferdig"
 
@@ -1866,16 +1902,15 @@ msgstr "Bunnmeny"
 msgid "For"
 msgstr "For"
 
-#. Heading for the chart of your place in each session
-#: src/pages/shuttlekaos/StatsPage.tsx
+#. Heading for your places in your latest sessions
+#: src/pages/shuttlekaos/MyStats.tsx
 msgid "Form"
 msgstr "Form"
 
 #. Table heading
-#. Table heading
 #: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/SessionTable.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Format"
 msgstr "Format"
 
@@ -1908,10 +1943,12 @@ msgstr "forsiden"
 msgid "Front page"
 msgstr "Forsiden"
 
+#. A session that has reached its player limit
 #. A training group takes no new players
 #. Volunteer shift with no free spots
 #: src/components/events/ShiftBoard.tsx
 #: src/components/training/GroupStatusBadge.tsx
+#: src/pages/shuttlekaos/labels.ts
 msgid "Full"
 msgstr "Full"
 
@@ -1972,6 +2009,10 @@ msgstr "Gå til innmeldingsskjemaet"
 msgid "Google login isn't switched on yet."
 msgstr "Innlogging med Google er ikke slått på ennå."
 
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "Got a code from the organizer? Pop it in."
+msgstr "Fått en kode fra arrangøren? Skriv den inn."
+
 #. Footer decoration: club logo that fades out
 #: src/components/layout/VariantPanel.tsx
 msgid "Gradient"
@@ -2006,6 +2047,11 @@ msgstr "Har det skjedd noe i klubben som ikke er greit? Du kan si fra til Norges
 #: src/components/layout/VariantPanel.tsx
 msgid "Heading font"
 msgstr "Skrift for overskrifter"
+
+#. Greeting with your first name
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Hi {name}"
+msgstr "Hei {name}"
 
 #: src/pages/membership/MemberDeal.tsx
 msgid "Hi! Could you send me the {name} member code?"
@@ -2057,6 +2103,7 @@ msgid "How do I change or end my membership?"
 msgstr "Hvordan endrer eller avslutter jeg medlemskapet?"
 
 #: src/components/layout/SponsorStrip.tsx
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
 msgid "How it works"
 msgstr "Slik fungerer det"
 
@@ -2103,11 +2150,21 @@ msgstr "Installer ShuttleKaos"
 msgid "Invite players"
 msgstr "Inviter spillere"
 
-#: src/components/layout/SiteHeader.tsx
 #: src/pages/shuttlekaos/OpenSession.tsx
-#: src/pages/shuttlekaos/PublicSessions.tsx
+msgid "It's time"
+msgstr "Det er tid"
+
+#: src/components/layout/SiteHeader.tsx
 msgid "Join"
 msgstr "Bli medlem"
+
+#. Button that opens the session for the typed code
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+#: src/pages/shuttlekaos/OpenSession.tsx
+#: src/pages/shuttlekaos/PublicSessions.tsx
+msgctxt "ShuttleKaos: join a session"
+msgid "Join"
+msgstr "Bli med"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Join Bygdø Badmintonklubb"
@@ -2128,6 +2185,14 @@ msgstr "Bli medlem"
 #: src/pages/training/TrainingPage.tsx
 msgid "Join the waiting list"
 msgstr "Sett deg på venteliste"
+
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "Join with code"
+msgstr "Bli med med kode"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Joining stops at {value}. You can still add people yourself."
+msgstr "Påmeldingen stenger ved {value}. Du kan fortsatt legge til folk selv."
 
 #: src/pages/news/NewsPage.tsx
 msgid "Jump to"
@@ -2166,8 +2231,8 @@ msgstr "Hold-ballen-oppe-spill. Flytt racketen med piltastene, og trykk mellomro
 msgid "Kids 7–12: try half a season for {0}"
 msgstr "Barn 7–12 år: prøv en halv sesong for {0}"
 
-#. Short column heading for matches lost
-#: src/pages/shuttlekaos/StandingsTable.tsx
+#. Short for lost: a column heading or a match result
+#: src/pages/shuttlekaos/labels.ts
 msgid "L"
 msgstr "T"
 
@@ -2194,19 +2259,23 @@ msgstr "Språk"
 msgid "Large"
 msgstr "Stor"
 
-#. Form chart axis: finished last in a session
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "Last"
-msgstr "Sist"
-
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Last 5"
 msgstr "Siste 5"
+
+#. Under your places in your latest sessions
+#: src/pages/shuttlekaos/MyStats.tsx
+msgid "Last 5, newest on the right"
+msgstr "Siste 5, nyeste til høyre"
 
 #. Who last edited this membership. {who} is a name or 'the board'
 #: src/pages/board/MembershipList.tsx
 msgid "Last changed by {who} · {day}"
 msgstr "Sist endret av {who} · {day}"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Last date"
+msgstr "Siste dato"
 
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Last results, oldest first"
@@ -2215,6 +2284,11 @@ msgstr "Siste resultater, eldste først"
 #: src/pages/privacy/PrivacyPage.tsx
 msgid "Last updated {updated}"
 msgstr "Sist oppdatert {updated}"
+
+#. Session start option: pick a date and time
+#: src/pages/shuttlekaos/labels.ts
+msgid "Later"
+msgstr "Senere"
 
 #: src/pages/news/NewsPage.tsx
 msgid "Latest"
@@ -2248,7 +2322,6 @@ msgstr "Forlate denne økta?"
 
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
-#: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Level"
 msgstr "Klasse"
 
@@ -2276,14 +2349,18 @@ msgstr "Klasser"
 msgid "Light"
 msgstr "Lys"
 
-#. Button: link this player name to a club account
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Limit the number of players"
+msgstr "Begrens antall spillere"
+
+#. Button: link this player name to a ShuttleKaos account
 #: src/pages/shuttlekaos/LinkPlayers.tsx
 msgid "Link"
 msgstr "Koble til"
 
 #: src/pages/shuttlekaos/LinkPlayers.tsx
-msgid "Link a name to a club account. The session then shows up in that person's history."
-msgstr "Koble et navn til en klubbkonto. Da dukker økta opp i historikken til den personen."
+msgid "Link a name to an account. The session then shows up in that person's history."
+msgstr "Koble et navn til en konto. Da dukker økta opp i historikken til den personen."
 
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Link an account"
@@ -2330,8 +2407,8 @@ msgstr "Synlig for alle. Alle med konto kan bli med."
 #. Marks the round being played right now
 #. Session status: being played right now
 #: src/pages/shuttlekaos/Fallbacks.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/RoundBrowser.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Live"
 msgstr "Direkte"
 
@@ -2340,14 +2417,25 @@ msgstr "Direkte"
 msgid "Live now"
 msgstr "Pågår nå"
 
-#. Table heading: where the session is played
+#. Browser tab title for the list of public ShuttleKaos sessions
+#. Page title: public sessions anyone can join or watch
+#. ShuttleKaos tab: public sessions anyone can join or watch
+#: src/pages/shuttlekaos/home/HomeShell.tsx
+#: src/pages/shuttlekaos/home/LobbyPage.tsx
+msgid "Lobby"
+msgstr "Lobby"
+
 #. Table heading: where the session is played
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/SessionTable.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Location"
 msgstr "Sted"
+
+#: src/pages/shuttlekaos/home/useNearestFirst.ts
+msgid "Location access is off. Allow it in the browser to see the nearest sessions first."
+msgstr "Posisjon er slått av. Tillat det i nettleseren for å se de nærmeste øktene først."
 
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Location access is off. Allow it in the browser, or pick the hall from the list."
@@ -2392,7 +2480,7 @@ msgstr "Logg inn for å melde deg på dugnadsvakter. Styremedlemmer kan redigere
 msgid "Log in to start a session. Anyone can watch the scores without an account."
 msgstr "Logg inn for å starte en økt. Alle kan følge resultatene uten konto."
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/PlayPage.tsx
 msgid "Log in to start or join sessions and keep your history. Watching works without it."
 msgstr "Logg inn for å starte eller bli med i økter og ta vare på historikken din. Du kan se på uten."
 
@@ -2416,13 +2504,9 @@ msgstr "Ser på sesongen {fromLabel} …"
 msgid "Looking for the account…"
 msgstr "Ser etter kontoen…"
 
-#: src/pages/shuttlekaos/StandingsTable.tsx
+#: src/pages/shuttlekaos/labels.ts
 msgid "Lost"
 msgstr "Tapt"
-
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Made with Bygdø members in mind, but anyone is welcome to play."
-msgstr "Laget med tanke på Bygdø-medlemmer, men alle er velkomne til å spille."
 
 #: src/components/layout/MobileMenu.tsx
 #: src/components/layout/SiteHeader.tsx
@@ -2448,8 +2532,6 @@ msgstr "{done, plural, one {# medlemskap} other {# medlemskap}} markert som beta
 msgid "Marked paid by {who}"
 msgstr "Markert som betalt av {who}"
 
-#. Stats tile: matches you played
-#: src/pages/shuttlekaos/MyStats.tsx
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Matches"
 msgstr "Kamper"
@@ -2458,6 +2540,10 @@ msgstr "Kamper"
 #: src/pages/shuttlekaos/MyStats.tsx
 msgid "Matches won"
 msgstr "Vunne kamper"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Max players"
+msgstr "Maks spillere"
 
 #: src/pages/join/JoinPage.tsx
 msgid "Me"
@@ -2542,11 +2628,6 @@ msgstr "Mexicano"
 msgid "Microsoft login isn't switched on yet."
 msgstr "Innlogging med Microsoft er ikke slått på ennå."
 
-#. Form chart axis: finished in the middle of the field
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "Middle"
-msgstr "Midt"
-
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Missed after {hits, plural, one {# hit} other {# hits}}. Press Space to serve again."
 msgstr "Bom etter {hits, plural, one {# slag} other {# slag}}. Trykk mellomrom for å serve igjen."
@@ -2600,10 +2681,6 @@ msgstr "Barnet mitt"
 msgid "My membership"
 msgstr "Mitt medlemskap"
 
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "My sessions"
-msgstr "Mine økter"
-
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
@@ -2619,6 +2696,11 @@ msgstr "Navn eller e-post"
 #: src/pages/board/access/AddAdminForm.tsx
 msgid "name@example.com"
 msgstr "navn@eksempel.no"
+
+#. Toggle that sorts sessions by distance from you
+#: src/pages/shuttlekaos/PublicSessions.tsx
+msgid "Nearest first"
+msgstr "Nærmeste først"
 
 #: src/components/auth/errors.ts
 msgid "New accounts are closed right now."
@@ -2740,6 +2822,10 @@ msgstr "Uten trener"
 msgid "No doubles partners yet."
 msgstr "Ingen doublemakkere ennå."
 
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "No end date"
+msgstr "Ingen sluttdato"
+
 #: src/pages/events/EventsPage.tsx
 msgid "No events match this filter"
 msgstr "Ingen arrangementer passer filteret"
@@ -2783,6 +2869,14 @@ msgstr "Ingen medlemskap denne sesongen ennå"
 msgid "No memberships yet"
 msgstr "Ingen medlemskap ennå"
 
+#: src/pages/shuttlekaos/SessionMenu.tsx
+msgid "No new dates get added. Dates already planned stay. Delete them one by one if you need to."
+msgstr "Ingen nye datoer legges til. Datoer som allerede er planlagt blir stående. Slett dem én og én om du må."
+
+#: src/pages/shuttlekaos/SessionMenu.tsx
+msgid "No new dates will be added."
+msgstr "Ingen nye datoer blir lagt til."
+
 #: src/pages/board/MembersPage.tsx
 msgid "No one matches"
 msgstr "Ingen treff"
@@ -2790,10 +2884,6 @@ msgstr "Ingen treff"
 #: src/pages/board/MembersPage.tsx
 msgid "No open requests. All caught up!"
 msgstr "Ingen åpne forespørsler. Alt er i boks!"
-
-#: src/pages/shuttlekaos/PublicSessions.tsx
-msgid "No open sessions right now. Start one and get the chaos going!"
-msgstr "Ingen åpne økter akkurat nå. Start en og sett i gang kaoset!"
 
 #: src/components/auth/LoginModal.tsx
 msgid "No password needed."
@@ -2825,17 +2915,9 @@ msgstr "Ingen forespørsler passer"
 msgid "No score"
 msgstr "Ingen resultat"
 
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "No sessions yet. Start one, or join one, and it lands here."
-msgstr "Ingen økter ennå. Start en eller bli med i en, så havner den her."
-
 #: src/pages/events/EventPage.tsx
 msgid "No shifts listed yet. Tell the board you can help."
 msgstr "Ingen vakter ennå. Si fra til styret at du kan hjelpe."
-
-#: src/pages/shuttlekaos/StatsPage.tsx
-msgid "No stats yet. Play a session to the end and your stats show up here."
-msgstr "Ingen statistikk ennå. Spill en økt ferdig, så dukker den opp her."
 
 #: src/components/styles/court/CourtWeek.tsx
 #: src/components/training/NextTraining.tsx
@@ -2891,6 +2973,11 @@ msgstr "Ingen"
 msgid "Not marked as paid: {missedNames}"
 msgstr "Ikke markert som betalt: {missedNames}"
 
+#. Hides the banner that suggests adding ShuttleKaos to the Home screen
+#: src/pages/shuttlekaos/AddToHome.tsx
+msgid "Not now"
+msgstr "Ikke nå"
+
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipList.tsx
 msgid "Not paid"
@@ -2899,11 +2986,6 @@ msgstr "Ikke betalt"
 #: src/components/auth/MyMemberships.tsx
 msgid "Not paid yet"
 msgstr "Ikke betalt ennå"
-
-#. Start column for a session that hasn't started yet
-#: src/pages/shuttlekaos/PublicSessions.tsx
-msgid "Not started"
-msgstr "Ikke startet"
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Not sure? Start as a beginner."
@@ -2936,6 +3018,11 @@ msgstr "Ingenting passer filtrene."
 #: src/pages/home/HomePage.tsx
 msgid "Nothing planned yet. New events show up here."
 msgstr "Ingenting planlagt ennå. Nye arrangementer dukker opp her."
+
+#. Session start option: start right away
+#: src/pages/shuttlekaos/labels.ts
+msgid "Now"
+msgstr "Nå"
 
 #. Badge on an event that is happening today
 #: src/components/events/EventCard.tsx
@@ -2977,6 +3064,15 @@ msgstr "På en vakt som er fjernet"
 #: src/components/training/NextTraining.tsx
 msgid "On now"
 msgstr "Pågår nå"
+
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "On your phone? Scan the QR code on the organizer's screen."
+msgstr "På mobilen? Skann QR-koden på arrangørens skjerm."
+
+#. Session repeat option: no repeat
+#: src/pages/shuttlekaos/labels.ts
+msgid "Once"
+msgstr "Én gang"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "One game"
@@ -3032,9 +3128,13 @@ msgid "Oops, rim shot!"
 msgstr "Oisann, rammetreff!"
 
 #. Session status: people can still join
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Open"
 msgstr "Åpen"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Open for players right away."
+msgstr "Åpen for spillere med en gang."
 
 #: src/components/calendar/CalendarFeed.tsx
 msgid "Open in calendar app"
@@ -3049,7 +3149,7 @@ msgstr "Åpne i kart"
 msgid "Open menu"
 msgstr "Åpne menyen"
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/PlayPage.tsx
 msgid "Open sessions"
 msgstr "Åpne økter"
 
@@ -3074,16 +3174,21 @@ msgstr "Åpne påmeldingslisten"
 msgid "Open to join"
 msgstr "Åpen for påmelding"
 
+#. Phone banner on ShuttleKaos: why to add the app to the Home screen
+#: src/pages/shuttlekaos/AddToHome.tsx
+msgid "Opens full screen, straight to your sessions."
+msgstr "Åpnes i fullskjerm, rett til øktene dine."
+
 #: src/pages/board/MembershipForm.tsx
 msgid "Optional. Usually a parent's account."
 msgstr "Valgfritt. Vanligvis kontoen til en forelder."
 
 #. Table heading for the options menu
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Options"
 msgstr "Valg"
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Options for {title}"
 msgstr "Valg for {title}"
 
@@ -3099,6 +3204,10 @@ msgstr "Eller lån en på treningene med trener"
 msgid "or get a link by email"
 msgstr "eller få en lenke på e-post"
 
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "Or point your camera at the organizer's QR code."
+msgstr "Eller rett kameraet mot QR-koden til arrangøren."
+
 #. placeholder {0}: club.orgNr
 #: src/components/layout/SiteFooter.tsx
 #: src/pages/contact/ContactSection.tsx
@@ -3107,8 +3216,8 @@ msgstr "Org.nr. {0}"
 
 #. Table heading
 #. Table heading
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Organizer"
 msgstr "Arrangør"
 
@@ -3240,13 +3349,21 @@ msgstr "Makkere"
 msgid "Past"
 msgstr "Tidligere"
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "Past sessions"
 msgstr "Tidligere økter"
+
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "Pasting the link works too."
+msgstr "Det går også fint å lime inn lenken."
 
 #: src/pages/membership/MembershipPage.tsx
 msgid "Pay"
 msgstr "Betal"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "People can sign up now. You start it when everyone's there."
+msgstr "Folk kan melde seg på nå. Du starter når alle er der."
 
 #. Table column: from and to date of the membership
 #: src/pages/board/MembershipList.tsx
@@ -3264,10 +3381,24 @@ msgstr "Person"
 msgid "Phone"
 msgstr "Mobil"
 
+#. Firefox on Android: second step. Use the exact name of this menu option in Firefox in your language
+#: src/components/layout/InstallApp.tsx
+msgid "Pick “Add app to Home screen”."
+msgstr "Velg «Legg til app på startskjermen»."
+
 #. iPhone and iPad: second step. Use the exact name of this option in iOS in your language
 #: src/components/layout/InstallApp.tsx
 msgid "Pick “Add to Home Screen”."
 msgstr "Velg «Legg til på Hjem-skjerm»."
+
+#: src/pages/shuttlekaos/labels.ts
+msgid "Pick a date and a time."
+msgstr "Velg dato og klokkeslett."
+
+#. days is a number
+#: src/pages/shuttlekaos/labels.ts
+msgid "Pick a date in the next {days} days."
+msgstr "Velg en dato innen {days} dager."
 
 #: src/components/events/ShiftBoard.tsx
 msgid "Pick a free shift below and tap Sign up."
@@ -3296,6 +3427,10 @@ msgstr "Velg en vakt"
 #: src/pages/board/MembershipForm.tsx
 msgid "Pick a start date"
 msgstr "Velg startdato"
+
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+msgid "Pick Americano or Mexicano and how many courts. That's it."
+msgstr "Velg Americano eller Mexicano og hvor mange baner. Ferdig."
 
 #: src/pages/board/MembershipForm.tsx
 msgid "Pick an end date"
@@ -3349,6 +3484,16 @@ msgctxt "ShuttleKaos setup: singles or doubles"
 msgid "Play"
 msgstr "Spillform"
 
+#. Browser tab title for the ShuttleKaos home
+#. How it works, step 3
+#. ShuttleKaos tab: your live and waiting sessions
+#: src/pages/shuttlekaos/home/HomeShell.tsx
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgctxt "ShuttleKaos: play games"
+msgid "Play"
+msgstr "Spill"
+
 #: src/pages/shuttlekaos/labels.ts
 msgid "Play a set number of rallies. Every point counts."
 msgstr "Spill et fast antall ballvekslinger. Hvert poeng teller."
@@ -3356,10 +3501,6 @@ msgstr "Spill et fast antall ballvekslinger. Hvert poeng teller."
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "Play as long as you like."
 msgstr "Spill så lenge dere vil."
-
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "Play one more session to see your form."
-msgstr "Spill én økt til for å se formen din."
 
 #: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Play the replay again"
@@ -3381,10 +3522,10 @@ msgstr "Navn på spilleren"
 
 #. Table heading
 #. Table heading
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Players"
 msgstr "Spillere"
 
@@ -3405,8 +3546,8 @@ msgstr "Spiller i en annen økt. Legg til navnet i stedet."
 #. Session status: being played right now
 #. Session status: being played right now
 #: src/pages/shuttlekaos/HallScreen.tsx
+#: src/pages/shuttlekaos/home/PlayPage.tsx
 #: src/pages/shuttlekaos/SessionView.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Playing now"
 msgstr "Pågår nå"
 
@@ -3512,6 +3653,14 @@ msgstr "P"
 msgid "Public"
 msgstr "Offentlig"
 
+#: src/pages/shuttlekaos/home/LobbyPage.tsx
+msgid "Public sessions anyone can join. Jump in or watch the scores live."
+msgstr "Åpne økter alle kan bli med på. Hiv deg med eller følg stillingen live."
+
+#: src/pages/shuttlekaos/home/QuietCourt.tsx
+msgid "Public sessions show up here the moment someone opens one."
+msgstr "Åpne økter dukker opp her med en gang noen starter en."
+
 #: src/pages/shuttlekaos/labels.ts
 msgid "Put every player in a pair."
 msgstr "Sett alle spillerne i par."
@@ -3542,6 +3691,11 @@ msgstr "Spørsmål om dataene dine? Spør styret, så svarer vi."
 msgid "Quick start"
 msgstr "Hurtigstart"
 
+#. Empty state when no public sessions are open
+#: src/pages/shuttlekaos/home/QuietCourt.tsx
+msgid "Quiet on court."
+msgstr "Stille på banen."
+
 #. Short label for a round number, e.g. R3 for Round 3
 #: src/pages/shuttlekaos/MatchGrid.tsx
 msgid "R{number}"
@@ -3562,6 +3716,10 @@ msgstr "Plass"
 #: src/pages/club/sections.tsx
 msgid "Read about privacy"
 msgstr "Les om personvern"
+
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Ready for chaos?"
+msgstr "Klar for kaos?"
 
 #. Money paid in so far for memberships
 #: src/pages/board/MembersOverview.tsx
@@ -3609,8 +3767,9 @@ msgstr "Fjerne administrator?"
 msgid "Remove location"
 msgstr "Fjern sted"
 
+#: src/pages/shuttlekaos/home/ActionModal.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Remove me"
 msgstr "Fjern meg"
 
@@ -3622,10 +3781,34 @@ msgstr "Fjern bilde"
 msgid "Remove volunteer?"
 msgstr "Fjerne frivillig?"
 
+#: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Remove yourself?"
 msgstr "Fjerne deg selv?"
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Repeat"
+msgstr "Gjenta"
+
+#. weekday is a day name, e.g. Thursday
+#: src/pages/shuttlekaos/labels.ts
+msgid "Repeats every {weekday}"
+msgstr "Gjentas hver {weekday}"
+
+#. weekday is a day name, e.g. Thursday. date is the last date
+#: src/pages/shuttlekaos/labels.ts
+msgid "Repeats every {weekday} until {date}"
+msgstr "Gjentas hver {weekday} til {date}"
+
+#. weekday is a day name, e.g. Thursday
+#: src/pages/shuttlekaos/labels.ts
+msgid "Repeats every other {weekday}"
+msgstr "Gjentas annenhver {weekday}"
+
+#. weekday is a day name, e.g. Thursday. date is the last date
+#: src/pages/shuttlekaos/labels.ts
+msgid "Repeats every other {weekday} until {date}"
+msgstr "Gjentas annenhver {weekday} til {date}"
 
 #: src/pages/study/notfound/ideas/CourtOut.tsx
 msgid "Replay"
@@ -3712,6 +3895,7 @@ msgid "Round {next}"
 msgstr "Runde {next}"
 
 #: src/pages/shuttlekaos/MatchGrid.tsx
+#: src/pages/shuttlekaos/MyStats.tsx
 msgid "Round {number}"
 msgstr "Runde {number}"
 
@@ -3748,7 +3932,6 @@ msgstr "Runde 1 er trukket. La kaoset begynne!"
 
 #: src/pages/shuttlekaos/MatchGrid.tsx
 #: src/pages/shuttlekaos/SettingsForm.tsx
-#: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Rounds"
 msgstr "Runder"
 
@@ -3851,9 +4034,10 @@ msgstr "Sesong"
 msgid "Season {0}"
 msgstr "Sesong {0}"
 
-#: src/pages/shuttlekaos/MyStats.tsx
-msgid "See all your stats"
-msgstr "Se all statistikken din"
+#. Link from a few open sessions to the full list
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "See all"
+msgstr "Se alle"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "See groups and times"
@@ -3941,15 +4125,17 @@ msgid "Service fault: page not found"
 msgstr "Servefeil: siden finnes ikke"
 
 #. Table heading
-#. Table heading
-#: src/pages/shuttlekaos/PublicSessions.tsx
+#: src/pages/shuttlekaos/SessionTable.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Session"
 msgstr "Økt"
 
+#: src/pages/shuttlekaos/home/JoinCode.tsx
+msgid "Session code"
+msgstr "Øktkode"
+
+#: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Session deleted."
 msgstr "Økta er slettet."
 
@@ -3970,9 +4156,9 @@ msgstr "Velg sted"
 msgid "Set number"
 msgstr "Fast antall"
 
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
 #: src/pages/shuttlekaos/SetupPage.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "Set up again"
 msgstr "Sett opp på nytt"
 
@@ -3998,6 +4184,11 @@ msgstr "Del"
 #: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Share link"
 msgstr "Del lenke"
+
+#. How it works, step 2
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+msgid "Share the code or QR"
+msgstr "Del koden eller QR-koden"
 
 #: src/pages/shuttlekaos/SessionMenu.tsx
 #: src/pages/shuttlekaos/ShareButton.tsx
@@ -4054,6 +4245,10 @@ msgstr "Vis QR-kode"
 #: src/pages/board/visitors/ViewsChart.tsx
 msgid "Show the numbers"
 msgstr "Vis tallene"
+
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+msgid "Show the QR or read out the code. Everyone joins from their phone."
+msgstr "Vis QR-koden eller les opp koden. Alle blir med fra sin egen mobil."
 
 #. Button: list the members who have not paid yet
 #: src/pages/board/MembersOverview.tsx
@@ -4115,6 +4310,11 @@ msgstr "Skal du melde på et barn?"
 #: src/pages/club/ClubPage.tsx
 msgid "Since {0}"
 msgstr "Siden {0}"
+
+#. Under the stats title: the month of your first session, e.g. Since August 2026
+#: src/pages/shuttlekaos/StatsPage.tsx
+msgid "Since {month}"
+msgstr "Siden {month}"
 
 #. Badminton: one player on each side
 #: src/pages/shuttlekaos/labels.ts
@@ -4197,8 +4397,10 @@ msgstr "Spons klubben"
 msgid "Standings"
 msgstr "Tabell"
 
+#. How it works, step 1
 #: src/pages/board/membersCsv.ts
 #: src/pages/board/MembershipForm.tsx
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
 msgid "Start"
 msgstr "Start"
 
@@ -4208,9 +4410,7 @@ msgid "Start"
 msgstr "Start"
 
 #. Table heading: when the session started, in Oslo time
-#. Table heading: when the session started, in Oslo time
-#: src/pages/shuttlekaos/PublicSessions.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/SessionTable.tsx
 msgctxt "table heading"
 msgid "Start"
 msgstr "Start"
@@ -4228,6 +4428,10 @@ msgstr "Starte nå?"
 msgid "Start season {label}"
 msgstr "Start sesong {label}"
 
+#: src/pages/shuttlekaos/OpenSession.tsx
+msgid "Start when everyone's here."
+msgstr "Start når alle er her."
+
 #. Table column: where a membership request stands, and who sent it
 #. Table column: whether the person has paid
 #: src/pages/board/membersCsv.ts
@@ -4241,6 +4445,14 @@ msgstr "Status"
 #: src/pages/shuttlekaos/SetupSteps.tsx
 msgid "Step {number} of {total} · {name}"
 msgstr "Steg {number} av {total} · {name}"
+
+#: src/pages/shuttlekaos/SessionMenu.tsx
+msgid "Stop repeating"
+msgstr "Stopp gjentakelsen"
+
+#: src/pages/shuttlekaos/SessionMenu.tsx
+msgid "Stop repeating?"
+msgstr "Stoppe gjentakelsen?"
 
 #: src/pages/study/notfound/NotFoundGallery.tsx
 msgid "Study case"
@@ -4305,10 +4517,20 @@ msgstr "Ta <0>{name}</0> av denne vakten?"
 msgid "Take back round {round}?"
 msgstr "Angre runde {round}?"
 
+#. Points to the New session button at the bottom of the phone screen
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+msgid "Tap New session below to begin"
+msgstr "Trykk på Ny økt nederst for å begynne"
+
 #. iPhone and iPad: first step to add the site to the Home Screen. The icon is the iOS Share icon
 #: src/components/layout/InstallApp.tsx
 msgid "Tap Share <0/> in the browser."
 msgstr "Trykk på Del <0/> i nettleseren."
+
+#. Firefox on Android: first step to add the site to the Home screen. The icon is the three-dot Firefox menu icon
+#: src/components/layout/InstallApp.tsx
+msgid "Tap the menu <0/> in the browser."
+msgstr "Trykk på menyen <0/> i nettleseren."
 
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Tap to serve"
@@ -4361,6 +4583,10 @@ msgstr "Bildet er over 15 MB. Velg et mindre."
 #: src/volunteers/queries.ts
 msgid "That spot is gone. Someone may have removed it."
 msgstr "Plassen finnes ikke lenger. Noen kan ha fjernet den."
+
+#: src/pages/shuttlekaos/labels.ts
+msgid "That time has passed. Pick a later one."
+msgstr "Det tidspunktet har passert. Velg et senere."
 
 #: src/pages/shuttlekaos/PlaySession.tsx
 msgid "That was the last round. Time for the results!"
@@ -4439,11 +4665,14 @@ msgid "The new draw goes away and you're back on the previous round."
 msgstr "Den nye trekningen forsvinner, og dere er tilbake på forrige runde."
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "The next 2 dates are always open for sign-up."
+msgstr "De neste 2 datoene er alltid åpne for påmelding."
+
+#: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "The number of rounds follows the players."
 msgstr "Antall runder følger antall spillere."
 
-#: src/pages/shuttlekaos/HallScreen.tsx
-#: src/pages/shuttlekaos/SessionPage.tsx
+#: src/pages/shuttlekaos/Fallbacks.tsx
 msgid "The organizer may have deleted it. Start your own instead!"
 msgstr "Arrangøren kan ha slettet den. Start din egen i stedet!"
 
@@ -4520,7 +4749,7 @@ msgstr "Denne innloggingen er ikke slått på ennå."
 msgid "This page is out of play. Keep the shuttle up while you're here, or head back to the club."
 msgstr "Denne siden er ute av spill. Hold fjærballen oppe mens du er her, eller gå tilbake til klubben."
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/ActionModal.tsx
 msgid "This removes {title} for everyone, including the players' history. This can't be undone."
 msgstr "Dette fjerner {title} for alle, også fra spillernes historikk. Det kan ikke angres."
 
@@ -4528,8 +4757,7 @@ msgstr "Dette fjerner {title} for alle, også fra spillernes historikk. Det kan 
 msgid "This removes the session for everyone, including the players' history. This can't be undone."
 msgstr "Dette fjerner økta for alle, også fra spillernes historikk. Det kan ikke angres."
 
-#: src/pages/shuttlekaos/HallScreen.tsx
-#: src/pages/shuttlekaos/SessionPage.tsx
+#: src/pages/shuttlekaos/Fallbacks.tsx
 msgid "This session doesn't exist anymore"
 msgstr "Denne økta finnes ikke lenger"
 
@@ -4570,6 +4798,10 @@ msgstr "Tre måter å si «siden finnes ikke» på i badminton. Prøv dem, og ve
 msgid "Thwack!"
 msgstr "Smell!"
 
+#: src/pages/shuttlekaos/SettingsForm.tsx
+msgid "Time"
+msgstr "Klokkeslett"
+
 #: src/components/training/TrainingSchedule.tsx
 msgid "Time slot"
 msgstr "Tidsluke"
@@ -4598,10 +4830,10 @@ msgstr "For mange e-poster akkurat nå. Prøv igjen senere."
 msgid "Too many tries. Try again in a bit."
 msgstr "For mange forsøk. Prøv igjen om litt."
 
-#. Form chart axis: finished first in a session
+#. Stats tile detail: share of sessions you finished top 3, e.g. Top 3 in 48%
 #: src/pages/shuttlekaos/MyStats.tsx
-msgid "Top"
-msgstr "Topp"
+msgid "Top 3 in {podiumShare}"
+msgstr "Topp 3 i {podiumShare}"
 
 #. Where the main menu sits
 #: src/components/layout/VariantPanel.tsx
@@ -4629,6 +4861,11 @@ msgstr "Poeng totalt"
 #: src/pages/shuttlekaos/labels.ts
 msgid "Total points per match"
 msgstr "Totalpoeng per kamp"
+
+#. Heading for your stats tiles
+#: src/pages/shuttlekaos/StatsPage.tsx
+msgid "Totals"
+msgstr "Totalt"
 
 #. Event type
 #: src/data/events.ts
@@ -4713,6 +4950,10 @@ msgstr "Prøv en annen kategori, eller se alle nyhetene."
 msgid "Two players have the same name. Make them different."
 msgstr "To spillere har samme navn. Gjør dem forskjellige."
 
+#: src/pages/shuttlekaos/home/HowItWorks.tsx
+msgid "Type the score after each match. Standings update live for everyone."
+msgstr "Skriv inn resultatet etter hver kamp. Tabellen oppdateres live for alle."
+
 #: src/pages/study/notfound/ideas/Scoreboard.tsx
 msgid "Umpire"
 msgstr "Dommer"
@@ -4775,10 +5016,6 @@ msgstr "Bruk en annen e-post"
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Use current location"
 msgstr "Bruk min posisjon"
-
-#: src/pages/shuttlekaos/StartPage.tsx
-msgid "Use last setup"
-msgstr "Bruk forrige oppsett"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "Use other details"
@@ -4844,8 +5081,8 @@ msgstr "Dugnad"
 msgid "Volunteers"
 msgstr "Frivillige"
 
-#. Short column heading for matches won
-#: src/pages/shuttlekaos/StandingsTable.tsx
+#. Short for won: a column heading or a match result
+#: src/pages/shuttlekaos/labels.ts
 msgid "W"
 msgstr "V"
 
@@ -4855,7 +5092,7 @@ msgid "Waiting list"
 msgstr "Venteliste"
 
 #. Heading for your sessions that haven't started
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/PlayPage.tsx
 msgid "Waiting to start"
 msgstr "Venter på start"
 
@@ -4920,9 +5157,19 @@ msgstr "Uke {0}"
 msgid "Weekday"
 msgstr "Ukedag"
 
+#. Session repeat option
+#: src/pages/shuttlekaos/labels.ts
+msgid "Weekly"
+msgstr "Hver uke"
+
 #: src/pages/training/TrainingPage.tsx
 msgid "Weekly schedule"
 msgstr "Ukeplan"
+
+#. Greeting when we don't know your name
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Welcome"
+msgstr "Velkommen"
 
 #: src/pages/contact/ContactSection.tsx
 msgid "What is it about?"
@@ -4937,13 +5184,14 @@ msgstr "Hva du tar med"
 msgid "What we store about you, why, and who helps us keep it."
 msgstr "Hva vi lagrer om deg, hvorfor, og hvem som hjelper oss å ta vare på det."
 
+#: src/pages/shuttlekaos/SettingsForm.tsx
+#: src/pages/shuttlekaos/SetupPage.tsx
+msgid "When"
+msgstr "Når"
+
 #: src/pages/home/HomePage.tsx
 msgid "Where do you want to start?"
 msgstr "Hvor vil du begynne?"
-
-#: src/pages/shuttlekaos/StatsPage.tsx
-msgid "Where you finished in each session, oldest first."
-msgstr "Hvor du endte i hver økt, eldste først."
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Which level am I?"
@@ -4983,12 +5231,17 @@ msgstr "Bredde"
 msgid "Winner"
 msgstr "Vinner"
 
+#. Stats tile: sessions you finished first
+#: src/pages/shuttlekaos/MyStats.tsx
+msgid "Wins"
+msgstr "Seire"
+
 #: src/components/training/TrainingSchedule.tsx
 #: src/pages/training/TrainingPage.tsx
 msgid "With coach"
 msgstr "Med trener"
 
-#: src/pages/shuttlekaos/StandingsTable.tsx
+#: src/pages/shuttlekaos/labels.ts
 msgid "Won"
 msgstr "Vunnet"
 
@@ -5019,8 +5272,8 @@ msgstr "Ja. Barn kan starte med prøvemedlemskap, og voksne kan komme på drop-i
 #. Badge next to your own name in the admin list
 #. Shown instead of your own name in a session
 #: src/pages/board/access/AccessPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/labels.ts
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "You"
 msgstr "Du"
 
@@ -5060,12 +5313,12 @@ msgstr "Du hjalp til"
 msgid "You left the session."
 msgstr "Du forlot økta."
 
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "You organize · {players} players"
 msgstr "Du arrangerer · {players} spillere"
 
 #. Your place and points, e.g. You: #2, 84 pts
-#: src/pages/shuttlekaos/StartPage.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 msgid "You: #{rank}, {points} pts"
 msgstr "Du: #{rank}, {points} poeng"
 
@@ -5081,8 +5334,8 @@ msgstr "Du er med"
 msgid "You're in! The organizer starts when everyone's here."
 msgstr "Du er med! Arrangøren starter når alle er her."
 
+#: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/SessionMenu.tsx
-#: src/pages/shuttlekaos/StartPage.tsx
 msgid "You're off that session."
 msgstr "Du er ute av den økta."
 
@@ -5122,16 +5375,17 @@ msgstr "Meldingen din er på vei til styret."
 msgid "Your pick"
 msgstr "Ditt valg"
 
-#. Heading for your latest finished sessions and your place in each
-#: src/pages/shuttlekaos/StatsPage.tsx
-msgid "Your results"
-msgstr "Resultatene dine"
-
 #. Browser tab title for your ShuttleKaos stats
-#: src/pages/shuttlekaos/StartPage.tsx
+#. ShuttleKaos tab: your results and history
+#: src/pages/shuttlekaos/home/HomeShell.tsx
 #: src/pages/shuttlekaos/StatsPage.tsx
 msgid "Your stats"
 msgstr "Statistikken din"
+
+#. Title when you have no stats yet
+#: src/pages/shuttlekaos/MyStats.tsx
+msgid "Your stats start here"
+msgstr "Statistikken din starter her"
 
 #: src/components/auth/AvatarCropper.tsx
 msgid "Zoom"

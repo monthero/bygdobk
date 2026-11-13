@@ -82,6 +82,31 @@ const Field: FC<{ label: ReactNode; children: ReactNode }> = ({ label, children 
   </Stack>
 );
 
+type Choices<T extends string> = { options: readonly T[]; parse: (value: unknown) => T };
+
+type SegmentedFieldProps<T extends string> = {
+  label: ReactNode;
+  labels: Record<T, MessageDescriptor>;
+  choices: Choices<T>;
+  value: T;
+  onChange: (value: T) => void;
+};
+
+const SegmentedField = <T extends string>({ label, labels, choices, value, onChange }: SegmentedFieldProps<T>) => {
+  const { i18n } = useLingui();
+  return (
+    <Field label={label}>
+      <SegmentedControl
+        fullWidth
+        size="xs"
+        data={choices.options.map((option) => ({ value: option, label: i18n._(labels[option]) }))}
+        value={value}
+        onChange={(next) => onChange(choices.parse(next))}
+      />
+    </Field>
+  );
+};
+
 const VariantPanel: FC = () => {
   const { i18n } = useLingui();
   const { palette, shape, density, navLayout, width, font, style, footerMark, set } = useSettings(
@@ -146,42 +171,34 @@ const VariantPanel: FC = () => {
           )}
         />
       </Field>
-      <Field label={<Trans>Shape</Trans>}>
-        <SegmentedControl
-          fullWidth
-          size="xs"
-          data={options(SHAPE_LABELS, Shape.options)}
-          value={shape}
-          onChange={(value) => set({ shape: Shape.parse(value) })}
-        />
-      </Field>
-      <Field label={<Trans>Size</Trans>}>
-        <SegmentedControl
-          fullWidth
-          size="xs"
-          data={options(DENSITY_LABELS, Density.options)}
-          value={density}
-          onChange={(value) => set({ density: Density.parse(value) })}
-        />
-      </Field>
-      <Field label={<Trans>Menu</Trans>}>
-        <SegmentedControl
-          fullWidth
-          size="xs"
-          data={options(NAV_LABELS, NavLayout.options)}
-          value={navLayout}
-          onChange={(value) => set({ navLayout: NavLayout.parse(value) })}
-        />
-      </Field>
-      <Field label={<Trans>Width</Trans>}>
-        <SegmentedControl
-          fullWidth
-          size="xs"
-          data={options(WIDTH_LABELS, Width.options)}
-          value={width}
-          onChange={(value) => set({ width: Width.parse(value) })}
-        />
-      </Field>
+      <SegmentedField
+        label={<Trans>Shape</Trans>}
+        labels={SHAPE_LABELS}
+        choices={Shape}
+        value={shape}
+        onChange={(value) => set({ shape: value })}
+      />
+      <SegmentedField
+        label={<Trans>Size</Trans>}
+        labels={DENSITY_LABELS}
+        choices={Density}
+        value={density}
+        onChange={(value) => set({ density: value })}
+      />
+      <SegmentedField
+        label={<Trans>Menu</Trans>}
+        labels={NAV_LABELS}
+        choices={NavLayout}
+        value={navLayout}
+        onChange={(value) => set({ navLayout: value })}
+      />
+      <SegmentedField
+        label={<Trans>Width</Trans>}
+        labels={WIDTH_LABELS}
+        choices={Width}
+        value={width}
+        onChange={(value) => set({ width: value })}
+      />
       <Field label={<Trans comment="Variant menu: the decoration in the corner of the page footer">Footer mark</Trans>}>
         <Select
           size="xs"

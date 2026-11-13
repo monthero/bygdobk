@@ -84,15 +84,13 @@
 }
 
 .kaos {
-  & :where(h2, h3) {
-    text-shadow:
-      0 1px 2px rgb(255 255 255 / 0.85),
-      0 0 14px rgb(255 255 255 / 0.7);
+  --kaos-halo: 0 1px 2px rgb(255 255 255 / 0.85), 0 0 14px rgb(255 255 255 / 0.7);
+
+  :where([data-mantine-color-scheme='dark']) & {
+    --kaos-halo: 0 1px 2px rgb(0 0 0 / 0.8), 0 0 14px rgb(0 0 0 / 0.6);
   }
 
-  :where([data-mantine-color-scheme='dark']) & :where(h2, h3) {
-    text-shadow:
-      0 1px 2px rgb(0 0 0 / 0.8),
-      0 0 14px rgb(0 0 0 / 0.6);
+  & :where(h2, h3) {
+    text-shadow: var(--kaos-halo);
   }
 }

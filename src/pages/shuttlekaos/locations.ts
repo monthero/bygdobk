@@ -74,7 +74,7 @@ export const mapsUrl = (location: SessionLocation) =>
 
 const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
 
-const distanceKm = (lat: number, lng: number, location: SessionLocation) => {
+export const distanceKm = (lat: number, lng: number, location: SessionLocation) => {
   const dLat = toRadians(location.lat - lat);
   const dLng = toRadians(location.lng - lng);
   const a =
@@ -91,7 +91,7 @@ const nearest = (locations: SessionLocation[], lat: number, lng: number) => {
   return best && best.km <= NEAR_KM ? best.location : null;
 };
 
-const currentPosition = () =>
+export const currentPosition = () =>
   new Promise<GeolocationPosition>((resolve, reject) => {
     if (!('geolocation' in navigator)) {
       reject(new Error('Geolocation is not available'));

@@ -6,7 +6,6 @@ import { useEffect, useMemo, type FC, type ReactNode } from 'react';
 
 import { ArrowsIn, ArrowsOut, ListNumbers, Shuttle, Trophy } from '~/components/ui';
 import { usePageTitle } from '~/hooks/usePageTitle';
-import { LoadError } from '~/pages/board/LoadError';
 import { standings } from '~/shuttlekaos/engine';
 import { SessionStatus, type Session } from '~/shuttlekaos/model';
 import { useShuttleKaosSession } from '~/shuttlekaos/queries';
@@ -14,7 +13,7 @@ import { useUi } from '~/stores/ui';
 
 import { Wordmark } from './BrandHeader';
 import { CourtCard } from './CourtCard';
-import { EmptySession, LiveBadge, SessionSkeleton } from './Fallbacks';
+import { LiveBadge, SessionGate } from './Fallbacks';
 import { InviteLink } from './InviteCard';
 import {
   BRAND,
@@ -286,32 +285,12 @@ export const HallScreen: FC = () => {
     </ActionIcon>
   );
 
-  let content: ReactNode;
-  if (view.isPending) content = <SessionSkeleton />;
-  else if (view.isError) {
-    content = (
-      <LoadError
-        title={t`Couldn't load this session`}
-        error={view.error}
-        retrying={view.isRefetching}
-        onRetry={() => void view.refetch()}
-      />
-    );
-  } else if (!view.data) {
-    content = (
-      <EmptySession
-        title={<Trans>This session doesn't exist anymore</Trans>}
-        text={<Trans>The organizer may have deleted it. Start your own instead!</Trans>}
-      />
-    );
-  } else {
-    content = <Board session={shownSession(view.data.session)} shareCode={view.data.shareCode} />;
-  }
-
   return (
     <div ref={ref} className={classes.hall} data-idle={idle || undefined}>
       <Box className={classes.stage} __vars={{ '--hall-scale': `${scale}` }}>
-        {content}
+        <SessionGate view={view}>
+          {(data) => <Board session={shownSession(data.session)} shareCode={data.shareCode} />}
+        </SessionGate>
       </Box>
       {fullscreenButton}
     </div>

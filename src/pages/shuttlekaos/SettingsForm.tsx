@@ -1,37 +1,73 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Accordion, Button, Chip, Group, Radio, SegmentedControl, SimpleGrid, Stack, Text } from '@mantine/core';
+import {
+  Accordion,
+  Button,
+  Chip,
+  Group,
+  Radio,
+  SegmentedControl,
+  SimpleGrid,
+  Stack,
+  Switch,
+  Text,
+} from '@mantine/core';
+import { DatePickerInput, TimeInput } from '@mantine/dates';
 import { useState, type FC, type ReactNode } from 'react';
 import { z } from 'zod';
 
-import { Globe, Hash, Infinity as InfinityIcon, LockSimple, UsersThree } from '~/components/ui';
+import {
+  CalendarBlank,
+  Clock,
+  Globe,
+  Hash,
+  Infinity as InfinityIcon,
+  Lightning,
+  LockSimple,
+  UsersThree,
+} from '~/components/ui';
+import { BoardDatesProvider } from '~/pages/board/BoardDatesProvider';
+import { DAY_FORMATTER } from '~/pages/board/format';
 import { entrantsNeeded, plannedRounds } from '~/shuttlekaos/engine';
 import {
   EVERYONE_ONCE,
   Format,
   Level,
   MAX_COURTS,
+  MAX_PLAYERS,
   MAX_ROUNDS,
+  MIN_PLAYER_LIMIT,
   Partners,
   PlayStyle,
+  Repeat,
   ScoreMode,
   type Pair,
   type Settings,
 } from '~/shuttlekaos/model';
+import { date, ISO_DAY, today, todayIso } from '~/utils/dates';
 
 import { Field, Section } from './FormParts';
 import {
   FORMAT_LABELS,
+  lastScheduleDay,
   LEVEL_HINTS,
   PARTNER_HINTS,
   PARTNER_LABELS,
+  REPEAT_LABELS,
+  REPEAT_WEEKS,
+  repeatsLabel,
   RoundsChoice,
   roundsChoice,
   SCORE_MODE_LABELS,
+  scheduleMessage,
+  scheduleProblem,
   SectionColor,
   STYLE_LABELS,
   suggestedCourts,
   Visibility,
   VISIBILITY_LABELS,
+  When,
+  WHEN_LABELS,
+  type Schedule,
 } from './labels';
 import { LevelsText } from './Levels';
 import { FORMAT_ICONS, PARTNER_ICONS, SECTION_ICONS, STYLE_ICONS } from './sectionIcons';
@@ -53,6 +89,10 @@ const SEGMENT_CLASS_NAMES = { root: classes.segmented, label: classes.segmentLab
 const VISIBILITY_ICONS: Record<Visibility, ReactNode> = {
   [Visibility.enum.public]: <Globe />,
   [Visibility.enum.private]: <LockSimple />,
+};
+const WHEN_ICONS: Record<When, ReactNode> = {
+  [When.enum.now]: <Lightning />,
+  [When.enum.later]: <CalendarBlank />,
 };
 const ROUNDS_ICONS: Record<RoundsChoice, ReactNode> = {
   [RoundsChoice.enum.everyone]: <UsersThree />,
@@ -111,7 +151,142 @@ export const VisibilityPicker: FC<{ isPublic: boolean; onChange: (isPublic: bool
   );
 };
 
-export const LevelPicker: FC<{ levels: Level[]; onChange: (levels: Level[]) => void }> = ({ levels, onChange }) => {
+const ScheduleFields: FC<{ schedule: Schedule; onChange: (schedule: Schedule) => void }> = ({ schedule, onChange }) => {
+  const { t, i18n } = useLingui();
+  const { day, repeat } = schedule;
+  const problem = scheduleProblem(schedule);
+  const every = REPEAT_WEEKS[repeat];
+  const patch = (next: Partial<Schedule>) => onChange({ ...schedule, ...next });
+
+  const pickDay = (next: string | null) =>
+    patch({ day: next, endsOn: next && schedule.endsOn && schedule.endsOn < next ? null : schedule.endsOn });
+
+  return (
+    <BoardDatesProvider>
+      <Stack gap="sm">
+        <SimpleGrid cols={2} spacing="sm">
+          <DatePickerInput
+            size="md"
+            label={t`Date`}
+            leftSection={<CalendarBlank />}
+            valueFormatter={DAY_FORMATTER}
+            minDate={todayIso()}
+            maxDate={lastScheduleDay()}
+            value={day}
+            onChange={pickDay}
+          />
+          <TimeInput
+            size="md"
+            label={t`Time`}
+            leftSection={<Clock />}
+            value={schedule.time}
+            onChange={(e) => patch({ time: e.currentTarget.value })}
+          />
+        </SimpleGrid>
+        {problem && (
+          <Text size="sm" c="red">
+            {i18n._(scheduleMessage(problem))}
+          </Text>
+        )}
+        <Field label={<Trans>Repeat</Trans>}>
+          <Choice
+            label={t`Repeat`}
+            value={repeat}
+            onChange={(value) => patch({ repeat: Repeat.parse(value) })}
+            data={Repeat.options.map((value) => ({ value, label: i18n._(REPEAT_LABELS[value]) }))}
+          />
+        </Field>
+        {every && day && (
+          <>
+            <DatePickerInput
+              size="md"
+              label={t`Last date`}
+              placeholder={t`No end date`}
+              leftSection={<CalendarBlank />}
+              valueFormatter={DAY_FORMATTER}
+              clearable
+              minDate={day}
+              value={schedule.endsOn}
+              onChange={(endsOn) => patch({ endsOn })}
+            />
+            <Text size="sm" c="dimmed">
+              {i18n._(repeatsLabel({ weekday: date(day).isoWeekday(), every, endsOn: schedule.endsOn }))}.{' '}
+              <Trans>The next 2 dates are always open for sign-up.</Trans>
+            </Text>
+          </>
+        )}
+      </Stack>
+    </BoardDatesProvider>
+  );
+};
+
+export const WhenPicker: FC<{ schedule: Schedule; onChange: (schedule: Schedule) => void }> = ({
+  schedule,
+  onChange,
+}) => {
+  const { t, i18n } = useLingui();
+  const later = schedule.when === When.enum.later;
+
+  const pick = (value: string) => {
+    const when = When.parse(value);
+    onChange({ ...schedule, when, day: schedule.day ?? today().add(1, 'day').format(ISO_DAY) });
+  };
+
+  return (
+    <Stack gap={8}>
+      <Choice
+        label={t`When`}
+        value={schedule.when}
+        onChange={pick}
+        data={When.options.map((value) => ({
+          value,
+          label: <Option icon={WHEN_ICONS[value]}>{i18n._(WHEN_LABELS[value])}</Option>,
+        }))}
+      />
+      <Text size="sm" c="dimmed">
+        {later ? (
+          <Trans>People can sign up now. You start it when everyone's there.</Trans>
+        ) : (
+          <Trans>Open for players right away.</Trans>
+        )}
+      </Text>
+      {later && <ScheduleFields schedule={schedule} onChange={onChange} />}
+    </Stack>
+  );
+};
+
+export const PlayerLimitField: FC<{
+  value: number | null;
+  suggested: number;
+  onChange: (value: number | null) => void;
+}> = ({ value, suggested, onChange }) => {
+  const { t } = useLingui();
+  return (
+    <Stack gap={8}>
+      <Switch
+        size="md"
+        color="brand"
+        label={<Trans>Limit the number of players</Trans>}
+        checked={value !== null}
+        onChange={(e) => onChange(e.currentTarget.checked ? suggested : null)}
+      />
+      {value !== null && (
+        <Field hint={<Trans>Joining stops at {value}. You can still add people yourself.</Trans>}>
+          <Stepper
+            label={t`Max players`}
+            value={value}
+            min={MIN_PLAYER_LIMIT}
+            max={MAX_PLAYERS}
+            onChange={(limit) => limit !== null && onChange(limit)}
+            fullWidth
+          />
+        </Field>
+      )}
+    </Stack>
+  );
+};
+
+const LevelPicker: FC<{ levels: Level[]; onChange: (levels: Level[]) => void }> = ({ levels, onChange }) => {
   const { t, i18n } = useLingui();
   return (
     <Stack gap="sm">
@@ -169,7 +344,7 @@ export const LevelPicker: FC<{ levels: Level[]; onChange: (levels: Level[]) => v
   );
 };
 
-export const GameFields: FC<{ editor: SettingsEditor }> = ({ editor: { settings, onChange } }) => {
+const GameFields: FC<{ editor: SettingsEditor }> = ({ editor: { settings, onChange } }) => {
   const { t, i18n } = useLingui();
   return (
     <>
@@ -285,7 +460,7 @@ const PointsField: FC<{ editor: SettingsEditor }> = ({ editor: { settings, setPo
   );
 };
 
-export const ScoringFields: FC<{ editor: SettingsEditor }> = ({ editor }) => {
+const ScoringFields: FC<{ editor: SettingsEditor }> = ({ editor }) => {
   const { t, i18n } = useLingui();
   const { settings, onChange, pickMode } = editor;
   return (
@@ -319,7 +494,7 @@ export const ScoringFields: FC<{ editor: SettingsEditor }> = ({ editor }) => {
   );
 };
 
-export const RoundsFields: FC<{ editor: SettingsEditor; playerCount: number; pairs: Pair[] }> = ({
+const RoundsFields: FC<{ editor: SettingsEditor; playerCount: number; pairs: Pair[] }> = ({
   editor,
   playerCount,
   pairs,
@@ -380,6 +555,35 @@ export const RoundsFields: FC<{ editor: SettingsEditor; playerCount: number; pai
   );
 };
 
+export const GameSection: FC<{ editor: SettingsEditor; children?: ReactNode }> = ({ editor, children }) => (
+  <Section title={<Trans>Game</Trans>} icon={SECTION_ICONS.game} color={SectionColor.enum.brand}>
+    <GameFields editor={editor} />
+    {children}
+  </Section>
+);
+
+export const ScoringSection: FC<{ editor: SettingsEditor }> = ({ editor }) => (
+  <Section title={<Trans>Scoring</Trans>} icon={SECTION_ICONS.scoring} color={SectionColor.enum.teal}>
+    <ScoringFields editor={editor} />
+  </Section>
+);
+
+export const RoundsSection: FC<{ editor: SettingsEditor; playerCount: number; pairs: Pair[] }> = ({
+  editor,
+  playerCount,
+  pairs,
+}) => (
+  <Section title={<Trans>Rounds</Trans>} icon={SECTION_ICONS.rounds} color={SectionColor.enum.blue}>
+    <RoundsFields editor={editor} playerCount={playerCount} pairs={pairs} />
+  </Section>
+);
+
+export const LevelSection: FC<{ levels: Level[]; onChange: (levels: Level[]) => void }> = ({ levels, onChange }) => (
+  <Section title={<Trans>Level</Trans>} icon={SECTION_ICONS.level} color={SectionColor.enum.grape}>
+    <LevelPicker levels={levels} onChange={onChange} />
+  </Section>
+);
+
 type Props = {
   settings: Settings;
   playerCount: number;
@@ -391,19 +595,12 @@ export const SettingsForm: FC<Props> = ({ settings, playerCount, pairs, onChange
   const editor = useSettingsEditor(settings, onChange);
   return (
     <Stack gap="md">
-      <Section title={<Trans>Game</Trans>} icon={SECTION_ICONS.game} color={SectionColor.enum.brand}>
-        <GameFields editor={editor} />
+      <GameSection editor={editor}>
         <CourtsField editor={editor} playerCount={playerCount} />
-      </Section>
-      <Section title={<Trans>Scoring</Trans>} icon={SECTION_ICONS.scoring} color={SectionColor.enum.teal}>
-        <ScoringFields editor={editor} />
-      </Section>
-      <Section title={<Trans>Rounds</Trans>} icon={SECTION_ICONS.rounds} color={SectionColor.enum.blue}>
-        <RoundsFields editor={editor} playerCount={playerCount} pairs={pairs} />
-      </Section>
-      <Section title={<Trans>Level</Trans>} icon={SECTION_ICONS.level} color={SectionColor.enum.grape}>
-        <LevelPicker levels={settings.levels} onChange={(levels) => onChange({ levels })} />
-      </Section>
+      </GameSection>
+      <ScoringSection editor={editor} />
+      <RoundsSection editor={editor} playerCount={playerCount} pairs={pairs} />
+      <LevelSection levels={settings.levels} onChange={(levels) => onChange({ levels })} />
     </Stack>
   );
 };

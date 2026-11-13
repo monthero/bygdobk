@@ -36,6 +36,7 @@
 }
 
 .option {
+  composes: underline from '../../styles/underline.module.css';
   position: relative;
   display: flex;
   align-items: center;
@@ -56,14 +57,6 @@
   transition: color 0.2s;
 
   &::after {
-    content: '';
-    position: absolute;
-    inset-inline: 12px;
-    bottom: 0;
-    height: 3px;
-    border-radius: 3px 3px 0 0;
-    background: var(--bk-accent-strong);
-    opacity: 0;
     transform: scaleX(0.4);
     transition:
       opacity 0.2s,

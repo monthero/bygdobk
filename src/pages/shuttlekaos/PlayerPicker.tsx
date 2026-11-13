@@ -28,7 +28,7 @@ const PlayerRow: FC<{ player: Player; me?: boolean; onRemove?: (id: string) => v
       <span className={classes.name}>{me ? i18n._(YOU) : playerName}</span>
       {player.profileId && (
         <Badge variant="light" color="blue" size="sm" leftSection={<LinkSimple />} className={classes.linked}>
-          <Trans comment="Badge on a player that is linked to a club account">Account</Trans>
+          <Trans comment="Badge on a player that is linked to a ShuttleKaos account">Account</Trans>
         </Badge>
       )}
       {onRemove && (

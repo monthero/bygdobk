@@ -30,7 +30,10 @@ import { estimate } from './estimate';
 import {
   durationText,
   FORMAT_LABELS,
+  FULL,
+  isFull,
   minutesText,
+  playerCountText,
   STYLE_LABELS,
   SummaryPart,
   Visibility,
@@ -92,6 +95,23 @@ export const VisibilityBadge: FC<{ isPublic: boolean }> = ({ isPublic }) => {
   );
 };
 
+export const PlayerCount: FC<{ playerCount: number; maxPlayers: number | null }> = ({ playerCount, maxPlayers }) => {
+  const { i18n } = useLingui();
+  const limit = { playerCount, maxPlayers };
+  return (
+    <Group gap={6} wrap="nowrap">
+      {isFull(limit) && (
+        <Badge variant="light" color="orange" tt="none">
+          {i18n._(FULL)}
+        </Badge>
+      )}
+      <Text c="dimmed" className="tabular">
+        {playerCountText(limit)}
+      </Text>
+    </Group>
+  );
+};
+
 type ChipProps = {
   part: SummaryPart;
   size?: MantineSize;
@@ -122,6 +142,23 @@ const SummaryChip: FC<ChipProps> = ({ part, size, color, icon, onPick, children 
       {children}
     </Badge>
   );
+
+export const SessionChips: FC<FormatCellProps & { size?: MantineSize }> = ({ format, style, levels, size }) => {
+  const { i18n } = useLingui();
+  return (
+    <Group gap={6}>
+      <SummaryChip size={size} part={SummaryPart.enum.format} color="brand" icon={FORMAT_ICONS[format]}>
+        {i18n._(FORMAT_LABELS[format].label)}
+      </SummaryChip>
+      <SummaryChip size={size} part={SummaryPart.enum.play} color="teal" icon={STYLE_ICONS[style]}>
+        {i18n._(STYLE_LABELS[style])}
+      </SummaryChip>
+      <SummaryChip size={size} part={SummaryPart.enum.levels} color="grape" icon={SECTION_ICONS.level}>
+        <LevelsText levels={levels} />
+      </SummaryChip>
+    </Group>
+  );
+};
 
 type SessionFacts = Record<SummaryPart, ReactNode> & { partners: ReactNode };
 
@@ -178,88 +215,104 @@ type Props = {
   isPublic: boolean;
   playerCount: number;
   pairs: Pair[];
+  maxPlayers?: number | null;
   onPick?: (part: SummaryPart) => void;
   inSession?: boolean;
 };
 
-export const SettingsSummary = memo<Props>(({ settings, isPublic, playerCount, pairs, onPick, inSession }) => {
-  const facts = useSessionFacts(settings, playerCount, pairs, isPublic);
-  const sessionSize = useMatches<MantineSize>(SESSION_CHIP_SIZE);
-  const size = inSession ? sessionSize : undefined;
-  return (
-    <Group gap={6}>
-      {inSession && (
-        <Badge size={size} variant="light" color="gray" tt="none" leftSection={<Users />}>
-          <Trans>{playerCount} players</Trans>
-        </Badge>
-      )}
-      <SummaryChip
-        size={size}
-        part={SummaryPart.enum.format}
-        color="brand"
-        icon={FORMAT_ICONS[settings.format]}
-        onPick={onPick}
-      >
-        {facts.format}
-      </SummaryChip>
-      <SummaryChip
-        size={size}
-        part={SummaryPart.enum.play}
-        color="teal"
-        icon={STYLE_ICONS[settings.style]}
-        onPick={onPick}
-      >
-        {facts.play}
-      </SummaryChip>
-      {facts.partners && (
+export const SettingsSummary = memo<Props>(
+  ({ settings, isPublic, playerCount: joined, pairs, maxPlayers = null, onPick, inSession }) => {
+    const facts = useSessionFacts(settings, joined, pairs, isPublic);
+    const sessionSize = useMatches<MantineSize>(SESSION_CHIP_SIZE);
+    const size = inSession ? sessionSize : undefined;
+    const playerCount = playerCountText({ playerCount: joined, maxPlayers });
+    return (
+      <Group gap={6}>
+        {inSession && (
+          <Badge size={size} variant="light" color="gray" tt="none" leftSection={<Users />}>
+            <Trans>{playerCount} players</Trans>
+          </Badge>
+        )}
+        <SummaryChip
+          size={size}
+          part={SummaryPart.enum.format}
+          color="brand"
+          icon={FORMAT_ICONS[settings.format]}
+          onPick={onPick}
+        >
+          {facts.format}
+        </SummaryChip>
         <SummaryChip
           size={size}
           part={SummaryPart.enum.play}
           color="teal"
-          icon={PARTNER_ICONS[settings.partners]}
+          icon={STYLE_ICONS[settings.style]}
           onPick={onPick}
         >
-          {facts.partners}
+          {facts.play}
         </SummaryChip>
-      )}
-      <SummaryChip size={size} part={SummaryPart.enum.courts} color="blue" icon={SECTION_ICONS.courts} onPick={onPick}>
-        {facts.courts}
-      </SummaryChip>
-      <SummaryChip
-        size={size}
-        part={SummaryPart.enum.scoring}
-        color="teal"
-        icon={SECTION_ICONS.scoring}
-        onPick={onPick}
-      >
-        {facts.scoring}
-      </SummaryChip>
-      {!inSession && (
+        {facts.partners && (
+          <SummaryChip
+            size={size}
+            part={SummaryPart.enum.play}
+            color="teal"
+            icon={PARTNER_ICONS[settings.partners]}
+            onPick={onPick}
+          >
+            {facts.partners}
+          </SummaryChip>
+        )}
         <SummaryChip
           size={size}
-          part={SummaryPart.enum.rounds}
+          part={SummaryPart.enum.courts}
           color="blue"
-          icon={SECTION_ICONS.rounds}
+          icon={SECTION_ICONS.courts}
           onPick={onPick}
         >
-          {facts.rounds}
+          {facts.courts}
         </SummaryChip>
-      )}
-      <SummaryChip size={size} part={SummaryPart.enum.levels} color="grape" icon={SECTION_ICONS.level} onPick={onPick}>
-        {facts.levels}
-      </SummaryChip>
-      <SummaryChip
-        size={size}
-        part={SummaryPart.enum.visibility}
-        color={isPublic ? 'teal' : 'gray'}
-        icon={isPublic ? <Globe /> : <LockSimple />}
-        onPick={onPick}
-      >
-        {facts.visibility}
-      </SummaryChip>
-    </Group>
-  );
-});
+        <SummaryChip
+          size={size}
+          part={SummaryPart.enum.scoring}
+          color="teal"
+          icon={SECTION_ICONS.scoring}
+          onPick={onPick}
+        >
+          {facts.scoring}
+        </SummaryChip>
+        {!inSession && (
+          <SummaryChip
+            size={size}
+            part={SummaryPart.enum.rounds}
+            color="blue"
+            icon={SECTION_ICONS.rounds}
+            onPick={onPick}
+          >
+            {facts.rounds}
+          </SummaryChip>
+        )}
+        <SummaryChip
+          size={size}
+          part={SummaryPart.enum.levels}
+          color="grape"
+          icon={SECTION_ICONS.level}
+          onPick={onPick}
+        >
+          {facts.levels}
+        </SummaryChip>
+        <SummaryChip
+          size={size}
+          part={SummaryPart.enum.visibility}
+          color={isPublic ? 'teal' : 'gray'}
+          icon={isPublic ? <Globe /> : <LockSimple />}
+          onPick={onPick}
+        >
+          {facts.visibility}
+        </SummaryChip>
+      </Group>
+    );
+  },
+);
 
 export const SessionEstimate: FC<{ settings: Settings; playerCount: number; pairs: Pair[] }> = ({
   settings,

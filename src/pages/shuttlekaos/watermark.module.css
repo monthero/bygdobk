@@ -1,0 +1,22 @@
+:where(.watermark) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.watermark::after {
+  --size: var(--watermark-size, 96px);
+
+  content: '';
+  position: absolute;
+  right: calc(var(--size) * -0.2);
+  bottom: calc(var(--size) * -0.24);
+  z-index: -1;
+  width: var(--size);
+  aspect-ratio: 1;
+  background: currentColor;
+  opacity: var(--watermark-opacity, 0.07);
+  mask: var(--sk-shuttle-mask) center / contain no-repeat;
+  transform: rotate(-28deg);
+  pointer-events: none;
+}
