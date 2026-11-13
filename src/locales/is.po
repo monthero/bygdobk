@@ -219,10 +219,9 @@ msgstr "{playedRounds, plural, one {# umferð, lauk eftir {duration}} other {# u
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Lokið eftir # umferð} other {Lokið eftir # umferðir}}"
 
-#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "{playerCount} players"
-msgstr "{playerCount} leikmenn"
+msgid "{playerCount, plural, one {{count} player} other {{count} players}}"
+msgstr "{playerCount, plural, one {{count} leikmaður} other {{count} leikmenn}}"
 
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{points} points per match"
@@ -898,13 +897,11 @@ msgid "BWF standard: 15 (21 before 2027)"
 msgstr "BWF-staðall: 15 (21 fyrir 2027)"
 
 #. Who organizes a session
+#. Who organizes a session
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "By {organizer}"
 msgstr "Eftir {organizer}"
-
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "By {organizer} · {players} players"
-msgstr "Hjá {organizer} · {players} leikmenn"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -1004,13 +1001,13 @@ msgstr "Véfenging: síðan"
 msgid "Challenge. Checking the replay…"
 msgstr "Véfenging. Skoðum endursýninguna…"
 
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Change"
-msgstr "Breyta"
-
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Change location"
 msgstr "Skipta um stað"
+
+#: src/pages/shuttlekaos/OpenSession.tsx
+msgid "Change settings"
+msgstr "Breyta stillingum"
 
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Change since last round"
@@ -1079,6 +1076,7 @@ msgstr "Hreinsa leit"
 #: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/shuttlekaos/RoundDone.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Close"
 msgstr "Loka"
 
@@ -1195,17 +1193,9 @@ msgstr "Halda áfram með Google"
 msgid "Continue with Microsoft"
 msgstr "Halda áfram með Microsoft"
 
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copied"
-msgstr "Afritað"
-
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "Afritað! Límdu þau í Bcc"
-
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copy"
-msgstr "Afrita"
 
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
@@ -1213,6 +1203,7 @@ msgid "Copy email address for {0}"
 msgstr "Afrita netfang: {0}"
 
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Copy link"
 msgstr "Afrita tengil"
 
@@ -1451,6 +1442,10 @@ msgstr "Eyða {name}"
 #: src/pages/board/DeleteMembershipModal.tsx
 msgid "Delete membership?"
 msgstr "Eyða aðild?"
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Delete message"
+msgstr "Eyða skilaboðum"
 
 #: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/home/SessionCards.tsx
@@ -2000,6 +1995,11 @@ msgstr "Jökull"
 #: src/pages/training/TrainingPage.tsx
 msgid "Go to season {currentLabel}"
 msgstr "Fara á tímabilið {currentLabel}"
+
+#. Button on a session card that opens the session page
+#: src/pages/shuttlekaos/home/SessionCards.tsx
+msgid "Go to session"
+msgstr "Fara í lotuna"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Go to the sign-up form"
@@ -2616,6 +2616,7 @@ msgid "Menu"
 msgstr "Valmynd"
 
 #: src/pages/contact/ContactSection.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Message"
 msgstr "Skilaboð"
 
@@ -2869,6 +2870,10 @@ msgstr "Engar aðildir á þessu tímabili enn"
 msgid "No memberships yet"
 msgstr "Engar aðildir enn"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "No messages yet"
+msgstr "Engin skilaboð enn"
+
 #: src/pages/shuttlekaos/SessionMenu.tsx
 msgid "No new dates get added. Dates already planned stay. Delete them one by one if you need to."
 msgstr "Engum nýjum dagsetningum er bætt við. Dagsetningar sem eru þegar skipulagðar haldast. Eyddu þeim einni í einu ef þarf."
@@ -3114,6 +3119,14 @@ msgstr "Aðeins annað liðið getur náð stigamarkinu."
 msgid "Only people with the link can see and join."
 msgstr "Aðeins þeir sem hafa tengilinn geta séð og verið með."
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer can chat here."
+msgstr "Aðeins leikmenn og skipuleggjandi geta spjallað hér."
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer see this. Messages are deleted 7 days after the session."
+msgstr "Aðeins leikmenn og skipuleggjandi sjá þetta. Skilaboðum er eytt 7 dögum eftir lotuna."
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Only the board sees this."
 msgstr "Aðeins stjórnin sér þetta."
@@ -3126,11 +3139,6 @@ msgstr "Aðeins skipuleggjandinn getur gert þetta."
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Oops, rim shot!"
 msgstr "Úps, í rammann!"
-
-#. Session status: people can still join
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "Open"
-msgstr "Opinn"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Open for players right away."
@@ -3149,10 +3157,6 @@ msgstr "Opna á korti"
 msgid "Open menu"
 msgstr "Opna valmynd"
 
-#: src/pages/shuttlekaos/home/PlayPage.tsx
-msgid "Open sessions"
-msgstr "Opnir spilatímar"
-
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Open spot"
 msgstr "Laust pláss"
@@ -3168,7 +3172,9 @@ msgstr "Opna skráningarlistann"
 #. Session status: people can still join
 #. Session status: people can still join
 #. Session status: people can still join
+#. Session status: people can still join
 #: src/pages/shuttlekaos/HallScreen.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Open to join"
@@ -3653,6 +3659,11 @@ msgstr "Stig"
 msgid "Public"
 msgstr "Opið"
 
+#. Heading for sessions anyone can join
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Public sessions"
+msgstr "Opnar lotur"
+
 #: src/pages/shuttlekaos/home/LobbyPage.tsx
 msgid "Public sessions anyone can join. Jump in or watch the scores live."
 msgstr "Opnar lotur sem allir geta tekið þátt í. Vertu með eða fylgstu með stöðunni í beinni."
@@ -3965,6 +3976,10 @@ msgstr "Vista mynd"
 msgid "Save score"
 msgstr "Vista úrslit"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Say hi to the group."
+msgstr "Segðu hæ við hópinn."
+
 #. Next to a QR code that opens the final standings
 #: src/pages/shuttlekaos/labels.ts
 msgid "Scan for the results"
@@ -4084,6 +4099,10 @@ msgstr "Veldu ár"
 msgid "Selected memberships"
 msgstr "Valdar aðildir"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Send"
+msgstr "Senda"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "Senda aftur"
@@ -4130,6 +4149,10 @@ msgstr "Villa í uppgjöf: síðan fannst ekki"
 msgid "Session"
 msgstr "Spilatími"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Session chat"
+msgstr "Spjall lotunnar"
+
 #: src/pages/shuttlekaos/home/JoinCode.tsx
 msgid "Session code"
 msgstr "Kóði lotu"
@@ -4161,10 +4184,6 @@ msgstr "Ákveðinn fjöldi"
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Set up again"
 msgstr "Setja upp aftur"
-
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Settings"
-msgstr "Stillingar"
 
 #: src/components/events/ShiftBoard.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
@@ -5082,6 +5101,10 @@ msgstr "Sjálfboðaliðar"
 msgid "W"
 msgstr "U"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Wait a few seconds and try again."
+msgstr "Bíddu í nokkrar sekúndur og reyndu aftur."
+
 #. A training group takes new players only from a waiting list
 #: src/components/training/GroupStatusBadge.tsx
 msgid "Waiting list"
@@ -5241,6 +5264,10 @@ msgstr "Með þjálfara"
 msgid "Won"
 msgstr "Unnir"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Write a message"
+msgstr "Skrifaðu skilaboð"
+
 #: src/pages/contact/ContactSection.tsx
 msgid "Write another message"
 msgstr "Skrifa ný skilaboð"
@@ -5309,9 +5336,10 @@ msgstr "Þú lagðir hönd á plóg"
 msgid "You left the session."
 msgstr "Þú yfirgafst spilatímann."
 
+#. On your session card: you are the organizer
 #: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "You organize · {players} players"
-msgstr "Þú skipuleggur · {players} leikmenn"
+msgid "You organize"
+msgstr "Þú skipuleggur"
 
 #. Your place and points, e.g. You: #2, 84 pts
 #: src/pages/shuttlekaos/home/SessionCards.tsx

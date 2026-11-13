@@ -29,8 +29,16 @@
   }
 }
 
-.title {
+.heading {
+  display: flex;
   grid-area: title;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.title {
+  min-width: 0;
   font-size: clamp(1.3rem, 5vw, 1.75rem);
   line-height: 1.2;
 

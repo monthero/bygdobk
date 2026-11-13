@@ -42,7 +42,7 @@ import {
 } from './labels';
 import { LevelsText } from './Levels';
 import { SessionLink, SessionRow, SessionTable } from './SessionTable';
-import { FormatCell, SessionChips } from './SettingsSummary';
+import { FormatCell, PlayersText, SessionChips } from './SettingsSummary';
 
 import classes from './PublicSessions.module.css';
 import tables from './SessionTables.module.css';
@@ -327,7 +327,6 @@ export const NearestButton: FC<{ sort: NearestFirst; size?: MantineSize; h?: num
 
 export const PublicCard = memo<{ session: PublicSession; km?: number }>(({ session, km }) => {
   const organizer = session.organizerName;
-  const playerCount = playerCountText(session);
   const when = sessionTimeText(session);
 
   return (
@@ -353,7 +352,7 @@ export const PublicCard = memo<{ session: PublicSession; km?: number }>(({ sessi
       <div className={classes.cardFoot}>
         <span className={classes.players}>
           <Users aria-hidden />
-          <Trans>{playerCount} players</Trans>
+          <PlayersText playerCount={session.playerCount} maxPlayers={session.maxPlayers} />
         </span>
         <SessionAction session={session} />
       </div>

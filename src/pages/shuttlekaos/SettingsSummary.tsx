@@ -95,6 +95,11 @@ export const VisibilityBadge: FC<{ isPublic: boolean }> = ({ isPublic }) => {
   );
 };
 
+export const PlayersText: FC<{ playerCount: number; maxPlayers: number | null }> = ({ playerCount, maxPlayers }) => {
+  const count = playerCountText({ playerCount, maxPlayers });
+  return <Plural value={playerCount} one={`${count} player`} other={`${count} players`} />;
+};
+
 export const PlayerCount: FC<{ playerCount: number; maxPlayers: number | null }> = ({ playerCount, maxPlayers }) => {
   const { i18n } = useLingui();
   const limit = { playerCount, maxPlayers };
@@ -225,12 +230,11 @@ export const SettingsSummary = memo<Props>(
     const facts = useSessionFacts(settings, joined, pairs, isPublic);
     const sessionSize = useMatches<MantineSize>(SESSION_CHIP_SIZE);
     const size = inSession ? sessionSize : undefined;
-    const playerCount = playerCountText({ playerCount: joined, maxPlayers });
     return (
       <Group gap={6}>
         {inSession && (
           <Badge size={size} variant="light" color="gray" tt="none" leftSection={<Users />}>
-            <Trans>{playerCount} players</Trans>
+            <PlayersText playerCount={joined} maxPlayers={maxPlayers} />
           </Badge>
         )}
         <SummaryChip

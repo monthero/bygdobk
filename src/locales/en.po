@@ -219,10 +219,9 @@ msgstr "{playedRounds, plural, one {# round, finished after {duration}} other {#
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 
-#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "{playerCount} players"
-msgstr "{playerCount} players"
+msgid "{playerCount, plural, one {{count} player} other {{count} players}}"
+msgstr "{playerCount, plural, one {{count} player} other {{count} players}}"
 
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{points} points per match"
@@ -898,13 +897,11 @@ msgid "BWF standard: 15 (21 before 2027)"
 msgstr "BWF standard: 15 (21 before 2027)"
 
 #. Who organizes a session
+#. Who organizes a session
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "By {organizer}"
 msgstr "By {organizer}"
-
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "By {organizer} · {players} players"
-msgstr "By {organizer} · {players} players"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -1004,13 +1001,13 @@ msgstr "Challenge: page"
 msgid "Challenge. Checking the replay…"
 msgstr "Challenge. Checking the replay…"
 
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Change"
-msgstr "Change"
-
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Change location"
 msgstr "Change location"
+
+#: src/pages/shuttlekaos/OpenSession.tsx
+msgid "Change settings"
+msgstr "Change settings"
 
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Change since last round"
@@ -1079,6 +1076,7 @@ msgstr "Clear search"
 #: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/shuttlekaos/RoundDone.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Close"
 msgstr "Close"
 
@@ -1195,17 +1193,9 @@ msgstr "Continue with Google"
 msgid "Continue with Microsoft"
 msgstr "Continue with Microsoft"
 
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copied"
-msgstr "Copied"
-
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "Copied! Paste them into Bcc"
-
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copy"
-msgstr "Copy"
 
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
@@ -1213,6 +1203,7 @@ msgid "Copy email address for {0}"
 msgstr "Copy email address for {0}"
 
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Copy link"
 msgstr "Copy link"
 
@@ -1451,6 +1442,10 @@ msgstr "Delete {name}"
 #: src/pages/board/DeleteMembershipModal.tsx
 msgid "Delete membership?"
 msgstr "Delete membership?"
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Delete message"
+msgstr "Delete message"
 
 #: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/home/SessionCards.tsx
@@ -2000,6 +1995,11 @@ msgstr "Glacier"
 #: src/pages/training/TrainingPage.tsx
 msgid "Go to season {currentLabel}"
 msgstr "Go to season {currentLabel}"
+
+#. Button on a session card that opens the session page
+#: src/pages/shuttlekaos/home/SessionCards.tsx
+msgid "Go to session"
+msgstr "Go to session"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Go to the sign-up form"
@@ -2616,6 +2616,7 @@ msgid "Menu"
 msgstr "Menu"
 
 #: src/pages/contact/ContactSection.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Message"
 msgstr "Message"
 
@@ -2869,6 +2870,10 @@ msgstr "No memberships this season yet"
 msgid "No memberships yet"
 msgstr "No memberships yet"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "No messages yet"
+msgstr "No messages yet"
+
 #: src/pages/shuttlekaos/SessionMenu.tsx
 msgid "No new dates get added. Dates already planned stay. Delete them one by one if you need to."
 msgstr "No new dates get added. Dates already planned stay. Delete them one by one if you need to."
@@ -3114,6 +3119,14 @@ msgstr "Only one side can reach the target."
 msgid "Only people with the link can see and join."
 msgstr "Only people with the link can see and join."
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer can chat here."
+msgstr "Only players and the organizer can chat here."
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer see this. Messages are deleted 7 days after the session."
+msgstr "Only players and the organizer see this. Messages are deleted 7 days after the session."
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Only the board sees this."
 msgstr "Only the board sees this."
@@ -3126,11 +3139,6 @@ msgstr "Only the organizer can do that."
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Oops, rim shot!"
 msgstr "Oops, rim shot!"
-
-#. Session status: people can still join
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "Open"
-msgstr "Open"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Open for players right away."
@@ -3149,10 +3157,6 @@ msgstr "Open in maps"
 msgid "Open menu"
 msgstr "Open menu"
 
-#: src/pages/shuttlekaos/home/PlayPage.tsx
-msgid "Open sessions"
-msgstr "Open sessions"
-
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Open spot"
 msgstr "Open spot"
@@ -3168,7 +3172,9 @@ msgstr "Open the sign-up sheet"
 #. Session status: people can still join
 #. Session status: people can still join
 #. Session status: people can still join
+#. Session status: people can still join
 #: src/pages/shuttlekaos/HallScreen.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Open to join"
@@ -3653,6 +3659,11 @@ msgstr "Pts"
 msgid "Public"
 msgstr "Public"
 
+#. Heading for sessions anyone can join
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Public sessions"
+msgstr "Public sessions"
+
 #: src/pages/shuttlekaos/home/LobbyPage.tsx
 msgid "Public sessions anyone can join. Jump in or watch the scores live."
 msgstr "Public sessions anyone can join. Jump in or watch the scores live."
@@ -3965,6 +3976,10 @@ msgstr "Save photo"
 msgid "Save score"
 msgstr "Save score"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Say hi to the group."
+msgstr "Say hi to the group."
+
 #. Next to a QR code that opens the final standings
 #: src/pages/shuttlekaos/labels.ts
 msgid "Scan for the results"
@@ -4084,6 +4099,10 @@ msgstr "Select year"
 msgid "Selected memberships"
 msgstr "Selected memberships"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Send"
+msgstr "Send"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "Send again"
@@ -4130,6 +4149,10 @@ msgstr "Service fault: page not found"
 msgid "Session"
 msgstr "Session"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Session chat"
+msgstr "Session chat"
+
 #: src/pages/shuttlekaos/home/JoinCode.tsx
 msgid "Session code"
 msgstr "Session code"
@@ -4161,10 +4184,6 @@ msgstr "Set number"
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Set up again"
 msgstr "Set up again"
-
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Settings"
-msgstr "Settings"
 
 #: src/components/events/ShiftBoard.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
@@ -5082,6 +5101,10 @@ msgstr "Volunteers"
 msgid "W"
 msgstr "W"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Wait a few seconds and try again."
+msgstr "Wait a few seconds and try again."
+
 #. A training group takes new players only from a waiting list
 #: src/components/training/GroupStatusBadge.tsx
 msgid "Waiting list"
@@ -5241,6 +5264,10 @@ msgstr "With coach"
 msgid "Won"
 msgstr "Won"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Write a message"
+msgstr "Write a message"
+
 #: src/pages/contact/ContactSection.tsx
 msgid "Write another message"
 msgstr "Write another message"
@@ -5309,9 +5336,10 @@ msgstr "You helped out"
 msgid "You left the session."
 msgstr "You left the session."
 
+#. On your session card: you are the organizer
 #: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "You organize · {players} players"
-msgstr "You organize · {players} players"
+msgid "You organize"
+msgstr "You organize"
 
 #. Your place and points, e.g. You: #2, 84 pts
 #: src/pages/shuttlekaos/home/SessionCards.tsx

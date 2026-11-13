@@ -4,7 +4,7 @@ import { notifyDone, notifyFailed } from '~/pages/board/format';
 
 import { sessionUrl } from './labels';
 
-const CAN_SHARE = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
+export const CAN_SHARE = typeof navigator !== 'undefined' && typeof navigator.share === 'function';
 
 export const useShareSession = () => {
   const { t } = useLingui();

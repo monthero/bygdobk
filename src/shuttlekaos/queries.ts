@@ -42,6 +42,7 @@ const MY_SESSIONS_KEY = 'shuttlekaos-mine';
 export const PAGE_SIZE = 10;
 const ACCOUNTS_KEY = 'shuttlekaos-accounts';
 const FINDABLE_KEY = 'shuttlekaos-findable';
+const CHAT_KEY = 'shuttlekaos-chat';
 const FUNCTION_NAME = 'shuttlekaos';
 const MIN_SEARCH_LENGTH = 2;
 const POLL_MS = 30_000;
@@ -67,6 +68,9 @@ const RPC_PROBLEMS: Record<string, ShuttleKaosProblem> = {
   '': ShuttleKaosProblem.enum.offline,
   '42501': ShuttleKaosProblem.enum.loggedOut,
   '22023': ShuttleKaosProblem.enum.invalid,
+  P0002: ShuttleKaosProblem.enum.notFound,
+  SKNOA: ShuttleKaosProblem.enum.notAllowed,
+  PT429: ShuttleKaosProblem.enum.tooMany,
 };
 
 export class ShuttleKaosError extends Error {
@@ -173,6 +177,20 @@ const Findable = z.boolean();
 
 const Count = z.number().int();
 
+const ChatMessage = z.object({
+  id: z.uuid(),
+  profileId: z.uuid(),
+  name: z.string(),
+  avatarUrl: z.string().nullable(),
+  body: z.string(),
+  createdAt: z.string(),
+  mine: z.boolean(),
+  canDelete: z.boolean(),
+});
+export type ChatMessage = z.infer<typeof ChatMessage>;
+
+const ChatMessages = z.array(ChatMessage);
+
 export const MatchResult = z.enum(['won', 'lost', 'drawn']);
 export type MatchResult = z.infer<typeof MatchResult>;
 
@@ -231,6 +249,9 @@ type MyActiveKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'active
 type MyHistoryKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'history', number];
 type MyStatsKey = readonly [typeof MY_SESSIONS_KEY, string | undefined, 'stats'];
 type AccountsKey = readonly [typeof ACCOUNTS_KEY, string | undefined, string];
+type ChatKey = readonly [typeof CHAT_KEY, string];
+type SendVariables = { code: string; body: string };
+type DeleteMessageVariables = { code: string; id: string };
 type FindableKey = readonly [typeof FINDABLE_KEY, string | undefined];
 type QueryOptions<TData, T, TKey extends readonly unknown[]> = Omit<
   UseQueryOptions<TData, Error, T, TKey>,
@@ -285,6 +306,16 @@ const fetchMyActive = async () => SummaryList.parse(await callRpc('my_shuttlekao
 
 const fetchMyHistory = async (page: number) =>
   SummaryPage.parse(await callRpc('my_shuttlekaos_history', { p_offset: (page - 1) * PAGE_SIZE, p_limit: PAGE_SIZE }));
+
+const fetchChat = async (code: string) => ChatMessages.parse(await callRpc('shuttlekaos_messages', { p_code: code }));
+
+const sendMessage = async ({ code, body }: SendVariables) => {
+  await callRpc('send_shuttlekaos_message', { p_code: code, p_body: body });
+};
+
+const deleteMessage = async ({ id }: DeleteMessageVariables) => {
+  await callRpc('delete_shuttlekaos_message', { p_id: id });
+};
 
 const fetchMyStats = async () => MyStats.parse(await callRpc('my_shuttlekaos_stats'));
 
@@ -362,6 +393,10 @@ const cachedRevision = (shareCode: string) =>
 const onNudge = (shareCode: string, payload: unknown) => {
   const nudge = Nudge.safeParse(payload);
   if (!nudge.success) return;
+  if ('chat' in nudge.data) {
+    void queryClient.invalidateQueries({ queryKey: [CHAT_KEY, shareCode] });
+    return;
+  }
   if ('deleted' in nudge.data) {
     void queryClient.refetchQueries({ queryKey: [SESSION_KEY, shareCode] });
     void refreshLists();
@@ -535,3 +570,25 @@ export const useLinkPlayer = (options?: MutationOptions<ShuttleKaosReply, LinkVa
 
 export const useDeleteSession = (options?: MutationOptions<ShuttleKaosReply, string>) =>
   useMutation({ mutationFn: deleteSession, onSettled: refreshLists, ...options });
+
+const CHAT_POLL_MS = 15_000;
+
+const refreshChat = (_: unknown, __: unknown, { code }: { code: string }) =>
+  queryClient.invalidateQueries({ queryKey: [CHAT_KEY, code] });
+
+export const useSessionChat = <T = ChatMessage[]>(code: string, options?: QueryOptions<ChatMessage[], T, ChatKey>) => {
+  const shareCode = code.trim().toLowerCase();
+  const subscribed = useSessionNudges(shareCode);
+  return useQuery({
+    queryKey: [CHAT_KEY, shareCode] as const,
+    queryFn: () => fetchChat(shareCode),
+    refetchInterval: subscribed ? false : CHAT_POLL_MS,
+    ...options,
+  });
+};
+
+export const useSendMessage = (options?: MutationOptions<void, SendVariables>) =>
+  useMutation({ mutationFn: sendMessage, onSettled: refreshChat, ...options });
+
+export const useDeleteMessage = (options?: MutationOptions<void, DeleteMessageVariables>) =>
+  useMutation({ mutationFn: deleteMessage, onSettled: refreshChat, ...options });

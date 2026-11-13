@@ -15,8 +15,17 @@
 .body {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
+  align-items: start;
+  gap: 16px;
+}
+
+.share {
+  width: 100%;
+  margin-top: 12px;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    width: auto;
+  }
 }
 
 .qr {

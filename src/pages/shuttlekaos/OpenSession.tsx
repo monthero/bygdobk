@@ -1,5 +1,5 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
-import { Alert, Button, Container, Group, Stack, Text } from '@mantine/core';
+import { ActionIcon, Alert, Button, Container, Group, Stack, Text, Tooltip } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useState, type FC } from 'react';
 
@@ -38,6 +38,7 @@ import { LocationPicker } from './LocationPicker';
 import { PairPicker } from './PairPicker';
 import { PlayerList, PlayerPicker } from './PlayerPicker';
 import { SECTION_ICONS } from './sectionIcons';
+import { SessionChat } from './SessionChat';
 import { SessionMenu } from './SessionMenu';
 import { SessionTop } from './SessionTop';
 import { PlayerLimitField, SettingsForm, VisibilityPicker } from './SettingsForm';
@@ -101,7 +102,6 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
   const start = useStartSession({
     onError: (error) => notifyFailed(i18n._(shuttleKaosErrorMessage(error))),
   });
-  const [editing, edit] = useDisclosure(false);
   const [confirming, confirm] = useDisclosure(false);
   const fixed = usesPairs(session.settings);
   const problem = setupProblem(session.settings, session.players, session.pairs);
@@ -138,22 +138,15 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
               </Alert>
             )}
             <InviteCard code={shareCode} title={session.title} />
+          </Stack>
+          <Stack gap="md">
             <Section
-              title={<Trans>Settings</Trans>}
-              icon={SECTION_ICONS.game}
-              color={SectionColor.enum.brand}
-              aside={
-                <Button variant="subtle" size="compact-md" h={44} leftSection={<PencilSimple />} onClick={edit.open}>
-                  <Trans>Change</Trans>
-                </Button>
-              }
+              title={<Trans>Players</Trans>}
+              icon={SECTION_ICONS.players}
+              color={SectionColor.enum.blue}
+              aside={<PlayerCount {...playerLimitOf(session)} />}
             >
-              <SettingsSummary
-                settings={session.settings}
-                isPublic={session.isPublic}
-                playerCount={session.players.length}
-                pairs={session.pairs}
-              />
+              <PlayerPicker players={session.players} signedIn onChange={changePlayers} />
               {suggested !== courts && session.players.length >= perCourt && (
                 <Group gap="xs">
                   <Text size="sm" c="dimmed">
@@ -172,16 +165,6 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
                   </Button>
                 </Group>
               )}
-            </Section>
-          </Stack>
-          <Stack gap="md">
-            <Section
-              title={<Trans>Players</Trans>}
-              icon={SECTION_ICONS.players}
-              color={SectionColor.enum.blue}
-              aside={<PlayerCount {...playerLimitOf(session)} />}
-            >
-              <PlayerPicker players={session.players} signedIn onChange={changePlayers} />
             </Section>
             {fixed && session.players.length > 1 && (
               <Section title={<Trans>Pairs</Trans>} icon={SECTION_ICONS.pairs} color={SectionColor.enum.teal}>
@@ -203,7 +186,6 @@ const OrganizerLobby: FC<{ view: SessionData }> = ({ view }) => {
           <Trans context="ShuttleKaos: button that starts the session">Start</Trans>
         </Button>
       </StickyBar>
-      {editing && <EditSettings view={view} onClose={edit.close} />}
       <ResponsiveModal opened={confirming} onClose={confirm.close} title={<Trans>Start now?</Trans>}>
         <Stack gap="md">
           <Text>
@@ -285,14 +267,6 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
     <>
       <Container py="md">
         <div className={classes.grid}>
-          <Section title={<Trans>Settings</Trans>} icon={SECTION_ICONS.game} color={SectionColor.enum.brand}>
-            <SettingsSummary
-              settings={session.settings}
-              isPublic={session.isPublic}
-              playerCount={session.players.length}
-              pairs={session.pairs}
-            />
-          </Section>
           <Section
             title={<Trans>Who's in</Trans>}
             icon={SECTION_ICONS.players}
@@ -309,8 +283,9 @@ const Lobby: FC<{ view: SessionData }> = ({ view }) => {
 };
 
 export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
-  const { i18n } = useLingui();
+  const { t, i18n } = useLingui();
   const { session, series } = view;
+  const [editing, edit] = useDisclosure(false);
   useKaosTitle(session.title);
   return (
     <>
@@ -328,10 +303,23 @@ export const OpenSession: FC<{ view: SessionData }> = ({ view }) => {
             inSession
           />
         }
-        actions={<SessionMenu view={view} />}
+        actions={
+          <>
+            {view.isOwner && (
+              <Tooltip label={t`Change settings`} withArrow>
+                <ActionIcon variant="default" radius="xl" size={44} aria-label={t`Change settings`} onClick={edit.open}>
+                  <PencilSimple />
+                </ActionIcon>
+              </Tooltip>
+            )}
+            <SessionChat view={view} />
+            <SessionMenu view={view} />
+          </>
+        }
         location={session.location}
       />
       {view.isOwner ? <OrganizerLobby view={view} /> : <Lobby view={view} />}
+      {editing && <EditSettings view={view} onClose={edit.close} />}
     </>
   );
 };

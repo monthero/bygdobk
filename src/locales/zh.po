@@ -219,10 +219,9 @@ msgstr "{playedRounds, plural, other {共 # 轮，用时 {duration}}}"
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, other {打了#轮后结束}}"
 
-#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "{playerCount} players"
-msgstr "{playerCount}人"
+msgid "{playerCount, plural, one {{count} player} other {{count} players}}"
+msgstr "{playerCount, plural, other {{count} 名球员}}"
 
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{points} points per match"
@@ -898,13 +897,11 @@ msgid "BWF standard: 15 (21 before 2027)"
 msgstr "BWF标准：15分（2027年前为21分）"
 
 #. Who organizes a session
+#. Who organizes a session
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "By {organizer}"
 msgstr "{organizer} 发起"
-
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "By {organizer} · {players} players"
-msgstr "{organizer}发起 · {players}人"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -1004,13 +1001,13 @@ msgstr "挑战：页面"
 msgid "Challenge. Checking the replay…"
 msgstr "挑战。正在查看回放…"
 
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Change"
-msgstr "修改"
-
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Change location"
 msgstr "更换地点"
+
+#: src/pages/shuttlekaos/OpenSession.tsx
+msgid "Change settings"
+msgstr "修改设置"
 
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Change since last round"
@@ -1079,6 +1076,7 @@ msgstr "清除搜索"
 #: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/shuttlekaos/RoundDone.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Close"
 msgstr "关闭"
 
@@ -1195,17 +1193,9 @@ msgstr "使用Google继续"
 msgid "Continue with Microsoft"
 msgstr "使用Microsoft继续"
 
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copied"
-msgstr "已复制"
-
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "已复制！粘贴到密送栏"
-
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copy"
-msgstr "复制"
 
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
@@ -1213,6 +1203,7 @@ msgid "Copy email address for {0}"
 msgstr "复制{0}的邮箱地址"
 
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Copy link"
 msgstr "复制链接"
 
@@ -1451,6 +1442,10 @@ msgstr "删除{name}"
 #: src/pages/board/DeleteMembershipModal.tsx
 msgid "Delete membership?"
 msgstr "删除会员？"
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Delete message"
+msgstr "删除消息"
 
 #: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/home/SessionCards.tsx
@@ -2000,6 +1995,11 @@ msgstr "冰川"
 #: src/pages/training/TrainingPage.tsx
 msgid "Go to season {currentLabel}"
 msgstr "前往{currentLabel}赛季"
+
+#. Button on a session card that opens the session page
+#: src/pages/shuttlekaos/home/SessionCards.tsx
+msgid "Go to session"
+msgstr "进入场次"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Go to the sign-up form"
@@ -2616,6 +2616,7 @@ msgid "Menu"
 msgstr "菜单"
 
 #: src/pages/contact/ContactSection.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Message"
 msgstr "消息"
 
@@ -2869,6 +2870,10 @@ msgstr "本赛季还没有会员"
 msgid "No memberships yet"
 msgstr "还没有会员"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "No messages yet"
+msgstr "还没有消息"
+
 #: src/pages/shuttlekaos/SessionMenu.tsx
 msgid "No new dates get added. Dates already planned stay. Delete them one by one if you need to."
 msgstr "不再添加新日期。已安排的日期保留，需要时可逐个删除。"
@@ -3114,6 +3119,14 @@ msgstr "只能有一方达到目标分。"
 msgid "Only people with the link can see and join."
 msgstr "只有拿到链接的人能看到和加入。"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer can chat here."
+msgstr "只有球员和组织者可以在这里聊天。"
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer see this. Messages are deleted 7 days after the session."
+msgstr "只有球员和组织者能看到。消息会在场次结束 7 天后删除。"
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Only the board sees this."
 msgstr "只有理事会能看到。"
@@ -3126,11 +3139,6 @@ msgstr "只有发起人能这样做。"
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Oops, rim shot!"
 msgstr "哎呀，打框了！"
-
-#. Session status: people can still join
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "Open"
-msgstr "开放中"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Open for players right away."
@@ -3149,10 +3157,6 @@ msgstr "在地图中打开"
 msgid "Open menu"
 msgstr "打开菜单"
 
-#: src/pages/shuttlekaos/home/PlayPage.tsx
-msgid "Open sessions"
-msgstr "开放的球局"
-
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Open spot"
 msgstr "空位"
@@ -3168,7 +3172,9 @@ msgstr "打开报名表"
 #. Session status: people can still join
 #. Session status: people can still join
 #. Session status: people can still join
+#. Session status: people can still join
 #: src/pages/shuttlekaos/HallScreen.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Open to join"
@@ -3653,6 +3659,11 @@ msgstr "分"
 msgid "Public"
 msgstr "公开"
 
+#. Heading for sessions anyone can join
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Public sessions"
+msgstr "公开场次"
+
 #: src/pages/shuttlekaos/home/LobbyPage.tsx
 msgid "Public sessions anyone can join. Jump in or watch the scores live."
 msgstr "任何人都能加入的公开场次。加入，或实时看比分。"
@@ -3965,6 +3976,10 @@ msgstr "保存照片"
 msgid "Save score"
 msgstr "保存比分"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Say hi to the group."
+msgstr "跟大家打个招呼吧。"
+
 #. Next to a QR code that opens the final standings
 #: src/pages/shuttlekaos/labels.ts
 msgid "Scan for the results"
@@ -4084,6 +4099,10 @@ msgstr "选择年份"
 msgid "Selected memberships"
 msgstr "已选会员记录"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Send"
+msgstr "发送"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "再发一次"
@@ -4130,6 +4149,10 @@ msgstr "发球失误：找不到页面"
 msgid "Session"
 msgstr "球局"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Session chat"
+msgstr "场次聊天"
+
 #: src/pages/shuttlekaos/home/JoinCode.tsx
 msgid "Session code"
 msgstr "场次代码"
@@ -4161,10 +4184,6 @@ msgstr "固定轮数"
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Set up again"
 msgstr "再开一局"
-
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Settings"
-msgstr "设置"
 
 #: src/components/events/ShiftBoard.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
@@ -5082,6 +5101,10 @@ msgstr "志愿者"
 msgid "W"
 msgstr "胜"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Wait a few seconds and try again."
+msgstr "请等几秒再试。"
+
 #. A training group takes new players only from a waiting list
 #: src/components/training/GroupStatusBadge.tsx
 msgid "Waiting list"
@@ -5241,6 +5264,10 @@ msgstr "有教练"
 msgid "Won"
 msgstr "胜场"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Write a message"
+msgstr "写条消息"
+
 #: src/pages/contact/ContactSection.tsx
 msgid "Write another message"
 msgstr "再写一条消息"
@@ -5309,9 +5336,10 @@ msgstr "你参与过的班次"
 msgid "You left the session."
 msgstr "你已退出球局。"
 
+#. On your session card: you are the organizer
 #: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "You organize · {players} players"
-msgstr "你发起的 · {players}人"
+msgid "You organize"
+msgstr "你是组织者"
 
 #. Your place and points, e.g. You: #2, 84 pts
 #: src/pages/shuttlekaos/home/SessionCards.tsx

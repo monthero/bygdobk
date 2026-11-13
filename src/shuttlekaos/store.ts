@@ -46,7 +46,11 @@ export const NUDGE_EVENT = 'changed';
 
 export const sessionTopic = (shareCode: string) => `shuttlekaos:${shareCode}`;
 
-export const Nudge = z.union([z.object({ revision: z.number().int() }), z.object({ deleted: z.literal(true) })]);
+export const Nudge = z.union([
+  z.object({ revision: z.number().int() }),
+  z.object({ deleted: z.literal(true) }),
+  z.object({ chat: z.literal(true) }),
+]);
 export type Nudge = z.infer<typeof Nudge>;
 
 export const ShuttleKaosAction = z.enum(['create', 'save', 'start', 'join', 'leave', 'delete', 'link']);

@@ -29,6 +29,7 @@ import { endedAutomatically, playerMap, resume, shownSession, YOU } from './labe
 import { ClaimNotice } from './LinkPlayers';
 import { RoundDone } from './RoundDone';
 import { ScoreSheet } from './ScoreSheet';
+import { SessionChat } from './SessionChat';
 import { SessionMenu } from './SessionMenu';
 import { SessionView } from './SessionView';
 import { ShareButton } from './ShareButton';
@@ -232,6 +233,7 @@ export const PlaySession: FC<{ view: SessionData }> = ({ view }) => {
         actions={
           <>
             {!isOwner && running && <LiveBadge size="lg" />}
+            <SessionChat view={view} />
             <FocusToggle />
             <ShareButton code={shareCode} title={session.title} />
             <SessionMenu view={view} hasOpenCourts={openCourts(session) > 0} onEnd={isOwner ? finish : undefined} />

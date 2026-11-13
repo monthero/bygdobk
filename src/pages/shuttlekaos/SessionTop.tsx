@@ -3,6 +3,7 @@ import { Fragment, type FC, type ReactNode } from 'react';
 
 import type { SessionLocation } from '~/shuttlekaos/model';
 
+import { BackButton } from './BrandHeader';
 import { BRAND } from './labels';
 import { LocationLink } from './LocationPicker';
 
@@ -33,9 +34,12 @@ export const SessionTop: FC<Props> = ({
 }) => (
   <div className={classes.top} data-compact={compact || undefined}>
     <Container className={classes.inner}>
-      <Title order={1} className={classes.title} lineClamp={1}>
-        {title || BRAND}
-      </Title>
+      <div className={classes.heading}>
+        <BackButton size={compact ? 34 : 40} />
+        <Title order={1} className={classes.title} lineClamp={1}>
+          {title || BRAND}
+        </Title>
+      </div>
       <Text size="sm" c="dimmed" className={classes.meta}>
         <span className={classes.progress}>{progress}</span>
         {parts.filter(Boolean).map((part, index) => (

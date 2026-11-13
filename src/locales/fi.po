@@ -219,10 +219,9 @@ msgstr "{playedRounds, plural, one {# kierros, päättyi {duration} jälkeen} ot
 msgid "{playedRounds, plural, one {Finished after # round} other {Finished after # rounds}}"
 msgstr "{playedRounds, plural, one {Päättyi # kierroksen jälkeen} other {Päättyi # kierroksen jälkeen}}"
 
-#: src/pages/shuttlekaos/PublicSessions.tsx
 #: src/pages/shuttlekaos/SettingsSummary.tsx
-msgid "{playerCount} players"
-msgstr "{playerCount} pelaajaa"
+msgid "{playerCount, plural, one {{count} player} other {{count} players}}"
+msgstr "{playerCount, plural, one {{count} pelaaja} other {{count} pelaajaa}}"
 
 #: src/pages/shuttlekaos/SettingsSummary.tsx
 msgid "{points} points per match"
@@ -898,13 +897,11 @@ msgid "BWF standard: 15 (21 before 2027)"
 msgstr "BWF:n standardi: 15 (21 ennen vuotta 2027)"
 
 #. Who organizes a session
+#. Who organizes a session
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "By {organizer}"
 msgstr "Järjestäjä: {organizer}"
-
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "By {organizer} · {players} players"
-msgstr "Järjestäjä {organizer} · {players} pelaajaa"
 
 #. Heading above a table that splits the numbers per membership plan
 #: src/pages/board/MembersOverview.tsx
@@ -1004,13 +1001,13 @@ msgstr "Haaste: sivu"
 msgid "Challenge. Checking the replay…"
 msgstr "Haaste. Katsotaan uusinta…"
 
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Change"
-msgstr "Muuta"
-
 #: src/pages/shuttlekaos/LocationPicker.tsx
 msgid "Change location"
 msgstr "Vaihda paikka"
+
+#: src/pages/shuttlekaos/OpenSession.tsx
+msgid "Change settings"
+msgstr "Muuta asetuksia"
 
 #: src/pages/shuttlekaos/StandingsTable.tsx
 msgid "Change since last round"
@@ -1079,6 +1076,7 @@ msgstr "Tyhjennä haku"
 #: src/pages/board/NewSeasonModal.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 #: src/pages/shuttlekaos/RoundDone.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Close"
 msgstr "Sulje"
 
@@ -1195,17 +1193,9 @@ msgstr "Jatka Googlella"
 msgid "Continue with Microsoft"
 msgstr "Jatka Microsoftilla"
 
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copied"
-msgstr "Kopioitu"
-
 #: src/pages/board/BulkActions.tsx
 msgid "Copied! Paste them into Bcc"
 msgstr "Kopioitu! Liitä ne Piilokopio-kenttään"
-
-#: src/pages/shuttlekaos/InviteCard.tsx
-msgid "Copy"
-msgstr "Kopioi"
 
 #. placeholder {0}: member.name
 #: src/pages/club/sections.tsx
@@ -1213,6 +1203,7 @@ msgid "Copy email address for {0}"
 msgstr "Kopioi sähköpostiosoite: {0}"
 
 #: src/components/ui/CopyLinkButton.tsx
+#: src/pages/shuttlekaos/InviteCard.tsx
 msgid "Copy link"
 msgstr "Kopioi linkki"
 
@@ -1451,6 +1442,10 @@ msgstr "Poista {name}"
 #: src/pages/board/DeleteMembershipModal.tsx
 msgid "Delete membership?"
 msgstr "Poistetaanko jäsenyys?"
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Delete message"
+msgstr "Poista viesti"
 
 #: src/pages/shuttlekaos/home/ActionModal.tsx
 #: src/pages/shuttlekaos/home/SessionCards.tsx
@@ -2000,6 +1995,11 @@ msgstr "Jäätikkö"
 #: src/pages/training/TrainingPage.tsx
 msgid "Go to season {currentLabel}"
 msgstr "Siirry kauteen {currentLabel}"
+
+#. Button on a session card that opens the session page
+#: src/pages/shuttlekaos/home/SessionCards.tsx
+msgid "Go to session"
+msgstr "Siirry sessioon"
 
 #: src/components/styles/flight/HowToJoin.tsx
 msgid "Go to the sign-up form"
@@ -2616,6 +2616,7 @@ msgid "Menu"
 msgstr "Valikko"
 
 #: src/pages/contact/ContactSection.tsx
+#: src/pages/shuttlekaos/SessionChat.tsx
 msgid "Message"
 msgstr "Viesti"
 
@@ -2869,6 +2870,10 @@ msgstr "Tällä kaudella ei ole vielä jäsenyyksiä"
 msgid "No memberships yet"
 msgstr "Ei vielä jäsenyyksiä"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "No messages yet"
+msgstr "Ei vielä viestejä"
+
 #: src/pages/shuttlekaos/SessionMenu.tsx
 msgid "No new dates get added. Dates already planned stay. Delete them one by one if you need to."
 msgstr "Uusia päiviä ei lisätä. Jo suunnitellut päivät jäävät. Poista ne yksi kerrallaan tarvittaessa."
@@ -3114,6 +3119,14 @@ msgstr "Vain toinen puoli voi päästä tavoitteeseen."
 msgid "Only people with the link can see and join."
 msgstr "Vain linkin saaneet voivat nähdä ja liittyä."
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer can chat here."
+msgstr "Vain pelaajat ja järjestäjä voivat keskustella täällä."
+
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Only players and the organizer see this. Messages are deleted 7 days after the session."
+msgstr "Vain pelaajat ja järjestäjä näkevät tämän. Viestit poistetaan 7 päivää session jälkeen."
+
 #: src/pages/board/volunteers/VolunteerDialogs.tsx
 msgid "Only the board sees this."
 msgstr "Vain hallitus näkee tämän."
@@ -3126,11 +3139,6 @@ msgstr "Vain järjestäjä voi tehdä sen."
 #: src/pages/study/notfound/ideas/KeepItUp.tsx
 msgid "Oops, rim shot!"
 msgstr "Hups, kehysosuma!"
-
-#. Session status: people can still join
-#: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "Open"
-msgstr "Avoin"
 
 #: src/pages/shuttlekaos/SettingsForm.tsx
 msgid "Open for players right away."
@@ -3149,10 +3157,6 @@ msgstr "Avaa kartalla"
 msgid "Open menu"
 msgstr "Avaa valikko"
 
-#: src/pages/shuttlekaos/home/PlayPage.tsx
-msgid "Open sessions"
-msgstr "Avoimet sessiot"
-
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
 msgid "Open spot"
 msgstr "Vapaa paikka"
@@ -3168,7 +3172,9 @@ msgstr "Avaa ilmoittautumislista"
 #. Session status: people can still join
 #. Session status: people can still join
 #. Session status: people can still join
+#. Session status: people can still join
 #: src/pages/shuttlekaos/HallScreen.tsx
+#: src/pages/shuttlekaos/home/SessionCards.tsx
 #: src/pages/shuttlekaos/OpenSession.tsx
 #: src/pages/shuttlekaos/PublicSessions.tsx
 msgid "Open to join"
@@ -3653,6 +3659,11 @@ msgstr "P"
 msgid "Public"
 msgstr "Julkinen"
 
+#. Heading for sessions anyone can join
+#: src/pages/shuttlekaos/home/PlayPage.tsx
+msgid "Public sessions"
+msgstr "Julkiset sessiot"
+
 #: src/pages/shuttlekaos/home/LobbyPage.tsx
 msgid "Public sessions anyone can join. Jump in or watch the scores live."
 msgstr "Julkiset sessiot, joihin kuka tahansa voi liittyä. Hyppää mukaan tai seuraa tuloksia livenä."
@@ -3965,6 +3976,10 @@ msgstr "Tallenna kuva"
 msgid "Save score"
 msgstr "Tallenna tulos"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Say hi to the group."
+msgstr "Sano hei porukalle."
+
 #. Next to a QR code that opens the final standings
 #: src/pages/shuttlekaos/labels.ts
 msgid "Scan for the results"
@@ -4084,6 +4099,10 @@ msgstr "Valitse vuosi"
 msgid "Selected memberships"
 msgstr "Valitut jäsenyydet"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Send"
+msgstr "Lähetä"
+
 #: src/components/auth/LoginModal.tsx
 msgid "Send again"
 msgstr "Lähetä uudelleen"
@@ -4130,6 +4149,10 @@ msgstr "Syöttövirhe: sivua ei löydy"
 msgid "Session"
 msgstr "Sessio"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Session chat"
+msgstr "Session keskustelu"
+
 #: src/pages/shuttlekaos/home/JoinCode.tsx
 msgid "Session code"
 msgstr "Session koodi"
@@ -4161,10 +4184,6 @@ msgstr "Kiinteä määrä"
 #: src/pages/shuttlekaos/SetupPage.tsx
 msgid "Set up again"
 msgstr "Luo uudelleen"
-
-#: src/pages/shuttlekaos/OpenSession.tsx
-msgid "Settings"
-msgstr "Asetukset"
 
 #: src/components/events/ShiftBoard.tsx
 #: src/pages/board/volunteers/PrintShiftPlan.tsx
@@ -5082,6 +5101,10 @@ msgstr "Talkoolaiset"
 msgid "W"
 msgstr "V"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Wait a few seconds and try again."
+msgstr "Odota muutama sekunti ja yritä uudelleen."
+
 #. A training group takes new players only from a waiting list
 #: src/components/training/GroupStatusBadge.tsx
 msgid "Waiting list"
@@ -5241,6 +5264,10 @@ msgstr "Valmentajan kanssa"
 msgid "Won"
 msgstr "Voitot"
 
+#: src/pages/shuttlekaos/SessionChat.tsx
+msgid "Write a message"
+msgstr "Kirjoita viesti"
+
 #: src/pages/contact/ContactSection.tsx
 msgid "Write another message"
 msgstr "Kirjoita uusi viesti"
@@ -5309,9 +5336,10 @@ msgstr "Olit auttamassa"
 msgid "You left the session."
 msgstr "Poistuit sessiosta."
 
+#. On your session card: you are the organizer
 #: src/pages/shuttlekaos/home/SessionCards.tsx
-msgid "You organize · {players} players"
-msgstr "Sinä järjestät · {players} pelaajaa"
+msgid "You organize"
+msgstr "Sinä järjestät"
 
 #. Your place and points, e.g. You: #2, 84 pts
 #: src/pages/shuttlekaos/home/SessionCards.tsx

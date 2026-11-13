@@ -13,25 +13,29 @@ export const Wordmark: FC = () => (
   </>
 );
 
+export const BackButton: FC<{ size?: number }> = ({ size = 44 }) => {
+  const { t } = useLingui();
+  return (
+    <ActionIcon
+      variant="default"
+      radius="xl"
+      size={size}
+      aria-label={t`Back to ShuttleKaos`}
+      renderRoot={(props) => <Link {...props} to="/shuttlekaos" />}
+    >
+      <ArrowLeft />
+    </ActionIcon>
+  );
+};
+
 type Props = { title: ReactNode; eyebrow?: ReactNode; back?: boolean; actions?: ReactNode };
 
 export const BrandHeader: FC<Props> = ({ title, eyebrow, back, actions }) => {
-  const { t } = useLingui();
   return (
     <header className={classes.header} data-compact>
       <Container className={classes.inner}>
         <div className={classes.row}>
-          {back && (
-            <ActionIcon
-              variant="default"
-              radius="xl"
-              size={44}
-              aria-label={t`Back to ShuttleKaos`}
-              renderRoot={(props) => <Link {...props} to="/shuttlekaos" />}
-            >
-              <ArrowLeft />
-            </ActionIcon>
-          )}
+          {back && <BackButton />}
           <div className={classes.text}>
             <Text className={classes.eyebrow}>{eyebrow ?? <Wordmark />}</Text>
             <Title order={1} className={classes.title}>

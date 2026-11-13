@@ -28,7 +28,7 @@ import { LiveBadge } from '../Fallbacks';
 import { BRAND, durationText, formatStart, sessionMinutes, sessionTimeText, stop, TABLE_QUERY } from '../labels';
 import { Place } from '../PublicSessions';
 import { SessionLink, SessionRow, SessionTable } from '../SessionTable';
-import { FormatCell, SessionChips, VisibilityBadge, VisibilityIcon } from '../SettingsSummary';
+import { FormatCell, PlayersText, SessionChips, VisibilityBadge, VisibilityIcon } from '../SettingsSummary';
 import { ActionModal } from './ActionModal';
 import { Action, useSessionActions } from './sessionActions';
 
@@ -59,7 +59,7 @@ const StatusBadge: FC<{ status: SessionStatus }> = ({ status }) => {
   if (status === SessionStatus.enum.open) {
     return (
       <Badge color="teal" variant="light">
-        <Trans comment="Session status: people can still join">Open</Trans>
+        <Trans comment="Session status: people can still join">Open to join</Trans>
       </Badge>
     );
   }
@@ -82,7 +82,7 @@ export type CardProps = { summary: SessionSummary; onAction?: (a: Action, s: Ses
 export const SessionCard = memo<CardProps>(({ summary, onAction }) => {
   const navigate = useNavigate();
   const title = summary.title || BRAND;
-  const players = summary.playerCount;
+  const when = sessionTimeText(summary);
   const organizer = summary.organizerName;
   const rank = summary.myResult?.rank;
   const points = summary.myResult?.pointsFor;
@@ -103,16 +103,18 @@ export const SessionCard = memo<CardProps>(({ summary, onAction }) => {
         <Text fw={700} size="lg" className={classes.title}>
           {title}
         </Text>
-        <Text size="sm" c="dimmed">
-          {sessionTimeText(summary) ?? formatStart(summary.createdAt)}
-          {' · '}
-          {summary.isOwner ? (
-            <Trans>You organize · {players} players</Trans>
-          ) : (
-            <Trans>
-              By {organizer} · {players} players
-            </Trans>
-          )}
+        <Text size="sm" c="dimmed" className={classes.metaLine}>
+          {when && <span>{when}</span>}
+          <span>
+            {summary.isOwner ? (
+              <Trans comment="On your session card: you are the organizer">You organize</Trans>
+            ) : (
+              <Trans comment="Who organizes a session">By {organizer}</Trans>
+            )}
+          </span>
+          <span>
+            <PlayersText playerCount={summary.playerCount} maxPlayers={summary.maxPlayers} />
+          </span>
         </Text>
         {finished && rank !== undefined && (
           <Text size="sm" fw={700}>
@@ -131,7 +133,7 @@ export const SessionCard = memo<CardProps>(({ summary, onAction }) => {
       )}
       {summary.status === SessionStatus.enum.open && (
         <Button size="md" variant="default" rightSection={<ArrowRight />} onClick={go} className={classes.action}>
-          <Trans>Open</Trans>
+          <Trans comment="Button on a session card that opens the session page">Go to session</Trans>
         </Button>
       )}
     </Paper>

@@ -1,7 +1,7 @@
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Anchor, Button, Group, Skeleton } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import type { FC } from 'react';
+import { useMemo, type FC } from 'react';
 
 import { useAuthReady, useProfile, useSessionUserId } from '~/components/auth/hooks';
 import { ArrowCounterClockwise, ArrowRight } from '~/components/ui';
@@ -33,6 +33,7 @@ const ROW_SKELETONS = [0, 1, 2];
 
 const selectFirstName = (user: User) => firstName(user.name);
 const selectHasLineup = (s: PrefsState) => s.lineup !== null;
+const selectIds = (sessions: SessionSummary[]) => new Set(sessions.map((s) => s.id));
 const byStatus = (sessions: SessionSummary[]) => Map.groupBy(sessions, (s) => s.status);
 
 const Greeting: FC = () => {
@@ -100,7 +101,12 @@ const MySessions: FC = () => {
 const OpenSessions: FC = () => {
   const { t } = useLingui();
   const list = usePublicSessions(NO_LEVELS);
-  const sort = useNearestFirst(list.data ?? EMPTY_PUBLIC);
+  const mine = useMyActiveSessions({ select: selectIds }).data;
+  const others = useMemo(
+    () => (list.data ?? EMPTY_PUBLIC).filter((session) => !mine?.has(session.id)),
+    [list.data, mine],
+  );
+  const sort = useNearestFirst(others);
   const shown = sort.sessions.slice(0, ROW_LIMIT);
 
   let body;
@@ -135,7 +141,7 @@ const OpenSessions: FC = () => {
 
   return (
     <HomeSection
-      title={<Trans>Open sessions</Trans>}
+      title={<Trans comment="Heading for sessions anyone can join">Public sessions</Trans>}
       action={
         shown.length > 0 && (
           <Group gap={12}>
