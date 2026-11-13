@@ -1,11 +1,12 @@
 import { Trans } from '@lingui/react/macro';
 import { AppShell } from '@mantine/core';
-import { useDisclosure, useHeadroom, useMediaQuery } from '@mantine/hooks';
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Outlet, useRouterState, type RouterState } from '@tanstack/react-router';
 import { lazy, Suspense, useEffect, useState, type FC } from 'react';
 
 import { usePreferenceSync } from '~/components/auth/preferences';
 import { useStyleKit } from '~/components/styles';
+import { useScrollLinkedHeader } from '~/hooks/useScrollLinkedHeader';
 import { useStandaloneNav } from '~/hooks/useStandaloneNav';
 import type { FileRoutesById } from '~/routeTree.gen';
 import { HeadingFont, NavLayout, Style, useSettings } from '~/stores/settings';
@@ -25,7 +26,6 @@ import classes from './RootLayout.module.css';
 const LoginModal = lazy(() => import('~/components/auth/LoginModal'));
 
 const HEADER_HEIGHT = 64;
-const HEADROOM_FIXED_AT = 64;
 const SMALL_SCREEN = '(max-width: 48em)';
 
 const NO_STRIP_ROUTES = new Set<keyof FileRoutesById>(['/medlemskap/bli-medlem']);
@@ -50,9 +50,13 @@ export const RootLayout: FC = () => {
   const smallScreen = useMediaQuery(SMALL_SCREEN);
   const autoHide = useUi((s) => s.autoHideHeader) && smallScreen;
   const focus = useUi((s) => s.focusMode);
-  const { pinned } = useHeadroom({ fixedAt: HEADROOM_FIXED_AT });
-  const headerHidden = focus || (autoHide && !pinned);
   const floating = !standalone && (autoHide || focus);
+  const linked = !standalone && autoHide && !focus;
+  useScrollLinkedHeader(linked, HEADER_HEIGHT);
+
+  let headerShown = `${HEADER_HEIGHT}px`;
+  if (standalone || focus) headerShown = '0px';
+  else if (linked) headerShown = `calc(${HEADER_HEIGHT}px - var(--bk-header-offset, 0px))`;
   const [loginLoaded, setLoginLoaded] = useState(loginOpened);
   if (loginOpened && !loginLoaded) setLoginLoaded(true);
 
@@ -74,13 +78,13 @@ export const RootLayout: FC = () => {
         <Trans>Skip to content</Trans>
       </a>
       <AppShell
-        header={standalone ? undefined : { height: HEADER_HEIGHT, collapsed: headerHidden, offset: !floating }}
-        __vars={{ '--bk-header-shown': standalone || headerHidden ? '0px' : `${HEADER_HEIGHT}px` }}
+        header={standalone ? undefined : { height: HEADER_HEIGHT, collapsed: focus, offset: !floating }}
+        __vars={{ '--bk-header-shown': headerShown }}
         navbar={{ width: 248, breakpoint: 'md', collapsed: { mobile: true, desktop: !side } }}
         padding={0}
       >
         {!standalone && (
-          <AppShell.Header>
+          <AppShell.Header className={classes.header} data-linked={linked || undefined}>
             <SiteHeader menuOpened={opened} onToggleMenu={toggle} showLinks={!side} />
           </AppShell.Header>
         )}

@@ -20,6 +20,10 @@
   border-radius: 50%;
   background: currentColor;
   animation: pulse 1.6s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 }
 
 @keyframes pulse {

@@ -5,7 +5,6 @@
   border-radius: 0;
   box-shadow: none;
   padding-block: 16px 14px;
-  transition: padding 150ms ease;
 
   &[data-compact] {
     padding-block: 8px;

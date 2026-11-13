@@ -14,6 +14,15 @@
   }
 }
 
+.header[data-linked] {
+  transform: translateY(calc(-1 * var(--bk-header-offset, 0px)));
+  transition: none;
+
+  :global(:root[data-header-snap]) & {
+    transition: transform 180ms ease-out;
+  }
+}
+
 .main {
   display: flex;
   flex-direction: column;

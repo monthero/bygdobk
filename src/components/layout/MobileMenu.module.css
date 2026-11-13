@@ -59,10 +59,6 @@
       color: var(--mantine-color-body);
     }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
 }
 
 .icon {

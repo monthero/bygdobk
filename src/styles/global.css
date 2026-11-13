@@ -17,15 +17,6 @@ h4 {
   font-stretch: var(--bk-font-display-stretch, 100%);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
 .tabular {
   font-variant-numeric: tabular-nums;
 }

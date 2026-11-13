@@ -8,6 +8,7 @@ import { useMemo, type FC } from 'react';
 import { queryClient } from './cms/queryClient';
 import { ContentError } from './components/layout';
 import { useResolvedColorScheme } from './hooks/useResolvedColorScheme';
+import { useThemeColorMeta } from './hooks/useThemeColorMeta';
 import { localeRewrite } from './i18n/url';
 import { NotFoundPage } from './pages/NotFoundPage';
 import { routeTree } from './routeTree.gen';
@@ -38,6 +39,7 @@ export const App: FC = () => {
   const width = useSettings((s) => s.width);
   const font = useSettings((s) => s.font);
   const colorScheme = useResolvedColorScheme();
+  useThemeColorMeta(palette, colorScheme);
   const theme = useMemo(
     () => buildTheme({ palette, shape, density, width, font }),
     [palette, shape, density, width, font],

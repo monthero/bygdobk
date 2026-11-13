@@ -256,6 +256,9 @@ const strongLightText = (colors: Record<string, MantineColorsTuple>) =>
     }),
   );
 
+export const bodyColor = (palette: Palette, scheme: 'light' | 'dark') =>
+  scheme === 'dark' ? DARK_NEUTRALS[palette].body : LIGHT_NEUTRALS[palette].body;
+
 export const cssVariablesResolver: CSSVariablesResolver = (theme) => {
   const palette = Palette.catch(Palette.enum.fjord).parse(theme.other.palette);
   const font = HeadingFont.catch(HeadingFont.enum.chakra).parse(theme.other.font);

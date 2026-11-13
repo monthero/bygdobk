@@ -1,7 +1,7 @@
 import { Plural, Trans, useLingui } from '@lingui/react/macro';
 import { Box, Container, Group, Paper, Stack, ThemeIcon, Title } from '@mantine/core';
-import { useDisclosure, useElementSize, useIntersection, useMediaQuery } from '@mantine/hooks';
-import { useMemo, useState, type FC, type ReactNode } from 'react';
+import { useDisclosure, useIntersection, useMediaQuery } from '@mantine/hooks';
+import { useCallback, useMemo, useState, type FC, type ReactNode } from 'react';
 
 import { ListNumbers, Racket, ResponsiveModal, Trophy } from '~/components/ui';
 import { usePageTitle } from '~/hooks/usePageTitle';
@@ -62,7 +62,18 @@ export const SessionView: FC<Props> = ({ session, actions, notice, footer, onSco
   const finished = session.status === SessionStatus.enum.finished;
   const { ref: sentinel, entry } = useIntersection({ rootMargin: STICKY_MARGIN });
   const compact = entry !== null && !entry.isIntersecting;
-  const { ref: topRef, height: topHeight } = useElementSize();
+  const [topHeight, setTopHeight] = useState(0);
+  const [restingHeight, setRestingHeight] = useState(0);
+  const barRef = useCallback((node: HTMLDivElement | null) => {
+    if (!node) return undefined;
+    const observer = new ResizeObserver(() => {
+      const height = node.offsetHeight;
+      setTopHeight(height);
+      if (node.dataset.compact === undefined) setRestingHeight(height);
+    });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
   const { ref: roundHead, entry: headEntry } = useIntersection({ rootMargin: ROUND_MARGIN });
   const roundAway =
     !finished &&
@@ -175,37 +186,39 @@ export const SessionView: FC<Props> = ({ session, actions, notice, footer, onSco
   }
 
   return (
-    <Box __vars={{ '--session-top': `${topHeight}px` }} className={classes.root}>
+    <Box __vars={{ '--session-top': `${topHeight}px`, '--top-resting': `${restingHeight}px` }} className={classes.root}>
       <div ref={sentinel} className={classes.sentinel} aria-hidden />
-      <div ref={topRef} className={classes.top}>
-        <SessionTop
-          title={session.title}
-          progress={progress}
-          started={started}
-          details={
-            <SettingsSummary
-              settings={session.settings}
-              isPublic={session.isPublic}
-              playerCount={session.players.length}
-              pairs={session.pairs}
-              inSession
-            />
-          }
-          actions={actions}
-          compact={compact}
-          location={session.location}
-          below={
-            roundAway && (
-              <RoundNav
-                session={session}
-                viewed={viewed}
-                onView={view}
-                compact
-                onStandings={wide ? undefined : fullControls.open}
+      <div className={classes.top} data-compact={(compact && restingHeight > 0) || undefined}>
+        <div ref={barRef} className={classes.bar} data-compact={compact || undefined}>
+          <SessionTop
+            title={session.title}
+            progress={progress}
+            started={started}
+            details={
+              <SettingsSummary
+                settings={session.settings}
+                isPublic={session.isPublic}
+                playerCount={session.players.length}
+                pairs={session.pairs}
+                inSession
               />
-            )
-          }
-        />
+            }
+            actions={actions}
+            compact={compact}
+            location={session.location}
+            below={
+              roundAway && (
+                <RoundNav
+                  session={session}
+                  viewed={viewed}
+                  onView={view}
+                  compact
+                  onStandings={wide ? undefined : fullControls.open}
+                />
+              )
+            }
+          />
+        </div>
       </div>
       <Container py="xl" className={classes.body}>
         <Stack gap="md">

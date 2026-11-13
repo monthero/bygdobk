@@ -1,4 +1,5 @@
 .root {
+  position: relative;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -24,21 +25,39 @@
 }
 
 .sentinel {
+  position: absolute;
+  top: calc(var(--top-resting, 0px) * 0.6);
+  width: 1px;
   height: 1px;
-  margin-bottom: -1px;
+  pointer-events: none;
 }
 
 .top {
   position: sticky;
   top: var(--bk-header-shown, 0px);
   z-index: 6;
-  transition: top 200ms ease;
+
+  &[data-compact] {
+    height: var(--top-resting);
+    pointer-events: none;
+  }
+
+  :global(:root[data-header-snap]) & {
+    transition: top 180ms ease-out;
+  }
+}
+
+.bar {
+  pointer-events: auto;
 }
 
 .aside {
   position: sticky;
   top: calc(var(--bk-header-shown, 0px) + var(--session-top, 0px) + 16px);
-  transition: top 200ms ease;
+
+  :global(:root[data-header-snap]) & {
+    transition: top 180ms ease-out;
+  }
 }
 
 .panel {
